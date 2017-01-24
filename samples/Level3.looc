@@ -1,0 +1,32 @@
+class Fibonacci = (
+
+	var current : int;
+	var previous: int;
+	var generation: int;
+
+	method init() {
+		current := 1;
+		previous := 0;
+		generation := 1;
+	}
+
+	method nextGen() {
+		var temp : int;
+		temp := current
+		current := current + previous;
+		previous := temp;
+		generation := generation + 1;
+	}
+
+	method nextGenAndGet() : int {
+		do this.nextGen();
+		return (current);
+	}
+)
+
+var f : Fibonacci;
+F := new Fibonacci;
+do f.init();
+do f.nextGen();
+do f.nextGen();
+write f.nextGenAndGet();
