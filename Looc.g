@@ -1,37 +1,59 @@
 grammar Looc;
 
 @header {
-  import java.util.HashMap;
+	import java.util.HashMap;
 }
 
 @members {
-  HashMap<String, Integer> memory = new HashMap<String, Integer>();
+	HashMap<String, Integer> memory = new HashMap<String, Integer>();
 }
 
-program: var_decl* instruction+;
+/**----------------------
+	Nonterminal symbols
+------------------------*/
 
-var_decl: 'var' IDF ':' type;
 
-type: 'int'
-      |'string';
+program: 		class_decl var_decl* instruction+;
 
-return: 'return('expression')';
+class_decl:		'class' CLASS inheritance '(' ')';
 
-instruction : IDF':='expression 
-	      |'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
-	      | print;
-	      
-	          
-expression : IDF expressionbis | INT expressionbis;
+inheritance: 	'inherits' CLASS 
+				|
+				;
 
-expressionbis : OPER expression  | INT | IDF | ;	
+var_decl: 		'var' IDF ':' type;
 
-print	:	'write' expression;
+type: 			'int' | 'string';
 
-IDF : ('a'..'z')('a'..'z'|'A'..'Z')* ;
+ //#### Not working because 'return' symbol cannot be used in java ....
+return_decl: 	'return(' expression ')';
 
-INT :   '0'..'9'+ ;
 
-OPER : '+'|'-'|'*'|'<'|'<='|'>'|'>='|'=='|'!=' ;
+instruction: 	IDF ':=' expression 
+				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
+	      		| print;
 
-WS : (' '|'\t'|'\n')+{$channel=HIDDEN;} ;
+expression: 	IDF expressionbis | INT expressionbis;
+
+expressionbis: 	OPER expression  | INT | IDF | ;	
+
+print:			'write' expression;
+
+
+
+/**----------------------
+	Terminal symbols
+------------------------*/
+
+
+CLASS: 	('A'..'Z')('a'..'z'|'A'..'Z')*;
+
+IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
+
+INT:	'0'..'9'+;
+
+OPER: 	'+'|'-'|'*'|'<'|'<='|'>'|'>='|'=='|'!=';
+
+WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
+
+NEWLINE: '\r'? '\n';
