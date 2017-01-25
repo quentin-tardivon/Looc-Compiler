@@ -31,3 +31,8 @@ clean:
 parse: java
 	@echo " --- Execute TestLooc ---"
 	@java $(PGM)
+
+
+level1: java
+	@echo " --- Check Level1.looc---"
+	@java $(PGM) $(SAMPLE_DIR)/Level1.looc
