@@ -31,7 +31,8 @@ type: 			'int' | 'string';
 
 instruction: 	IDF ':=' expression 
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
-	      		| print;
+				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
+	      			| print;
 
 expression: 	IDF expressionbis | INT expressionbis;
 
