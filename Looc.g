@@ -13,32 +13,39 @@ grammar Looc;
 ------------------------*/
 
 
-program: 		var_decl* instruction+;
+program: 		class_decl* var_decl* instruction+;
 
-//class_decl:		'class' CLASS inheritance '(' ')';
 
-//inheritance: 	'inherits' CLASS 
-				//|
-				//;
+
+class_decl:		'class' CLASS '=' '('class_item_decl')';
+
+class_item_decl :	var_decl* method_decl*;
+
+method_decl : 		'method' IDF '('method_args*')''{'var_decl* instruction+ '}'
+			| 'method' IDF '('method_args*')'':' type'{'var_decl* instruction+'}';
+
+method_args : IDF':'type (','IDF':'type)*;
 
 var_decl: 		'var' IDF ':' type ';';
 
-type: 			'int' | 'string';
-
-// #### Not working because 'return' symbol cannot be used in java ....
-//return_decl: 	'return(' expression ')';
-
+type: 			'int' | 'string' | CLASS ;
 
 instruction: 	IDF ':=' expression ';'
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
 				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
-	      			| print;
+	      			| print
+	      			|return_decl ';';
 
-expression: 	IDF expressionbis | INT expressionbis;
+	      			
+expression: 	IDF expressionbis | INT expressionbis | 'new' CLASS;
 
-expressionbis: 	OPER expression  | INT | IDF | ;	
+
+expressionbis: 	OPER expression |'.'IDF'('expression(','expression)*')'| ;	
+
 
 print:			'write' expression ';' ;
+
+return_decl: 	'return''(' expression ')';
 
 
 
@@ -47,9 +54,9 @@ print:			'write' expression ';' ;
 ------------------------*/
 
 
-//CLASS: 	('A'..'Z')('a'..'z'|'A'..'Z')*;
-
 IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
+
+CLASS:	('A'..'Z')('a'..'z'|'A'..'Z')*; 	
 
 INT:	'0'..'9'+;
 
