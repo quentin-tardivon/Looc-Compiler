@@ -13,20 +13,20 @@ grammar Looc;
 ------------------------*/
 
 
-program: 		class_decl* var_decl* instruction+;
+program: 		var_decl* instruction+;
 
-class_decl:		'class' CLASS inheritance '(' ')';
+//class_decl:		'class' CLASS inheritance '(' ')';
 
-inheritance: 	'inherits' CLASS 
-				|
-				;
+//inheritance: 	'inherits' CLASS 
+				//|
+				//;
 
 var_decl: 		'var' IDF ':' type;
 
 type: 			'int' | 'string';
 
 // #### Not working because 'return' symbol cannot be used in java ....
-return_decl: 	'return(' expression ')';
+//return_decl: 	'return(' expression ')';
 
 
 instruction: 	IDF ':=' expression 
@@ -46,7 +46,7 @@ print:			'write' expression;
 ------------------------*/
 
 
-CLASS: 	('A'..'Z')('a'..'z'|'A'..'Z')*;
+//CLASS: 	('A'..'Z')('a'..'z'|'A'..'Z')*;
 
 IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
 
