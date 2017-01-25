@@ -24,7 +24,7 @@ class_item_decl :	var_decl* method_decl*;
 
 method_decl : 		'method' IDF '('method_args*')''{'var_decl* instruction+ '}'
 			| 'method' IDF '('method_args*')'':' type'{'var_decl* instruction+'}';
-			
+
 method_args : IDF':'type (','IDF':'type)*;
 
 
@@ -34,22 +34,27 @@ var_decl: 		'var' IDF ':' type ';';
 type: 			'int' | 'string' | CLASS;
 
 
-instruction: 	IDF ':=' expression ';'
-				
+
+instruction: 	IDF ':=' expression ';'{memory.put($IDF.text, new Integer($expression.value));}
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
 				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
 	      			| print
 	      			|'do' expression'.'IDF'('(expression(','expression)*)?')'';'  //problem here
 	      			|return_decl ';';
 
-	      			
-expression: 	IDF expressionbis | INT expressionbis | 'new' CLASS |'this'|'super';
+expression returns [int value]: 	IDF expressionbis
+					| INT {$value = Integer.parseInt($INT.text);} expressionbis
+					| 'new' CLASS |'this'|'super';
 
+expressionbis returns [int value]: 	OPER expression
+					| '+' e=expression {$value += $e.value;}
+					| '-' e=expression {$value -= $e.value;}
+					| '/' e=expression {$value /= $e.value;}
+					| '*' e=expression {$value *= $e.value;}
+					|'.'IDF'('expression(','expression)*')'
+					| ;
 
-expressionbis: 	OPER expression |'.'IDF'(' expression(','expression)*')' | ;	
-
-
-print:			'write' expression ';' ;
+print:			'write' IDF {System.out.println(memory.get($IDF.text));}';' ;
 
 return_decl: 	'return''(' expression ')';
 
@@ -62,11 +67,11 @@ return_decl: 	'return''(' expression ')';
 
 IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
 
-CLASS:	('A'..'Z')('a'..'z'|'A'..'Z')*; 	
+CLASS:	('A'..'Z')('a'..'z'|'A'..'Z')*;
 
 INT:	'0'..'9'+;
 
-OPER: 	'+'|'-'|'*'|'<'|'<='|'>'|'>='|'=='|'!=';
+OPER: 	'<'|'<='|'>'|'>='|'=='|'!=';
 
 WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
 
