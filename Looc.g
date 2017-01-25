@@ -21,7 +21,7 @@ program: 		var_decl* instruction+;
 				//|
 				//;
 
-var_decl: 		'var' IDF ':' type;
+var_decl: 		'var' IDF ':' type ';';
 
 type: 			'int' | 'string';
 
@@ -29,7 +29,7 @@ type: 			'int' | 'string';
 //return_decl: 	'return(' expression ')';
 
 
-instruction: 	IDF ':=' expression 
+instruction: 	IDF ':=' expression ';'
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
 				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
 	      			| print;
@@ -38,7 +38,7 @@ expression: 	IDF expressionbis | INT expressionbis;
 
 expressionbis: 	OPER expression  | INT | IDF | ;	
 
-print:			'write' expression;
+print:			'write' expression ';' ;
 
 
 
