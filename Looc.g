@@ -23,22 +23,29 @@ program: 		var_decl* instruction+;
 
 var_decl: 		'var' IDF ':' type ';';
 
-type: 			'int' | 'string';
+type: 			'int' 
+			| 'string';
 
 // #### Not working because 'return' symbol cannot be used in java ....
 //return_decl: 	'return(' expression ')';
 
 
-instruction: 	IDF ':=' expression ';'
+instruction: 	IDF ':=' expression ';'{memory.put($IDF.text, new Integer($expression.value));}
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
 				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
 	      			| print;
 
-expression: 	IDF expressionbis | INT expressionbis;
+expression returns [int value]: 	IDF expressionbis
+					| INT {$value = Integer.parseInt($INT.text);} expressionbis;
 
-expressionbis: 	OPER expression  | INT | IDF | ;	
+expressionbis returns [int value]: 	OPER expression  
+					| '+' e=expression {$value += $e.value;}
+					| '-' e=expression {$value -= $e.value;}
+					| '/' e=expression {$value /= $e.value;}
+					| '*' e=expression {$value *= $e.value;}
+					| ;	
 
-print:			'write' expression ';' ;
+print:			'write' IDF {System.out.println(memory.get($IDF.text));}';' ;
 
 
 
@@ -53,7 +60,7 @@ IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
 
 INT:	'0'..'9'+;
 
-OPER: 	'+'|'-'|'*'|'<'|'<='|'>'|'>='|'=='|'!=';
+OPER: 	'<'|'<='|'>'|'>='|'=='|'!=';
 
 WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
 
