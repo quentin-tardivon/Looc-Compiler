@@ -13,7 +13,7 @@ grammar Looc;
 ------------------------*/
 
 
-program: 		class_decl var_decl* instruction+;
+program: 		class_decl* var_decl* instruction+;
 
 class_decl:		'class' CLASS inheritance '(' ')';
 
@@ -25,7 +25,7 @@ var_decl: 		'var' IDF ':' type;
 
 type: 			'int' | 'string';
 
- //#### Not working because 'return' symbol cannot be used in java ....
+// #### Not working because 'return' symbol cannot be used in java ....
 return_decl: 	'return(' expression ')';
 
 
