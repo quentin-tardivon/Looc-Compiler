@@ -1,5 +1,10 @@
 grammar Looc;
 
+options {
+	k=1;
+	backtrack=no;
+}
+
 @header {
 	import java.util.HashMap;
 }
