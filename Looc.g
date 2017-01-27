@@ -2,7 +2,6 @@ grammar Looc;
 
 options {
 	k=1;
-	backtrack=no;
 }
 
 @header {
@@ -50,16 +49,16 @@ instruction: 		IDF ':=' expression ';'
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
 
-expression returns [int value]: 	IDF expressionbis //il peut y avoir le vide
+expression : 	IDF expressionbis //il peut y avoir le vide
 					| INT expressionbis
 					| STRING // Maybe add expressionbis
 					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
 
-expressionbis returns [int value]: 	OPER expression
-					| '+' e=expression
-					| '-' e=expression
-					| '/' e=expression
-					| '*' e=expression
+expressionbis : 	OPER expression
+					| '+' expression
+					| '-' expression
+					| '/' expression
+					| '*' expression
 					| '.' IDF '('(expression(','expression)*)?')'
 					| ;
 
@@ -87,3 +86,11 @@ OPER: 	'<'|'<='|'>'|'>='|'=='|'!=';
 WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
 
 NEWLINE: '\r'? '\n';
+
+COMMENT
+    : '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
+    ;
+
+LINE_COMMENT
+		    : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
+		    ;
