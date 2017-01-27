@@ -36,3 +36,15 @@ parse: java
 level1: java
 	@echo " --- Check Level1.looc---"
 	@java $(PGM) $(SAMPLE_DIR)/Level1.looc
+
+level2: java
+	@echo " --- Check Level2.looc---"
+	@java $(PGM) $(SAMPLE_DIR)/Level2.looc	
+
+level3: java
+	@echo " --- Check Level3.looc---"
+	@java $(PGM) $(SAMPLE_DIR)/Level3.looc
+
+level4: java
+	@echo " --- Check Level4.looc---"
+	@java $(PGM) $(SAMPLE_DIR)/Level4.looc	

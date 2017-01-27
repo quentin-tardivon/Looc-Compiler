@@ -2,6 +2,17 @@
 
 Projet de compilation pour langage objet Looc en ASM
 
+Remarques
+===
+
+Note pour la grammaire:
+
+- expression -> cst_ent
+           -> cst_chaine
+
+- INSTRUCTION -> do EXPRESSION (à la place de do EXPRESSION .idf ...)  
+
+- L'operateur **-** est le plus fort
 
 ##Auteurs
 ==
@@ -13,11 +24,3 @@ Quentin Tardivon
 
 Yann Prono
 
-Note pour la grammaire:
-
-expression -> cst_ent
-           -> cst_chaine
-
-INSTRUCTION -> do EXPRESSION (à la place de do EXPRESSION .idf ...)  
-
-Le - unaire est le plus fort des opérateurs
