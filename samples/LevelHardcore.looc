@@ -1,0 +1,29 @@
+class Compiler = (
+
+	var inputFile : string;
+	var outputFile: string;
+	var verbose: int;
+	var content: string;
+
+	method init(in: string, out: string, verbose: int) {
+		inputFile := in;
+		outputFile := out;
+		verbose := verbose;
+	}
+
+	method compile() {
+		content = inputFile + "\n\n[] == 0\n+[] === 0\n++[] === 1  // sorta, though this is invalid js syntax, so...\n[[]][0] === []\n++[[]][0] === 1\n++[[]][+[]] === 1  // yay! wtf!\n\n" + outputFile;
+		if verbose == 1 then
+			write "-- Launch compilation --\n"
+			write content;
+			write "-- end --";
+		else
+			write content
+		fi
+	}
+)
+
+var babel : Compiler;
+babel := new Compiler;
+do babel.init("jquery.js","jquery.min.js", 0);
+do babel.compile();
