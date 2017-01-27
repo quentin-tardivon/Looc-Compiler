@@ -21,7 +21,7 @@ options {
 program: 		class_decl* var_decl* instruction+;
 
 
-class_decl:		'class' CLASS '=' '('class_item_decl')';
+class_decl:		'class' CLASS ('inherit')? '=' '('class_item_decl')';
 
 
 class_item_decl :	var_decl* method_decl*;
@@ -52,7 +52,7 @@ instruction: 	IDF ':=' expression ';'
 
 expression returns [int value]: 	IDF expressionbis
 					| INT expressionbis
-					| 'new' CLASS |'this'|'super';
+					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
 
 expressionbis returns [int value]: 	OPER expression
 					| '+' e=expression

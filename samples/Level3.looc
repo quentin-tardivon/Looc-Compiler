@@ -25,7 +25,7 @@ class Fibonacci = (
 )
 
 var f : Fibonacci;
-F := new Fibonacci;
+f := new Fibonacci;
 do f.init();
 do f.nextGen();
 do f.nextGen();

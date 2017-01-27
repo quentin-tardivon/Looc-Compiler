@@ -19,3 +19,5 @@ expression -> cst_ent
            -> cst_chaine
 
 INSTRUCTION -> do EXPRESSION (à la place de do EXPRESSION .idf ...)  
+
+Le - unaire est le plus fort des opérateurs
