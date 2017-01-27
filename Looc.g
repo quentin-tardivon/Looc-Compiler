@@ -29,7 +29,7 @@ class_item_decl :	var_decl* method_decl*;
 
 method_decl : 	'method' IDF '('method_args*')' function_decl;
 
-function_decl : ':' type'{'var_decl* instruction+'}' 
+function_decl : ':' type'{'var_decl* instruction+'}'
 		| '{'var_decl* instruction+ '}';
 
 
@@ -43,26 +43,26 @@ type: 			'int' | 'string' | CLASS;
 
 
 
-instruction: 	IDF ':=' expression ';'{memory.put($IDF.text, new Integer($expression.value));}
+instruction: 	IDF ':=' expression ';'
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
 				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
 	      			| print
-	      			|'do' expression'.'IDF'('(expression(','expression)*)?')'';'  //problem here
+	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
 
 expression returns [int value]: 	IDF expressionbis
-					| INT {$value = Integer.parseInt($INT.text);} expressionbis
+					| INT expressionbis
 					| 'new' CLASS |'this'|'super';
 
 expressionbis returns [int value]: 	OPER expression
-					| '+' e=expression {$value += $e.value;}
-					| '-' e=expression {$value -= $e.value;}
-					| '/' e=expression {$value /= $e.value;}
-					| '*' e=expression {$value *= $e.value;}
-					|'.'IDF'('expression(','expression)*')'
+					| '+' e=expression
+					| '-' e=expression
+					| '/' e=expression
+					| '*' e=expression
+					| '.' IDF '('expression(','expression)*')'
 					| ;
 
-print:			'write' IDF {System.out.println(memory.get($IDF.text));}';' ;
+print:			'write' expression ';' ;
 
 return_decl: 	'return''(' expression ')';
 

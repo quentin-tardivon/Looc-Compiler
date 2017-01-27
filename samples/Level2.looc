@@ -1,4 +1,4 @@
-class Math = 
+class Math =
 (
 	method pow(a : int, b : int) : int {
 		var retval : int;
@@ -10,7 +10,7 @@ class Math =
 		retval := 1;
 		for i in 1 .. b
 		do
-			retval :) retval * a;
+			retval := retval * a;
 		end
 
 		return (retval);
