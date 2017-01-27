@@ -21,7 +21,7 @@ options {
 program: 		class_decl* var_decl* instruction+;
 
 
-class_decl:		'class' CLASS ('inherit')? '=' '('class_item_decl')';
+class_decl:		'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 
 
 class_item_decl :	var_decl* method_decl*;
@@ -43,15 +43,16 @@ type: 			'int' | 'string' | CLASS;
 
 
 
-instruction: 	IDF ':=' expression ';'
-				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
-				| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
+instruction: 		IDF ':=' expression ';'
+					| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
+					| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
 	      			| print
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
 
 expression returns [int value]: 	IDF expressionbis
 					| INT expressionbis
+					| STRING // Maybe add expressionbis
 					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
 
 expressionbis returns [int value]: 	OPER expression
@@ -73,11 +74,13 @@ return_decl: 	'return''(' expression ')';
 ------------------------*/
 
 
-IDF: 	('a'..'z')('a'..'z'|'A'..'Z')*;
+IDF: 	('a'..'z')('a'..'z'|'A'..'Z'|'0'..'9')*;
 
 CLASS:	('A'..'Z')('a'..'z'|'A'..'Z')*;
 
 INT:	'0'..'9'+;
+
+STRING: '"'(.)*'"';
 
 OPER: 	'<'|'<='|'>'|'>='|'=='|'!=';
 

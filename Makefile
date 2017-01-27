@@ -48,3 +48,5 @@ level3: java
 level4: java
 	@echo " --- Check Level4.looc---"
 	@java $(PGM) $(SAMPLE_DIR)/Level4.looc	
+
+test: level1 level2 level3 level4
