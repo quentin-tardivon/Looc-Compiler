@@ -50,7 +50,7 @@ instruction: 		IDF ':=' expression ';'
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
 
-expression returns [int value]: 	IDF expressionbis
+expression returns [int value]: 	IDF expressionbis //il peut y avoir le vide
 					| INT expressionbis
 					| STRING // Maybe add expressionbis
 					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
@@ -60,7 +60,7 @@ expressionbis returns [int value]: 	OPER expression
 					| '-' e=expression
 					| '/' e=expression
 					| '*' e=expression
-					| '.' IDF '('expression(','expression)*')'
+					| '.' IDF '('(expression(','expression)*)?')'
 					| ;
 
 print:			'write' expression ';' ;

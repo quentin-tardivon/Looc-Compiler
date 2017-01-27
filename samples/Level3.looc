@@ -12,7 +12,7 @@ class Fibonacci = (
 
 	method nextGen() {
 		var temp : int;
-		temp := current
+		temp := current;
 		current := current + previous;
 		previous := temp;
 		generation := generation + 1;
