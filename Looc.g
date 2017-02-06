@@ -26,13 +26,15 @@ class_decl:		'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 class_item_decl :	var_decl* method_decl*;
 
 
-method_decl : 	'method' IDF '('method_args?')' function_decl;
+method_decl : 	'method' IDF '(' method_args ')' function_decl;
 
 function_decl : ':' type'{'var_decl* instruction+'}'
 		| '{'var_decl* instruction+ '}';
 
 
 method_args : IDF':'type (','IDF':'type)*;
+
+//tmp:		IDF ':' type;
 
 
 var_decl: 		'var' IDF ':' type ';';
@@ -44,7 +46,7 @@ type: 			'int' | 'string' | CLASS;
 
 instruction: 		IDF ':=' expression ';'
 					| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
-					| 'if'  expression 'then' instruction ('else' instruction)? 'fi'
+					| 'if' expression 'then' instruction* ('else' instruction*)? 'fi'
 	      			| print
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
@@ -100,10 +102,20 @@ WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
 
 NEWLINE: '\r'? '\n';
 
+//COMMENT
+  //  : '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
+// ;
+
 COMMENT
-    : '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
-    ;
+	: '/*' (.*) '*/' { $channel=HIDDEN; }
+	;
+
 
 LINE_COMMENT
-		    : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-		    ;
+	: '//' (.*) '\n' { $channel=HIDDEN; }
+	;
+
+
+//LINE_COMMENT
+//		    : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
+//		    ;

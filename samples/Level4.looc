@@ -2,7 +2,7 @@ class Animal = (
 
 	var name : string;
 
-	method setName(n : string) {
+	method setName(n : string, prout : string) {
 		name := n;
 	}
 
