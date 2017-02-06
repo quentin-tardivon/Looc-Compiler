@@ -49,19 +49,32 @@ instruction: 		IDF ':=' expression ';'
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';';
 
-expression : 	IDF expressionbis //il peut y avoir le vide
-					| INT expressionbis
+expression : 	 operation
 					| STRING // Maybe add expressionbis
 					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
+					
+expressionbis 
+	: |'.' IDF '('(expression(','expression)*)?')';
 
-expressionbis : 	OPER expression
-					| '+' expression
-					| '-' expression
-					| '/' expression
-					| '*' expression
-					| '.' IDF '('(expression(','expression)*)?')'
-					| ;
+					
+operation : multiop ( '+' multiop 
+		     |'-' multiop )*
+	   ;
+	   	
+		     
+multiop : comparaison ('*' comparaison
+		|'/' comparaison )*;
+		
+comparaison
+	: moinsunaire (OPER moinsunaire)?;
+	
+moinsunaire
+	: ('-')? atom;
 
+atom 	: INT 
+	| IDF ('.' IDF '('(expression(','expression)*)?')')?
+	| '(' expression ')'; 	 
+					
 print:			'write' expression ';' ;
 
 return_decl: 	'return''(' expression ')';

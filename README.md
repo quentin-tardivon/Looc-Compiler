@@ -14,6 +14,8 @@ Note pour la grammaire:
 
 - L'operateur **-** est le plus fort
 
+OUTPUT = AST
+
 ##Auteurs
 ==
 Maxime Escamez
