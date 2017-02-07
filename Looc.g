@@ -26,7 +26,7 @@ class_decl:		'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 class_item_decl :	var_decl* method_decl*;
 
 
-method_decl : 	'method' IDF '(' method_args ')' function_decl;
+method_decl : 	'method' IDF '(' method_args? ')' function_decl;
 
 function_decl : ':' type'{'var_decl* instruction+'}'
 		| '{'var_decl* instruction+ '}';
@@ -49,14 +49,15 @@ instruction: 		IDF ':=' expression ';'
 					| 'if' expression 'then' instruction* ('else' instruction*)? 'fi'
 	      			| print
 	      			|'do' expression';'  //problem here
-	      			|return_decl ';';
+	      			|return_decl ';'
+	      			|read';';
 
 expression : 	 operation
 					| STRING // Maybe add expressionbis
-					| 'new' CLASS |'this' expressionbis |'super' expressionbis;
+					| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
 					
-expressionbis 
-	: |'.' IDF '('(expression(','expression)*)?')';
+//expressionbis //expression bis n'est plus utile avec atom 
+//	: |'.' IDF '('(expression(','expression)*)?')';
 
 					
 operation : multiop ( '+' multiop 
@@ -75,11 +76,16 @@ moinsunaire
 
 atom 	: INT 
 	| IDF ('.' IDF '('(expression(','expression)*)?')')?
+	| 'this' ('.' IDF '('(expression(','expression)*)?')')? //intégration des possibilités de expressionbis ?
+	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
 	| '(' expression ')'; 	 
 					
-print:			'write' expression ';' ;
+print:		'write' expression ';' 
+		;
 
 return_decl: 	'return''(' expression ')';
+
+read	:	'read' IDF;
 
 
 
@@ -114,6 +120,9 @@ COMMENT
 LINE_COMMENT
 	: '//' (.*) '\n' { $channel=HIDDEN; }
 	;
+
+	
+
 
 
 //LINE_COMMENT
