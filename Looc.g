@@ -5,6 +5,8 @@ options {
 	output=AST;
 }
 
+tokens { BODY;}
+
 @header {
 	import java.util.HashMap;
 }
@@ -27,10 +29,10 @@ class_decl:			'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 class_item_decl:	var_decl* method_decl*;
 
 
-method_decl: 		'method' IDF '(' method_args? ')' function_decl;
+method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^('method' IDF method_args? function_decl);
 
-function_decl: 		':' type'{'var_decl* instruction+'}'
-					|'{'var_decl* instruction+ '}';
+function_decl: 		':' type'{'var_decl* instruction+'}' -> type ^(BODY var_decl* instruction+)
+					|'{'var_decl* instruction+ '}' -> ^(BODY var_decl* instruction+);
 
 
 method_args: 		IDF':'type (','IDF':'type)*;
