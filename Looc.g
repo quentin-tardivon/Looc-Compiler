@@ -5,28 +5,26 @@ options {
 	output=AST;
 }
 
-tokens { BODY;}
+tokens{
+	CLASS_DEC;
+	ROOT;
+	BLOCK;
+	BODY;
+	}
 
-@header {
-	import java.util.HashMap;
-}
-
-@members {
-	HashMap<String, Integer> memory = new HashMap<String, Integer>();
-}
 
 /**----------------------
 	Nonterminal symbols
 ------------------------*/
 
 
-program: 			class_decl* var_decl* instruction+;
+program: 			class_decl* var_decl* instruction+ -> ^(ROOT class_decl* var_decl* instruction+) ;
+
+class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(CLASS_DEC CLASS ('inherit' CLASS)? class_item_decl);
 
 
-class_decl:			'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 
-
-class_item_decl:	var_decl* method_decl*;
+class_item_decl:	var_decl* method_decl* -> ^(BLOCK var_decl* method_decl*);
 
 
 method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^('method' IDF method_args? function_decl);
@@ -48,7 +46,7 @@ type: 				'int' -> 'int'
 
 instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
 				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^('for' IDF expression expression ^('do' instruction+))
-				| 'if' expression 'then' instruction* ('else' instruction*)? 'fi' 
+				| 'if' expression 'then' instruction* ('else' instruction*)? 'fi'
 	      			| print
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';'
@@ -57,30 +55,30 @@ instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
 expression : 	 operation
 					//| STRING // Maybe add expressionbis
 					| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
-					
-//expressionbis //expression bis n'est plus utile avec atom 
+
+//expressionbis //expression bis n'est plus utile avec atom
 //	: |'.' IDF '('(expression(','expression)*)?')';
 
-					
+
 operation : multiop ( '+' multiop  |'-' multiop )* ;
-	   	
-		     
+
+
 multiop : comparaison ('*' comparaison |'/' comparaison )*;
-		
+
 comparaison
 	: moinsunaire (OPER moinsunaire)?;
-	
+
 moinsunaire
 	: ('-')? atom;
 
 atom: INT
-	| STRING 
+	| STRING
 	| IDF ('.' IDF '('(expression(','expression)*)?')')?
 	| 'this' ('.' IDF '('(expression(','expression)*)?')')? //intégration des possibilités de expressionbis ?
 	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
-	| '(' expression ')'; 	 
-					
-print:		'write' expression ';' 
+	| '(' expression ')';
+
+print:		'write' expression ';'
 		;
 
 return_decl: 	'return''(' expression ')';
@@ -112,4 +110,4 @@ COMMENT
 	: '/*' (.*) '*/' { $channel=HIDDEN; } ;
 
 LINE_COMMENT
-	: '//' (.*) '\n' { $channel=HIDDEN; } ;
+	: '//' (.*) '\n' { $channel=HIDDEN; };
