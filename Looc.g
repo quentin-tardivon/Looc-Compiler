@@ -17,31 +17,30 @@ options {
 ------------------------*/
 
 
-program: 		class_decl* var_decl* instruction+;
+program: 			class_decl* var_decl* instruction+;
 
 
-class_decl:		'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
+class_decl:			'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 
 
-class_item_decl :	var_decl* method_decl*;
+class_item_decl:	var_decl* method_decl*;
 
 
-method_decl : 	'method' IDF '(' method_args? ')' function_decl;
+method_decl: 		'method' IDF '(' method_args? ')' function_decl;
 
-function_decl : ':' type'{'var_decl* instruction+'}'
-		| '{'var_decl* instruction+ '}';
-
-
-method_args : IDF':'type (','IDF':'type)*;
-
-//tmp:		IDF ':' type;
+function_decl: 		':' type'{'var_decl* instruction+'}'
+					|'{'var_decl* instruction+ '}';
 
 
-var_decl: 		'var' IDF ':' type ';';
+method_args: 		IDF':'type (','IDF':'type)*;
 
 
-type: 			'int' | 'string' | CLASS;
+var_decl: 			'var' IDF ':' type ';';
 
+
+type: 				'int'
+					|'string'
+					| CLASS;
 
 
 instruction: 		IDF ':=' expression ';'
@@ -53,20 +52,17 @@ instruction: 		IDF ':=' expression ';'
 	      			|read';';
 
 expression : 	 operation
-					| STRING // Maybe add expressionbis
+					//| STRING // Maybe add expressionbis
 					| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
 					
 //expressionbis //expression bis n'est plus utile avec atom 
 //	: |'.' IDF '('(expression(','expression)*)?')';
 
 					
-operation : multiop ( '+' multiop 
-		     |'-' multiop )*
-	   ;
+operation : multiop ( '+' multiop  |'-' multiop )* ;
 	   	
 		     
-multiop : comparaison ('*' comparaison
-		|'/' comparaison )*;
+multiop : comparaison ('*' comparaison |'/' comparaison )*;
 		
 comparaison
 	: moinsunaire (OPER moinsunaire)?;
@@ -74,7 +70,8 @@ comparaison
 moinsunaire
 	: ('-')? atom;
 
-atom 	: INT 
+atom: INT
+	| STRING 
 	| IDF ('.' IDF '('(expression(','expression)*)?')')?
 	| 'this' ('.' IDF '('(expression(','expression)*)?')')? //intégration des possibilités de expressionbis ?
 	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
@@ -108,23 +105,8 @@ WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
 
 NEWLINE: '\r'? '\n';
 
-//COMMENT
-  //  : '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
-// ;
-
 COMMENT
-	: '/*' (.*) '*/' { $channel=HIDDEN; }
-	;
-
+	: '/*' (.*) '*/' { $channel=HIDDEN; } ;
 
 LINE_COMMENT
-	: '//' (.*) '\n' { $channel=HIDDEN; }
-	;
-
-	
-
-
-
-//LINE_COMMENT
-//		    : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-//		    ;
+	: '//' (.*) '\n' { $channel=HIDDEN; } ;
