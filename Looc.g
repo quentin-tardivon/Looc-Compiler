@@ -5,26 +5,26 @@ options {
 	output=AST;
 }
 
-@header {
-	import java.util.HashMap;
-}
+tokens{
+	CLASS_DEC;
+	ROOT;
+	BLOCK;
+	}
 
-@members {
-	HashMap<String, Integer> memory = new HashMap<String, Integer>();
-}
+
 
 /**----------------------
 	Nonterminal symbols
 ------------------------*/
 
 
-program: 			class_decl* var_decl* instruction+;
+program: 			class_decl* var_decl* instruction+ -> ^(ROOT class_decl* var_decl* instruction+) ;
+
+class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(CLASS_DEC CLASS ('inherit' CLASS)? class_item_decl);
 
 
-class_decl:			'class' CLASS ('inherit' CLASS)?  '='  '('class_item_decl')';
 
-
-class_item_decl:	var_decl* method_decl*;
+class_item_decl:	var_decl* method_decl* -> ^(BLOCK var_decl* method_decl*);
 
 
 method_decl: 		'method' IDF '(' method_args? ')' function_decl;
@@ -110,4 +110,4 @@ COMMENT
 	: '/*' (.*) '*/' { $channel=HIDDEN; } ;
 
 LINE_COMMENT
-	: '//' (.*) '\n' { $channel=HIDDEN; } ;
+	: '//' (.*) '\n' { $channel=HIDDEN; };
