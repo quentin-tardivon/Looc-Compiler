@@ -2,6 +2,7 @@ grammar Looc;
 
 options {
 	k=1;
+	output=AST;
 }
 
 @header {
@@ -35,17 +36,17 @@ function_decl: 		':' type'{'var_decl* instruction+'}'
 method_args: 		IDF':'type (','IDF':'type)*;
 
 
-var_decl: 			'var' IDF ':' type ';';
+var_decl: 			'var' IDF ':' type ';' -> ^('var' IDF type);
 
 
-type: 				'int'
-					|'string'
-					| CLASS;
+type: 				'int' -> 'int'
+					|'string' -> 'int'
+					| CLASS -> CLASS;
 
 
-instruction: 		IDF ':=' expression ';'
-					| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end'
-					| 'if' expression 'then' instruction* ('else' instruction*)? 'fi'
+instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
+				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^('for' IDF expression expression ^('do' instruction+))
+				| 'if' expression 'then' instruction* ('else' instruction*)? 'fi' 
 	      			| print
 	      			|'do' expression';'  //problem here
 	      			|return_decl ';'
