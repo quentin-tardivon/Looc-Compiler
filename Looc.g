@@ -22,6 +22,8 @@ tokens{
 	}
 
 
+
+
 /**----------------------
 	Nonterminal symbols
 ------------------------*/
@@ -42,10 +44,10 @@ function_decl: 		':' type'{'var_decl* instruction+'}' -> type ^(BODY var_decl* i
 					|'{'var_decl* instruction+ '}' -> ^(BODY var_decl* instruction+);
 
 
-method_args: 		IDF':'type (','IDF':'type)*;
+method_args: 	IDF':'type (','IDF':'type)*;
 
 
-var_decl: 			'var' IDF ':' type ';' -> ^('var' IDF type);
+var_decl: 	'var' IDF ':' type ';' -> ^('var' IDF type);
 
 
 type: 				'int' -> 'int'
@@ -62,20 +64,15 @@ instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
 	      			|read';';
 
 expression : 	 operation
-					//| STRING // Maybe add expressionbis
-					| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
-
-//expressionbis //expression bis n'est plus utile avec atom
-//	: |'.' IDF '('(expression(','expression)*)?')';
+		| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
 
 
-operation : multiop ( '+' multiop  |'-' multiop )* ;
+operation : multiop (('+'^|'-'^) multiop)*;
 
-
-multiop : comparaison ('*' comparaison |'/' comparaison )*;
+multiop : comparaison (('*'^|'/'^) comparaison )*;
 
 comparaison
-	: moinsunaire (OPER moinsunaire)?;
+	: moinsunaire (OPER^ moinsunaire)?;
 
 moinsunaire
 	: ('-')? atom;
@@ -85,7 +82,7 @@ atom: INT
 	| IDF ('.' IDF '('(expression(','expression)*)?')')?
 	| 'this' ('.' IDF '('(expression(','expression)*)?')')? //intégration des possibilités de expressionbis ?
 	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
-	| '(' expression ')';
+	| '(' expression ')' -> expression;
 
 print:		'write' expression ';'
 		;
@@ -111,7 +108,7 @@ STRING: '"'(.)*'"';
 
 OPER: 	'<'|'<='|'>'|'>='|'=='|'!=';
 
-WS: 	(' '|'\t'|'\n')+{$channel=HIDDEN;};
+WS: 	(' '|'\t'|'\n')+ {$channel=HIDDEN;};
 
 NEWLINE: '\r'? '\n';
 
