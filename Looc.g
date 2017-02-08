@@ -10,6 +10,15 @@ tokens{
 	ROOT;
 	BLOCK;
 	BODY;
+	METHOD;
+	FOR;
+	IF;
+	EGAL;
+	DO;
+	PLUS;
+	DIFF;
+	THEN;
+	ELSE;
 	}
 
 
@@ -27,7 +36,7 @@ class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(C
 class_item_decl:	var_decl* method_decl* -> ^(BLOCK var_decl* method_decl*);
 
 
-method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^('method' IDF method_args? function_decl);
+method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^(METHOD IDF method_args? function_decl);
 
 function_decl: 		':' type'{'var_decl* instruction+'}' -> type ^(BODY var_decl* instruction+)
 					|'{'var_decl* instruction+ '}' -> ^(BODY var_decl* instruction+);
@@ -40,15 +49,15 @@ var_decl: 			'var' IDF ':' type ';' -> ^('var' IDF type);
 
 
 type: 				'int' -> 'int'
-					|'string' -> 'int'
+					|'string' -> 'string'
 					| CLASS -> CLASS;
 
 
 instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
-				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^('for' IDF expression expression ^('do' instruction+))
-				| 'if' expression 'then' instruction* ('else' instruction*)? 'fi'
-	      			| print
-	      			|'do' expression';'  //problem here
+				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
+				| 'if' expression 'then' a=instruction* ('else' (b=instruction)+)? 'fi' -> ^(IF expression ^(THEN $a) (^(ELSE $b+))?) //problem here
+				| print
+	      			|'do' expression ';' -> ^(DO expression)
 	      			|return_decl ';'
 	      			|read';';
 
