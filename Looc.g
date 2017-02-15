@@ -9,7 +9,8 @@ tokens{
 	CLASS_DEC;
 	VAR_DEC;
 	ROOT;
-	BLOCK;
+	FORMAL_PARAM;
+	FORMAL_PARAMS;
 	BODY;
 	METHOD;
 	FOR;
@@ -41,7 +42,7 @@ class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(C
 
 
 
-class_item_decl:	var_decl* method_decl* -> ^(BLOCK var_decl* method_decl*);
+class_item_decl:	var_decl* method_decl* -> ^(BODY var_decl* method_decl*);
 
 
 method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^(METHOD IDF method_args? function_decl);
@@ -50,8 +51,10 @@ function_decl: 		':' type'{'var_decl* instruction+'}' -> type ^(BODY var_decl* i
 					|'{'var_decl* instruction+ '}' -> ^(BODY var_decl* instruction+);
 
 
-method_args: 	IDF':'type (','IDF':'type)*;
-
+// define the list of parameters for a function
+method_args: 	method_arg (',' method_arg)* -> ^(FORMAL_PARAMS method_arg (method_arg)*);
+// Define an formal paramater
+method_arg: IDF ':' type -> ^(FORMAL_PARAM IDF type);
 
 var_decl: 	'var' IDF ':' type ';' -> ^(VAR_DEC IDF type);
 
