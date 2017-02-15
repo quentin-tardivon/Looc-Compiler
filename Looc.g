@@ -80,7 +80,7 @@ operation : (multiop -> multiop) ('+' mult=multiop -> ^(PLUS $operation $mult)
 		|'-' mult=multiop -> ^(DIFF $operation $mult))*;
 
 multiop : (comparaison -> comparaison) ('*' cmp=comparaison -> ^(MUL $multiop $cmp)
-		|'/' comparaison -> ^(DIV $multiop $cmp))*;
+		|'/' cmp=comparaison -> ^(DIV $multiop $cmp))*;
 
 comparaison
 	: moinsunaire (OPER^ moinsunaire)?;
