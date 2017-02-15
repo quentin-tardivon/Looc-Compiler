@@ -1,0 +1,50 @@
+class ExceptionNotImplemented = (
+
+  method throw() {
+    write "ExceptionNotImplemented: need to implement the method!";
+  }
+)
+
+
+
+class Greater inherit Comparator = (
+
+  method compare(left :int, right: int) {
+    return (left > right);
+  }
+)
+
+class Lower inherit Comparator = (
+
+  method compare(left :int, right: int) {
+    return (left < right);
+  }
+)
+
+class Between = (
+
+  method test(left :int, right: int, value: int) {
+    var g : Greater;
+    var l : Lower;
+    g := new Greater;
+    l := new Lower;
+    return (g.compare(left, value) * l.compare(value, right));
+  }
+)
+
+class Comparator = (
+  method compare(left: int, right: int) {
+    var ex : ExceptionNotImplemented;
+    ex := new ExceptionNotImplemented;
+    do ex.throw();
+  }
+)
+
+var b : Between;
+b := new Between;
+
+write b.test(10, 600, 55);
+
+if 55 > 10 * 55 < 600 then
+  write "yes";
+fi
