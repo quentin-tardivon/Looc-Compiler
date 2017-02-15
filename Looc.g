@@ -26,6 +26,12 @@ tokens{
 	MUL;
 	DIV;
 	NEG;
+	RETURN;
+	WRITE;
+	READ;
+	ACCESS;
+	THIS;
+	SUPER;
 	}
 
 
@@ -69,8 +75,8 @@ instruction: 	IDF ':=' expression ';' -> ^(AFFECT IDF  expression)
 							| 'if' expression 'then' a=instruction* ('else' (b=instruction)+)? 'fi' -> ^(IF expression ^(THEN $a) (^(ELSE $b+))?) //problem here
 							| print
 	      			|'do' expression ';' -> ^(DO expression)
-	     				|return_decl ';'
-	     				|read';';
+	     				|return_decl ';' -> ^(RETURN return_decl)
+	     				|read';' -> ^(READ read);
 
 expression : 	 operation
 		| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
@@ -90,16 +96,16 @@ moinsunaire
 
 atom: INT
 	| STRING
-	| IDF ('.' IDF '('(expression(','expression)*)?')')?
-	| 'this' ('.' IDF '('(expression(','expression)*)?')')? //intégration des possibilités de expressionbis ?
-	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
+	| IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF (IDF(expression(expression)*)?)?
+	| 'this' ('.' IDF '('(expression(','expression)*)?')')? -> 'this' (IDF(expression(expression)*)?)? //intégration des possibilités de expressionbis ?
+	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> 'super' (IDF(expression(expression)*)?)?  //
 	| '(' expression ')' -> expression;
 
-print:		'write' expression ';' -> ^(PRINT expression);
+print:		'write' expression ';' -> ^(WRITE expression);
 
-return_decl: 	'return''(' expression ')';
+return_decl: 	'return''(' expression ')' -> expression ;
 
-read	:	'read' IDF;
+read	:	'read' IDF -> IDF;
 
 
 
