@@ -7,6 +7,7 @@ options {
 
 tokens{
 	CLASS_DEC;
+	VAR_DEC;
 	ROOT;
 	BLOCK;
 	BODY;
@@ -19,6 +20,11 @@ tokens{
 	DIFF;
 	THEN;
 	ELSE;
+	PRINT;
+	AFFECT;
+	MUL;
+	DIV;
+	NEG;
 	}
 
 
@@ -47,29 +53,31 @@ function_decl: 		':' type'{'var_decl* instruction+'}' -> type ^(BODY var_decl* i
 method_args: 	IDF':'type (','IDF':'type)*;
 
 
-var_decl: 	'var' IDF ':' type ';' -> ^('var' IDF type);
+var_decl: 	'var' IDF ':' type ';' -> ^(VAR_DEC IDF type);
 
 
-type: 				'int' -> 'int'
+type: 		'int' -> 'int'
 					|'string' -> 'string'
 					| CLASS -> CLASS;
 
 
-instruction: 		IDF ':=' expression ';' -> ^(':=' IDF  expression)
-				| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
-				| 'if' expression 'then' a=instruction* ('else' (b=instruction)+)? 'fi' -> ^(IF expression ^(THEN $a) (^(ELSE $b+))?) //problem here
-				| print
+instruction: 	IDF ':=' expression ';' -> ^(AFFECT IDF  expression)
+							| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
+							| 'if' expression 'then' a=instruction* ('else' (b=instruction)+)? 'fi' -> ^(IF expression ^(THEN $a) (^(ELSE $b+))?) //problem here
+							| print
 	      			|'do' expression ';' -> ^(DO expression)
-	      			|return_decl ';'
-	      			|read';';
+	     				|return_decl ';'
+	     				|read';';
 
 expression : 	 operation
 		| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
 
 
-operation : multiop (('+'^|'-'^) multiop)*;
+operation : (multiop -> multiop) ('+' mult=multiop -> ^(PLUS $operation $mult)
+		|'-' mult=multiop -> ^(DIFF $operation $mult))*;
 
-multiop : comparaison (('*'^|'/'^) comparaison )*;
+multiop : (comparaison -> comparaison) ('*' cmp=comparaison -> ^(MUL $multiop $cmp)
+		|'/' comparaison -> ^(DIV $multiop $cmp))*;
 
 comparaison
 	: moinsunaire (OPER^ moinsunaire)?;
@@ -84,8 +92,7 @@ atom: INT
 	| 'super' ('.' IDF '('(expression(','expression)*)?')')? //
 	| '(' expression ')' -> expression;
 
-print:		'write' expression ';'
-		;
+print:		'write' expression ';' -> ^(PRINT expression);
 
 return_decl: 	'return''(' expression ')';
 
