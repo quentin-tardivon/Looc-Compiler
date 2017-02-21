@@ -72,7 +72,7 @@ type: 		'int' -> 'int'
 
 instruction: 	IDF ':=' expression ';' -> ^(AFFECT IDF  expression)
 							| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
-							| 'if' expression 'then' a=instruction* ('else' (b=instruction)+)? 'fi' -> ^(IF expression ^(THEN $a) (^(ELSE $b+))?) //problem here
+							| 'if' expression 'then' a+=instruction+ ('else' b+=instruction+)? 'fi' -> ^(IF expression ^(THEN $a+) (^(ELSE $b+))?) //problem here
 							| print
 	      			|'do' expression ';' -> ^(DO expression)
 	     				|return_decl ';' -> ^(RETURN return_decl)
