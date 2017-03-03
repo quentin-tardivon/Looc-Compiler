@@ -32,6 +32,8 @@ tokens{
 	ACCESS;
 	THIS;
 	SUPER;
+	BLOCK;
+	LIST_PARAM;
 	}
 
 
@@ -71,12 +73,13 @@ type: 		'int' -> 'int'
 
 
 instruction: 	IDF ':=' expression ';' -> ^(AFFECT IDF  expression)
-							| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
-							| 'if' expression 'then' a+=instruction+ ('else' b+=instruction+)? 'fi' -> ^(IF expression ^(THEN $a+) (^(ELSE $b+))?) //problem here
-							| print
-	      			|'do' expression ';' -> ^(DO expression)
-	     				|return_decl ';' -> ^(RETURN return_decl)
-	     				|read';' -> ^(READ read);
+			| 'for' IDF 'in' expression '..' expression 'do' instruction+ 'end' -> ^(FOR IDF expression expression ^(BODY instruction+))
+			| 'if' expression 'then' a+=instruction+ ('else' b+=instruction+)? 'fi' -> ^(IF expression ^(THEN $a+) (^(ELSE $b+))?) //problem here
+			| print
+	      		|'do' expression ';' -> ^(DO expression)
+	      		| '{' var_decl* instruction+ '}' -> ^(BLOCK var_decl* instruction+)
+	   		|return_decl ';' -> ^(RETURN return_decl)
+	     		|read';' -> ^(READ read);
 
 expression : 	 operation
 		| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
@@ -92,11 +95,11 @@ comparaison
 	: moinsunaire (OPER^ moinsunaire)?;
 
 moinsunaire
-	: ('-')? atom;
+	: ('-'^)? atom;
 
 atom: INT
 	| STRING
-	| IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF (IDF(expression(expression)*)?)?
+	| IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF(IDF(expression(expression)*)?)?
 	| 'this' ('.' IDF '('(expression(','expression)*)?')')? -> 'this' (IDF(expression(expression)*)?)? //intégration des possibilités de expressionbis ?
 	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> 'super' (IDF(expression(expression)*)?)?  //
 	| '(' expression ')' -> expression;
