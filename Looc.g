@@ -11,6 +11,7 @@ tokens{
 	ROOT;
 	FORMAL_PARAM;
 	FORMAL_PARAMS;
+	EFFECTIVE_PARAMS;
 	BODY;
 	METHOD;
 	FOR;
@@ -33,7 +34,6 @@ tokens{
 	THIS;
 	SUPER;
 	BLOCK;
-	LIST_PARAM;
 	}
 
 
@@ -46,7 +46,7 @@ tokens{
 
 program: 			class_decl* var_decl* instruction+ -> ^(ROOT class_decl* var_decl* instruction+) ;
 
-class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(CLASS_DEC CLASS ('inherit' CLASS)? class_item_decl);
+class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(CLASS_DEC CLASS (CLASS)? class_item_decl);
 
 
 
@@ -82,7 +82,7 @@ instruction: 	IDF ':=' expression ';' -> ^(AFFECT IDF  expression)
 	     		|read';' -> ^(READ read);
 
 expression : 	 operation
-		| 'new' CLASS ;//|'this' expressionbis |'super' expressionbis;
+		| 'new' CLASS -> ^('new' CLASS);//|'this' expressionbis |'super' expressionbis;
 
 
 operation : (multiop -> multiop) ('+' mult=multiop -> ^(PLUS $operation $mult)
@@ -99,9 +99,9 @@ moinsunaire
 
 atom: INT
 	| STRING
-	| IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF(IDF(expression(expression)*)?)?
-	| 'this' ('.' IDF '('(expression(','expression)*)?')')? -> 'this' (IDF(expression(expression)*)?)? //intégration des possibilités de expressionbis ?
-	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> 'super' (IDF(expression(expression)*)?)?  //
+  | IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF (IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?)?
+  | 'this' ('.' IDF '('(expression(','expression)*)?')')? -> 'this' (IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)? //intégration des possibilités de expressionbis ?
+	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> 'super' (IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)?  //
 	| '(' expression ')' -> expression;
 
 print:		'write' expression ';' -> ^(WRITE expression);
