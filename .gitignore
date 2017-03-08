@@ -2,3 +2,5 @@
 *.tokens
 **.jar
 output/
+.idea/*
+*.iml
