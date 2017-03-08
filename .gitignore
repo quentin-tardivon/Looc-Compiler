@@ -3,4 +3,4 @@
 **.jar
 output/
 .idea/*
-looc-compiler.iml
+*.iml
