@@ -1,31 +1,28 @@
 SRC_DIR = src
-BIN_DIR = bin
-OUTPUT_DIR = output
+BIN_DIR = out
 SAMPLE_DIR = samples
-PGM = TestLooc
+PGM = TestLoocMakefile
 EXTENSION = looc
 PGM_JAVA = $(PGM).java
 LOG_FILE_ANTLR = antlr.log
 
 # Create needed directories
-$(shell mkdir -p $(OUTPUT_DIR))
 $(shell mkdir -p $(BIN_DIR))
 
-export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./bin:$$CLASSPATH
+export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):$$CLASSPATH
 
 all: java
 
 java: antlr
 	@echo "\n --- Compile java classes ---"
-	javac -d $(BIN_DIR) $(OUTPUT_DIR)/LoocLexer.java $(OUTPUT_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
+	javac -d $(BIN_DIR) $(SRC_DIR)/LoocLexer.java $(SRC_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
 antlr:
 	@echo "\n --- Execute Antlr ---"
-	-java org.antlr.Tool -o $(OUTPUT_DIR) Looc.g 2>&1 |tail -n 5
+	-java org.antlr.Tool -o $(SRC_DIR) Looc.g 2>&1 |tail -n 5
 
 clean:
-	rm -r $(OUTPUT_DIR)
 	rm -r $(BIN_DIR)
 	rm -f $(LOG_FILE_ANTLR)
 
