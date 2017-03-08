@@ -16,15 +16,6 @@ public class TestLoocMakefile {
 			CommonTokenStream tokens = new CommonTokenStream(lexer);
 			LoocParser parser = new LoocParser(tokens);
 			parser.program();
-
 		}
-	}
-
-
-	public static void prompt() {
-		/*if(args.length == 0) {
-			System.out.println("\n -> Write some " + LANGUAGE_NAME + " code:\n\n");
-			input = new ANTLRInputStream(System.in);
-		}*/
 	}
 }
