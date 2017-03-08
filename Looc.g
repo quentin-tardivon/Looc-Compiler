@@ -34,6 +34,8 @@ tokens{
 	THIS;
 	SUPER;
 	BLOCK;
+	VARS;
+	METHODS;
 	}
 
 
@@ -50,7 +52,7 @@ class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(C
 
 
 
-class_item_decl:	var_decl* method_decl* -> ^(BODY var_decl* method_decl*);
+class_item_decl:	var_decl* method_decl* -> ^(VARS var_decl*) ^(METHODS method_decl*);
 
 
 method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^(METHOD IDF method_args? function_decl);
