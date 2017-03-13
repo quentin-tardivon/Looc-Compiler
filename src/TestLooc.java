@@ -1,5 +1,9 @@
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.DOTTreeGenerator;
+import org.antlr.stringtemplate.StringTemplate;
+
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 
@@ -22,6 +26,16 @@ public class TestLooc {
 		LoocLexer lexer = new LoocLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		LoocParser parser = new LoocParser(tokens);
-		parser.program();
+		CommonTree tree = (CommonTree)parser.program().getTree();
+
+		CommonTreeParser treeParser = new CommonTreeParser();
+		treeParser.parseCommonTreeParser(tree);
+
+		System.out.print(treeParser.list.toString());
+
+		DOTTreeGenerator gen = new DOTTreeGenerator();
+		StringTemplate st = gen.toDOT(tree);
+
+
 	}
 }
