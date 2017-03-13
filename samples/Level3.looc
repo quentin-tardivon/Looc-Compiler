@@ -30,3 +30,11 @@ do f.init();
 do f.nextGen();
 do f.nextGen();
 write f.nextGenAndGet();
+
+/*
+TDS.TDS Fibonacci
+ - current -> entry = variable, type = int
+ - previous -> entry = variable, type = int
+ - generation -> entry = variable, type = int
+ - init -> entry = func
+*/
