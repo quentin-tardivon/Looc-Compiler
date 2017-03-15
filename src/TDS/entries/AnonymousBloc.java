@@ -10,10 +10,7 @@ import TDS.Entry;
  */
 public class AnonymousBloc extends Entry {
 
-	public final static String ANONYMOUS_BLOC = "Anonymous bloc";
-
-
 	public AnonymousBloc() {
-		super(ANONYMOUS_BLOC);
+		super("Anonymous bloc");
 	}
 }

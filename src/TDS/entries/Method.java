@@ -10,9 +10,7 @@ import TDS.Entry;
  */
 public class Method extends Entry {
 
-	public final static String METHOD = "Method";
-
 	public Method() {
-		super(METHOD);
+		super("Method");
 	}
 }
