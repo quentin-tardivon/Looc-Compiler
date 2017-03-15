@@ -8,12 +8,15 @@ import java.util.HashMap;
 public class Test {
 
     /*
-        var n : int;
-        n := 10;
-        method init() {
-    	     var t : int;
-    	     n := 12;
-    	}
+        class Test = (
+	    var n :int;
+
+	    method init() {
+		    var t: int;
+		    n:=12;
+		    t:=5;}
+	    n:=10;
+	    )
 
         -- TDS main --
             n ->    type = 'int',
@@ -42,6 +45,8 @@ public class Test {
         tmp.put("type", "int");
         tmp.put("kind", "var");
         tmp.put("depl", "0");
+
+
 
 
 
