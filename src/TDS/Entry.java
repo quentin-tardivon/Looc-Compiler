@@ -13,10 +13,6 @@ import java.util.HashMap;
  */
 public abstract class Entry {
 
-	public final static String VARIABLE = "Variable";
-	public final static String METHOD = "Method";
-	public final static String ANONYMOUS_BLOC = "Anonymous bloc";
-
 	protected HashMap<String, String> info;
 	protected String name;
 
