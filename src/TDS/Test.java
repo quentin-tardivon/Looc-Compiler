@@ -22,20 +22,17 @@ public class Test {
             n ->    type = 'int',
                     kind = 'var',
                     depl = 0
-
             init -> type = method
                     return = void
                     params = []
                     depl = 1
                     link = TDS init
-
             father -> null
 
         -- TDS_init --
             t ->    type = 'int',
                     kind = 'var',
                     depl = 0
-
             father -> TDS_main
      */
 
