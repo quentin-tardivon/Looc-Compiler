@@ -25,9 +25,17 @@ public class SymbolTable {
         return this.entries.put(symbol, o);
     }
 
-    public Object get(String s) {
+    public Object getEntries(String s) {
         return this.entries.get(s);
     }
+
+    public int getImbricationLevel(SymbolTable s){ return s.imbricationLevel;}
+
+    public SymbolTable getFather(SymbolTable s){return s.father;}
+
+    public void setFather( SymbolTable f){ this.father=f;}
+
+    public void update_imbrication(){this.imbricationLevel=this.father.imbricationLevel++;}
 
     public String toString() {
         return this.entries.toString();
