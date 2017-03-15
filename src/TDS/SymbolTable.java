@@ -2,7 +2,12 @@ package TDS;
 
 import java.util.HashMap;
 
-/** Table of symbols
+/** A symbol table is described by a Hashmap.
+ *  A symbol table associate to a symbol (String) a entry.
+ *
+ *      "a"             -> Entry
+ *      "constructor    -> Entry
+ *      ...
  *
  * @author Maxime Escamez
  * @author Théo Le Donné
@@ -11,33 +16,79 @@ import java.util.HashMap;
  */
 public class SymbolTable {
 
-    private HashMap<String, Object> entries;
-    private int imbricationLevel;
-    private SymbolTable father;
+	/**
+	 * An entry can be a function, variable, anonymous bloc
+	 */
+    private HashMap<String, Entry> entries;
+	/** Imbrication level, root is 0 */
+	private final int imbricationLevel;
+	/** The parent Symbol Table */
+    private final SymbolTable father;
+	/** Links between symbol tables (used to access symbol table of a function for example) */
+	private HashMap<String, SymbolTable> links;
 
-    public SymbolTable() {
-        this.entries = new HashMap<String, Object>();
-        this.imbricationLevel = 0;
-        this.father = null;
+
+	/**
+	 * Default constructor
+	 */
+	public SymbolTable() {
+		this.entries = new HashMap<String, Entry>();
+		this.links = new HashMap<String, SymbolTable>();
+		this.imbricationLevel = 0;
+		this.father = null;
+	}
+
+	/**
+	 * @param imbricationLevel The final imbrication level
+	 * @param father The final Symbol table parent
+	 */
+	public SymbolTable(int imbricationLevel, SymbolTable father) {
+        this.entries = new HashMap<String, Entry>();
+		this.links = new HashMap<String, SymbolTable>();
+        this.imbricationLevel = imbricationLevel;
+        this.father = father;
     }
 
-    public Object put(String symbol, Object o) {
-        return this.entries.put(symbol, o);
+	/**
+	 * Add a new entry to the symbol table
+	 * @param symbol Uniq ID for this symbol table
+	 * @param entry The entry corresponding to the symbol
+	 * @return
+	 */
+	public Object put(String symbol, Entry entry) {
+        return this.entries.put(symbol, entry);
     }
 
-    public Object getEntries(String s) {
+	/**
+	 * @param symbol
+	 * @param tds Table symbol to link
+	 * @return The added table symbol
+	 */
+	public SymbolTable putLink(String symbol, SymbolTable tds) {  return this.links.put(symbol, tds);  }
+
+	/**
+	 * @param s Symbol to find
+	 * @return Entry associated to the given symbol
+	 */
+    public Entry get(String s) {
         return this.entries.get(s);
     }
 
-    public int getImbricationLevel(SymbolTable s){ return s.imbricationLevel;}
+	/**
+	 * @return The imbrication level of this Symbol table
+	 */
+	public int getImbricationLevel(){  return this.imbricationLevel;  }
 
-    public SymbolTable getFather(SymbolTable s){return s.father;}
-
-    public void setFather( SymbolTable f){ this.father=f;}
-
-    public void update_imbrication(){this.imbricationLevel=this.father.imbricationLevel++;}
+	/**
+	 * @return The symbol table parent of table
+	 */
+    public SymbolTable getFather(){return this.father;}
 
     public String toString() {
-        return this.entries.toString();
+	    String s = String.format("==== %d ====\n", this.getImbricationLevel());
+	    for(String symbol: this.entries.keySet()) {
+	    	s += String.format(" - %-10s -> Entry\n", symbol);
+	    }
+    	return s;
     }
 }
