@@ -48,10 +48,10 @@ Changements
 - D'après la grammaire (à vérifier), il est possible d'avoir qu'une seule instruction dans le bloc d'un *if* et *else*.
 
 
-QUelques interrogations
+Quelques interrogations
 ==
 
-- Durant la première soutenance, Monsieur Da Silva nous a conseillé de faire remonter les attributs de classes au même niveau que la déclaration de la classe. Suite à notre après-midi 'compil', nous n'avons pas compris pourquoi cette modification serait plus facile pour construire la TDS. Mystère et hypster chauve ?
+- Durant la première soutenance, Monsieur Da Silva nous a conseillé de faire remonter les attributs de classes au même niveau que la déclaration de la classe. Suite à notre après-midi 'compil', nous n'avons pas compris pourquoi cette modification serait plus facile pour construire la TDS.TDS. Mystère et hypster chauve ?
 
 Auteurs
 ==
