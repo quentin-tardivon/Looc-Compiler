@@ -43,6 +43,7 @@ public class Test {
         HashMap<String, Object> tmp_init = new HashMap<>();
         HashMap<String, Object> tmp_t = new HashMap<>();
 
+
         tmp_n.put("type", "int");
         tmp_n.put("kind", "var");
         tmp_n.put("depl", "0");
@@ -68,7 +69,7 @@ public class Test {
 
         System.out.println("tds main : "+tds_main.toString());
 
-        System.out.println("init dans tds main : "+tds_main.getEntries("init"));
+        System.out.println("init dans tds main : "+tds_main.getEntries("init").getEntries("type"));
 
         //System.out.println("init dans tds main"+(tds_main.get("init")).getClass().toString());
 
