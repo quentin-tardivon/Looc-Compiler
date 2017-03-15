@@ -12,8 +12,10 @@ import TDS.Entry;
  */
 public class Variable extends Entry {
 
+	public final static String VARIABLE = "Variable";
+
 	public Variable() {
-		super(Entry.VARIABLE);
+		super(VARIABLE);
 	}
 
 }
