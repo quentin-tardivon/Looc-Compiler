@@ -32,9 +32,15 @@ public class TestLooc {
 		treeParser.parseCommonTreeParser(tree);
 
 		System.out.print(treeParser.list.toString());
+		treeParser.constructTDS(tree);
+		System.out.println(treeParser.tds.toString());
+
+
 
 		DOTTreeGenerator gen = new DOTTreeGenerator();
 		StringTemplate st = gen.toDOT(tree);
+
+
 
 
 	}

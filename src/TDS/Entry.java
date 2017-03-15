@@ -17,7 +17,7 @@ public abstract class Entry {
 	public final static String METHOD = "Method";
 	public final static String ANONYMOUS_BLOC = "Anonymous bloc";
 
-	private HashMap<String, String> info;
+	protected HashMap<String, String> info;
 	protected String name;
 
 	public Entry(String name) {

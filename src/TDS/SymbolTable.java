@@ -87,7 +87,10 @@ public class SymbolTable {
     public String toString() {
 	    String s = String.format("==== %d ====\n", this.getImbricationLevel());
 	    for(String symbol: this.entries.keySet()) {
-	    	s += String.format(" - %-10s -> Entry\n", symbol);
+	    	s += String.format(" - %-10s -> %s\n", symbol, this.entries.get(symbol));
+	    }
+	    for (String symbol: this.links.keySet()) {
+		    s += String.format(" - %-10s -> %s\n", symbol, this.links.get(symbol));
 	    }
     	return s;
     }

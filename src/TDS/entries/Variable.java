@@ -16,4 +16,9 @@ public class Variable extends Entry {
 		super(Entry.VARIABLE);
 	}
 
+	public Variable(String type) {
+		super(Entry.VARIABLE);
+		this.info.put("type", type);
+	}
+
 }
