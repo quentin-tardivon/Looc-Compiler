@@ -8,31 +8,31 @@ import java.util.HashMap;
 public class Test {
 
     /*
-        var n : int;
-        n := 10;
-        method init() {
-    	     var t : int;
-    	     n := 12;
-    	}
+        class Test = (
+	    var n :int;
+
+	    method init() {
+		    var t: int;
+		    n:=12;
+		    t:=5;}
+	    n:=10;
+	    )
 
         -- TDS_main --
             n ->    type = 'int',
                     kind = 'var',
                     depl = 0
-
             init -> type = method
                     return = void
                     params = []
                     depl = 1
                     link = TDS init
-
             father -> null
 
         -- TDS_init --
             t ->    type = 'int',
                     kind = 'var',
                     depl = 0
-
             father -> TDS_main
      */
 
@@ -77,5 +77,3 @@ public class Test {
     }
 
 }
-
-
