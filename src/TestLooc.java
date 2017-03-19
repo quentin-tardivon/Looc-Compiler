@@ -1,3 +1,4 @@
+import TDS.SymbolTable;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
@@ -31,8 +32,8 @@ public class TestLooc {
 		CommonTreeParser treeParser = new CommonTreeParser();
 		treeParser.parseCommonTreeParser(tree);
 
-		System.out.print(treeParser.list.toString());
-		treeParser.constructTDS(tree);
+		System.out.print(treeParser.list.toString() + "\n");
+		treeParser.constructTDS(tree, new SymbolTable());
 		System.out.println(treeParser.tds.toString());
 
 
