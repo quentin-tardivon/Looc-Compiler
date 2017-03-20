@@ -40,16 +40,20 @@ public class CommonTreeParser {
 			case "METHOD": System.out.println("Method encounter:" + tree.getChild(0).toString());
 						   newtds = new SymbolTable(tds.getImbricationLevel()+1, tds);
 						   tds.putLink(tree.getChild(0).getText(), newtds);
+						   constructTDS(tree.getChild(1), newtds); //Should we reorganize original AST?
 				           break;
 
 			case "VAR_DEC": System.out.println("Var encounter:" + tree.getChild(0).toString());
-						    this.tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
+						    tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
 						    break;
 
 			case "CLASS_DEC": System.out.println("Class encounter:" + tree.getChild(0).toString());
 							  newtds = new SymbolTable(tds.getImbricationLevel()+1, tds);
 							  tds.putLink(tree.getChild(0).getText(), newtds);
-							  constructTDS(tree.getChild(1), newtds);
+							  for (int j = 1; j<tree.getChildCount();j++) {
+							  	constructTDS(tree.getChild(j), newtds);
+							  }
+
 							  break;
 
 			case "BLOCK": this.tds.putLink(tree.getChild(0).getText(), new SymbolTable(this.tds.getImbricationLevel()+1, this.tds));
@@ -59,6 +63,21 @@ public class CommonTreeParser {
 				       break;
 
 			case "ELSE": this.tds.putLink(tree.getChild(0).getText(), new SymbolTable(this.tds.getImbricationLevel()+1, this.tds)); //Certainly not working
+						 break;
+
+			case "VARS": for(int i= 0; i<tree.getChildCount();i++) {
+							constructTDS(tree.getChild(i), tds);
+						 }
+						 break;
+
+			case "METHODS": for(int i = 0; i<tree.getChildCount(); i++) {
+								constructTDS(tree.getChild(i), tds);
+							}
+							break;
+
+			case "BODY": for (int i = 0; i<tree.getChildCount(); i++) {
+					        constructTDS(tree.getChild(i), tds);
+						 }
 						 break;
 
 			default: for (int i=0; i<tree.getChildCount();i++) {

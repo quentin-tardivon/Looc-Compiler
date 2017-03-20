@@ -21,15 +21,15 @@ class CommonTreeParserTest extends GroovyTestCase {
         treeParser.constructTDS(tree, new SymbolTable())
 
         String out =  treeParser.tds.get("total")
-        def expected = "### Variable ####\n" +  " - type       -> int\n"
+        def expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
         out = treeParser.tds.get("n")
-        expected = "### Variable ####\n" +  " - type       -> int\n"
+        expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
         out = treeParser.tds.get("i")
-        expected = "### Variable ####\n" +  " - type       -> int\n"
+        expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
     }
 
@@ -45,12 +45,46 @@ class CommonTreeParserTest extends GroovyTestCase {
         CommonTreeParser treeParser = new CommonTreeParser()
         treeParser.constructTDS(tree, new SymbolTable())
 
-        String out =  treeParser.tds.get("Math")
-        def expected = "### Variable ####\n" +  " - type       -> Math\n"
+        String out =  treeParser.tds.getLink("Math").getLink("pow").toString()
+        def expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
-        out =  treeParser.tds.get("pow")
-        expected = "### Variable ####\n" +  " - type       -> Math\n"
+        out = treeParser.tds.get("m")
+        expected = "### Variable ###\n" + " - type       -> Math\n"
+        assertToString(out, expected)
+
+    }
+
+    void testConstructTDSLevel3() {
+        String file = "./samples/Level3.looc"
+
+        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(file))
+        LoocLexer lexer = new LoocLexer(input)
+        CommonTokenStream tokens = new CommonTokenStream(lexer)
+        LoocParser parser = new LoocParser(tokens)
+        CommonTree tree = (CommonTree)parser.program().getTree()
+
+        CommonTreeParser treeParser = new CommonTreeParser()
+        treeParser.constructTDS(tree, new SymbolTable())
+
+        String out = treeParser.tds.getLink("Fibonacci").get("current")
+        def expected = "### Variable ###\n" +  " - type       -> int\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Fibonacci").get("previous")
+        expected = "### Variable ###\n" + " - type       -> int\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Fibonacci").get("generation")
+        expected = "### Variable ###\n" + " - type       -> int\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Fibonacci").getLink("nextGen").get("temp")
+        expected = "### Variable ###\n" + " - type       -> int\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.get("f")
+        expected = "### Variable ###\n" + " - type       -> Fibonacci\n"
         assertToString(out, expected)
 
     }

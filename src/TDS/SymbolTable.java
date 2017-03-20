@@ -67,6 +67,14 @@ public class SymbolTable {
 	public SymbolTable putLink(String symbol, SymbolTable tds) {  return this.links.put(symbol, tds);  }
 
 	/**
+	 * @param symbol
+	 * @return tds
+	 */
+	public SymbolTable getLink(String symbol) {
+		return this.links.get(symbol);
+	}
+
+	/**
 	 * @param s Symbol to find
 	 * @return Entry associated to the given symbol
 	 */

@@ -30,7 +30,7 @@ public abstract class Entry {
 	}
 
 	public String toString() {
-		String s = String.format("### %s ####\n", this.name);
+		String s = String.format("### %s ###\n", this.name);
 		for(String symbol: this.info.keySet()) {
 			s += String.format(" - %-10s -> %s\n", symbol, this.info.get(symbol));
 		}
