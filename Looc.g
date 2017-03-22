@@ -36,9 +36,7 @@ tokens{
 	BLOCK;
 	VARS;
 	METHODS;
-	}
-
-
+}
 
 
 /**----------------------

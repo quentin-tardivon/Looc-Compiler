@@ -1,5 +1,6 @@
 SRC_DIR = src
 BIN_DIR = out
+CORE_DIR= core
 SAMPLE_DIR = samples
 PGM = TestLoocMakefile
 EXTENSION = looc
@@ -15,12 +16,13 @@ all: java
 
 java: antlr
 	@echo "\n --- Compile java classes ---"
-	javac -d $(BIN_DIR) $(SRC_DIR)/LoocLexer.java $(SRC_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
+	javac -d $(BIN_DIR) $(SRC_DIR)/$(CORE_DIR)/LoocLexer.java $(SRC_DIR)/$(CORE_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
 antlr:
 	@echo "\n --- Execute Antlr ---"
-	-java org.antlr.Tool -o $(SRC_DIR) Looc.g 2>&1 |tail -n 5
+	java org.antlr.Tool -o $(CORE_DIR) Looc.g 2>&1 |tail -n 5
+	#java org.antlr.Tool -o $(CORE_DIR) Looc.g
 
 clean:
 	rm -r $(BIN_DIR)
@@ -64,21 +66,24 @@ test: java
 	@for file in $(SAMPLE_DIR)/*.$(EXTENSION); do \
 		FILE=$$(basename $$file); \
 		TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
-		LETTER=$$(echo $$FILE | head -c 1); \
-		if [ "$$LETTER" = '_' ] ; then \
-			if [ -z "$$TMP" ]; then \
-				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur)"; \
-				echo  "\t\033[91mIl devrait y avoir des erreurs...\033[0m"; \
+		LETTER=$$(echo $$FILE | head -c 2); \
+		if [ "$$LETTER" != '__' ] ; then \
+			FIRST=$$(echo $$LETTER | head -c 1); \
+			if [ "$$FIRST" = '_' ] ; then \
+				if [ -z "$$TMP" ]; then \
+					echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur)"; \
+					echo  "\t\033[91mIl devrait y avoir des erreurs...\033[0m"; \
+				else \
+					echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur)"; \
+					echo  "\t\033[90mErreur détecté: $$(echo $$TMP|head -c 50)...\033[0m"; \
+				fi; \
 			else \
-				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur)"; \
-				echo  "\t\033[90mErreur détecté: $$(echo $$TMP|head -c 50)...\033[0m"; \
-			fi; \
-		else \
-			if [ -z "$$TMP" ]; then \
-				echo  "\033[92m --- Check $$(basename $$file)\033[0m"; \
-			else \
-				echo  "\033[91m --- Check $$(basename $$file)\033[0m"; \
-				echo  "\t\033[91m$$TMP\033[0m"; \
+				if [ -z "$$TMP" ]; then \
+					echo  "\033[92m --- Check $$(basename $$file)\033[0m"; \
+				else \
+					echo  "\033[91m --- Check $$(basename $$file)\033[0m"; \
+					echo  "\t\033[91m$$TMP\033[0m"; \
+				fi; \
 			fi; \
 		fi; \
 	done;

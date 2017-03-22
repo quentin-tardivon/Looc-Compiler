@@ -11,5 +11,5 @@ public class Parameter extends Variable {
 	public Parameter(String type) {
 		super("Parameter", type);
 	}
-	
+
 }
