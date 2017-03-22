@@ -1,5 +1,7 @@
 package TDS;
 
+import exceptions.SymbolAlreadyDeclaredException;
+
 import java.util.HashMap;
 
 /** A symbol table is described by a Hashmap.
@@ -55,9 +57,14 @@ public class SymbolTable {
 	 * @param entry The entry corresponding to the symbol
 	 * @return
 	 */
-	public Object put(String symbol, Entry entry) {
-        return this.entries.put(symbol, entry);
-    }
+	public Object put(String symbol, Entry entry) throws SymbolAlreadyDeclaredException {
+        if(this.entries.containsKey(symbol)) {
+	        throw new SymbolAlreadyDeclaredException(symbol);
+	    }
+        else {
+	        return this.entries.put(symbol, entry);
+        }
+	}
 
 	/**
 	 * @param symbol

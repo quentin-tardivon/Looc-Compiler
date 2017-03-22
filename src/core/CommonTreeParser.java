@@ -1,8 +1,11 @@
+package core;
+
 import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
+import exceptions.SymbolAlreadyDeclaredException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 import TDS.entries.Class;
@@ -30,7 +33,7 @@ public class CommonTreeParser {
 		}
 	}
 
-	public void constructTDS(Tree tree, SymbolTable tds) {
+	public void constructTDS(Tree tree, SymbolTable tds) throws SymbolAlreadyDeclaredException {
 		SymbolTable newtds;
 		switch (tree.getText()) {
 			case "ROOT":
@@ -149,6 +152,14 @@ public class CommonTreeParser {
 				}
 				break;
 		}
+	}
+
+	public String toString() {
+		return this.list.toString();
+	}
+
+	public SymbolTable getRootSymbolTable() {
+		return this.tds;
 	}
 
 
