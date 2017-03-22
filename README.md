@@ -59,6 +59,51 @@ Quelques interrogations
    
 Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les identifier de manière unique dans la TDS ?
 
+
+
+
+Controle sémantiques
+====================
+
+-Une classe ne peut referencer que des classes déjà définies -> class not defined
+
+-un programme ne peut rdéfinir une classe existante -> cannot override class
+
+-Les noms des classes et des méthodes sont visibles partout ->
+
+-Dans une classe, un idf ne peut pas désigner a la fois un argument ou un attribut et une méthode ->
+
+-Les régles de portée des arguments et des variables locales sont celles habituellement définies dans les langages impératifs, tels que Java. ->
+
+-La portée d'une déclaration d'une variable locale commence a la fin de sa declaration et se termine a la fin du bloc englobant cette declaration. -> "variable not defined"
+
+-Une expression ne peut referencer que des variables ou attributs deja déclarés
+
+-cohérence de typages
+
+-division par zero ?
+
+->line number
+1)Cohérence de type (selon déclaration la plus récente) -> "Cannot assign a" type variable "to a" type variable (pas TDS only)
+2)variable non déclarée -> "Variable" var " is not declared"                                          (pas TDS only)
+3)classe non définie -> "Class" class "is not defined"                                                (TDS only)
+4)Argument, attribut et méthode avec meme idf -> idf "is already used by"                             (Exception dans TDS ou TDS only)
+5)plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined"                  (Exception dans TDS)
+6)nb de params inexacte -> method "is missing parameters" ou method "has got to many parameters"      (pas TDS only)
+7)respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"     (pas TDS only)
+8)cohérence de type lors d'un calcul ->  a= b+c; a= b+2;                                              (pas TDS only)
+9)variable jamais utilisé -> idf "is never used"                                                      (pas TDS only)
+10)cohérence de type avec héritage -> Animal A; A=new Dog();                                              
+11)
+12)
+13)
+14)
+15)
+16)
+
+
+
+
 Auteurs
 ==
 
