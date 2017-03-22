@@ -25,6 +25,10 @@ class CommonTreeParserTest extends GroovyTestCase {
         expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
+        out = treeParser.tds.get("for0")
+        expected = "### For Loop ###\n"
+        assertToString(out, expected)
+
 
     }
 
@@ -58,6 +62,11 @@ class CommonTreeParserTest extends GroovyTestCase {
         out = treeParser.tds.getLink("Math").getLink("pow").get("i")
         expected = "### Variable ###\n" + " - type       -> int\n"
         assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Math").getLink("pow").get("if0")
+        expected = "### If Statement ###\n"
+        assertToString(out, expected)
+
 
 
 
@@ -147,6 +156,19 @@ class CommonTreeParserTest extends GroovyTestCase {
         out = treeParser.tds.get("f")
         expected = "### Variable ###\n" + " - type       -> Fibonacci\n"
         assertToString(out, expected)
+
+        out = treeParser.tds.get("block0")
+        expected = "### Anonymous Block ###\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.get("block1")
+        expected = "### Anonymous Block ###\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("block0").get("block0")
+        expected = "### Anonymous Block ###\n"
+        assertToString(out, expected)
+
     }
 
     void testConstructTDSLevel4() {

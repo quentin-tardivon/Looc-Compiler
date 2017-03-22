@@ -11,6 +11,6 @@ import TDS.Entry;
 public class AnonymousBloc extends Entry {
 
 	public AnonymousBloc() {
-		super("Anonymous bloc");
+		super("Anonymous Block");
 	}
 }

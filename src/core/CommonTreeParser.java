@@ -5,19 +5,17 @@ import TDS.SymbolTable;
 import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import exceptions.MismatchTypeException;
-import exceptions.SymbolAlreadyDeclaredException;
-import exceptions.UndeclaredVariableException;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.Tree;
+import TDS.entries.*;
 import TDS.entries.Class;
+
+import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import static utils.Util.testType;
+import java.util.ArrayList;
+
 
 /**
  * Created by quentin on 13/03/2017.
@@ -102,32 +100,37 @@ public class CommonTreeParser {
 
 
 			case "BLOCK":
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds); //We have to generate a nam
-				tds.putLink(tree.getChild(0).getText(), newtds);
-				for (int j = 1; j < tree.getChildCount(); j++) {
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
+				int nb = tds.getNumberBlock();
+				tds.put("block" +nb , new AnonymousBloc(), "Block");
+				tds.putLink("block" + nb, newtds);
+				for (int j = 0; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
 				break;
 
 			case "IF":
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds); //We have to generate a nam
-				tds.putLink(tree.getChild(0).getText(), newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
-					constructTDS(tree.getChild(j), newtds);
+					constructTDS(tree.getChild(j), tds);
 				}
+				tds.setNumberIf(tds.getNumberIf()+1);
 				break;
 
 			case "THEN":
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds); //We have to generate a name
-				tds.putLink(tree.getChild(0).getText(), newtds);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
+				nb = tds.getNumberIf();
+				tds.put("if" +nb , new If());
+				tds.putLink("if" + nb, newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
 				break;
 
 			case "ELSE":
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds); //We have to generate a nam
-				tds.putLink(tree.getChild(0).getText(), newtds);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
+				nb = tds.getNumberIf();
+				tds.put("else" +nb , new Else());
+				tds.putLink("else" + nb, newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
@@ -161,6 +164,17 @@ public class CommonTreeParser {
 							tree.getChild(1).getText(),
 							tree.getChild(0).getText()
 					);
+				break;
+
+			case "FOR":
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
+				nb = tds.getNumberBlock();
+				System.out.println("for"+nb);
+				tds.put("for" +nb , new ForLoop(), "For");
+				tds.putLink("for" + nb, newtds);
+				for (int j = 1; j < tree.getChildCount(); j++) {
+					constructTDS(tree.getChild(j), newtds);
+				}
 				break;
 
 			default:
