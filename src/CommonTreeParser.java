@@ -1,5 +1,6 @@
 import TDS.Entry;
 import TDS.SymbolTable;
+import TDS.entries.Method;
 import TDS.entries.Variable;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
@@ -40,8 +41,26 @@ public class CommonTreeParser {
 			case "METHOD": System.out.println("Method encounter:" + tree.getChild(0).toString());
 						   newtds = new SymbolTable(tds.getImbricationLevel()+1, tds);
 						   tds.putLink(tree.getChild(0).getText(), newtds);
-						   constructTDS(tree.getChild(1), newtds); //Should we reorganize original AST?
+						   if (tree.getChildCount() == 4) {
+						   	tds.put(tree.getChild(0).getText(), new Method(tree.getChild(2).getText()));
+						   	constructTDS(tree.getChild(1), newtds);
+						   	constructTDS(tree.getChild(3), newtds);
+						   }
+						   else {
+							   tds.put(tree.getChild(0).getText(), new Method(tree.getChild(1).getText()));
+							   constructTDS(tree.getChild(2), newtds);
+						   }
+
 				           break;
+
+			case "FORMAL_PARAMETERS": System.out.println("Formal parameters encounter:");
+									for(int i=0; i<tree.getChildCount(); i++ ) {
+										constructTDS(tree.getChild(i), tds);
+									}
+									break;
+
+			case "FORMAL_PARAMETER": System.out.println("Formal parameters encounter:");
+									 tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText()));
 
 			case "VAR_DEC": System.out.println("Var encounter:" + tree.getChild(0).toString());
 						    tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
