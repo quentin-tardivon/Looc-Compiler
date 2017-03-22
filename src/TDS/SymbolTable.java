@@ -28,6 +28,12 @@ public class SymbolTable {
     private final SymbolTable father;
 	/** Links between symbol tables (used to access symbol table of a function for example) */
 	private HashMap<String, SymbolTable> links;
+	/** Number of for statement in this block **/
+	private int numberFor = 0;
+	/** Number of if statement in this block **/
+	private int numberIf = 0;
+	/** Number of block statement statement in this block **/
+	private int numberBlock = 0;
 
 
 	/**
@@ -67,6 +73,31 @@ public class SymbolTable {
 	}
 
 	/**
+	 * Add a new entry to the symbol table (For Statement and Anonymous Block)
+	 * @param symbol Uniq ID for this symbol table
+	 * @param entry The entry corresponding to the symbol
+	 * @param type type of entry added
+	 * @return
+	 * @throws SymbolAlreadyDeclaredException
+	 */
+	public Object put(String symbol, Entry entry, String type) throws SymbolAlreadyDeclaredException {
+		if(this.entries.containsKey(symbol)) {
+			throw new SymbolAlreadyDeclaredException(symbol);
+		}
+		else {
+			if (type == "For") {
+				numberFor += 1;
+			}
+			else {
+				numberBlock +=1;
+			}
+
+
+			return this.entries.put(symbol, entry);
+		}
+	}
+
+	/**
 	 * @param symbol
 	 * @param tds Table symbol to link
 	 * @return The added table symbol
@@ -98,6 +129,38 @@ public class SymbolTable {
 	 * @return The symbol table parent of table
 	 */
     public SymbolTable getFather(){return this.father;}
+
+	/**
+	 *
+	 * @return The number of for statement
+	 */
+	public int getNumberFor() {
+		return numberFor;
+	}
+
+	/**
+	 *
+	 * @return The number of if statement
+	 */
+	public int getNumberIf() {
+		return numberIf;
+	}
+
+	/**
+	 *
+	 * @return The number of block
+	 */
+	public int getNumberBlock() {
+		return numberBlock;
+	}
+
+	/**
+	 *
+	 * @param numberIf
+	 */
+	public void setNumberIf(int numberIf) {
+		this.numberIf = numberIf;
+	}
 
     public String toString() {
 	    String s = String.format("==== %d ====\n", this.getImbricationLevel());
