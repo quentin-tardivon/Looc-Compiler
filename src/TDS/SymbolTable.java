@@ -1,6 +1,7 @@
 package TDS;
 
 import exceptions.SymbolAlreadyDeclaredException;
+import exceptions.UndeclaredVariableException;
 
 import java.util.HashMap;
 
@@ -93,6 +94,19 @@ public class SymbolTable {
 	 * @return The imbrication level of this Symbol table
 	 */
 	public int getImbricationLevel(){  return this.imbricationLevel;  }
+
+
+	public Entry getInfo(String idf) throws UndeclaredVariableException {
+		if (this.entries.containsKey(idf)) {
+			return this.entries.get(idf);
+		}
+		else {
+			if (this.father != null) {
+				return this.father.getInfo(idf);
+			}
+			 throw new UndeclaredVariableException(idf);
+		}
+	}
 
 	/**
 	 * @return The symbol table parent of table

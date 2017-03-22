@@ -4,3 +4,4 @@
 output/
 .idea/*
 *.iml
+.DS_Store

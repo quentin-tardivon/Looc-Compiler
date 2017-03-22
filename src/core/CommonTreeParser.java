@@ -5,13 +5,19 @@ import TDS.SymbolTable;
 import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import exceptions.MismatchTypeException;
 import exceptions.SymbolAlreadyDeclaredException;
+import exceptions.UndeclaredVariableException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 import TDS.entries.Class;
+import utils.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static utils.Util.testType;
 
 /**
  * Created by quentin on 13/03/2017.
@@ -33,7 +39,7 @@ public class CommonTreeParser {
 		}
 	}
 
-	public void constructTDS(Tree tree, SymbolTable tds) throws SymbolAlreadyDeclaredException {
+	public void constructTDS(Tree tree, SymbolTable tds) throws Exception {
 		SymbolTable newtds;
 		switch (tree.getText()) {
 			case "ROOT":
@@ -145,9 +151,21 @@ public class CommonTreeParser {
 				}
 				break;
 
+
+			case "AFFECT":
+				Entry entry = tds.getInfo(tree.getChild(0).getText());
+				if (!Util.testType(entry,tree.getChild(1).getText()))
+					throw new MismatchTypeException(
+							Util.getType(tree.getChild(1).getText()),
+							entry.get("type"),
+							tree.getChild(1).getText(),
+							tree.getChild(0).getText()
+					);
+				break;
+
 			default:
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					System.out.println("## Default case " + tree);
+					//System.out.println("## Default case " + tree);
 					constructTDS(tree.getChild(i), tds);
 				}
 				break;
@@ -161,6 +179,21 @@ public class CommonTreeParser {
 	public SymbolTable getRootSymbolTable() {
 		return this.tds;
 	}
+
+	/*public Boolean testType(Entry l, Object r){
+		if (l.get("type").equals("int") && r instanceof Integer)
+			return true;
+		if (l.get("type").equals("string") && r instanceof String)
+			return true;
+		return false;
+	}
+
+	public String getType(Object o) {
+		System.out.println(o);
+		if (o instanceof Integer) {return "int";}
+		else  { return "string";}
+
+	}*/
 
 
 }

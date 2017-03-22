@@ -4,7 +4,9 @@ import TDS.SymbolTable;
 import core.CommonTreeParser;
 import core.LoocLexer;
 import core.LoocParser;
+import exceptions.MismatchTypeException;
 import exceptions.SymbolAlreadyDeclaredException;
+import exceptions.UndeclaredVariableException;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -18,7 +20,7 @@ import java.io.IOException;
  */
 public class CommonTreeParserFactory {
 
-	public static CommonTreeParser createFromFile(String filename) throws IOException, RecognitionException, SymbolAlreadyDeclaredException {
+	public static CommonTreeParser createFromFile(String filename) throws Exception {
 		ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(filename));
 		LoocLexer lexer = new LoocLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
