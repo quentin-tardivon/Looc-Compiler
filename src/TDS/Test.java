@@ -1,5 +1,7 @@
 package TDS;
 
+import TDS.entries.Variable;
+
 import java.util.HashMap;
 
 /**
@@ -39,9 +41,9 @@ public class Test {
     public static void main(String[] args) {
         SymbolTable tds_main = new SymbolTable();
         SymbolTable tds_init = new SymbolTable();
-        HashMap<String, Object> tmp_n = new HashMap<>();
-        HashMap<String, Object> tmp_init = new HashMap<>();
-        HashMap<String, Object> tmp_t = new HashMap<>();
+        Entry tmp_n = new Variable();
+	    Entry tmp_init = new Variable();
+	    Entry tmp_t = new Variable();
 
 
         tmp_n.put("type", "int");
@@ -56,7 +58,7 @@ public class Test {
         tmp_init.put("return", "void");
         tmp_init.put("params", "");
         tmp_init.put("depl", "1");
-        tmp_init.put("link",tds_init);
+        tds_main.putLink("link",tds_init);
 
         tds_main.put("init", tmp_init);
 
@@ -67,9 +69,11 @@ public class Test {
 
         tds_init.put("t",tmp_t);
 
-        System.out.println("tds main : "+tds_main.toString());
+        System.out.println("init dans tds main : "+tds_main.toString());
+        System.out.println("init dans tds main : "+tds_main.get("init").get("type"));
 
-        System.out.println("init dans tds main : "+tds_main.getEntries("init").getEntries("type"));
+
+
 
         //System.out.println("init dans tds main"+(tds_main.get("init")).getClass().toString());
 
