@@ -13,7 +13,12 @@ import TDS.Entry;
 public class Variable extends Entry {
 
 	public Variable() {
-		super(Entry.VARIABLE);
+		super("Variable");
+	}
+
+	public Variable(String type) {
+		super("Variable");
+		this.info.put("type", type);
 	}
 
 }

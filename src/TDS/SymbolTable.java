@@ -67,6 +67,14 @@ public class SymbolTable {
 	public SymbolTable putLink(String symbol, SymbolTable tds) {  return this.links.put(symbol, tds);  }
 
 	/**
+	 * @param symbol
+	 * @return tds
+	 */
+	public SymbolTable getLink(String symbol) {
+		return this.links.get(symbol);
+	}
+
+	/**
 	 * @param s Symbol to find
 	 * @return Entry associated to the given symbol
 	 */
@@ -87,7 +95,10 @@ public class SymbolTable {
     public String toString() {
 	    String s = String.format("==== %d ====\n", this.getImbricationLevel());
 	    for(String symbol: this.entries.keySet()) {
-	    	s += String.format(" - %-10s -> Entry\n", symbol);
+	    	s += String.format(" - %-10s -> %s\n", symbol, this.entries.get(symbol));
+	    }
+	    for (String symbol: this.links.keySet()) {
+		    s += String.format(" - %-10s -> %s\n", symbol, this.links.get(symbol));
 	    }
     	return s;
     }
