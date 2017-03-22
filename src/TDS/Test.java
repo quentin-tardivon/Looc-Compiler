@@ -44,6 +44,7 @@ public class Test {
 	    Entry tmp_init = new Variable();
 	    Entry tmp_t = new Variable();
 
+
         tmp_n.put("type", "int");
         tmp_n.put("kind", "var");
         tmp_n.put("depl", "0");
@@ -66,8 +67,12 @@ public class Test {
         tmp_t.put("depl", "0");
 
         tds_init.put("t",tmp_t);
-        System.out.println(tds_main);
-        System.out.println(tds_main.get("init"));
+
+        System.out.println("init dans tds main : "+tds_main.toString());
+        System.out.println("init dans tds main : "+tds_main.get("init").get("type"));
+
+
+
 
         //System.out.println("init dans tds main"+(tds_main.get("init")).getClass().toString());
 
