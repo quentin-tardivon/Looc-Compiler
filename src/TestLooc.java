@@ -1,4 +1,7 @@
 import TDS.SymbolTable;
+import core.CommonTreeParser;
+import core.LoocLexer;
+import core.LoocParser;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
@@ -23,26 +26,23 @@ public class TestLooc {
 		}
 		else
 			input = new ANTLRInputStream(new FileInputStream(args[0]));
-        
+
 		LoocLexer lexer = new LoocLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		LoocParser parser = new LoocParser(tokens);
 		CommonTree tree = (CommonTree)parser.program().getTree();
 
+
 		CommonTreeParser treeParser = new CommonTreeParser();
 		treeParser.parseCommonTreeParser(tree);
 
-		System.out.print(treeParser.list.toString() + "\n");
+		System.out.print(treeParser.toString() + "\n");
 		treeParser.constructTDS(tree, new SymbolTable());
-		System.out.println(treeParser.tds.toString());
-
+		System.out.println(treeParser.getRootSymbolTable().toString());
 
 
 		DOTTreeGenerator gen = new DOTTreeGenerator();
 		StringTemplate st = gen.toDOT(tree);
-
-
-
 
 	}
 }

@@ -1,8 +1,7 @@
 package TDS;
 
 import TDS.entries.Variable;
-
-import java.util.HashMap;
+import exceptions.SymbolAlreadyDeclaredException;
 
 /**
  * Created by mcdostone on 13/03/17.
@@ -38,7 +37,7 @@ public class Test {
             father -> TDS_main
      */
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SymbolAlreadyDeclaredException {
         SymbolTable tds_main = new SymbolTable();
         SymbolTable tds_init = new SymbolTable();
         Entry tmp_n = new Variable();
