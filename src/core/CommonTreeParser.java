@@ -1,13 +1,13 @@
-import TDS.Entry;
+package core;
+
 import TDS.SymbolTable;
 import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
-import org.antlr.runtime.tree.CommonTree;
+import exceptions.SymbolAlreadyDeclaredException;
 import org.antlr.runtime.tree.Tree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by quentin on 13/03/2017.
@@ -18,9 +18,6 @@ public class CommonTreeParser {
 
 	protected ArrayList<String> list = new ArrayList<>();
 
-	public CommonTreeParser() {
-
-	}
 
 	public void parseCommonTreeParser(Tree tree) {
 		list.add(tree.toString());
@@ -29,7 +26,7 @@ public class CommonTreeParser {
 		}
 	}
 
-	public void constructTDS(Tree tree, SymbolTable tds) {
+	public void constructTDS(Tree tree, SymbolTable tds) throws SymbolAlreadyDeclaredException {
 		SymbolTable newtds;
 		switch (tree.getText()) {
 			case "ROOT":
@@ -125,5 +122,13 @@ public class CommonTreeParser {
 		}
 	}
 
+
+	public String toString() {
+		return this.list.toString();
+	}
+
+	public SymbolTable getRootSymbolTable() {
+		return this.tds;
+	}
 
 }

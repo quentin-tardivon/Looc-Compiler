@@ -1,24 +1,17 @@
 import TDS.SymbolTable
-import org.antlr.runtime.ANTLRInputStream
-import org.antlr.runtime.CommonTokenStream
-import org.antlr.runtime.tree.CommonTree
+import core.CommonTreeParser
+import exceptions.SymbolAlreadyDeclaredException
+import factories.CommonTreeParserFactory
 
 /**
  * Created by quentin on 18/03/2017.
  */
 class CommonTreeParserTest extends GroovyTestCase {
+
+    private CommonTreeParser treeParser
+
     void testConstructTDSLevel1() {
-
-        String file = "./samples/Level1.looc"
-
-        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(file))
-        LoocLexer lexer = new LoocLexer(input)
-        CommonTokenStream tokens = new CommonTokenStream(lexer)
-        LoocParser parser = new LoocParser(tokens)
-        CommonTree tree = (CommonTree)parser.program().getTree()
-
-        CommonTreeParser treeParser = new CommonTreeParser()
-        treeParser.constructTDS(tree, new SymbolTable())
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level1.looc");
 
         String out =  treeParser.tds.get("total")
         def expected = "### Variable ###\n" +  " - type       -> int\n"
@@ -34,16 +27,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel2() {
-        String file = "./samples/Level2.looc"
-
-        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(file))
-        LoocLexer lexer = new LoocLexer(input)
-        CommonTokenStream tokens = new CommonTokenStream(lexer)
-        LoocParser parser = new LoocParser(tokens)
-        CommonTree tree = (CommonTree)parser.program().getTree()
-
-        CommonTreeParser treeParser = new CommonTreeParser()
-        treeParser.constructTDS(tree, new SymbolTable())
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level2.looc");
 
         String out =  treeParser.tds.getLink("Math").getLink("pow").get("retval").toString()
         def expected = "### Variable ###\n" +  " - type       -> int\n"
@@ -60,16 +44,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel3() {
-        String file = "./samples/Level3.looc"
-
-        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(file))
-        LoocLexer lexer = new LoocLexer(input)
-        CommonTokenStream tokens = new CommonTokenStream(lexer)
-        LoocParser parser = new LoocParser(tokens)
-        CommonTree tree = (CommonTree)parser.program().getTree()
-
-        CommonTreeParser treeParser = new CommonTreeParser()
-        treeParser.constructTDS(tree, new SymbolTable())
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3.looc");
 
         String out = treeParser.tds.getLink("Fibonacci").get("current")
         def expected = "### Variable ###\n" +  " - type       -> int\n"
@@ -91,5 +66,13 @@ class CommonTreeParserTest extends GroovyTestCase {
         expected = "### Variable ###\n" + " - type       -> Fibonacci\n"
         assertToString(out, expected)
 
+    }
+
+    void testConstruct__TDSLevel1() {
+        shouldFail(SymbolAlreadyDeclaredException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1.looc")
+            treeParser.constructTDS(tree, new SymbolTable());
+
+        }
     }
 }
