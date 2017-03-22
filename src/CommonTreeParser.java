@@ -4,7 +4,6 @@ import TDS.entries.Method;
 import TDS.entries.Variable;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
