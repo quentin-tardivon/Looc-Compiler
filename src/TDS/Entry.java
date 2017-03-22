@@ -29,6 +29,8 @@ public abstract class Entry {
 		return this.info.get(k);
 	}
 
+	public String getName() {  return this.name; }
+
 	public String toString() {
 		String s = String.format("### %s ###\n", this.name);
 		for(String symbol: this.info.keySet()) {
