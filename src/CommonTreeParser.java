@@ -1,6 +1,7 @@
 import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Method;
+import TDS.entries.Parameter;
 import TDS.entries.Variable;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
