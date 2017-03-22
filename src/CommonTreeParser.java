@@ -117,8 +117,8 @@ public class CommonTreeParser {
 				break;
 
 			default:
+				System.out.println("## Default case " + tree);
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					//System.out.println("## Default case " + tree);
 					constructTDS(tree.getChild(i), tds);
 				}
 				break;
