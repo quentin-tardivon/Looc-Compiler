@@ -9,7 +9,7 @@ import TDS.Entry;
  * @author Yann Prono
  */
 public class Class extends Entry {
-	
+
 	public Class(String name) {
 		super("Class");
 	}
