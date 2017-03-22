@@ -75,6 +75,7 @@ public class CommonTreeParser {
 
 							  break;
 
+
 			case "BLOCK": this.tds.putLink(tree.getChild(0).getText(), new SymbolTable(this.tds.getImbricationLevel()+1, this.tds));
 				          break;
 
@@ -100,6 +101,7 @@ public class CommonTreeParser {
 						 break;
 
 			default: for (int i=0; i<tree.getChildCount();i++) {
+				System.out.println("## Default case " + tree);
 				constructTDS(tree.getChild(i), tds);
 			}
 			break;
