@@ -45,12 +45,16 @@ class CommonTreeParserTest extends GroovyTestCase {
         CommonTreeParser treeParser = new CommonTreeParser()
         treeParser.constructTDS(tree, new SymbolTable())
 
-        String out =  treeParser.tds.getLink("Math").getLink("pow").toString()
+        String out =  treeParser.tds.getLink("Math").getLink("pow").get("retval").toString()
         def expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
         out = treeParser.tds.get("m")
         expected = "### Variable ###\n" + " - type       -> Math\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Math").getLink("pow").get("a").toString()
+        expected = "### Parameter ###\n" + " - type       -> int\n"
         assertToString(out, expected)
 
     }
