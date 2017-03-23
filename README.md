@@ -53,10 +53,10 @@ Quelques interrogations
 
 - Durant la première soutenance, Monsieur Da Silva nous a conseillé de faire remonter les attributs de classes au même niveau que la déclaration de la classe. Suite à notre après-midi 'compil', nous n'avons pas compris pourquoi cette modification serait plus facile pour construire la TDS.TDS. Mystère et hypster chauve ?
 - POur la création de la TDS, nous avons fait le choix d'associer à un mot-clé une entrée dans la TDS
-        
-        "sqrt" => function, [parameter a double], return double 
+
+        "sqrt" => function, [parameter a double], return double
         // Key => Type     , List of formals params, type of returned value
-   
+
 Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les identifier de manière unique dans la TDS ?
 
 
@@ -94,7 +94,7 @@ Controle sémantiques
 8)cohérence de type lors d'un calcul ->  a= b+c; a= b+2;                                              (pas TDS only)
 9)variable jamais utilisé -> idf "is never used"                                                      (pas TDS only)
 10)cohérence de type avec héritage -> Animal A; A=new Dog();                                              
-11)
+11)Pas d'opérations sur les strings => Str = a - b
 12)
 13)
 14)
