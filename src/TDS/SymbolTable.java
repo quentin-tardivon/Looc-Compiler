@@ -132,7 +132,12 @@ public class SymbolTable {
 			return this.entries.get(idf);
 		}
 		else {
+			//System.out.println(this.toString());
+
+			//System.out.println(this.father.toString());
+
 			if (this.father != null) {
+				//System.out.println(this.father.getInfo(idf).toString());
 				return this.father.getInfo(idf);
 			}
 			 throw new UndeclaredVariableException(idf);

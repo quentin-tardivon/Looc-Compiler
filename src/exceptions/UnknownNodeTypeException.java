@@ -7,7 +7,7 @@ public class UnknownNodeTypeException extends Exception {
 
     public UnknownNodeTypeException(String idf) {
 
-            super("Type unknown :'" + idf );
+            super("Type unknown :" + idf );
 
     }
 

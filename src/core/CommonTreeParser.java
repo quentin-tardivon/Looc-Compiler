@@ -10,6 +10,9 @@ import exceptions.MismatchTypeException;
 import TDS.entries.*;
 import TDS.entries.Class;
 
+import exceptions.StringOperationException;
+import exceptions.UndeclaredVariableException;
+import exceptions.UnknownNodeTypeException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
@@ -157,13 +160,14 @@ public class CommonTreeParser {
 
 			case "AFFECT":
 				Entry entry = tds.getInfo(tree.getChild(0).getText());
-				if (!Util.testType(entry,tree.getChild(1).getText()))
+				if (!Util.testType(entry,subTreeType(tree.getChild(1))))
 					throw new MismatchTypeException(
-							Util.getType(tree.getChild(1).getText()),
+							Util.getType(tree.getChild(1).getText(),tds),
 							entry.get("type"),
 							tree.getChild(1).getText(),
 							tree.getChild(0).getText()
 					);
+				System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
 				break;
 
 			case "FOR":
@@ -194,20 +198,28 @@ public class CommonTreeParser {
 		return this.tds;
 	}
 
-	/*public Boolean testType(Entry l, Object r){
-		if (l.get("type").equals("int") && r instanceof Integer)
-			return true;
-		if (l.get("type").equals("string") && r instanceof String)
-			return true;
-		return false;
+	public String subTreeType(Tree node) throws UndeclaredVariableException, StringOperationException, UnknownNodeTypeException {
+
+
+			switch (node.getText()) {
+				case "PLUS":
+					System.out.println("plus");
+					return Util.testTypeOper(subTreeType(node.getChild(0)),subTreeType(node.getChild(1)));
+				case "DIFF":
+					System.out.println("diff");
+					return Util.testTypeOper(subTreeType(node.getChild(0)),subTreeType(node.getChild(1)));
+				case "MUL":
+					System.out.println("mul");
+					return Util.testTypeOper(subTreeType(node.getChild(0)),subTreeType(node.getChild(1)));
+				case "DIV":
+					System.out.println("div");
+					return Util.testTypeOper(subTreeType(node.getChild(0)),subTreeType(node.getChild(1)));
+				default:
+					return Util.getType(node.getText(),tds);
+			}
+
+
 	}
-
-	public String getType(Object o) {
-		System.out.println(o);
-		if (o instanceof Integer) {return "int";}
-		else  { return "string";}
-
-	}*/
 
 
 }
