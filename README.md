@@ -83,18 +83,57 @@ Controle sémantiques
 
 -division par zero ?
 
-->line number
-1)Cohérence de type (selon déclaration la plus récente) -> "Cannot assign a" type variable "to a" type variable (pas TDS only)
-2)variable non déclarée -> "Variable" var " is not declared"                                          (pas TDS only)
-3)classe non définie -> "Class" class "is not defined"                                                (TDS only)
-4)Argument, attribut et méthode avec meme idf -> idf "is already used by"                             (Exception dans TDS ou TDS only)
-5)plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined"                  (Exception dans TDS)
-6)nb de params inexacte -> method "is missing parameters" ou method "has got to many parameters"      (pas TDS only)
-7)respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"     (pas TDS only)
-8)cohérence de type lors d'un calcul ->  a= b+c; a= b+2;                                              (pas TDS only)
-9)variable jamais utilisé -> idf "is never used"                                                      (pas TDS only)
-10)cohérence de type avec héritage -> Animal A; A=new Dog();                                              
-11)Pas d'opérations sur les strings => Str = a - b
+
+TODO-> add line number ?
+
+
+1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) -> "Cannot assign a" type variable "to a" type variable -> WARNING : double déclaration dans différent block -> what then ?
+
+
+2)UndeclaredVariableException : variable non déclarée -> "Variable" var " is not declared"   (OK)   
+
+
+
+3)UndefinedClassException : classe non définie -> "Class" class "is not defined"        
+
+
+
+
+4)Argument, attribut et méthode avec meme idf -> idf "is already used by"    
+
+
+
+
+5)AlreadyDeclaredException : plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined"  
+
+
+
+
+6)InexactParametersException : nb de params inexacte -> method "is missing parameters" ou method "has got to many parameters"  
+
+
+
+7)InexactReturnValueException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"   
+
+
+
+
+8)OperationTypeMismatchException : cohérence de type lors d'un calcul ->  a= b+c; a= b+2;       
+
+
+
+
+9)UnusedVariableExceptionException : variable jamais utilisé -> idf "is never used"                                               
+
+
+
+10)InheritanceTypeMismatchException :  cohérence de type avec héritage -> Animal A; A=new Dog();       
+
+
+
+11)StringOperationException : Pas d'opérations sur les strings => Str = a - b  ->
+
+
 12)
 13)
 14)

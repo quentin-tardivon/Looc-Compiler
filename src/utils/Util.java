@@ -19,7 +19,6 @@ public class Util {
     }
 
     public static String getType(String s) throws UnknownNodeTypeException {
-        System.out.println(s);
         if (s.matches("[0-9]+")) {return "int";}
         if (s.matches("'.*'")) {return "string";}
         throw new UnknownNodeTypeException(s);
