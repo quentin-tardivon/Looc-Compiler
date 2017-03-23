@@ -6,6 +6,7 @@ import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
 
+import exceptions.LoocException;
 import exceptions.MismatchTypeException;
 import TDS.entries.*;
 import TDS.entries.Class;
@@ -24,11 +25,11 @@ import java.util.ArrayList;
 public class CommonTreeParser {
 
 	protected SymbolTable tds;
-
+	private String filename;
 	protected ArrayList<String> list = new ArrayList<>();
 
-	public CommonTreeParser() {
-
+	public CommonTreeParser(String filename) {
+		this.filename = filename;
 	}
 
 	public void parseCommonTreeParser(Tree tree) {
@@ -44,7 +45,6 @@ public class CommonTreeParser {
 			case "ROOT":
 				this.tds = tds;
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					//System.out.println("Enter in child" + i);
 					constructTDS(tree.getChild(i), this.tds);
 				}
 				break;
@@ -157,9 +157,18 @@ public class CommonTreeParser {
 
 
 			case "AFFECT":
+
+				//UndefinedVariableException
 				Entry entry = tds.getInfo(tree.getChild(0).getText());
+
+				//UndefinedClassException
+				if(tree.getChild(1).getText().equals("new")){
+					tds.getInfo(tree.getChild(1).getChild(0).getText());
+				}
+
+				//MismatchTypeException
 				if (!Util.testType(entry,tree.getChild(1).getText()))
-					throw new MismatchTypeException(
+					throw new MismatchTypeException(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText()),
 							entry.get("type"),
 							tree.getChild(1).getText(),
@@ -168,6 +177,7 @@ public class CommonTreeParser {
 				System.out.println("Line number: "  + tree.getChild(0).getLine());
 
 				break;
+
 
 			case "FOR":
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
@@ -178,6 +188,12 @@ public class CommonTreeParser {
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
+				break;
+
+			case "DO":
+				//UndeclaredMethodException
+				tds.getInfo(tree.getChild(1).getText());
+
 				break;
 
 			default:
