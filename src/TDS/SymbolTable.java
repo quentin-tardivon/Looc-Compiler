@@ -1,7 +1,6 @@
 package TDS;
 
-import exceptions.SymbolAlreadyDeclaredException;
-import exceptions.UndeclaredVariableException;
+import exceptions.*;
 
 import java.util.HashMap;
 
@@ -36,7 +35,6 @@ public class SymbolTable {
 	/** Number of block statement statement in this block **/
 	private int numberBlock = 0;
 
-
 	/**
 	 * Default constructor
 	 */
@@ -66,7 +64,7 @@ public class SymbolTable {
 	 */
 	public Object put(String symbol, Entry entry) throws SymbolAlreadyDeclaredException {
         if(this.entries.containsKey(symbol)) {
-	        throw new SymbolAlreadyDeclaredException(symbol);
+	        throw new SymbolAlreadyDeclaredException("",null, symbol);
 	    }
         else {
 	        return this.entries.put(symbol, entry);
@@ -83,7 +81,7 @@ public class SymbolTable {
 	 */
 	public Object put(String symbol, Entry entry, String type) throws SymbolAlreadyDeclaredException {
 		if(this.entries.containsKey(symbol)) {
-			throw new SymbolAlreadyDeclaredException(symbol);
+			throw new SymbolAlreadyDeclaredException("", null, symbol);
 		}
 		else {
 			if (type == "For") {
@@ -127,7 +125,14 @@ public class SymbolTable {
 	public int getImbricationLevel(){  return this.imbricationLevel;  }
 
 
-	public Entry getInfo(String idf) throws UndeclaredVariableException {
+	/**
+	 * @param idf key
+	 * @return Returns the entries of the idf or throw an UndeclaredException
+	 */
+	public Entry getInfo(String idf) throws Exception {
+		System.out.println(idf + " theooooooooo");
+		if(idf.equals("retval"))
+			System.out.println("break");
 		if (this.entries.containsKey(idf)) {
 			return this.entries.get(idf);
 		}
@@ -139,8 +144,18 @@ public class SymbolTable {
 			if (this.father != null) {
 				//System.out.println(this.father.getInfo(idf).toString());
 				return this.father.getInfo(idf);
+			} else {
+				if(this.entries.get(idf).get("type").equals("Class")){
+					throw new UndeclaredClassException(null, null, idf);
+				}else if(this.entries.get(idf).get("type").equals("Method")){
+					throw new UndeclaredMethodException(null, null, idf);
+				}else if(this.entries.get(idf).get("type").equals("Variable")){
+					throw new UndeclaredVariableException(null, null, idf);
+				}
+				else{
+					throw new UnknownNodeTypeException(null, null, idf);
+				}
 			}
-			 throw new UndeclaredVariableException(idf);
 		}
 	}
 

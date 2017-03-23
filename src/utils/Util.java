@@ -34,7 +34,7 @@ public class Util {
         else throw new StringOperationException();
     }
 
-    public static String getType(String s, SymbolTable tds) throws UnknownNodeTypeException, UndeclaredVariableException {
+    public static String getType(String s, SymbolTable tds) throws Exception {
         if (s.matches("[0-9]+")) {return "int";}
         else if (s.matches("'.*'")){
             return "string";
@@ -43,5 +43,7 @@ public class Util {
             return tds.getInfo(s).get("type");
 
         }
+
     }
+
 }
