@@ -1,6 +1,8 @@
 import TDS.SymbolTable
 import core.CommonTreeParser
+import exceptions.MismatchTypeException
 import exceptions.SymbolAlreadyDeclaredException
+import exceptions.UndeclaredVariableException
 import factories.CommonTreeParserFactory
 
 /**
@@ -9,6 +11,12 @@ import factories.CommonTreeParserFactory
 class CommonTreeParserTest extends GroovyTestCase {
 
     private CommonTreeParser treeParser
+
+
+    void testConstructTDSLevel0() {
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc");
+
+    }
 
     void testConstructTDSLevel1() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level1.looc");
@@ -219,6 +227,20 @@ class CommonTreeParserTest extends GroovyTestCase {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1.looc")
             treeParser.constructTDS(tree, new SymbolTable())
 
+        }
+    }
+
+    void testConstruct__TDSLevel2() {
+        shouldFail(UndeclaredVariableException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level2.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
+    void testConstruct__TDSLevel3() {
+        shouldFail(MismatchTypeException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level3.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
         }
     }
 

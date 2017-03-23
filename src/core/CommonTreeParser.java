@@ -164,6 +164,8 @@ public class CommonTreeParser {
 							tree.getChild(1).getText(),
 							tree.getChild(0).getText()
 					);
+				System.out.println("Line number: "  + tree.getChild(0).getLine());
+
 				break;
 
 			case "FOR":

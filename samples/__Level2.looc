@@ -1,0 +1,5 @@
+// La variable i n'est pas déclaré au préalable ! ligne 5
+
+var n : int;
+
+i := 10;
