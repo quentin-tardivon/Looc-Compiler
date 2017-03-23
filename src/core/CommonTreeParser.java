@@ -6,6 +6,7 @@ import TDS.entries.Method;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
 
+import exceptions.LoocException;
 import exceptions.MismatchTypeException;
 import TDS.entries.*;
 import TDS.entries.Class;
@@ -23,11 +24,11 @@ import java.util.ArrayList;
 public class CommonTreeParser {
 
 	protected SymbolTable tds;
-
+	private String filename;
 	protected ArrayList<String> list = new ArrayList<>();
 
-	public CommonTreeParser() {
-
+	public CommonTreeParser(String filename) {
+		this.filename = filename;
 	}
 
 	public void parseCommonTreeParser(Tree tree) {
@@ -43,7 +44,6 @@ public class CommonTreeParser {
 			case "ROOT":
 				this.tds = tds;
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					//System.out.println("Enter in child" + i);
 					constructTDS(tree.getChild(i), this.tds);
 				}
 				break;
@@ -167,7 +167,7 @@ public class CommonTreeParser {
 
 				//MismatchTypeException
 				if (!Util.testType(entry,tree.getChild(1).getText()))
-					throw new MismatchTypeException(
+					throw new MismatchTypeException(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText()),
 							entry.get("type"),
 							tree.getChild(1).getText(),

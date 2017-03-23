@@ -18,14 +18,10 @@ public class Util {
         return false;
     }
 
-
-
     public static String getType(String s) throws UnknownNodeTypeException {
         if (s.matches("[0-9]+")) {return "int";}
         if (s.matches("'.*'")) {return "string";}
-        throw new UnknownNodeTypeException(s);
-
+        throw new UnknownNodeTypeException(null, null, s);
     }
-
 
 }

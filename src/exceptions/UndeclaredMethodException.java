@@ -1,12 +1,14 @@
 package exceptions;
 
+import org.antlr.runtime.tree.Tree;
+
 /**
  * Created by madmax on 23/03/2017.
  */
-public class UndeclaredMethodException extends Exception {
+public class UndeclaredMethodException extends LoocException {
 
-    public UndeclaredMethodException(String idf) {
-        super("The method '" + idf + "' is not declared");
+    public UndeclaredMethodException(String filename, Tree t, String idf) {
+        super(filename, t, "The method '" + idf + "' is not declared");
     }
 }
 
