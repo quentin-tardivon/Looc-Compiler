@@ -43,7 +43,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     void testConstructTDSLevel2() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level2.looc");
 
-        String out =  treeParser.tds.getLink("Math").getLink("pow").get("retval").toString()
+        String out =  treeParser.tds.getLink("Math").getLink("pow").get("retval")
         def expected = "### Variable ###\n" +  " - type       -> int\n"
         assertToString(out, expected)
 
@@ -65,6 +65,14 @@ class CommonTreeParserTest extends GroovyTestCase {
 
         out = treeParser.tds.get("Math")
         expected = "### Class ###\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Math").getLink("pow").get("for0")
+        expected = "### For Loop ###\n"
+        assertToString(out, expected)
+
+        out = treeParser.tds.getLink("Math").getLink("pow").getLink("for0").getFather().get("retval")
+        expected = "### Variable ###\n" + " - type       -> int\n"
         assertToString(out, expected)
 
         out = treeParser.tds.getLink("Math").getLink("pow").get("i")

@@ -28,8 +28,7 @@ public class CommonTreeParserFactory {
 		CommonTree tree = (CommonTree) parser.program().getTree();
 
 		CommonTreeParser treeParser = new CommonTreeParser();
-		treeParser = new CommonTreeParser();
-		treeParser.constructTDS(tree, new SymbolTable());
+		treeParser.constructTDSWithoutSemantic(tree, new SymbolTable());
 		return treeParser;
 	}
 }

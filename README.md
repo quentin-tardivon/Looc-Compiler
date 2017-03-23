@@ -86,6 +86,8 @@ Controle sémantiques
 
 TODO-> add line number ?
 
+TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
+
 
 1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) -> "Cannot assign a" type variable "to a" type variable -> WARNING : double déclaration dans différent block -> what then ?
 
