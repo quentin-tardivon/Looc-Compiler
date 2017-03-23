@@ -1,7 +1,6 @@
 package TDS;
 
-import exceptions.SymbolAlreadyDeclaredException;
-import exceptions.UndeclaredVariableException;
+import exceptions.*;
 
 import java.util.HashMap;
 
@@ -127,15 +126,29 @@ public class SymbolTable {
 	public int getImbricationLevel(){  return this.imbricationLevel;  }
 
 
-	public Entry getInfo(String idf) throws UndeclaredVariableException {
+	/**
+	 * @param idf key
+	 * @return Returns the entries of the idf or throw an UndeclaredException
+	 */
+	public Entry getInfo(String idf) throws Exception {
 		if (this.entries.containsKey(idf)) {
 			return this.entries.get(idf);
 		}
 		else {
 			if (this.father != null) {
 				return this.father.getInfo(idf);
+			} else {
+				if(this.entries.get(idf).get("type").equals("Class")){
+					throw new UndeclaredClassException(idf);
+				}else if(this.entries.get(idf).get("type").equals("Method")){
+					throw new UndeclaredMethodException(idf);
+				}else if(this.entries.get(idf).get("type").equals("Variable")){
+					throw new UndeclaredVariableException(idf);
+				}
+				else{
+					throw new UnknownNodeTypeException(idf);
+				}
 			}
-			 throw new UndeclaredVariableException(idf);
 		}
 	}
 

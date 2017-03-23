@@ -6,7 +6,7 @@ package exceptions;
 public class UndeclaredVariableException extends Exception {
 
     public UndeclaredVariableException(String idf) {
-        super("The symbol '" + idf + "' is not declared");
+        super("The variable '" + idf + "' is not declared");
     }
 
 }

@@ -156,7 +156,16 @@ public class CommonTreeParser {
 
 
 			case "AFFECT":
+
+				//UndefinedVariableException
 				Entry entry = tds.getInfo(tree.getChild(0).getText());
+
+				//UndefinedClassException
+				if(tree.getChild(1).getText().equals("new")){
+					tds.getInfo(tree.getChild(1).getChild(0).getText());
+				}
+
+				//MismatchTypeException
 				if (!Util.testType(entry,tree.getChild(1).getText()))
 					throw new MismatchTypeException(
 							Util.getType(tree.getChild(1).getText()),
@@ -165,6 +174,7 @@ public class CommonTreeParser {
 							tree.getChild(0).getText()
 					);
 				break;
+
 
 			case "FOR":
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
@@ -175,6 +185,12 @@ public class CommonTreeParser {
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
+				break;
+
+			case "DO":
+				//UndeclaredMethodException
+				tds.getInfo(tree.getChild(1).getText());
+
 				break;
 
 			default:

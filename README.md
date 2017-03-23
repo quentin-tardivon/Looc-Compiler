@@ -84,10 +84,17 @@ Controle sémantiques
 -division par zero ?
 
 
+
+
+
+
+
+
+
 TODO-> add line number ?
 
 
-1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) -> "Cannot assign a" type variable "to a" type variable -> WARNING : double déclaration dans différent block -> what then ?
+1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
 
 
 2)UndeclaredVariableException : variable non déclarée -> "Variable" var " is not declared"   (OK)   
@@ -113,7 +120,7 @@ TODO-> add line number ?
 
 
 
-7)InexactReturnValueException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"   
+7)ReturnValueTypeMismatchException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"   
 
 
 
@@ -123,7 +130,7 @@ TODO-> add line number ?
 
 
 
-9)UnusedVariableExceptionException : variable jamais utilisé -> idf "is never used"                                               
+9)UnusedVariableException : variable jamais utilisé -> idf "is never used"                                               
 
 
 
@@ -134,7 +141,11 @@ TODO-> add line number ?
 11)StringOperationException : Pas d'opérations sur les strings => Str = a - b  ->
 
 
-12)
+
+12)UndefinedMethodException : utilisation d'une méthode non défini
+
+
+
 13)
 14)
 15)
