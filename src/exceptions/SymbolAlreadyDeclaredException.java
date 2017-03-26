@@ -1,5 +1,7 @@
 package exceptions;
 
+import org.antlr.runtime.tree.Tree;
+
 /**
  * Throw this exception if a symbol is already declared in the current Symbol table !
  * TODO improve ....!
@@ -8,13 +10,13 @@ package exceptions;
  * @author Quentin Tardivon
  * @author Yann Prono
  */
-public class SymbolAlreadyDeclaredException extends Exception {
+public class SymbolAlreadyDeclaredException extends LoocException {
 
-	public SymbolAlreadyDeclaredException(String doublonSymbol) {
-		super("The symbol '" + doublonSymbol + "' is already declared in the current symbol table");
+	public SymbolAlreadyDeclaredException(String filename, Tree node, String doublonSymbol) {
+		super(filename, node, "The symbol '" + doublonSymbol + "' is already declared in the current symbol table");
 	}
 
-	public SymbolAlreadyDeclaredException() {
+/*	public SymbolAlreadyDeclaredException() {
 		super("A symbol is already declared in the current symbol table");
-	}
+	}*/
 }

@@ -33,7 +33,7 @@ public class TestLooc {
 		CommonTree tree = (CommonTree)parser.program().getTree();
 
 
-		CommonTreeParser treeParser = new CommonTreeParser();
+		CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
 		treeParser.parseCommonTreeParser(tree);
 
 		System.out.print(treeParser.toString() + "\n");

@@ -3,6 +3,9 @@
 Projet de compilation pour langage objet Looc
 en ASM
 
+TODO
+cas new et moins unaire dans affect
+
 Organisation
 ===
 

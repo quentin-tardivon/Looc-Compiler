@@ -15,7 +15,6 @@ class CommonTreeParserTest extends GroovyTestCase {
 
     void testConstructTDSLevel0() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc");
-
     }
 
     void testConstructTDSLevel1() {
