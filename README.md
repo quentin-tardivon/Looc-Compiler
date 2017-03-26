@@ -91,22 +91,25 @@ Controle sémantiques
 
 
 
-TODO-> add line number ?
+TODO-> add line number
+TODO-> Syntaxiquement on peut faire : Do new Dog; c'est faux.
+
+
 
 
 1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
 
 
-2)UndeclaredVariableException : variable non déclarée -> "Variable" var " is not declared"   (OK)   
+
+2)UndeclaredVariableException : variable non définie (OK)   
 
 
 
-3)UndefinedClassException : classe non définie -> "Class" class "is not defined"        
+3)UndeclaredClassException : classe non définie  (OK)    
 
 
 
-
-4)Argument, attribut et méthode avec meme idf -> idf "is already used by"    
+4)UndeclaredMethodException : méthode non définie (OK)
 
 
 
@@ -142,7 +145,7 @@ TODO-> add line number ?
 
 
 
-12)UndefinedMethodException : utilisation d'une méthode non défini
+12)Argument, attribut et méthode avec meme idf -> idf "is already used by"
 
 
 
