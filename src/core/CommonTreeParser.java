@@ -86,7 +86,8 @@ public class CommonTreeParser {
 
 			case "CLASS_DEC":
 				Class newClass = new Class(tree.getChild(0).getText());
-				if (!tree.getChild(1).equals("METHODS") && !tree.getChild(1).equals("VARS")) {
+				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
+					tds.getInfo(tree.getChild(1).getText());
 					newClass.put("Inherit", tree.getChild(1).getText()); //Rajouter le contrôle de déclaration du père
 				}
 				tds.put(tree.getChild(0).getText(), newClass);
