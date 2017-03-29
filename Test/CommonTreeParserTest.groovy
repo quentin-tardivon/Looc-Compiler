@@ -130,6 +130,10 @@ class CommonTreeParserTest extends GroovyTestCase {
         expected = "### Variable ###\n" + " - type       -> Animal\n"
         assertToString(out, expected)
 
+        out = treeParser.tds.get("Cat").get("Inherit")
+        expected = "Animal\n"
+        assertToString(out, expected)
+
     }
 
 
