@@ -99,6 +99,8 @@ TODO-> Syntaxiquement on peut faire : Do new Dog; c'est faux.
 
 
 
+TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
+
 
 1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
 

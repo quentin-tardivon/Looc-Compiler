@@ -130,9 +130,7 @@ public class SymbolTable {
 	 * @return Returns the entries of the idf or throw an UndeclaredException
 	 */
 	public Entry getInfo(String idf) throws Exception {
-		System.out.println(idf + " theooooooooo");
-		if(idf.equals("retval"))
-			System.out.println("break");
+
 		if (this.entries.containsKey(idf)) {
 			return this.entries.get(idf);
 		}
@@ -145,6 +143,7 @@ public class SymbolTable {
 				//System.out.println(this.father.getInfo(idf).toString());
 				return this.father.getInfo(idf);
 			} else {
+				System.out.println("idf : " + idf);
 				if(this.entries.get(idf).get("type").equals("Class")){
 					throw new UndeclaredClassException(null, null, idf);
 				}else if(this.entries.get(idf).get("type").equals("Method")){
