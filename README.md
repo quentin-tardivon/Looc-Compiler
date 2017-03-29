@@ -96,6 +96,8 @@ Controle sémantiques
 
 TODO-> add line number ?
 
+TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
+
 
 1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
 
