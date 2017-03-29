@@ -3,11 +3,8 @@ package utils;
 import TDS.Entry;
 import TDS.SymbolTable;
 import exceptions.StringOperationException;
-import exceptions.UndeclaredVariableException;
 import exceptions.UnknownNodeTypeException;
-import org.antlr.runtime.tree.Tree;
 
-import javax.lang.model.type.UnknownTypeException;
 
 /**
  * Created by tld on 22/03/2017.
@@ -15,9 +12,7 @@ import javax.lang.model.type.UnknownTypeException;
 public class Util {
 
     public static Boolean testType(Entry l, String r) throws UnknownNodeTypeException{
-        if (l.get("type").equals("int") && r.equals("int"))
-            return true;
-        if (l.get("type").equals("string") && r.equals("string"))
+        if (l.get("type").equals(r))
             return true;
         return false;
     }
