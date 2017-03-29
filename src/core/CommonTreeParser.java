@@ -353,7 +353,7 @@ public class CommonTreeParser {
 	}
 
 	public String subTreeType(Tree node,SymbolTable tds) throws Exception {
-			System.out.println("Appel subtreetype" + node.getText());
+			System.out.println("Appel subtreetype " + node.getText());
 
 			switch (node.getText()) {
 				case "PLUS":
@@ -371,6 +371,10 @@ public class CommonTreeParser {
 				case "new":
 					//System.out.println("new subtreetype");
 					return node.getChild(0).getText();
+				case "-":
+					System.out.printf("## It's a unary node %s\nnb children: %d\n", node.getText(), node.getChildCount());
+					//System.out.println("##### " + this.subTreeType(node.getChild(0), tds));
+					return this.subTreeType(node.getChild(0), tds);
 				default:
 					return Util.getType(node.getText(),tds);
 			}
