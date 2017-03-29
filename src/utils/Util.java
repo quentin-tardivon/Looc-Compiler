@@ -3,6 +3,7 @@ package utils;
 import TDS.Entry;
 import TDS.SymbolTable;
 import exceptions.StringOperationException;
+import exceptions.UndeclaredMethodException;
 import exceptions.UnknownNodeTypeException;
 
 
@@ -39,6 +40,14 @@ public class Util {
 
         }
 
+    }
+
+    public static Boolean testExecMethod(String var,String method,SymbolTable tds) throws Exception {
+        if (tds.getInfo(var).get("type").equals(tds.getLink(tds.getInfo(var).get("type")).getInfo(method)))
+            return true;
+        else {
+            throw new UndeclaredMethodException(null,null,null);
+        }
     }
 
 }

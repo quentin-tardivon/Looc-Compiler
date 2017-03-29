@@ -143,7 +143,7 @@ public class SymbolTable {
 				//System.out.println(this.father.getInfo(idf).toString());
 				return this.father.getInfo(idf);
 			} else {
-				System.out.println("idf : " + idf);
+				System.out.println("idf : " + idf + " entries : " + this.entries.get(idf));
 				if(this.entries.get(idf).get("type").equals("Class")){
 					throw new UndeclaredClassException(null, null, idf);
 				}else if(this.entries.get(idf).get("type").equals("Method")){

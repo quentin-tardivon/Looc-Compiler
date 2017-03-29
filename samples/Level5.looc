@@ -39,7 +39,7 @@ class Cat inherit Animal =
 var a1 : Animal;
 var a2 : Animal;
 a1 := new Dog;
-do a1.setName("boo");
+do 4+3;
 a2 := new Cat;
 do a2.setName("foo");
 do a1.whoami();

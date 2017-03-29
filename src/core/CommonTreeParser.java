@@ -174,7 +174,6 @@ public class CommonTreeParser {
 					);
 				//System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
 				System.out.println("Line number: "  + tree.getChild(0).getLine());
-
 				break;
 
 
@@ -190,9 +189,20 @@ public class CommonTreeParser {
 				break;
 
 			case "DO":
-				//UndeclaredMethodException
-				tds.getInfo(tree.getChild(1).getText());
+				if (tree.getChildCount()==1) {
+					//Controle sémantique ici ??
+					if (tree.getChild(0).getText().equals("new"))
+						tds.getInfo(tree.getChild(0).getChild(0).getText());
+					else {
 
+					}
+				}
+				else {
+					if (!Util.testExecMethod(tree.getChild(0).getText(),tree.getChild(1).getText(),tds)){
+						System.out.println("c pa bi1");
+					}
+				}
+				tds.getInfo(tree.getChild(1).getText());
 				break;
 
 			default:
