@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 17:20:08
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 17:37:26
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -698,10 +698,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:32:7: ( '.' )
-            // Looc.g:32:9: '.'
+            // Looc.g:32:7: ( 'this' )
+            // Looc.g:32:9: 'this'
             {
-            match('.'); 
+            match("this"); 
+
 
             }
 
@@ -718,10 +719,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:33:7: ( 'this' )
-            // Looc.g:33:9: 'this'
+            // Looc.g:33:7: ( 'super' )
+            // Looc.g:33:9: 'super'
             {
-            match("this"); 
+            match("super"); 
 
 
             }
@@ -739,11 +740,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:34:7: ( 'super' )
-            // Looc.g:34:9: 'super'
+            // Looc.g:34:7: ( '.' )
+            // Looc.g:34:9: '.'
             {
-            match("super"); 
-
+            match('.'); 
 
             }
 
@@ -823,17 +823,17 @@ public class LoocLexer extends Lexer {
         try {
             int _type = IDF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:121:4: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // Looc.g:121:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // Looc.g:124:4: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // Looc.g:124:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
-            // Looc.g:121:7: ( 'a' .. 'z' )
-            // Looc.g:121:8: 'a' .. 'z'
+            // Looc.g:124:7: ( 'a' .. 'z' )
+            // Looc.g:124:8: 'a' .. 'z'
             {
             matchRange('a','z'); 
 
             }
 
-            // Looc.g:121:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // Looc.g:124:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop1:
             do {
                 int alt1=2;
@@ -882,17 +882,17 @@ public class LoocLexer extends Lexer {
         try {
             int _type = CLASS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:123:6: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )* )
-            // Looc.g:123:8: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )*
+            // Looc.g:126:6: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )* )
+            // Looc.g:126:8: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )*
             {
-            // Looc.g:123:8: ( 'A' .. 'Z' )
-            // Looc.g:123:9: 'A' .. 'Z'
+            // Looc.g:126:8: ( 'A' .. 'Z' )
+            // Looc.g:126:9: 'A' .. 'Z'
             {
             matchRange('A','Z'); 
 
             }
 
-            // Looc.g:123:18: ( 'a' .. 'z' | 'A' .. 'Z' )*
+            // Looc.g:126:18: ( 'a' .. 'z' | 'A' .. 'Z' )*
             loop2:
             do {
                 int alt2=2;
@@ -941,10 +941,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:125:4: ( ( '0' .. '9' )+ )
-            // Looc.g:125:6: ( '0' .. '9' )+
+            // Looc.g:128:4: ( ( '0' .. '9' )+ )
+            // Looc.g:128:6: ( '0' .. '9' )+
             {
-            // Looc.g:125:6: ( '0' .. '9' )+
+            // Looc.g:128:6: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -958,7 +958,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // Looc.g:125:6: '0' .. '9'
+            	    // Looc.g:128:6: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -990,11 +990,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:127:7: ( '\"' ( . )* '\"' )
-            // Looc.g:127:9: '\"' ( . )* '\"'
+            // Looc.g:130:7: ( '\"' ( . )* '\"' )
+            // Looc.g:130:9: '\"' ( . )* '\"'
             {
             match('\"'); 
-            // Looc.g:127:12: ( . )*
+            // Looc.g:130:12: ( . )*
             loop4:
             do {
                 int alt4=2;
@@ -1010,7 +1010,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // Looc.g:127:13: .
+            	    // Looc.g:130:13: .
             	    {
             	    matchAny(); 
 
@@ -1039,7 +1039,7 @@ public class LoocLexer extends Lexer {
         try {
             int _type = OPER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:129:5: ( '<' | '<=' | '>' | '>=' | '==' | '!=' )
+            // Looc.g:132:5: ( '<' | '<=' | '>' | '>=' | '==' | '!=' )
             int alt5=6;
             switch ( input.LA(1) ) {
             case '<':
@@ -1083,14 +1083,14 @@ public class LoocLexer extends Lexer {
 
             switch (alt5) {
                 case 1 :
-                    // Looc.g:129:8: '<'
+                    // Looc.g:132:8: '<'
                     {
                     match('<'); 
 
                     }
                     break;
                 case 2 :
-                    // Looc.g:129:12: '<='
+                    // Looc.g:132:12: '<='
                     {
                     match("<="); 
 
@@ -1098,14 +1098,14 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // Looc.g:129:17: '>'
+                    // Looc.g:132:17: '>'
                     {
                     match('>'); 
 
                     }
                     break;
                 case 4 :
-                    // Looc.g:129:21: '>='
+                    // Looc.g:132:21: '>='
                     {
                     match(">="); 
 
@@ -1113,7 +1113,7 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // Looc.g:129:26: '=='
+                    // Looc.g:132:26: '=='
                     {
                     match("=="); 
 
@@ -1121,7 +1121,7 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // Looc.g:129:31: '!='
+                    // Looc.g:132:31: '!='
                     {
                     match("!="); 
 
@@ -1143,10 +1143,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:131:3: ( ( ' ' | '\\t' | '\\n' )+ )
-            // Looc.g:131:6: ( ' ' | '\\t' | '\\n' )+
+            // Looc.g:134:3: ( ( ' ' | '\\t' | '\\n' )+ )
+            // Looc.g:134:6: ( ' ' | '\\t' | '\\n' )+
             {
-            // Looc.g:131:6: ( ' ' | '\\t' | '\\n' )+
+            // Looc.g:134:6: ( ' ' | '\\t' | '\\n' )+
             int cnt6=0;
             loop6:
             do {
@@ -1201,10 +1201,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = NEWLINE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:133:8: ( ( '\\r' )? '\\n' )
-            // Looc.g:133:10: ( '\\r' )? '\\n'
+            // Looc.g:136:8: ( ( '\\r' )? '\\n' )
+            // Looc.g:136:10: ( '\\r' )? '\\n'
             {
-            // Looc.g:133:10: ( '\\r' )?
+            // Looc.g:136:10: ( '\\r' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1213,7 +1213,7 @@ public class LoocLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // Looc.g:133:10: '\\r'
+                    // Looc.g:136:10: '\\r'
                     {
                     match('\r'); 
 
@@ -1239,15 +1239,15 @@ public class LoocLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:136:2: ( '/*' ( ( . )* ) '*/' )
-            // Looc.g:136:4: '/*' ( ( . )* ) '*/'
+            // Looc.g:139:2: ( '/*' ( ( . )* ) '*/' )
+            // Looc.g:139:4: '/*' ( ( . )* ) '*/'
             {
             match("/*"); 
 
-            // Looc.g:136:9: ( ( . )* )
-            // Looc.g:136:10: ( . )*
+            // Looc.g:139:9: ( ( . )* )
+            // Looc.g:139:10: ( . )*
             {
-            // Looc.g:136:10: ( . )*
+            // Looc.g:139:10: ( . )*
             loop8:
             do {
                 int alt8=2;
@@ -1272,7 +1272,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // Looc.g:136:10: .
+            	    // Looc.g:139:10: .
             	    {
             	    matchAny(); 
 
@@ -1306,15 +1306,15 @@ public class LoocLexer extends Lexer {
         try {
             int _type = LINE_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:139:2: ( '//' ( ( . )* ) '\\n' )
-            // Looc.g:139:4: '//' ( ( . )* ) '\\n'
+            // Looc.g:142:2: ( '//' ( ( . )* ) '\\n' )
+            // Looc.g:142:4: '//' ( ( . )* ) '\\n'
             {
             match("//"); 
 
-            // Looc.g:139:9: ( ( . )* )
-            // Looc.g:139:10: ( . )*
+            // Looc.g:142:9: ( ( . )* )
+            // Looc.g:142:10: ( . )*
             {
-            // Looc.g:139:10: ( . )*
+            // Looc.g:142:10: ( . )*
             loop9:
             do {
                 int alt9=2;
@@ -1330,7 +1330,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // Looc.g:139:10: .
+            	    // Looc.g:142:10: .
             	    {
             	    matchAny(); 
 
@@ -1711,10 +1711,10 @@ public class LoocLexer extends Lexer {
     static final String DFA10_acceptS =
         "\4\uffff\1\4\1\5\2\uffff\1\10\1\11\1\12\1\uffff\1\14\7\uffff\1\32"+
         "\1\33\1\34\3\uffff\1\44\1\45\1\46\1\47\1\50\1\51\1\52\1\51\3\uffff"+
-        "\1\3\1\uffff\1\17\1\7\5\uffff\1\22\1\36\5\uffff\1\53\1\54\1\35\5"+
+        "\1\3\1\uffff\1\17\1\7\5\uffff\1\22\1\40\5\uffff\1\53\1\54\1\35\5"+
         "\uffff\1\21\1\25\5\uffff\1\30\1\23\12\uffff\1\15\1\uffff\1\13\2"+
-        "\uffff\1\20\1\24\3\uffff\1\31\10\uffff\1\27\1\26\1\37\2\uffff\1"+
-        "\43\1\1\3\uffff\1\40\1\41\2\uffff\1\6\1\16\1\42\1\2";
+        "\uffff\1\20\1\24\3\uffff\1\31\10\uffff\1\27\1\26\1\36\2\uffff\1"+
+        "\43\1\1\3\uffff\1\37\1\41\2\uffff\1\6\1\16\1\42\1\2";
     static final String DFA10_specialS =
         "\165\uffff}>";
     static final String[] DFA10_transitionS = {
