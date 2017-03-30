@@ -3,5 +3,5 @@
 var a : int;
 var b : string;
 
-b := a;
+b := 1+2;
 

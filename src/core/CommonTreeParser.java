@@ -192,20 +192,22 @@ public class CommonTreeParser {
 				if (tree.getChild(1).getText().equals("new")) {
 					System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
 					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
-						throw new MismatchTypeException(this.filename, tree.getChild(1),
+						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
 								entry.get("type"),
 								tree.getChild(1).getChild(0).getText(),
-								tree.getChild(0).getText()
-						);
+								tree.getChild(0).getText());
+
+
 				}
 				else if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
-					throw new MismatchTypeException(this.filename, tree.getChild(1),
+					System.out.println("HEREHERE the subtree :"+ subTreeType(tree.getChild(1),tds));
+					Util.mismatchType(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText(), tds),
 							entry.get("type"),
 							tree.getChild(1).getText(),
-							tree.getChild(0).getText()
-					);
+							tree.getChild(0).getText());
+
 				//System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
 				System.out.println("Line number: "  + tree.getChild(0).getLine());
 				break;

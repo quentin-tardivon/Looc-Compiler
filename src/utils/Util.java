@@ -105,4 +105,8 @@ public class Util {
 	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
 		throw new UndeclaredInheritanceException(null, null, className);
 	}
+
+	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1, String idf2) throws Exception {
+        throw new MismatchTypeException(filename,node,type1,type2,idf1,idf2);
+    }
 }
