@@ -1,0 +1,6 @@
+// La variable a n'est pas déclarée!
+// ligne 6
+
+var n : int;
+
+n := a;
