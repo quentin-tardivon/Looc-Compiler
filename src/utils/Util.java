@@ -94,4 +94,15 @@ public class Util {
         }
     }
 
+    public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
+    	throw new UndeclaredClassException(null, null, className);
+    }
+
+	public static void undeclaredToken(String tokenName, SymbolTable tds) throws Exception {
+    	throw new UndeclaredVariableException(null, null, tokenName);
+	}
+
+	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
+		throw new UndeclaredInheritanceException(null, null, className);
+	}
 }

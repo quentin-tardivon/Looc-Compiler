@@ -16,11 +16,11 @@ class Dog inherit Animal = ()
 
 class Cat inherit Animal = ()
 
-var a1 : Michel;
+var a1 : Animal;
 
 var a2 : Animal;
 
-a1 := new Dog;
+a1 := new Michel;
 
 do a1.setName("boo") ;
 

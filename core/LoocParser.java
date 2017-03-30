@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 15:26:53
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 17:20:08
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -239,7 +239,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: class_decl, var_decl, instruction
+            // elements: var_decl, instruction, class_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -530,7 +530,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: var_decl, method_decl
+            // elements: method_decl, var_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -684,7 +684,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_args, function_decl, IDF
+            // elements: method_args, IDF, function_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -880,7 +880,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: instruction, type, var_decl
+                    // elements: type, instruction, var_decl
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -998,7 +998,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: instruction, var_decl
+                    // elements: var_decl, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1689,7 +1689,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: IDF, expression
+                    // elements: expression, IDF
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1788,7 +1788,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, instruction, IDF, expression
+                    // elements: expression, expression, IDF, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1950,7 +1950,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, a, b
+                    // elements: a, b, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3335,7 +3335,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, 74, expression, IDF
+                    // elements: IDF, expression, 74, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3348,7 +3348,7 @@ public class LoocParser extends Parser {
                     // 104:59: -> ( ^( CALL 'this' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )?
                     {
                         // Looc.g:104:62: ( ^( CALL 'this' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )?
-                        if ( stream_74.hasNext()||stream_IDF.hasNext() ) {
+                        if ( stream_IDF.hasNext()||stream_74.hasNext() ) {
                             // Looc.g:104:62: ^( CALL 'this' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )
                             {
                             Object root_1 = (Object)adaptor.nil();
@@ -3387,8 +3387,8 @@ public class LoocParser extends Parser {
                             }
 
                         }
-                        stream_74.reset();
                         stream_IDF.reset();
+                        stream_74.reset();
 
                     }
 
@@ -3489,7 +3489,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: 75, expression, expression, IDF
+                    // elements: IDF, 75, expression, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3502,7 +3502,7 @@ public class LoocParser extends Parser {
                     // 105:59: -> ( ^( CALL 'super' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )?
                     {
                         // Looc.g:105:62: ( ^( CALL 'super' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )?
-                        if ( stream_75.hasNext()||stream_IDF.hasNext() ) {
+                        if ( stream_IDF.hasNext()||stream_75.hasNext() ) {
                             // Looc.g:105:62: ^( CALL 'super' IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )
                             {
                             Object root_1 = (Object)adaptor.nil();
@@ -3541,8 +3541,8 @@ public class LoocParser extends Parser {
                             }
 
                         }
-                        stream_75.reset();
                         stream_IDF.reset();
+                        stream_75.reset();
 
                     }
 
