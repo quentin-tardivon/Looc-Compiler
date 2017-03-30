@@ -186,6 +186,8 @@ public class CommonTreeParser {
 
 				//MismatchTypeException
 				System.out.println("entry: "+ entry);
+				Util.testType(entry,subTreeType(tree.getChild(1),tds),tds);
+
 
 				if (tree.getChild(1).getText().equals("new")) {
 					System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
@@ -222,7 +224,7 @@ public class CommonTreeParser {
 
 			case "DO":
 					//UndeclaredMethodException
-
+				System.out.println("case DO tree : " +tree);
 				Util.testDo(tree.getChild(0),tds);
 				break;
 
@@ -249,6 +251,11 @@ public class CommonTreeParser {
 				String realV=tds.getInfo(tree.getChild(0).getText()).get("type").toString();
 				String expectedV=tds.getFather().get(tds.getName()).get("returnType").toString();
 				Util.testReturnType(expectedV,realV);
+				break;
+
+			case "READ":
+
+				break;
 
 
 			default:

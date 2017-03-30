@@ -9,6 +9,7 @@ import exceptions.UnknownNodeTypeException;
 import org.antlr.runtime.tree.Tree;
 
 import exceptions.*;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 
 /**
@@ -16,7 +17,7 @@ import exceptions.*;
  */
 public class Util {
 
-    public static Boolean testType(Entry l, String r, SymbolTable tds) throws UnknownNodeTypeException{
+    public static Boolean testType(Entry l, String r, SymbolTable tds) throws Exception{
     	System.out.println(r);
         if (l.get("type").equals(r)) {
 	        return true;
@@ -36,11 +37,11 @@ public class Util {
     }
 
 
-    public static String testTypeOper(Entry l, Entry r) throws StringOperationException {
+    /*public static String testTypeOper(Entry l, Entry r) throws StringOperationException {
         if (l.get("type").equals("string") ||  r.get("type").equals("string"))
             throw new StringOperationException();
         return "int";
-    }
+    }*/
 
     public static String testTypeOper(String nodeL, String nodeR) throws Exception {
         if (nodeL.equals("int") && nodeR.equals("int")) {
@@ -71,26 +72,38 @@ public class Util {
 
     }
 
-    public static Boolean testExecMethod(String var,String method,SymbolTable tds) throws Exception {
-        if (tds.getInfo(var).get("type").equals(tds.getLink(tds.getInfo(var).get("type")).getInfo(method)))
-            return true;
-        else {
+    public static void testExecMethod(String var,String method,SymbolTable tds) throws Exception {
+        if (!tds.getInfo(var).get("type").equals(tds.getLink(tds.getInfo(var).get("type")).getInfo(method)))
             throw new UndeclaredMethodException(null,null,null);
-        }
+
     }
 
     public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
+        System.out.println("testDo node : " +doChild);
         switch (doChild.getText()) {
             case "CALL":
-                if (!Util.testExecMethod(doChild.getChild(0).getText(),doChild.getChild(1).getText(),tds)){
-                    System.out.println("c pa bi1");
-                }
+                //Util.testCall(doChild,tds);
+                Util.testExecMethod(doChild.getChild(0).getText(),doChild.getChild(1).getText(),tds);
+                Util.testVoidCall(doChild,tds);
                 break;
 
 
             default: //OPER ou new
                 throw new InexactDoCallException(null,null,doChild.getText());
 
+        }
+    }
+
+    public static void testCall(Tree callNode,SymbolTable tds) throws Exception {
+        for (int j = 1; j < callNode.getChildCount(); j++) {
+
+
+        }
+    }
+
+    public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
+        if (tds.getInfo(callNode.getChild(0).getText()).get("returnType").equals(null)){
+            throw new MethodNonVoidException(null,null,callNode.getChild(0).getText());
         }
     }
 

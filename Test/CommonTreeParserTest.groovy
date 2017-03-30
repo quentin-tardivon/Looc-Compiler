@@ -273,4 +273,11 @@ class CommonTreeParserTest extends GroovyTestCase {
         }
     }
 
+    void testConstruct__MismatchTypeException() {
+        shouldFail(MismatchTypeException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/__MismatchTypeException.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
 }
