@@ -1,0 +1,49 @@
+
+class Dev = (
+
+    var programmingLanguagesKnown: int;
+    var age: int;
+    var master: string;
+
+    method getNbLanguagues(godmod : int): int {
+    	if godmod != -1 then
+    		return (99999);
+    	else
+    	    return (programmingLanguagesKnown);
+    	fi
+    }
+
+    method init() {
+        programmingLanguagesKnown := 3;
+        age := 20;
+        master := nil;
+    }
+
+    method levelUp() {
+        programmingLanguagesKnown := this.getNbLanguages(-1) + 1;
+        age := age + 1;
+    }
+
+)
+
+class Engineer inherit Dev = (
+    method getNbLanguagues(godmod: int) {
+        return (super.getNbLanguagues(godmod) - 1);
+    }
+)
+
+var d : Dev;
+var e : Dev;
+b := new Dev;
+b := new Engineer;
+do b.init();
+do e.init();
+
+write d.getNbLanguagues(0);
+write e.getNbLanguagues(0);
+
+do d.levelUp();
+do e.levelUp();
+do e.levelUp();
+write d.getNbLanguagues(0);
+write e.getNbLanguagues(0);

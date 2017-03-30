@@ -94,14 +94,17 @@ public class CommonTreeParser {
 				tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
 				break;
 
-			case "CLASS_DEC":
-				tds.put(tree.getChild(0).getText(), new Class(tree.getChild(0).getText()));
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(0).getText());
+			case "CLASS_DEC":Class newClass = new Class(tree.getChild(0).getText());
+				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
+					tds.getInfo(tree.getChild(1).getText());
+					newClass.put("Inherit", tree.getChild(1).getText());
+				}
+				tds.put(tree.getChild(0).getText(), newClass);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(1).getText());
 				tds.putLink(tree.getChild(0).getText(), newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
 				}
-
 				break;
 
 
@@ -175,8 +178,19 @@ public class CommonTreeParser {
 				}
 
 				//MismatchTypeException
-				//System.out.println(entry);
-				if (!Util.testType(entry,subTreeType(tree.getChild(1),tds)))
+				System.out.println("entry: "+ entry);
+
+				if (tree.getChild(1).getText().equals("new")) {
+					System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
+					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
+						throw new MismatchTypeException(this.filename, tree.getChild(1),
+								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
+								entry.get("type"),
+								tree.getChild(1).getChild(0).getText(),
+								tree.getChild(0).getText()
+						);
+				}
+				else if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
 					throw new MismatchTypeException(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText(), tds),
 							entry.get("type"),
@@ -185,7 +199,6 @@ public class CommonTreeParser {
 					);
 				//System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
 				System.out.println("Line number: "  + tree.getChild(0).getLine());
-
 				break;
 
 
@@ -202,9 +215,28 @@ public class CommonTreeParser {
 
 			case "DO":
 					//UndeclaredMethodException
-				tds.getInfo(tree.getChild(1).getText());
 
+				Util.testDo(tree.getChild(0),tds);
 				break;
+
+
+
+				/*if (tree.getChildCount()==1) {
+					//Controle sémantique ici ??
+					if (tree.getChild(0).getText().equals("new"))
+						tds.getInfo(tree.getChild(0).getChild(0).getText());
+					else {
+
+					}
+				}
+				else {
+					if (!Util.testExecMethod(tree.getChild(0).getText(),tree.getChild(1).getText(),tds)){
+						System.out.println("c pa bi1");
+					}
+				}
+				tds.getInfo(tree.getChild(1).getText());
+				break;*/
+
 
 			case "RETURN":
 				String realV=tds.getInfo(tree.getChild(0).getText()).get("type").toString();
@@ -214,7 +246,7 @@ public class CommonTreeParser {
 
 			default:
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					//System.out.println("## Default case " + tree);
+					System.out.println("## Default case " + tree);
 					constructTDS(tree.getChild(i), tds);
 				}
 				break;
