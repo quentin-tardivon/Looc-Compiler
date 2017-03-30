@@ -32,6 +32,7 @@ tokens{
 	READ;
 	ACCESS;
 	THIS;
+	CALL;
 	SUPER;
 	BLOCK;
 	VARS;
@@ -99,9 +100,9 @@ moinsunaire
 
 atom: INT
 	| STRING
-  | IDF ('.' IDF '('(expression(','expression)*)?')')? -> IDF (IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?)?
-  | 'this' ('.' IDF '('(expression(','expression)*)?')')? -> 'this' (IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)? //intégration des possibilités de expressionbis ?
-	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> 'super' (IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)?  //
+  | IDF ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?)?
+  | 'this' ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL 'this' IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)? //intégration des possibilités de expressionbis ?
+	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL 'super' IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)?  //
 	| '(' expression ')' -> expression;
 
 print:		'write' expression ';' -> ^(WRITE expression);

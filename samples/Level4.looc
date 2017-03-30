@@ -29,4 +29,4 @@ f := new Fibonacci;
 do f.init();
 do f.nextGen();
 do f.nextGen();
-write f.nextGenAndGet();
+write f.nextGenAndGet() + 4;
