@@ -1,7 +1,1 @@
-
-
-var a : int;
-var b : string;
-
-b := 1+2;
-
+    
