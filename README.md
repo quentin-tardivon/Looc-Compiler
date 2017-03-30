@@ -94,7 +94,7 @@ Controle sémantiques
 
 
 
-TODO-> add line number ?
+
 
 TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
@@ -102,21 +102,21 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
 
 
-2)UndeclaredVariableException : variable non déclarée -> "Variable" var " is not declared"   (OK)   
+
+2)UndeclaredVariableException : variable non définie (OK)   
 
 
 
-3)UndefinedClassException : classe non définie -> "Class" class "is not defined"        
+3)UndeclaredClassException : classe non définie  (OK)    
+
+
+
+4)UndeclaredMethodException : méthode non définie (OK)
 
 
 
 
-4)Argument, attribut et méthode avec meme idf -> idf "is already used by"    
-
-
-
-
-5)AlreadyDeclaredException : plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined"  
+5)AlreadyDeclaredException : plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined" (OK)
 
 
 
@@ -125,14 +125,12 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
 
 
-7)ReturnValueTypeMismatchException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"   
+7.1)ReturnValueTypeMismatchException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"    (+void-handling)
+
+7.2)MissingReturnValueException :
 
 
-
-
-8)OperationTypeMismatchException : cohérence de type lors d'un calcul ->  a= b+c; a= b+2;       
-
-
+8)MismatchOperationException : cohérence de type lors d'un calcul ->  a= b+c; a= b+2;       
 
 
 9)UnusedVariableException : variable jamais utilisé -> idf "is never used"                                               
@@ -143,18 +141,24 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
 
 
-11)StringOperationException : Pas d'opérations sur les strings => Str = a - b  ->
+11)StringOperationException : Pas d'opérations sur les strings => Str = a - b  (OK)
 
 
 
-12)UndefinedMethodException : utilisation d'une méthode non défini
+12)??? :Argument, attribut et méthode avec meme idf -> idf "is already used by"
 
 
+13)UndefinedInheritanceException: Héritage d'une classe inexistante -> Dog inherit Alien (but alien was never defined)
 
-13)
-14)
-15)
-16)
+14)InexactUsesOfDoStatement -> do 1+3; doesnt work
+
+15)do class.method() avec method ps void
+
+16)read =! entier
+
+17)write =! entier/string
+
+18) ordre des paramètres
 
 
 

@@ -2,6 +2,12 @@ package utils;
 
 import TDS.Entry;
 import TDS.SymbolTable;
+import exceptions.InexactDoCallException;
+import exceptions.StringOperationException;
+import exceptions.UndeclaredMethodException;
+import exceptions.UnknownNodeTypeException;
+import org.antlr.runtime.tree.Tree;
+
 import exceptions.*;
 
 
@@ -57,6 +63,11 @@ public class Util {
             return tds.getInfo(s).get("type");
 
         }
+    }
+
+    public static void testReturnType(String expected, String real) throws Exception {
+        if(!expected.equals(real))
+            throw new ReturnValueTypeMismatchException(expected, real);
 
     }
 
@@ -65,6 +76,21 @@ public class Util {
             return true;
         else {
             throw new UndeclaredMethodException(null,null,null);
+        }
+    }
+
+    public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
+        switch (doChild.getText()) {
+            case "CALL":
+                if (!Util.testExecMethod(doChild.getChild(0).getText(),doChild.getChild(1).getText(),tds)){
+                    System.out.println("c pa bi1");
+                }
+                break;
+
+
+            default: //OPER ou new
+                throw new InexactDoCallException(null,null,doChild.getText());
+
         }
     }
 

@@ -8,6 +8,5 @@ public class StringOperationException extends Exception {
     public StringOperationException(){
         super("Cannot operate on strings ");
     }
-
-
+    
 }
