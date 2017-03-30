@@ -2,14 +2,8 @@ package utils;
 
 import TDS.Entry;
 import TDS.SymbolTable;
-import exceptions.InexactDoCallException;
-import exceptions.StringOperationException;
-import exceptions.UndeclaredMethodException;
-import exceptions.UnknownNodeTypeException;
-import org.antlr.runtime.tree.Tree;
-
 import exceptions.*;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
+import org.antlr.runtime.tree.Tree;
 
 
 /**
