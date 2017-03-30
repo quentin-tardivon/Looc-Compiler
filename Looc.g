@@ -100,10 +100,13 @@ moinsunaire
 
 atom: INT
 	| STRING
-  | IDF ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?)?
-  | 'this' ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL 'this' IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)? //intégration des possibilités de expressionbis ?
-	| 'super' ('.' IDF '('(expression(','expression)*)?')')? -> ^(CALL 'super' IDF ^(EFFECTIVE_PARAMS(expression(expression)*)?)?)?  //
+	| IDF^ (call^)?
+	| 'this'^ (call^)?
+	| 'super'^ (call^)?
 	| '(' expression ')' -> expression;
+
+
+call	: '.' IDF '('(expression(','expression)*)?')' -> ^(CALL IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?);
 
 print:		'write' expression ';' -> ^(WRITE expression);
 
