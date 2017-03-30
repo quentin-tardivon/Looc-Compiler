@@ -233,6 +233,18 @@ class CommonTreeParserTest extends GroovyTestCase {
 
     }
 
+    void testConstructTDSLevel5() {
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level5.looc");
+    }
+
+    void testConstructTDSLevel6() {
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level6.looc");
+    }
+
+    void testConstructTDSLevel7() {
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level7.looc");
+    }
+
     void testConstruct__TDSLevel1MismatchOperationException() {
         shouldFail(MismatchOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1OperationMismatch.looc")

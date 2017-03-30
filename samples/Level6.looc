@@ -5,7 +5,13 @@ class ExceptionNotImplemented = (
   }
 )
 
-
+class Comparator = (
+  method compare(left: int, right: int) {
+    var ex : ExceptionNotImplemented;
+    ex := new ExceptionNotImplemented;
+    do ex.throw();
+  }
+)
 
 class Greater inherit Comparator = (
 
@@ -32,13 +38,6 @@ class Between = (
   }
 )
 
-class Comparator = (
-  method compare(left: int, right: int) {
-    var ex : ExceptionNotImplemented;
-    ex := new ExceptionNotImplemented;
-    do ex.throw();
-  }
-)
 
 var b : Between;
 b := new Between;
