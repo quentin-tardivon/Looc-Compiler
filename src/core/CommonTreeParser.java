@@ -203,7 +203,12 @@ public class CommonTreeParser {
 				break;
 
 			case "DO":
-				if (tree.getChildCount()==1) {
+				Util.testDo(tree.getChild(0),tds);
+				break;
+
+
+
+				/*if (tree.getChildCount()==1) {
 					//Controle sémantique ici ??
 					if (tree.getChild(0).getText().equals("new"))
 						tds.getInfo(tree.getChild(0).getChild(0).getText());
@@ -217,7 +222,8 @@ public class CommonTreeParser {
 					}
 				}
 				tds.getInfo(tree.getChild(1).getText());
-				break;
+				break;*/
+
 
 			default:
 				for (int i = 0; i < tree.getChildCount(); i++) {
