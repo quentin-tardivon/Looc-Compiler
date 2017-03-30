@@ -98,7 +98,7 @@ public class CommonTreeParser {
 				Class newClass = new Class(tree.getChild(0).getText());
 				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
 					if (tds.getInfo(tree.getChild(1).getText()) == null) {
-
+						Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
 					}
 					else {
 						newClass.put("Inherit", tree.getChild(1).getText());
