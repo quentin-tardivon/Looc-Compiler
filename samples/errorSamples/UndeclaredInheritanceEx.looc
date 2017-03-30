@@ -22,7 +22,7 @@ class Dog inherit Animal = (
 
 )
 
-class Cat inherit Animal = (
+class Cat inherit Michel = (
 
     method whoami () {
 
@@ -35,7 +35,7 @@ var a1 : Animal;
 
 var a2 : Animal;
 
-a1 := new Michel;
+
 
 
 

@@ -127,7 +127,7 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
 7.1)ReturnValueTypeMismatchException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"    (+void-handling)
 
-7.2)MissingReturnValueException :
+7.2)MissingReturnValueException : Missing return statement
 
 
 8)MismatchOperationException : cohérence de type lors d'un calcul ->  a= b+c; a= b+2;       

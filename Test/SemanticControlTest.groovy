@@ -2,8 +2,11 @@ import TDS.SymbolTable
 import core.CommonTreeParser
 import exceptions.MismatchOperationException
 import exceptions.MismatchTypeException
+import exceptions.ReturnValueTypeMismatchException
+import exceptions.StringOperationException
 import exceptions.SymbolAlreadyDeclaredException
 import exceptions.UndeclaredClassException
+import exceptions.UndeclaredInheritanceException
 import exceptions.UndeclaredVariableException
 import factories.CommonTreeParserFactory
 
@@ -31,6 +34,24 @@ class SemanticControlTest extends GroovyTestCase {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredClassEx.looc")
 
 
+        }
+    }
+
+    void testReturnValTypeMisEx() {
+        shouldFail(ReturnValueTypeMismatchException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMisEx.looc")
+        }
+    }
+
+    void testStringOpEx() {
+        shouldFail(StringOperationException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/StringOpEx.looc")
+        }
+    }
+
+    void testUndeclaredInheritanceEx() {
+        shouldFail(UndeclaredInheritanceException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredInheritanceEx.looc")
         }
     }
 }

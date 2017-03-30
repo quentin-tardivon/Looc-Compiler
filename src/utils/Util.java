@@ -17,7 +17,7 @@ import sun.jvm.hotspot.debugger.cdbg.Sym;
  */
 public class Util {
 
-    public static Boolean testType(Entry l, String r, SymbolTable tds) throws UnknownNodeTypeException{
+    public static Boolean testType(Entry l, String r, SymbolTable tds) throws Exception{
     	System.out.println(r);
         if (l.get("type").equals(r)) {
 	        return true;
@@ -37,11 +37,11 @@ public class Util {
     }
 
 
-    public static String testTypeOper(Entry l, Entry r) throws StringOperationException {
+    /*public static String testTypeOper(Entry l, Entry r) throws StringOperationException {
         if (l.get("type").equals("string") ||  r.get("type").equals("string"))
             throw new StringOperationException();
         return "int";
-    }
+    }*/
 
     public static String testTypeOper(String nodeL, String nodeR) throws Exception {
         if (nodeL.equals("int") && nodeR.equals("int")) {
@@ -107,4 +107,15 @@ public class Util {
         }
     }
 
+    public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
+    	throw new UndeclaredClassException(null, null, className);
+    }
+
+	public static void undeclaredToken(String tokenName, SymbolTable tds) throws Exception {
+    	throw new UndeclaredVariableException(null, null, tokenName);
+	}
+
+	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
+		throw new UndeclaredInheritanceException(null, null, className);
+	}
 }

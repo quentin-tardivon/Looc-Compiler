@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 17:21:30
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 17:37:25
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -239,7 +239,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: class_decl, var_decl, instruction
+            // elements: var_decl, instruction, class_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -530,7 +530,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: var_decl, method_decl
+            // elements: method_decl, var_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -684,7 +684,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_args, function_decl, IDF
+            // elements: method_args, IDF, function_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -880,7 +880,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: instruction, type, var_decl
+                    // elements: type, instruction, var_decl
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -998,7 +998,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: instruction, var_decl
+                    // elements: var_decl, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1689,7 +1689,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: IDF, expression
+                    // elements: expression, IDF
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1788,7 +1788,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, instruction, IDF, expression
+                    // elements: expression, expression, IDF, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1950,7 +1950,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, a, b
+                    // elements: a, b, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3319,7 +3319,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: expression, IDF, expression
+            // elements: expression, expression, IDF
             // token labels: 
             // rule labels: retval
             // token list labels: 

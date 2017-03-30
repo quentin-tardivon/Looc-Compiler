@@ -94,10 +94,15 @@ public class CommonTreeParser {
 				tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
 				break;
 
-			case "CLASS_DEC":Class newClass = new Class(tree.getChild(0).getText());
+			case "CLASS_DEC":
+				Class newClass = new Class(tree.getChild(0).getText());
 				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
-					tds.getInfo(tree.getChild(1).getText());
-					newClass.put("Inherit", tree.getChild(1).getText());
+					if (tds.getInfo(tree.getChild(1).getText()) == null) {
+						Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
+					}
+					else {
+						newClass.put("Inherit", tree.getChild(1).getText());
+					}
 				}
 				tds.put(tree.getChild(0).getText(), newClass);
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(1).getText());
@@ -170,15 +175,19 @@ public class CommonTreeParser {
 
 				//UndefinedVariableException
 				Entry entry = tds.getInfo(tree.getChild(0).getText());
+				if (entry == null) {
+					Util.undeclaredToken(tree.getChild(0).getText(), tds);
+				}
 
 				//UndefinedClassException
-				if(tree.getChild(1).getText().equals("new")){
-					System.out.println("affect new");
-					tds.getInfo(tree.getChild(1).getChild(0).getText());
+				if(tree.getChild(1).getText().equals("new") && tds.getInfo(tree.getChild(1).getChild(0).getText()) == null){
+					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
 				}
 
 				//MismatchTypeException
 				System.out.println("entry: "+ entry);
+				Util.testType(entry,subTreeType(tree.getChild(1),tds),tds);
+
 
 				if (tree.getChild(1).getText().equals("new")) {
 					System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
@@ -242,6 +251,11 @@ public class CommonTreeParser {
 				String realV=tds.getInfo(tree.getChild(0).getText()).get("type").toString();
 				String expectedV=tds.getFather().get(tds.getName()).get("returnType").toString();
 				Util.testReturnType(expectedV,realV);
+				break;
+
+			case "READ":
+
+				break;
 
 
 			default:
