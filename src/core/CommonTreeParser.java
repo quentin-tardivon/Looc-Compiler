@@ -215,7 +215,7 @@ public class CommonTreeParser {
 
 			case "DO":
 					//UndeclaredMethodException
-
+				System.out.println("case DO tree : " +tree);
 				Util.testDo(tree.getChild(0),tds);
 				break;
 
