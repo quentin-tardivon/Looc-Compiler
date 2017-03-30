@@ -96,10 +96,10 @@ public class Util {
 
     public static void testCall(Tree callNode,SymbolTable tds) throws Exception {
 
-        for (int j = 1; j < callNode.getChildCount(); j++) {
+       // for (int j = 1; j < callNode.getChildCount(); j++) {
+        //}
+        Util.testExecMethod(callNode.getChild(0).getText(),callNode.getChild(1).getText(),tds);
 
-
-        }
     }
 
     public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
@@ -119,4 +119,12 @@ public class Util {
 	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
 		throw new UndeclaredInheritanceException(null, null, className);
 	}
+
+	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1, String idf2) throws Exception {
+        throw new MismatchTypeException(filename,node,type1,type2,idf1,idf2);
+    }
+
+    public static String callReturnType(Tree node, SymbolTable tds)throws Exception{
+        return tds.getInfo(node.getText()).get("returnType");
+    }
 }

@@ -162,6 +162,33 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
 
 
+NEW Exception :
+
+1) MismatchTypeException
+2) UndeclaredVariableException
+3) UndeclaredClassException
+4) UndeclaredMethodException
+5) AlreadyDeclaredException
+6) InexactParametersException
+7) ReturnValueTypeMismatchException
+8) MismatchOperationException
+9) InheritanceTypeMismatchException
+10) StringOperationException
+11) UndefinedInheritanceException
+12) InexactUsesOfDoStatement
+13) NonVoidMethodInDoException
+14) InexactUsesofReadException
+15) InexactUsesofWriteException
+16) VarNotInitialisedException => var a; var b; b=a;
+
+others :
+
+
+17)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
+18)MissingReturn
+19)AlreadyDeclaredException
+20)WrongParameterOrder
+
 
 Auteurs
 ==

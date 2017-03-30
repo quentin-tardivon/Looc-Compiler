@@ -190,22 +190,33 @@ public class CommonTreeParser {
 
 
 				if (tree.getChild(1).getText().equals("new")) {
-					System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
+					//System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
 					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
-						throw new MismatchTypeException(this.filename, tree.getChild(1),
+						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
 								entry.get("type"),
 								tree.getChild(1).getChild(0).getText(),
-								tree.getChild(0).getText()
-						);
+								tree.getChild(0).getText());
+
+
+				} //TODO : implementer case : CALL dans subTreeType et testType
+				else if(tree.getChild(1).getText().equals("call")) {
+					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
+						Util.mismatchType(this.filename, tree.getChild(1),
+								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
+								entry.get("type"),
+								tree.getChild(1).getChild(0).getText(),
+								tree.getChild(0).getText());
+
 				}
 				else if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
-					throw new MismatchTypeException(this.filename, tree.getChild(1),
+					Util.mismatchType(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText(), tds),
 							entry.get("type"),
 							tree.getChild(1).getText(),
-							tree.getChild(0).getText()
-					);
+							tree.getChild(0).getText());
+
+
 				//System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
 				System.out.println("Line number: "  + tree.getChild(0).getLine());
 				break;
@@ -250,7 +261,7 @@ public class CommonTreeParser {
 				break;*/
 
 
-			case "RETURN":
+			case "RETURN"://TODO : regarder return 1, et passer par getInfo ou autre ?
 				String realV=tds.getInfo(tree.getChild(0).getText()).get("type").toString();
 				String expectedV=tds.getFather().get(tds.getName()).get("returnType").toString();
 				Util.testReturnType(expectedV,realV);
@@ -428,8 +439,11 @@ public class CommonTreeParser {
 				case "new":
 					//System.out.println("new subtreetype");
 					return node.getChild(0).getText();
+				case "CALL":
+					Util.testCall(node,tds);
+					return Util.callReturnType(node.getChild(0), tds);
 				case "-":
-					System.out.printf("## It's a unary node %s\nnb children: %d\n", node.getText(), node.getChildCount());
+					System.out.printf("## It's a unary node %s\n nb children: %d\n", node.getText(), node.getChildCount());
 					//System.out.println("##### " + this.subTreeType(node.getChild(0), tds));
 					return this.subTreeType(node.getChild(0), tds);
 				default:

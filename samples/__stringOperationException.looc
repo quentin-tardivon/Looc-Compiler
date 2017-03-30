@@ -1,7 +1,9 @@
-// La variable est déclaré deux fois ! Il manque une instruction
-// ligne 4 et 5
+// addition de string impossible
+// ligne 8
 
-var n : int;
-var n : int;
+var a : string;
+var b : string;
+var n : string;
 
-n := 10;
+n := a-b;
+
