@@ -34,6 +34,7 @@ public class SymbolTable {
 	private int numberIf = 0;
 	/** Number of block statement statement in this block **/
 	private int numberBlock = 0;
+	private String name;
 
 	/**
 	 * Default constructor
@@ -43,17 +44,19 @@ public class SymbolTable {
 		this.links = new HashMap<String, SymbolTable>();
 		this.imbricationLevel = 0;
 		this.father = null;
+		this.name = "ROOT";
 	}
 
 	/**
 	 * @param imbricationLevel The final imbrication level
 	 * @param father The final Symbol table parent
 	 */
-	public SymbolTable(int imbricationLevel, SymbolTable father) {
+	public SymbolTable(int imbricationLevel, SymbolTable father, String name) {
         this.entries = new HashMap<String, Entry>();
 		this.links = new HashMap<String, SymbolTable>();
         this.imbricationLevel = imbricationLevel;
         this.father = father;
+        this.name = name;
     }
 
 	/**
@@ -190,6 +193,11 @@ public class SymbolTable {
 	public void setNumberIf(int numberIf) {
 		this.numberIf = numberIf;
 	}
+
+	public String getName() {
+		return this.name;
+	}
+
 
     public String toString() {
 	    String s = String.format("==== %d ====\n", this.getImbricationLevel());

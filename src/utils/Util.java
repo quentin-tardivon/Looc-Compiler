@@ -63,6 +63,11 @@ public class Util {
             return tds.getInfo(s).get("type");
 
         }
+    }
+
+    public static void testReturnType(String expected, String real) throws Exception {
+        if(!expected.equals(real))
+            throw new ReturnValueTypeMismatchException(expected, real);
 
     }
 
