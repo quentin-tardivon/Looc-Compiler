@@ -88,7 +88,7 @@ public class CommonTreeParser {
 				Class newClass = new Class(tree.getChild(0).getText());
 				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
 					tds.getInfo(tree.getChild(1).getText());
-					newClass.put("Inherit", tree.getChild(1).getText()); //Rajouter le contrôle de déclaration du père
+					newClass.put("Inherit", tree.getChild(1).getText());
 				}
 				tds.put(tree.getChild(0).getText(), newClass);
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds);
