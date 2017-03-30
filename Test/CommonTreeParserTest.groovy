@@ -232,16 +232,6 @@ class CommonTreeParserTest extends GroovyTestCase {
 
     }
 
-
-
-    void testConstruct__TDSLevel1() {
-        shouldFail(SymbolAlreadyDeclaredException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-
-        }
-    }
-
     void testConstruct__TDSLevel1MismatchOperationException() {
         shouldFail(MismatchOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1OperationMismatch.looc")

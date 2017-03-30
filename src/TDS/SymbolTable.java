@@ -146,10 +146,6 @@ public class SymbolTable {
 				System.out.println("idf : " + idf + " entries : " + this.entries.get(idf));
 				if(idf.matches("[A-Z][a-zA-Z_0-9]*")){
 					throw new UndeclaredClassException(null, null, idf);
-				}else if(this.entries.get(idf).get("type").equals("Method")){
-					throw new UndeclaredMethodException(null, null, idf);
-				}else if(this.entries.get(idf).get("type").equals("Variable")){
-					throw new UndeclaredVariableException(null, null, idf);
 				}
 				else{
 					throw new UnknownNodeTypeException(null, null, idf);

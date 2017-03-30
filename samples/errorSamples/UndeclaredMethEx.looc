@@ -1,0 +1,27 @@
+// la méthode michel n'est pas déclarée
+// ligne 25
+
+class Math =
+(
+	method pow(a : int, b : int) : int {
+		var retval : int;
+		var i : int;
+
+		if b == 0 then
+			return (1);
+		fi
+		retval := 1;
+		for i in 1 .. b
+		do
+			retval := retval * a;
+		end
+
+		return (retval);
+	}
+
+)
+
+
+var m : Math;
+m := new Math;
+write m.michel(2, 3);
