@@ -1,0 +1,7 @@
+// La variable est déclaré deux fois ! Il manque une instruction
+// ligne 4 et 5
+
+var n : string;
+
+
+n := "michel" + "string";

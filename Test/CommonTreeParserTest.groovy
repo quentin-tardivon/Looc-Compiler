@@ -1,5 +1,6 @@
 import TDS.SymbolTable
 import core.CommonTreeParser
+import exceptions.MismatchOperationException
 import exceptions.MismatchTypeException
 import exceptions.SymbolAlreadyDeclaredException
 import exceptions.UndeclaredVariableException
@@ -238,6 +239,13 @@ class CommonTreeParserTest extends GroovyTestCase {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1.looc")
             treeParser.constructTDS(tree, new SymbolTable())
 
+        }
+    }
+
+    void testConstruct__TDSLevel1MismatchOperationException() {
+        shouldFail(MismatchOperationException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1OperationMismatch.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
         }
     }
 

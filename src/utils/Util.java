@@ -8,6 +8,8 @@ import exceptions.UndeclaredMethodException;
 import exceptions.UnknownNodeTypeException;
 import org.antlr.runtime.tree.Tree;
 
+import exceptions.*;
+
 
 /**
  * Created by tld on 22/03/2017.
@@ -17,20 +19,17 @@ public class Util {
     public static Boolean testType(Entry l, String r, SymbolTable tds) throws UnknownNodeTypeException{
     	System.out.println(r);
         if (l.get("type").equals(r)) {
-	        System.out.println("Types OK");
 	        return true;
         }
         else if (tds.get(r)!=null) {
-        	System.out.println("TDS non nulle");
-        	System.out.println(tds.getLink(r).get("Inherit"));
         	return l.get("type").equals(tds.get(r).get("Inherit"));
         }
         else if(tds.getFather() != null) {
-	        System.out.println("Père de la TDS non nul");
+
         	return testType(l,r,tds.getFather());
         }
         else {
-		    System.out.println("Type non ok");
+
 	        return false;
         }
 
@@ -43,10 +42,16 @@ public class Util {
         return "int";
     }
 
-    public static String testTypeOper(String nodeL, String nodeR) throws StringOperationException {
-        if (nodeL.equals("int") && nodeR.equals("int")) return "int";
-        else if (nodeL.equals("string") && nodeR.equals("string")) return "string";
-        else throw new StringOperationException();
+    public static String testTypeOper(String nodeL, String nodeR) throws Exception {
+        if (nodeL.equals("int") && nodeR.equals("int")) {
+        	return "int";
+        }
+        else if (nodeL.equals("string") && nodeR.equals("string")) {
+	        throw new StringOperationException();
+        }
+        else {
+			throw new MismatchOperationException();
+        }
     }
 
     public static String getType(String s, SymbolTable tds) throws Exception {
@@ -76,7 +81,7 @@ public class Util {
                     System.out.println("c pa bi1");
                 }
                 break;
-            
+
 
             default: //OPER ou new
                 throw new InexactDoCallException(null,null,doChild.getText());
