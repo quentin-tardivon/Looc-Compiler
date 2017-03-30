@@ -11,6 +11,8 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.DOTTreeGenerator;
+import org.antlr.stringtemplate.StringTemplate;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,9 +29,13 @@ public class CommonTreeParserFactory {
 		LoocParser parser = new LoocParser(tokens);
 		CommonTree tree = (CommonTree) parser.program().getTree();
 
+		/*DOTTreeGenerator gen = new DOTTreeGenerator();
+		StringTemplate st = gen.toDOT(tree);
+		System.out.println(st);*/
 
 		CommonTreeParser treeParser = new CommonTreeParser(filename);
 		treeParser.constructTDS(tree, new SymbolTable());
+
 		return treeParser;
 	}
 }

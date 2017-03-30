@@ -224,7 +224,10 @@ public class CommonTreeParser {
 
 			case "DO":
 					//UndeclaredMethodException
+				System.out.println("child count : " + tree.getChildCount());
 				System.out.println("case DO tree : " +tree);
+					System.out.println("son fils: " + tree.getChild(0).getText());
+				System.out.println("son fils: " + tree.getChild(1).getText());
 				Util.testDo(tree.getChild(0),tds);
 				break;
 
