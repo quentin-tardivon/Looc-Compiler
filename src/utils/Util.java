@@ -2,6 +2,7 @@ package utils;
 
 import TDS.Entry;
 import TDS.SymbolTable;
+import exceptions.ReturnValueTypeMismatchException;
 import exceptions.StringOperationException;
 import exceptions.UnknownNodeTypeException;
 
@@ -25,7 +26,7 @@ public class Util {
 
     public static String testTypeOper(String nodeL, String nodeR) throws StringOperationException {
         if (nodeL.equals("int") && nodeR.equals("int")) return "int";
-        else if (nodeL.equals("string") && nodeR.equals("string")) return "string";
+        //else if (nodeL.equals("string") && nodeR.equals("string")) return "string";
         else throw new StringOperationException();
     }
 
@@ -38,7 +39,14 @@ public class Util {
             return tds.getInfo(s).get("type");
 
         }
+    }
+
+    public static void testReturnType(String expected, String real) throws Exception {
+        if(!expected.equals(real))
+            throw new ReturnValueTypeMismatchException(expected, real);
 
     }
+
+
 
 }
