@@ -77,6 +77,7 @@ public class Util {
     public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
         switch (doChild.getText()) {
             case "CALL":
+                Util.testCall(doChild,tds);
                 if (!Util.testExecMethod(doChild.getChild(0).getText(),doChild.getChild(1).getText(),tds)){
                     System.out.println("c pa bi1");
                 }
@@ -87,6 +88,10 @@ public class Util {
                 throw new InexactDoCallException(null,null,doChild.getText());
 
         }
+    }
+
+    public static void testCall(Tree call,SymbolTable tds) throws Exception {
+        
     }
 
 }
