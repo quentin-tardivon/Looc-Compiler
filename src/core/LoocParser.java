@@ -1,4 +1,7 @@
-package core;// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-22 16:44:25
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-03-30 22:04:23
+
+package core;
+
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -10,10 +13,9 @@ import org.antlr.runtime.tree.*;
 
 public class LoocParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "CLASS_DEC", "VAR_DEC", "ROOT", "FORMAL_PARAM", "FORMAL_PARAMS", "EFFECTIVE_PARAMS", "BODY", "METHOD", "FOR", "IF", "EGAL", "DO", "PLUS", "DIFF", "THEN", "ELSE", "PRINT", "AFFECT", "MUL", "DIV", "NEG", "RETURN", "WRITE", "READ", "ACCESS", "THIS", "SUPER", "BLOCK", "VARS", "METHODS", "CLASS", "IDF", "OPER", "INT", "STRING", "WS", "NEWLINE", "COMMENT", "LINE_COMMENT", "'class'", "'inherit'", "'='", "'('", "')'", "'method'", "':'", "'{'", "'}'", "','", "'var'", "';'", "'int'", "'string'", "':='", "'for'", "'in'", "'..'", "'do'", "'end'", "'if'", "'then'", "'else'", "'fi'", "'new'", "'+'", "'-'", "'*'", "'/'", "'.'", "'this'", "'super'", "'write'", "'return'", "'read'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "CLASS_DEC", "VAR_DEC", "ROOT", "FORMAL_PARAM", "FORMAL_PARAMS", "EFFECTIVE_PARAMS", "BODY", "METHOD", "FOR", "IF", "EGAL", "DO", "PLUS", "DIFF", "THEN", "ELSE", "PRINT", "AFFECT", "MUL", "DIV", "NEG", "RETURN", "WRITE", "READ", "ACCESS", "THIS", "CALL", "SUPER", "BLOCK", "VARS", "METHODS", "CLASS", "IDF", "OPER", "INT", "STRING", "WS", "NEWLINE", "COMMENT", "LINE_COMMENT", "'class'", "'inherit'", "'='", "'('", "')'", "'method'", "':'", "'{'", "'}'", "','", "'var'", "';'", "'int'", "'string'", "':='", "'for'", "'in'", "'..'", "'do'", "'end'", "'if'", "'then'", "'else'", "'fi'", "'new'", "'+'", "'-'", "'*'", "'/'", "'this'", "'super'", "'.'", "'write'", "'return'", "'read'"
     };
     public static final int EOF=-1;
-    public static final int T__43=43;
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int T__46=46;
@@ -48,6 +50,7 @@ public class LoocParser extends Parser {
     public static final int T__75=75;
     public static final int T__76=76;
     public static final int T__77=77;
+    public static final int T__78=78;
     public static final int CLASS_DEC=4;
     public static final int VAR_DEC=5;
     public static final int ROOT=6;
@@ -74,19 +77,20 @@ public class LoocParser extends Parser {
     public static final int READ=27;
     public static final int ACCESS=28;
     public static final int THIS=29;
-    public static final int SUPER=30;
-    public static final int BLOCK=31;
-    public static final int VARS=32;
-    public static final int METHODS=33;
-    public static final int CLASS=34;
-    public static final int IDF=35;
-    public static final int OPER=36;
-    public static final int INT=37;
-    public static final int STRING=38;
-    public static final int WS=39;
-    public static final int NEWLINE=40;
-    public static final int COMMENT=41;
-    public static final int LINE_COMMENT=42;
+    public static final int CALL=30;
+    public static final int SUPER=31;
+    public static final int BLOCK=32;
+    public static final int VARS=33;
+    public static final int METHODS=34;
+    public static final int CLASS=35;
+    public static final int IDF=36;
+    public static final int OPER=37;
+    public static final int INT=38;
+    public static final int STRING=39;
+    public static final int WS=40;
+    public static final int NEWLINE=41;
+    public static final int COMMENT=42;
+    public static final int LINE_COMMENT=43;
 
     // delegates
     // delegators
@@ -119,7 +123,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "program"
-    // Looc.g:42:1: program : ( class_decl )* ( var_decl )* ( instruction )+ -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ ) ;
+    // Looc.g:51:1: program : ( class_decl )* ( var_decl )* ( instruction )+ -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ ) ;
     public final LoocParser.program_return program() throws RecognitionException {
         LoocParser.program_return retval = new LoocParser.program_return();
         retval.start = input.LT(1);
@@ -137,25 +141,25 @@ public class LoocParser extends Parser {
         RewriteRuleSubtreeStream stream_class_decl=new RewriteRuleSubtreeStream(adaptor,"rule class_decl");
         RewriteRuleSubtreeStream stream_var_decl=new RewriteRuleSubtreeStream(adaptor,"rule var_decl");
         try {
-            // Looc.g:47:8: ( ( class_decl )* ( var_decl )* ( instruction )+ -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ ) )
-            // Looc.g:47:13: ( class_decl )* ( var_decl )* ( instruction )+
+            // Looc.g:56:8: ( ( class_decl )* ( var_decl )* ( instruction )+ -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ ) )
+            // Looc.g:56:13: ( class_decl )* ( var_decl )* ( instruction )+
             {
-            // Looc.g:47:13: ( class_decl )*
+            // Looc.g:56:13: ( class_decl )*
             loop1:
             do {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==43) ) {
+                if ( (LA1_0==44) ) {
                     alt1=1;
                 }
 
 
                 switch (alt1) {
             	case 1 :
-            	    // Looc.g:47:13: class_decl
+            	    // Looc.g:56:13: class_decl
             	    {
-            	    pushFollow(FOLLOW_class_decl_in_program159);
+            	    pushFollow(FOLLOW_class_decl_in_program181);
             	    class_decl1=class_decl();
 
             	    state._fsp--;
@@ -170,22 +174,22 @@ public class LoocParser extends Parser {
                 }
             } while (true);
 
-            // Looc.g:47:25: ( var_decl )*
+            // Looc.g:56:25: ( var_decl )*
             loop2:
             do {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( (LA2_0==53) ) {
+                if ( (LA2_0==54) ) {
                     alt2=1;
                 }
 
 
                 switch (alt2) {
             	case 1 :
-            	    // Looc.g:47:25: var_decl
+            	    // Looc.g:56:25: var_decl
             	    {
-            	    pushFollow(FOLLOW_var_decl_in_program162);
+            	    pushFollow(FOLLOW_var_decl_in_program184);
             	    var_decl2=var_decl();
 
             	    state._fsp--;
@@ -200,23 +204,23 @@ public class LoocParser extends Parser {
                 }
             } while (true);
 
-            // Looc.g:47:35: ( instruction )+
+            // Looc.g:56:35: ( instruction )+
             int cnt3=0;
             loop3:
             do {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==IDF||LA3_0==50||LA3_0==58||LA3_0==61||LA3_0==63||(LA3_0>=75 && LA3_0<=77)) ) {
+                if ( (LA3_0==IDF||LA3_0==51||LA3_0==59||LA3_0==62||LA3_0==64||(LA3_0>=76 && LA3_0<=78)) ) {
                     alt3=1;
                 }
 
 
                 switch (alt3) {
             	case 1 :
-            	    // Looc.g:47:35: instruction
+            	    // Looc.g:56:35: instruction
             	    {
-            	    pushFollow(FOLLOW_instruction_in_program165);
+            	    pushFollow(FOLLOW_instruction_in_program187);
             	    instruction3=instruction();
 
             	    state._fsp--;
@@ -248,20 +252,20 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 47:48: -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ )
+            // 56:48: -> ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ )
             {
-                // Looc.g:47:51: ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ )
+                // Looc.g:56:51: ^( ROOT ( class_decl )* ( var_decl )* ( instruction )+ )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(ROOT, "ROOT"), root_1);
 
-                // Looc.g:47:58: ( class_decl )*
+                // Looc.g:56:58: ( class_decl )*
                 while ( stream_class_decl.hasNext() ) {
                     adaptor.addChild(root_1, stream_class_decl.nextTree());
 
                 }
                 stream_class_decl.reset();
-                // Looc.g:47:70: ( var_decl )*
+                // Looc.g:56:70: ( var_decl )*
                 while ( stream_var_decl.hasNext() ) {
                     adaptor.addChild(root_1, stream_var_decl.nextTree());
 
@@ -308,7 +312,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "class_decl"
-    // Looc.g:49:1: class_decl : 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')' -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl ) ;
+    // Looc.g:58:1: class_decl : 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')' -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl ) ;
     public final LoocParser.class_decl_return class_decl() throws RecognitionException {
         LoocParser.class_decl_return retval = new LoocParser.class_decl_return();
         retval.start = input.LT(1);
@@ -336,34 +340,34 @@ public class LoocParser extends Parser {
         RewriteRuleTokenStream stream_45=new RewriteRuleTokenStream(adaptor,"token 45");
         RewriteRuleTokenStream stream_46=new RewriteRuleTokenStream(adaptor,"token 46");
         RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
+        RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
         RewriteRuleTokenStream stream_CLASS=new RewriteRuleTokenStream(adaptor,"token CLASS");
-        RewriteRuleTokenStream stream_43=new RewriteRuleTokenStream(adaptor,"token 43");
         RewriteRuleSubtreeStream stream_class_item_decl=new RewriteRuleSubtreeStream(adaptor,"rule class_item_decl");
         try {
-            // Looc.g:49:11: ( 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')' -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl ) )
-            // Looc.g:49:15: 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')'
+            // Looc.g:58:11: ( 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')' -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl ) )
+            // Looc.g:58:15: 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')'
             {
-            string_literal4=(Token)match(input,43,FOLLOW_43_in_class_decl191);  
-            stream_43.add(string_literal4);
+            string_literal4=(Token)match(input,44,FOLLOW_44_in_class_decl213);  
+            stream_44.add(string_literal4);
 
-            CLASS5=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl193);  
+            CLASS5=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl215);  
             stream_CLASS.add(CLASS5);
 
-            // Looc.g:49:29: ( 'inherit' CLASS )?
+            // Looc.g:58:29: ( 'inherit' CLASS )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( (LA4_0==44) ) {
+            if ( (LA4_0==45) ) {
                 alt4=1;
             }
             switch (alt4) {
                 case 1 :
-                    // Looc.g:49:30: 'inherit' CLASS
+                    // Looc.g:58:30: 'inherit' CLASS
                     {
-                    string_literal6=(Token)match(input,44,FOLLOW_44_in_class_decl196);  
-                    stream_44.add(string_literal6);
+                    string_literal6=(Token)match(input,45,FOLLOW_45_in_class_decl218);  
+                    stream_45.add(string_literal6);
 
-                    CLASS7=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl198);  
+                    CLASS7=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl220);  
                     stream_CLASS.add(CLASS7);
 
 
@@ -372,20 +376,20 @@ public class LoocParser extends Parser {
 
             }
 
-            char_literal8=(Token)match(input,45,FOLLOW_45_in_class_decl203);  
-            stream_45.add(char_literal8);
+            char_literal8=(Token)match(input,46,FOLLOW_46_in_class_decl225);  
+            stream_46.add(char_literal8);
 
-            char_literal9=(Token)match(input,46,FOLLOW_46_in_class_decl205);  
-            stream_46.add(char_literal9);
+            char_literal9=(Token)match(input,47,FOLLOW_47_in_class_decl227);  
+            stream_47.add(char_literal9);
 
-            pushFollow(FOLLOW_class_item_decl_in_class_decl206);
+            pushFollow(FOLLOW_class_item_decl_in_class_decl228);
             class_item_decl10=class_item_decl();
 
             state._fsp--;
 
             stream_class_item_decl.add(class_item_decl10.getTree());
-            char_literal11=(Token)match(input,47,FOLLOW_47_in_class_decl207);  
-            stream_47.add(char_literal11);
+            char_literal11=(Token)match(input,48,FOLLOW_48_in_class_decl229);  
+            stream_48.add(char_literal11);
 
 
 
@@ -400,15 +404,15 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 49:75: -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl )
+            // 58:75: -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl )
             {
-                // Looc.g:49:78: ^( CLASS_DEC CLASS ( CLASS )? class_item_decl )
+                // Looc.g:58:78: ^( CLASS_DEC CLASS ( CLASS )? class_item_decl )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(CLASS_DEC, "CLASS_DEC"), root_1);
 
                 adaptor.addChild(root_1, stream_CLASS.nextNode());
-                // Looc.g:49:96: ( CLASS )?
+                // Looc.g:58:96: ( CLASS )?
                 if ( stream_CLASS.hasNext() ) {
                     adaptor.addChild(root_1, stream_CLASS.nextNode());
 
@@ -448,7 +452,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "class_item_decl"
-    // Looc.g:53:1: class_item_decl : ( var_decl )* ( method_decl )* -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )? ;
+    // Looc.g:62:1: class_item_decl : ( var_decl )* ( method_decl )* -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )? ;
     public final LoocParser.class_item_decl_return class_item_decl() throws RecognitionException {
         LoocParser.class_item_decl_return retval = new LoocParser.class_item_decl_return();
         retval.start = input.LT(1);
@@ -463,25 +467,25 @@ public class LoocParser extends Parser {
         RewriteRuleSubtreeStream stream_method_decl=new RewriteRuleSubtreeStream(adaptor,"rule method_decl");
         RewriteRuleSubtreeStream stream_var_decl=new RewriteRuleSubtreeStream(adaptor,"rule var_decl");
         try {
-            // Looc.g:53:16: ( ( var_decl )* ( method_decl )* -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )? )
-            // Looc.g:53:18: ( var_decl )* ( method_decl )*
+            // Looc.g:62:16: ( ( var_decl )* ( method_decl )* -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )? )
+            // Looc.g:62:18: ( var_decl )* ( method_decl )*
             {
-            // Looc.g:53:18: ( var_decl )*
+            // Looc.g:62:18: ( var_decl )*
             loop5:
             do {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( (LA5_0==53) ) {
+                if ( (LA5_0==54) ) {
                     alt5=1;
                 }
 
 
                 switch (alt5) {
             	case 1 :
-            	    // Looc.g:53:18: var_decl
+            	    // Looc.g:62:18: var_decl
             	    {
-            	    pushFollow(FOLLOW_var_decl_in_class_item_decl231);
+            	    pushFollow(FOLLOW_var_decl_in_class_item_decl253);
             	    var_decl12=var_decl();
 
             	    state._fsp--;
@@ -496,22 +500,22 @@ public class LoocParser extends Parser {
                 }
             } while (true);
 
-            // Looc.g:53:28: ( method_decl )*
+            // Looc.g:62:28: ( method_decl )*
             loop6:
             do {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==48) ) {
+                if ( (LA6_0==49) ) {
                     alt6=1;
                 }
 
 
                 switch (alt6) {
             	case 1 :
-            	    // Looc.g:53:28: method_decl
+            	    // Looc.g:62:28: method_decl
             	    {
-            	    pushFollow(FOLLOW_method_decl_in_class_item_decl234);
+            	    pushFollow(FOLLOW_method_decl_in_class_item_decl256);
             	    method_decl13=method_decl();
 
             	    state._fsp--;
@@ -539,16 +543,16 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 53:41: -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )?
+            // 62:41: -> ( ^( VARS ( var_decl )* ) )? ( ^( METHODS ( method_decl )* ) )?
             {
-                // Looc.g:53:44: ( ^( VARS ( var_decl )* ) )?
+                // Looc.g:62:44: ( ^( VARS ( var_decl )* ) )?
                 if ( stream_var_decl.hasNext() ) {
-                    // Looc.g:53:44: ^( VARS ( var_decl )* )
+                    // Looc.g:62:44: ^( VARS ( var_decl )* )
                     {
                     Object root_1 = (Object)adaptor.nil();
                     root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(VARS, "VARS"), root_1);
 
-                    // Looc.g:53:51: ( var_decl )*
+                    // Looc.g:62:51: ( var_decl )*
                     while ( stream_var_decl.hasNext() ) {
                         adaptor.addChild(root_1, stream_var_decl.nextTree());
 
@@ -560,14 +564,14 @@ public class LoocParser extends Parser {
 
                 }
                 stream_var_decl.reset();
-                // Looc.g:53:63: ( ^( METHODS ( method_decl )* ) )?
+                // Looc.g:62:63: ( ^( METHODS ( method_decl )* ) )?
                 if ( stream_method_decl.hasNext() ) {
-                    // Looc.g:53:63: ^( METHODS ( method_decl )* )
+                    // Looc.g:62:63: ^( METHODS ( method_decl )* )
                     {
                     Object root_1 = (Object)adaptor.nil();
                     root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(METHODS, "METHODS"), root_1);
 
-                    // Looc.g:53:73: ( method_decl )*
+                    // Looc.g:62:73: ( method_decl )*
                     while ( stream_method_decl.hasNext() ) {
                         adaptor.addChild(root_1, stream_method_decl.nextTree());
 
@@ -609,7 +613,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "method_decl"
-    // Looc.g:56:1: method_decl : 'method' IDF '(' ( method_args )? ')' function_decl -> ^( METHOD IDF ( method_args )? function_decl ) ;
+    // Looc.g:65:1: method_decl : 'method' IDF '(' ( method_args )? ')' function_decl -> ^( METHOD IDF ( method_args )? function_decl ) ;
     public final LoocParser.method_decl_return method_decl() throws RecognitionException {
         LoocParser.method_decl_return retval = new LoocParser.method_decl_return();
         retval.start = input.LT(1);
@@ -629,26 +633,26 @@ public class LoocParser extends Parser {
         Object IDF15_tree=null;
         Object char_literal16_tree=null;
         Object char_literal18_tree=null;
-        RewriteRuleTokenStream stream_46=new RewriteRuleTokenStream(adaptor,"token 46");
         RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
         RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
+        RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
         RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
         RewriteRuleSubtreeStream stream_function_decl=new RewriteRuleSubtreeStream(adaptor,"rule function_decl");
         RewriteRuleSubtreeStream stream_method_args=new RewriteRuleSubtreeStream(adaptor,"rule method_args");
         try {
-            // Looc.g:56:12: ( 'method' IDF '(' ( method_args )? ')' function_decl -> ^( METHOD IDF ( method_args )? function_decl ) )
-            // Looc.g:56:16: 'method' IDF '(' ( method_args )? ')' function_decl
+            // Looc.g:65:12: ( 'method' IDF '(' ( method_args )? ')' function_decl -> ^( METHOD IDF ( method_args )? function_decl ) )
+            // Looc.g:65:16: 'method' IDF '(' ( method_args )? ')' function_decl
             {
-            string_literal14=(Token)match(input,48,FOLLOW_48_in_method_decl263);  
-            stream_48.add(string_literal14);
+            string_literal14=(Token)match(input,49,FOLLOW_49_in_method_decl285);  
+            stream_49.add(string_literal14);
 
-            IDF15=(Token)match(input,IDF,FOLLOW_IDF_in_method_decl265);  
+            IDF15=(Token)match(input,IDF,FOLLOW_IDF_in_method_decl287);  
             stream_IDF.add(IDF15);
 
-            char_literal16=(Token)match(input,46,FOLLOW_46_in_method_decl267);  
-            stream_46.add(char_literal16);
+            char_literal16=(Token)match(input,47,FOLLOW_47_in_method_decl289);  
+            stream_47.add(char_literal16);
 
-            // Looc.g:56:33: ( method_args )?
+            // Looc.g:65:33: ( method_args )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -657,9 +661,9 @@ public class LoocParser extends Parser {
             }
             switch (alt7) {
                 case 1 :
-                    // Looc.g:56:33: method_args
+                    // Looc.g:65:33: method_args
                     {
-                    pushFollow(FOLLOW_method_args_in_method_decl269);
+                    pushFollow(FOLLOW_method_args_in_method_decl291);
                     method_args17=method_args();
 
                     state._fsp--;
@@ -671,10 +675,10 @@ public class LoocParser extends Parser {
 
             }
 
-            char_literal18=(Token)match(input,47,FOLLOW_47_in_method_decl272);  
-            stream_47.add(char_literal18);
+            char_literal18=(Token)match(input,48,FOLLOW_48_in_method_decl294);  
+            stream_48.add(char_literal18);
 
-            pushFollow(FOLLOW_function_decl_in_method_decl274);
+            pushFollow(FOLLOW_function_decl_in_method_decl296);
             function_decl19=function_decl();
 
             state._fsp--;
@@ -693,15 +697,15 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 56:64: -> ^( METHOD IDF ( method_args )? function_decl )
+            // 65:64: -> ^( METHOD IDF ( method_args )? function_decl )
             {
-                // Looc.g:56:67: ^( METHOD IDF ( method_args )? function_decl )
+                // Looc.g:65:67: ^( METHOD IDF ( method_args )? function_decl )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(METHOD, "METHOD"), root_1);
 
                 adaptor.addChild(root_1, stream_IDF.nextNode());
-                // Looc.g:56:80: ( method_args )?
+                // Looc.g:65:80: ( method_args )?
                 if ( stream_method_args.hasNext() ) {
                     adaptor.addChild(root_1, stream_method_args.nextTree());
 
@@ -741,7 +745,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "function_decl"
-    // Looc.g:58:1: function_decl : ( ':' type '{' ( var_decl )* ( instruction )+ '}' -> type ^( BODY ( var_decl )* ( instruction )+ ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BODY ( var_decl )* ( instruction )+ ) );
+    // Looc.g:67:1: function_decl : ( ':' type '{' ( var_decl )* ( instruction )+ '}' -> type ^( BODY ( var_decl )* ( instruction )+ ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BODY ( var_decl )* ( instruction )+ ) );
     public final LoocParser.function_decl_return function_decl() throws RecognitionException {
         LoocParser.function_decl_return retval = new LoocParser.function_decl_return();
         retval.start = input.LT(1);
@@ -769,21 +773,21 @@ public class LoocParser extends Parser {
         Object char_literal25_tree=null;
         Object char_literal26_tree=null;
         Object char_literal29_tree=null;
-        RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
         RewriteRuleTokenStream stream_50=new RewriteRuleTokenStream(adaptor,"token 50");
         RewriteRuleTokenStream stream_51=new RewriteRuleTokenStream(adaptor,"token 51");
+        RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
         RewriteRuleSubtreeStream stream_instruction=new RewriteRuleSubtreeStream(adaptor,"rule instruction");
         RewriteRuleSubtreeStream stream_var_decl=new RewriteRuleSubtreeStream(adaptor,"rule var_decl");
         RewriteRuleSubtreeStream stream_type=new RewriteRuleSubtreeStream(adaptor,"rule type");
         try {
-            // Looc.g:58:14: ( ':' type '{' ( var_decl )* ( instruction )+ '}' -> type ^( BODY ( var_decl )* ( instruction )+ ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BODY ( var_decl )* ( instruction )+ ) )
+            // Looc.g:67:14: ( ':' type '{' ( var_decl )* ( instruction )+ '}' -> type ^( BODY ( var_decl )* ( instruction )+ ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BODY ( var_decl )* ( instruction )+ ) )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
-            if ( (LA12_0==49) ) {
+            if ( (LA12_0==50) ) {
                 alt12=1;
             }
-            else if ( (LA12_0==50) ) {
+            else if ( (LA12_0==51) ) {
                 alt12=2;
             }
             else {
@@ -794,36 +798,36 @@ public class LoocParser extends Parser {
             }
             switch (alt12) {
                 case 1 :
-                    // Looc.g:58:18: ':' type '{' ( var_decl )* ( instruction )+ '}'
+                    // Looc.g:67:18: ':' type '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal20=(Token)match(input,49,FOLLOW_49_in_function_decl296);  
-                    stream_49.add(char_literal20);
+                    char_literal20=(Token)match(input,50,FOLLOW_50_in_function_decl318);  
+                    stream_50.add(char_literal20);
 
-                    pushFollow(FOLLOW_type_in_function_decl298);
+                    pushFollow(FOLLOW_type_in_function_decl320);
                     type21=type();
 
                     state._fsp--;
 
                     stream_type.add(type21.getTree());
-                    char_literal22=(Token)match(input,50,FOLLOW_50_in_function_decl299);  
-                    stream_50.add(char_literal22);
+                    char_literal22=(Token)match(input,51,FOLLOW_51_in_function_decl321);  
+                    stream_51.add(char_literal22);
 
-                    // Looc.g:58:29: ( var_decl )*
+                    // Looc.g:67:29: ( var_decl )*
                     loop8:
                     do {
                         int alt8=2;
                         int LA8_0 = input.LA(1);
 
-                        if ( (LA8_0==53) ) {
+                        if ( (LA8_0==54) ) {
                             alt8=1;
                         }
 
 
                         switch (alt8) {
                     	case 1 :
-                    	    // Looc.g:58:29: var_decl
+                    	    // Looc.g:67:29: var_decl
                     	    {
-                    	    pushFollow(FOLLOW_var_decl_in_function_decl300);
+                    	    pushFollow(FOLLOW_var_decl_in_function_decl322);
                     	    var_decl23=var_decl();
 
                     	    state._fsp--;
@@ -838,23 +842,23 @@ public class LoocParser extends Parser {
                         }
                     } while (true);
 
-                    // Looc.g:58:39: ( instruction )+
+                    // Looc.g:67:39: ( instruction )+
                     int cnt9=0;
                     loop9:
                     do {
                         int alt9=2;
                         int LA9_0 = input.LA(1);
 
-                        if ( (LA9_0==IDF||LA9_0==50||LA9_0==58||LA9_0==61||LA9_0==63||(LA9_0>=75 && LA9_0<=77)) ) {
+                        if ( (LA9_0==IDF||LA9_0==51||LA9_0==59||LA9_0==62||LA9_0==64||(LA9_0>=76 && LA9_0<=78)) ) {
                             alt9=1;
                         }
 
 
                         switch (alt9) {
                     	case 1 :
-                    	    // Looc.g:58:39: instruction
+                    	    // Looc.g:67:39: instruction
                     	    {
-                    	    pushFollow(FOLLOW_instruction_in_function_decl303);
+                    	    pushFollow(FOLLOW_instruction_in_function_decl325);
                     	    instruction24=instruction();
 
                     	    state._fsp--;
@@ -873,8 +877,8 @@ public class LoocParser extends Parser {
                         cnt9++;
                     } while (true);
 
-                    char_literal25=(Token)match(input,51,FOLLOW_51_in_function_decl305);  
-                    stream_51.add(char_literal25);
+                    char_literal25=(Token)match(input,52,FOLLOW_52_in_function_decl327);  
+                    stream_52.add(char_literal25);
 
 
 
@@ -889,15 +893,15 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 58:55: -> type ^( BODY ( var_decl )* ( instruction )+ )
+                    // 67:55: -> type ^( BODY ( var_decl )* ( instruction )+ )
                     {
                         adaptor.addChild(root_0, stream_type.nextTree());
-                        // Looc.g:58:63: ^( BODY ( var_decl )* ( instruction )+ )
+                        // Looc.g:67:63: ^( BODY ( var_decl )* ( instruction )+ )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(BODY, "BODY"), root_1);
 
-                        // Looc.g:58:70: ( var_decl )*
+                        // Looc.g:67:70: ( var_decl )*
                         while ( stream_var_decl.hasNext() ) {
                             adaptor.addChild(root_1, stream_var_decl.nextTree());
 
@@ -921,27 +925,27 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Looc.g:59:7: '{' ( var_decl )* ( instruction )+ '}'
+                    // Looc.g:68:7: '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal26=(Token)match(input,50,FOLLOW_50_in_function_decl327);  
-                    stream_50.add(char_literal26);
+                    char_literal26=(Token)match(input,51,FOLLOW_51_in_function_decl349);  
+                    stream_51.add(char_literal26);
 
-                    // Looc.g:59:10: ( var_decl )*
+                    // Looc.g:68:10: ( var_decl )*
                     loop10:
                     do {
                         int alt10=2;
                         int LA10_0 = input.LA(1);
 
-                        if ( (LA10_0==53) ) {
+                        if ( (LA10_0==54) ) {
                             alt10=1;
                         }
 
 
                         switch (alt10) {
                     	case 1 :
-                    	    // Looc.g:59:10: var_decl
+                    	    // Looc.g:68:10: var_decl
                     	    {
-                    	    pushFollow(FOLLOW_var_decl_in_function_decl328);
+                    	    pushFollow(FOLLOW_var_decl_in_function_decl350);
                     	    var_decl27=var_decl();
 
                     	    state._fsp--;
@@ -956,23 +960,23 @@ public class LoocParser extends Parser {
                         }
                     } while (true);
 
-                    // Looc.g:59:20: ( instruction )+
+                    // Looc.g:68:20: ( instruction )+
                     int cnt11=0;
                     loop11:
                     do {
                         int alt11=2;
                         int LA11_0 = input.LA(1);
 
-                        if ( (LA11_0==IDF||LA11_0==50||LA11_0==58||LA11_0==61||LA11_0==63||(LA11_0>=75 && LA11_0<=77)) ) {
+                        if ( (LA11_0==IDF||LA11_0==51||LA11_0==59||LA11_0==62||LA11_0==64||(LA11_0>=76 && LA11_0<=78)) ) {
                             alt11=1;
                         }
 
 
                         switch (alt11) {
                     	case 1 :
-                    	    // Looc.g:59:20: instruction
+                    	    // Looc.g:68:20: instruction
                     	    {
-                    	    pushFollow(FOLLOW_instruction_in_function_decl331);
+                    	    pushFollow(FOLLOW_instruction_in_function_decl353);
                     	    instruction28=instruction();
 
                     	    state._fsp--;
@@ -991,8 +995,8 @@ public class LoocParser extends Parser {
                         cnt11++;
                     } while (true);
 
-                    char_literal29=(Token)match(input,51,FOLLOW_51_in_function_decl334);  
-                    stream_51.add(char_literal29);
+                    char_literal29=(Token)match(input,52,FOLLOW_52_in_function_decl356);  
+                    stream_52.add(char_literal29);
 
 
 
@@ -1007,14 +1011,14 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 59:37: -> ^( BODY ( var_decl )* ( instruction )+ )
+                    // 68:37: -> ^( BODY ( var_decl )* ( instruction )+ )
                     {
-                        // Looc.g:59:40: ^( BODY ( var_decl )* ( instruction )+ )
+                        // Looc.g:68:40: ^( BODY ( var_decl )* ( instruction )+ )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(BODY, "BODY"), root_1);
 
-                        // Looc.g:59:47: ( var_decl )*
+                        // Looc.g:68:47: ( var_decl )*
                         while ( stream_var_decl.hasNext() ) {
                             adaptor.addChild(root_1, stream_var_decl.nextTree());
 
@@ -1063,7 +1067,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "method_args"
-    // Looc.g:63:1: method_args : method_arg ( ',' method_arg )* -> ^( FORMAL_PARAMS method_arg ( method_arg )* ) ;
+    // Looc.g:72:1: method_args : method_arg ( ',' method_arg )* -> ^( FORMAL_PARAMS method_arg ( method_arg )* ) ;
     public final LoocParser.method_args_return method_args() throws RecognitionException {
         LoocParser.method_args_return retval = new LoocParser.method_args_return();
         retval.start = input.LT(1);
@@ -1077,37 +1081,37 @@ public class LoocParser extends Parser {
 
 
         Object char_literal31_tree=null;
-        RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
+        RewriteRuleTokenStream stream_53=new RewriteRuleTokenStream(adaptor,"token 53");
         RewriteRuleSubtreeStream stream_method_arg=new RewriteRuleSubtreeStream(adaptor,"rule method_arg");
         try {
-            // Looc.g:63:12: ( method_arg ( ',' method_arg )* -> ^( FORMAL_PARAMS method_arg ( method_arg )* ) )
-            // Looc.g:63:15: method_arg ( ',' method_arg )*
+            // Looc.g:72:12: ( method_arg ( ',' method_arg )* -> ^( FORMAL_PARAMS method_arg ( method_arg )* ) )
+            // Looc.g:72:15: method_arg ( ',' method_arg )*
             {
-            pushFollow(FOLLOW_method_arg_in_method_args356);
+            pushFollow(FOLLOW_method_arg_in_method_args378);
             method_arg30=method_arg();
 
             state._fsp--;
 
             stream_method_arg.add(method_arg30.getTree());
-            // Looc.g:63:26: ( ',' method_arg )*
+            // Looc.g:72:26: ( ',' method_arg )*
             loop13:
             do {
                 int alt13=2;
                 int LA13_0 = input.LA(1);
 
-                if ( (LA13_0==52) ) {
+                if ( (LA13_0==53) ) {
                     alt13=1;
                 }
 
 
                 switch (alt13) {
             	case 1 :
-            	    // Looc.g:63:27: ',' method_arg
+            	    // Looc.g:72:27: ',' method_arg
             	    {
-            	    char_literal31=(Token)match(input,52,FOLLOW_52_in_method_args359);  
-            	    stream_52.add(char_literal31);
+            	    char_literal31=(Token)match(input,53,FOLLOW_53_in_method_args381);  
+            	    stream_53.add(char_literal31);
 
-            	    pushFollow(FOLLOW_method_arg_in_method_args361);
+            	    pushFollow(FOLLOW_method_arg_in_method_args383);
             	    method_arg32=method_arg();
 
             	    state._fsp--;
@@ -1135,15 +1139,15 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 63:44: -> ^( FORMAL_PARAMS method_arg ( method_arg )* )
+            // 72:44: -> ^( FORMAL_PARAMS method_arg ( method_arg )* )
             {
-                // Looc.g:63:47: ^( FORMAL_PARAMS method_arg ( method_arg )* )
+                // Looc.g:72:47: ^( FORMAL_PARAMS method_arg ( method_arg )* )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(FORMAL_PARAMS, "FORMAL_PARAMS"), root_1);
 
                 adaptor.addChild(root_1, stream_method_arg.nextTree());
-                // Looc.g:63:74: ( method_arg )*
+                // Looc.g:72:74: ( method_arg )*
                 while ( stream_method_arg.hasNext() ) {
                     adaptor.addChild(root_1, stream_method_arg.nextTree());
 
@@ -1182,7 +1186,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "method_arg"
-    // Looc.g:65:1: method_arg : IDF ':' type -> ^( FORMAL_PARAM IDF type ) ;
+    // Looc.g:74:1: method_arg : IDF ':' type -> ^( FORMAL_PARAM IDF type ) ;
     public final LoocParser.method_arg_return method_arg() throws RecognitionException {
         LoocParser.method_arg_return retval = new LoocParser.method_arg_return();
         retval.start = input.LT(1);
@@ -1196,20 +1200,20 @@ public class LoocParser extends Parser {
 
         Object IDF33_tree=null;
         Object char_literal34_tree=null;
-        RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
         RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
+        RewriteRuleTokenStream stream_50=new RewriteRuleTokenStream(adaptor,"token 50");
         RewriteRuleSubtreeStream stream_type=new RewriteRuleSubtreeStream(adaptor,"rule type");
         try {
-            // Looc.g:65:11: ( IDF ':' type -> ^( FORMAL_PARAM IDF type ) )
-            // Looc.g:65:13: IDF ':' type
+            // Looc.g:74:11: ( IDF ':' type -> ^( FORMAL_PARAM IDF type ) )
+            // Looc.g:74:13: IDF ':' type
             {
-            IDF33=(Token)match(input,IDF,FOLLOW_IDF_in_method_arg383);  
+            IDF33=(Token)match(input,IDF,FOLLOW_IDF_in_method_arg405);  
             stream_IDF.add(IDF33);
 
-            char_literal34=(Token)match(input,49,FOLLOW_49_in_method_arg385);  
-            stream_49.add(char_literal34);
+            char_literal34=(Token)match(input,50,FOLLOW_50_in_method_arg407);  
+            stream_50.add(char_literal34);
 
-            pushFollow(FOLLOW_type_in_method_arg387);
+            pushFollow(FOLLOW_type_in_method_arg409);
             type35=type();
 
             state._fsp--;
@@ -1228,9 +1232,9 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 65:26: -> ^( FORMAL_PARAM IDF type )
+            // 74:26: -> ^( FORMAL_PARAM IDF type )
             {
-                // Looc.g:65:29: ^( FORMAL_PARAM IDF type )
+                // Looc.g:74:29: ^( FORMAL_PARAM IDF type )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(FORMAL_PARAM, "FORMAL_PARAM"), root_1);
@@ -1270,7 +1274,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "var_decl"
-    // Looc.g:67:1: var_decl : 'var' IDF ':' type ';' -> ^( VAR_DEC IDF type ) ;
+    // Looc.g:76:1: var_decl : 'var' IDF ':' type ';' -> ^( VAR_DEC IDF type ) ;
     public final LoocParser.var_decl_return var_decl() throws RecognitionException {
         LoocParser.var_decl_return retval = new LoocParser.var_decl_return();
         retval.start = input.LT(1);
@@ -1288,32 +1292,32 @@ public class LoocParser extends Parser {
         Object IDF37_tree=null;
         Object char_literal38_tree=null;
         Object char_literal40_tree=null;
-        RewriteRuleTokenStream stream_49=new RewriteRuleTokenStream(adaptor,"token 49");
+        RewriteRuleTokenStream stream_55=new RewriteRuleTokenStream(adaptor,"token 55");
         RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
-        RewriteRuleTokenStream stream_53=new RewriteRuleTokenStream(adaptor,"token 53");
+        RewriteRuleTokenStream stream_50=new RewriteRuleTokenStream(adaptor,"token 50");
         RewriteRuleTokenStream stream_54=new RewriteRuleTokenStream(adaptor,"token 54");
         RewriteRuleSubtreeStream stream_type=new RewriteRuleSubtreeStream(adaptor,"rule type");
         try {
-            // Looc.g:67:9: ( 'var' IDF ':' type ';' -> ^( VAR_DEC IDF type ) )
-            // Looc.g:67:12: 'var' IDF ':' type ';'
+            // Looc.g:76:9: ( 'var' IDF ':' type ';' -> ^( VAR_DEC IDF type ) )
+            // Looc.g:76:12: 'var' IDF ':' type ';'
             {
-            string_literal36=(Token)match(input,53,FOLLOW_53_in_var_decl405);  
-            stream_53.add(string_literal36);
+            string_literal36=(Token)match(input,54,FOLLOW_54_in_var_decl427);  
+            stream_54.add(string_literal36);
 
-            IDF37=(Token)match(input,IDF,FOLLOW_IDF_in_var_decl407);  
+            IDF37=(Token)match(input,IDF,FOLLOW_IDF_in_var_decl429);  
             stream_IDF.add(IDF37);
 
-            char_literal38=(Token)match(input,49,FOLLOW_49_in_var_decl409);  
-            stream_49.add(char_literal38);
+            char_literal38=(Token)match(input,50,FOLLOW_50_in_var_decl431);  
+            stream_50.add(char_literal38);
 
-            pushFollow(FOLLOW_type_in_var_decl411);
+            pushFollow(FOLLOW_type_in_var_decl433);
             type39=type();
 
             state._fsp--;
 
             stream_type.add(type39.getTree());
-            char_literal40=(Token)match(input,54,FOLLOW_54_in_var_decl413);  
-            stream_54.add(char_literal40);
+            char_literal40=(Token)match(input,55,FOLLOW_55_in_var_decl435);  
+            stream_55.add(char_literal40);
 
 
 
@@ -1328,9 +1332,9 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 67:35: -> ^( VAR_DEC IDF type )
+            // 76:35: -> ^( VAR_DEC IDF type )
             {
-                // Looc.g:67:38: ^( VAR_DEC IDF type )
+                // Looc.g:76:38: ^( VAR_DEC IDF type )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(VAR_DEC, "VAR_DEC"), root_1);
@@ -1370,7 +1374,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "type"
-    // Looc.g:70:1: type : ( 'int' -> 'int' | 'string' -> 'string' | CLASS -> CLASS );
+    // Looc.g:79:1: type : ( 'int' -> 'int' | 'string' -> 'string' | CLASS -> CLASS );
     public final LoocParser.type_return type() throws RecognitionException {
         LoocParser.type_return retval = new LoocParser.type_return();
         retval.start = input.LT(1);
@@ -1384,20 +1388,20 @@ public class LoocParser extends Parser {
         Object string_literal41_tree=null;
         Object string_literal42_tree=null;
         Object CLASS43_tree=null;
-        RewriteRuleTokenStream stream_55=new RewriteRuleTokenStream(adaptor,"token 55");
         RewriteRuleTokenStream stream_56=new RewriteRuleTokenStream(adaptor,"token 56");
+        RewriteRuleTokenStream stream_57=new RewriteRuleTokenStream(adaptor,"token 57");
         RewriteRuleTokenStream stream_CLASS=new RewriteRuleTokenStream(adaptor,"token CLASS");
 
         try {
-            // Looc.g:70:5: ( 'int' -> 'int' | 'string' -> 'string' | CLASS -> CLASS )
+            // Looc.g:79:5: ( 'int' -> 'int' | 'string' -> 'string' | CLASS -> CLASS )
             int alt14=3;
             switch ( input.LA(1) ) {
-            case 55:
+            case 56:
                 {
                 alt14=1;
                 }
                 break;
-            case 56:
+            case 57:
                 {
                 alt14=2;
                 }
@@ -1416,38 +1420,10 @@ public class LoocParser extends Parser {
 
             switch (alt14) {
                 case 1 :
-                    // Looc.g:70:9: 'int'
+                    // Looc.g:79:9: 'int'
                     {
-                    string_literal41=(Token)match(input,55,FOLLOW_55_in_type433);  
-                    stream_55.add(string_literal41);
-
-
-
-                    // AST REWRITE
-                    // elements: 55
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (Object)adaptor.nil();
-                    // 70:15: -> 'int'
-                    {
-                        adaptor.addChild(root_0, stream_55.nextNode());
-
-                    }
-
-                    retval.tree = root_0;
-                    }
-                    break;
-                case 2 :
-                    // Looc.g:71:7: 'string'
-                    {
-                    string_literal42=(Token)match(input,56,FOLLOW_56_in_type445);  
-                    stream_56.add(string_literal42);
+                    string_literal41=(Token)match(input,56,FOLLOW_56_in_type455);  
+                    stream_56.add(string_literal41);
 
 
 
@@ -1462,7 +1438,7 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 71:16: -> 'string'
+                    // 79:15: -> 'int'
                     {
                         adaptor.addChild(root_0, stream_56.nextNode());
 
@@ -1471,10 +1447,38 @@ public class LoocParser extends Parser {
                     retval.tree = root_0;
                     }
                     break;
-                case 3 :
-                    // Looc.g:72:8: CLASS
+                case 2 :
+                    // Looc.g:80:7: 'string'
                     {
-                    CLASS43=(Token)match(input,CLASS,FOLLOW_CLASS_in_type458);  
+                    string_literal42=(Token)match(input,57,FOLLOW_57_in_type467);  
+                    stream_57.add(string_literal42);
+
+
+
+                    // AST REWRITE
+                    // elements: 57
+                    // token labels: 
+                    // rule labels: retval
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
+                    retval.tree = root_0;
+                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+                    root_0 = (Object)adaptor.nil();
+                    // 80:16: -> 'string'
+                    {
+                        adaptor.addChild(root_0, stream_57.nextNode());
+
+                    }
+
+                    retval.tree = root_0;
+                    }
+                    break;
+                case 3 :
+                    // Looc.g:81:8: CLASS
+                    {
+                    CLASS43=(Token)match(input,CLASS,FOLLOW_CLASS_in_type480);  
                     stream_CLASS.add(CLASS43);
 
 
@@ -1490,7 +1494,7 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 72:14: -> CLASS
+                    // 81:14: -> CLASS
                     {
                         adaptor.addChild(root_0, stream_CLASS.nextNode());
 
@@ -1525,7 +1529,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "instruction"
-    // Looc.g:75:1: instruction : ( IDF ':=' expression ';' -> ^( AFFECT IDF expression ) | 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end' -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) ) | 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi' -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? ) | print | 'do' expression ';' -> ^( DO expression ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BLOCK ( var_decl )* ( instruction )+ ) | return_decl ';' -> ^( RETURN return_decl ) | read ';' -> ^( READ read ) );
+    // Looc.g:84:1: instruction : ( IDF ':=' expression ';' -> ^( AFFECT IDF expression ) | 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end' -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) ) | 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi' -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? ) | print | 'do' expression ';' -> ^( DO expression ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BLOCK ( var_decl )* ( instruction )+ ) | return_decl ';' -> ^( RETURN return_decl ) | read ';' -> ^( READ read ) );
     public final LoocParser.instruction_return instruction() throws RecognitionException {
         LoocParser.instruction_return retval = new LoocParser.instruction_return();
         retval.start = input.LT(1);
@@ -1596,19 +1600,19 @@ public class LoocParser extends Parser {
         Object char_literal69_tree=null;
         Object char_literal71_tree=null;
         Object char_literal73_tree=null;
+        RewriteRuleTokenStream stream_55=new RewriteRuleTokenStream(adaptor,"token 55");
         RewriteRuleTokenStream stream_66=new RewriteRuleTokenStream(adaptor,"token 66");
-        RewriteRuleTokenStream stream_57=new RewriteRuleTokenStream(adaptor,"token 57");
+        RewriteRuleTokenStream stream_67=new RewriteRuleTokenStream(adaptor,"token 67");
         RewriteRuleTokenStream stream_58=new RewriteRuleTokenStream(adaptor,"token 58");
         RewriteRuleTokenStream stream_59=new RewriteRuleTokenStream(adaptor,"token 59");
         RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
         RewriteRuleTokenStream stream_60=new RewriteRuleTokenStream(adaptor,"token 60");
         RewriteRuleTokenStream stream_61=new RewriteRuleTokenStream(adaptor,"token 61");
-        RewriteRuleTokenStream stream_50=new RewriteRuleTokenStream(adaptor,"token 50");
         RewriteRuleTokenStream stream_62=new RewriteRuleTokenStream(adaptor,"token 62");
         RewriteRuleTokenStream stream_51=new RewriteRuleTokenStream(adaptor,"token 51");
         RewriteRuleTokenStream stream_63=new RewriteRuleTokenStream(adaptor,"token 63");
+        RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
         RewriteRuleTokenStream stream_64=new RewriteRuleTokenStream(adaptor,"token 64");
-        RewriteRuleTokenStream stream_54=new RewriteRuleTokenStream(adaptor,"token 54");
         RewriteRuleTokenStream stream_65=new RewriteRuleTokenStream(adaptor,"token 65");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         RewriteRuleSubtreeStream stream_read=new RewriteRuleSubtreeStream(adaptor,"rule read");
@@ -1616,7 +1620,7 @@ public class LoocParser extends Parser {
         RewriteRuleSubtreeStream stream_var_decl=new RewriteRuleSubtreeStream(adaptor,"rule var_decl");
         RewriteRuleSubtreeStream stream_return_decl=new RewriteRuleSubtreeStream(adaptor,"rule return_decl");
         try {
-            // Looc.g:75:12: ( IDF ':=' expression ';' -> ^( AFFECT IDF expression ) | 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end' -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) ) | 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi' -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? ) | print | 'do' expression ';' -> ^( DO expression ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BLOCK ( var_decl )* ( instruction )+ ) | return_decl ';' -> ^( RETURN return_decl ) | read ';' -> ^( READ read ) )
+            // Looc.g:84:12: ( IDF ':=' expression ';' -> ^( AFFECT IDF expression ) | 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end' -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) ) | 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi' -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? ) | print | 'do' expression ';' -> ^( DO expression ) | '{' ( var_decl )* ( instruction )+ '}' -> ^( BLOCK ( var_decl )* ( instruction )+ ) | return_decl ';' -> ^( RETURN return_decl ) | read ';' -> ^( READ read ) )
             int alt21=8;
             switch ( input.LA(1) ) {
             case IDF:
@@ -1624,37 +1628,37 @@ public class LoocParser extends Parser {
                 alt21=1;
                 }
                 break;
-            case 58:
+            case 59:
                 {
                 alt21=2;
                 }
                 break;
-            case 63:
+            case 64:
                 {
                 alt21=3;
                 }
                 break;
-            case 75:
+            case 76:
                 {
                 alt21=4;
                 }
                 break;
-            case 61:
+            case 62:
                 {
                 alt21=5;
                 }
                 break;
-            case 50:
+            case 51:
                 {
                 alt21=6;
                 }
                 break;
-            case 76:
+            case 77:
                 {
                 alt21=7;
                 }
                 break;
-            case 77:
+            case 78:
                 {
                 alt21=8;
                 }
@@ -1668,22 +1672,22 @@ public class LoocParser extends Parser {
 
             switch (alt21) {
                 case 1 :
-                    // Looc.g:75:15: IDF ':=' expression ';'
+                    // Looc.g:84:15: IDF ':=' expression ';'
                     {
-                    IDF44=(Token)match(input,IDF,FOLLOW_IDF_in_instruction471);  
+                    IDF44=(Token)match(input,IDF,FOLLOW_IDF_in_instruction493);  
                     stream_IDF.add(IDF44);
 
-                    string_literal45=(Token)match(input,57,FOLLOW_57_in_instruction473);  
-                    stream_57.add(string_literal45);
+                    string_literal45=(Token)match(input,58,FOLLOW_58_in_instruction495);  
+                    stream_58.add(string_literal45);
 
-                    pushFollow(FOLLOW_expression_in_instruction475);
+                    pushFollow(FOLLOW_expression_in_instruction497);
                     expression46=expression();
 
                     state._fsp--;
 
                     stream_expression.add(expression46.getTree());
-                    char_literal47=(Token)match(input,54,FOLLOW_54_in_instruction477);  
-                    stream_54.add(char_literal47);
+                    char_literal47=(Token)match(input,55,FOLLOW_55_in_instruction499);  
+                    stream_55.add(char_literal47);
 
 
 
@@ -1698,9 +1702,9 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 75:39: -> ^( AFFECT IDF expression )
+                    // 84:39: -> ^( AFFECT IDF expression )
                     {
-                        // Looc.g:75:42: ^( AFFECT IDF expression )
+                        // Looc.g:84:42: ^( AFFECT IDF expression )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(AFFECT, "AFFECT"), root_1);
@@ -1717,52 +1721,52 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Looc.g:76:6: 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end'
+                    // Looc.g:85:6: 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end'
                     {
-                    string_literal48=(Token)match(input,58,FOLLOW_58_in_instruction495);  
-                    stream_58.add(string_literal48);
+                    string_literal48=(Token)match(input,59,FOLLOW_59_in_instruction517);  
+                    stream_59.add(string_literal48);
 
-                    IDF49=(Token)match(input,IDF,FOLLOW_IDF_in_instruction497);  
+                    IDF49=(Token)match(input,IDF,FOLLOW_IDF_in_instruction519);  
                     stream_IDF.add(IDF49);
 
-                    string_literal50=(Token)match(input,59,FOLLOW_59_in_instruction499);  
-                    stream_59.add(string_literal50);
+                    string_literal50=(Token)match(input,60,FOLLOW_60_in_instruction521);  
+                    stream_60.add(string_literal50);
 
-                    pushFollow(FOLLOW_expression_in_instruction501);
+                    pushFollow(FOLLOW_expression_in_instruction523);
                     expression51=expression();
 
                     state._fsp--;
 
                     stream_expression.add(expression51.getTree());
-                    string_literal52=(Token)match(input,60,FOLLOW_60_in_instruction503);  
-                    stream_60.add(string_literal52);
+                    string_literal52=(Token)match(input,61,FOLLOW_61_in_instruction525);  
+                    stream_61.add(string_literal52);
 
-                    pushFollow(FOLLOW_expression_in_instruction505);
+                    pushFollow(FOLLOW_expression_in_instruction527);
                     expression53=expression();
 
                     state._fsp--;
 
                     stream_expression.add(expression53.getTree());
-                    string_literal54=(Token)match(input,61,FOLLOW_61_in_instruction507);  
-                    stream_61.add(string_literal54);
+                    string_literal54=(Token)match(input,62,FOLLOW_62_in_instruction529);  
+                    stream_62.add(string_literal54);
 
-                    // Looc.g:76:53: ( instruction )+
+                    // Looc.g:85:53: ( instruction )+
                     int cnt15=0;
                     loop15:
                     do {
                         int alt15=2;
                         int LA15_0 = input.LA(1);
 
-                        if ( (LA15_0==IDF||LA15_0==50||LA15_0==58||LA15_0==61||LA15_0==63||(LA15_0>=75 && LA15_0<=77)) ) {
+                        if ( (LA15_0==IDF||LA15_0==51||LA15_0==59||LA15_0==62||LA15_0==64||(LA15_0>=76 && LA15_0<=78)) ) {
                             alt15=1;
                         }
 
 
                         switch (alt15) {
                     	case 1 :
-                    	    // Looc.g:76:53: instruction
+                    	    // Looc.g:85:53: instruction
                     	    {
-                    	    pushFollow(FOLLOW_instruction_in_instruction509);
+                    	    pushFollow(FOLLOW_instruction_in_instruction531);
                     	    instruction55=instruction();
 
                     	    state._fsp--;
@@ -1781,8 +1785,8 @@ public class LoocParser extends Parser {
                         cnt15++;
                     } while (true);
 
-                    string_literal56=(Token)match(input,62,FOLLOW_62_in_instruction512);  
-                    stream_62.add(string_literal56);
+                    string_literal56=(Token)match(input,63,FOLLOW_63_in_instruction534);  
+                    stream_63.add(string_literal56);
 
 
 
@@ -1797,9 +1801,9 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 76:72: -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) )
+                    // 85:72: -> ^( FOR IDF expression expression ^( BODY ( instruction )+ ) )
                     {
-                        // Looc.g:76:75: ^( FOR IDF expression expression ^( BODY ( instruction )+ ) )
+                        // Looc.g:85:75: ^( FOR IDF expression expression ^( BODY ( instruction )+ ) )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(FOR, "FOR"), root_1);
@@ -1807,7 +1811,7 @@ public class LoocParser extends Parser {
                         adaptor.addChild(root_1, stream_IDF.nextNode());
                         adaptor.addChild(root_1, stream_expression.nextTree());
                         adaptor.addChild(root_1, stream_expression.nextTree());
-                        // Looc.g:76:107: ^( BODY ( instruction )+ )
+                        // Looc.g:85:107: ^( BODY ( instruction )+ )
                         {
                         Object root_2 = (Object)adaptor.nil();
                         root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(BODY, "BODY"), root_2);
@@ -1833,37 +1837,37 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // Looc.g:77:6: 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi'
+                    // Looc.g:86:6: 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi'
                     {
-                    string_literal57=(Token)match(input,63,FOLLOW_63_in_instruction538);  
-                    stream_63.add(string_literal57);
+                    string_literal57=(Token)match(input,64,FOLLOW_64_in_instruction560);  
+                    stream_64.add(string_literal57);
 
-                    pushFollow(FOLLOW_expression_in_instruction540);
+                    pushFollow(FOLLOW_expression_in_instruction562);
                     expression58=expression();
 
                     state._fsp--;
 
                     stream_expression.add(expression58.getTree());
-                    string_literal59=(Token)match(input,64,FOLLOW_64_in_instruction542);  
-                    stream_64.add(string_literal59);
+                    string_literal59=(Token)match(input,65,FOLLOW_65_in_instruction564);  
+                    stream_65.add(string_literal59);
 
-                    // Looc.g:77:30: (a+= instruction )+
+                    // Looc.g:86:30: (a+= instruction )+
                     int cnt16=0;
                     loop16:
                     do {
                         int alt16=2;
                         int LA16_0 = input.LA(1);
 
-                        if ( (LA16_0==IDF||LA16_0==50||LA16_0==58||LA16_0==61||LA16_0==63||(LA16_0>=75 && LA16_0<=77)) ) {
+                        if ( (LA16_0==IDF||LA16_0==51||LA16_0==59||LA16_0==62||LA16_0==64||(LA16_0>=76 && LA16_0<=78)) ) {
                             alt16=1;
                         }
 
 
                         switch (alt16) {
                     	case 1 :
-                    	    // Looc.g:77:30: a+= instruction
+                    	    // Looc.g:86:30: a+= instruction
                     	    {
-                    	    pushFollow(FOLLOW_instruction_in_instruction546);
+                    	    pushFollow(FOLLOW_instruction_in_instruction568);
                     	    a=instruction();
 
                     	    state._fsp--;
@@ -1885,37 +1889,37 @@ public class LoocParser extends Parser {
                         cnt16++;
                     } while (true);
 
-                    // Looc.g:77:45: ( 'else' (b+= instruction )+ )?
+                    // Looc.g:86:45: ( 'else' (b+= instruction )+ )?
                     int alt18=2;
                     int LA18_0 = input.LA(1);
 
-                    if ( (LA18_0==65) ) {
+                    if ( (LA18_0==66) ) {
                         alt18=1;
                     }
                     switch (alt18) {
                         case 1 :
-                            // Looc.g:77:46: 'else' (b+= instruction )+
+                            // Looc.g:86:46: 'else' (b+= instruction )+
                             {
-                            string_literal60=(Token)match(input,65,FOLLOW_65_in_instruction550);  
-                            stream_65.add(string_literal60);
+                            string_literal60=(Token)match(input,66,FOLLOW_66_in_instruction572);  
+                            stream_66.add(string_literal60);
 
-                            // Looc.g:77:54: (b+= instruction )+
+                            // Looc.g:86:54: (b+= instruction )+
                             int cnt17=0;
                             loop17:
                             do {
                                 int alt17=2;
                                 int LA17_0 = input.LA(1);
 
-                                if ( (LA17_0==IDF||LA17_0==50||LA17_0==58||LA17_0==61||LA17_0==63||(LA17_0>=75 && LA17_0<=77)) ) {
+                                if ( (LA17_0==IDF||LA17_0==51||LA17_0==59||LA17_0==62||LA17_0==64||(LA17_0>=76 && LA17_0<=78)) ) {
                                     alt17=1;
                                 }
 
 
                                 switch (alt17) {
                             	case 1 :
-                            	    // Looc.g:77:54: b+= instruction
+                            	    // Looc.g:86:54: b+= instruction
                             	    {
-                            	    pushFollow(FOLLOW_instruction_in_instruction554);
+                            	    pushFollow(FOLLOW_instruction_in_instruction576);
                             	    b=instruction();
 
                             	    state._fsp--;
@@ -1943,8 +1947,8 @@ public class LoocParser extends Parser {
 
                     }
 
-                    string_literal61=(Token)match(input,66,FOLLOW_66_in_instruction559);  
-                    stream_66.add(string_literal61);
+                    string_literal61=(Token)match(input,67,FOLLOW_67_in_instruction581);  
+                    stream_67.add(string_literal61);
 
 
 
@@ -1960,15 +1964,15 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_a=new RewriteRuleSubtreeStream(adaptor,"token a",list_a);
                     RewriteRuleSubtreeStream stream_b=new RewriteRuleSubtreeStream(adaptor,"token b",list_b);
                     root_0 = (Object)adaptor.nil();
-                    // 77:76: -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? )
+                    // 86:76: -> ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? )
                     {
-                        // Looc.g:77:79: ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? )
+                        // Looc.g:86:79: ^( IF expression ^( THEN ( $a)+ ) ( ^( ELSE ( $b)+ ) )? )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(IF, "IF"), root_1);
 
                         adaptor.addChild(root_1, stream_expression.nextTree());
-                        // Looc.g:77:95: ^( THEN ( $a)+ )
+                        // Looc.g:86:95: ^( THEN ( $a)+ )
                         {
                         Object root_2 = (Object)adaptor.nil();
                         root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(THEN, "THEN"), root_2);
@@ -1984,9 +1988,9 @@ public class LoocParser extends Parser {
 
                         adaptor.addChild(root_1, root_2);
                         }
-                        // Looc.g:77:107: ( ^( ELSE ( $b)+ ) )?
+                        // Looc.g:86:107: ( ^( ELSE ( $b)+ ) )?
                         if ( stream_b.hasNext() ) {
-                            // Looc.g:77:108: ^( ELSE ( $b)+ )
+                            // Looc.g:86:108: ^( ELSE ( $b)+ )
                             {
                             Object root_2 = (Object)adaptor.nil();
                             root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(ELSE, "ELSE"), root_2);
@@ -2015,11 +2019,11 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // Looc.g:78:6: print
+                    // Looc.g:87:6: print
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_print_in_instruction594);
+                    pushFollow(FOLLOW_print_in_instruction616);
                     print62=print();
 
                     state._fsp--;
@@ -2029,19 +2033,19 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // Looc.g:79:11: 'do' expression ';'
+                    // Looc.g:88:11: 'do' expression ';'
                     {
-                    string_literal63=(Token)match(input,61,FOLLOW_61_in_instruction606);  
-                    stream_61.add(string_literal63);
+                    string_literal63=(Token)match(input,62,FOLLOW_62_in_instruction628);  
+                    stream_62.add(string_literal63);
 
-                    pushFollow(FOLLOW_expression_in_instruction608);
+                    pushFollow(FOLLOW_expression_in_instruction630);
                     expression64=expression();
 
                     state._fsp--;
 
                     stream_expression.add(expression64.getTree());
-                    char_literal65=(Token)match(input,54,FOLLOW_54_in_instruction610);  
-                    stream_54.add(char_literal65);
+                    char_literal65=(Token)match(input,55,FOLLOW_55_in_instruction632);  
+                    stream_55.add(char_literal65);
 
 
 
@@ -2056,9 +2060,9 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 79:31: -> ^( DO expression )
+                    // 88:31: -> ^( DO expression )
                     {
-                        // Looc.g:79:34: ^( DO expression )
+                        // Looc.g:88:34: ^( DO expression )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(DO, "DO"), root_1);
@@ -2074,27 +2078,27 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // Looc.g:80:12: '{' ( var_decl )* ( instruction )+ '}'
+                    // Looc.g:89:12: '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal66=(Token)match(input,50,FOLLOW_50_in_instruction631);  
-                    stream_50.add(char_literal66);
+                    char_literal66=(Token)match(input,51,FOLLOW_51_in_instruction653);  
+                    stream_51.add(char_literal66);
 
-                    // Looc.g:80:16: ( var_decl )*
+                    // Looc.g:89:16: ( var_decl )*
                     loop19:
                     do {
                         int alt19=2;
                         int LA19_0 = input.LA(1);
 
-                        if ( (LA19_0==53) ) {
+                        if ( (LA19_0==54) ) {
                             alt19=1;
                         }
 
 
                         switch (alt19) {
                     	case 1 :
-                    	    // Looc.g:80:16: var_decl
+                    	    // Looc.g:89:16: var_decl
                     	    {
-                    	    pushFollow(FOLLOW_var_decl_in_instruction633);
+                    	    pushFollow(FOLLOW_var_decl_in_instruction655);
                     	    var_decl67=var_decl();
 
                     	    state._fsp--;
@@ -2109,23 +2113,23 @@ public class LoocParser extends Parser {
                         }
                     } while (true);
 
-                    // Looc.g:80:26: ( instruction )+
+                    // Looc.g:89:26: ( instruction )+
                     int cnt20=0;
                     loop20:
                     do {
                         int alt20=2;
                         int LA20_0 = input.LA(1);
 
-                        if ( (LA20_0==IDF||LA20_0==50||LA20_0==58||LA20_0==61||LA20_0==63||(LA20_0>=75 && LA20_0<=77)) ) {
+                        if ( (LA20_0==IDF||LA20_0==51||LA20_0==59||LA20_0==62||LA20_0==64||(LA20_0>=76 && LA20_0<=78)) ) {
                             alt20=1;
                         }
 
 
                         switch (alt20) {
                     	case 1 :
-                    	    // Looc.g:80:26: instruction
+                    	    // Looc.g:89:26: instruction
                     	    {
-                    	    pushFollow(FOLLOW_instruction_in_instruction636);
+                    	    pushFollow(FOLLOW_instruction_in_instruction658);
                     	    instruction68=instruction();
 
                     	    state._fsp--;
@@ -2144,8 +2148,8 @@ public class LoocParser extends Parser {
                         cnt20++;
                     } while (true);
 
-                    char_literal69=(Token)match(input,51,FOLLOW_51_in_instruction639);  
-                    stream_51.add(char_literal69);
+                    char_literal69=(Token)match(input,52,FOLLOW_52_in_instruction661);  
+                    stream_52.add(char_literal69);
 
 
 
@@ -2160,14 +2164,14 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 80:43: -> ^( BLOCK ( var_decl )* ( instruction )+ )
+                    // 89:43: -> ^( BLOCK ( var_decl )* ( instruction )+ )
                     {
-                        // Looc.g:80:46: ^( BLOCK ( var_decl )* ( instruction )+ )
+                        // Looc.g:89:46: ^( BLOCK ( var_decl )* ( instruction )+ )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(BLOCK, "BLOCK"), root_1);
 
-                        // Looc.g:80:54: ( var_decl )*
+                        // Looc.g:89:54: ( var_decl )*
                         while ( stream_var_decl.hasNext() ) {
                             adaptor.addChild(root_1, stream_var_decl.nextTree());
 
@@ -2191,16 +2195,16 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // Looc.g:81:8: return_decl ';'
+                    // Looc.g:90:8: return_decl ';'
                     {
-                    pushFollow(FOLLOW_return_decl_in_instruction660);
+                    pushFollow(FOLLOW_return_decl_in_instruction682);
                     return_decl70=return_decl();
 
                     state._fsp--;
 
                     stream_return_decl.add(return_decl70.getTree());
-                    char_literal71=(Token)match(input,54,FOLLOW_54_in_instruction662);  
-                    stream_54.add(char_literal71);
+                    char_literal71=(Token)match(input,55,FOLLOW_55_in_instruction684);  
+                    stream_55.add(char_literal71);
 
 
 
@@ -2215,9 +2219,9 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 81:24: -> ^( RETURN return_decl )
+                    // 90:24: -> ^( RETURN return_decl )
                     {
-                        // Looc.g:81:27: ^( RETURN return_decl )
+                        // Looc.g:90:27: ^( RETURN return_decl )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(RETURN, "RETURN"), root_1);
@@ -2233,16 +2237,16 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // Looc.g:82:10: read ';'
+                    // Looc.g:91:10: read ';'
                     {
-                    pushFollow(FOLLOW_read_in_instruction681);
+                    pushFollow(FOLLOW_read_in_instruction703);
                     read72=read();
 
                     state._fsp--;
 
                     stream_read.add(read72.getTree());
-                    char_literal73=(Token)match(input,54,FOLLOW_54_in_instruction682);  
-                    stream_54.add(char_literal73);
+                    char_literal73=(Token)match(input,55,FOLLOW_55_in_instruction704);  
+                    stream_55.add(char_literal73);
 
 
 
@@ -2257,9 +2261,9 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 82:18: -> ^( READ read )
+                    // 91:18: -> ^( READ read )
                     {
-                        // Looc.g:82:21: ^( READ read )
+                        // Looc.g:91:21: ^( READ read )
                         {
                         Object root_1 = (Object)adaptor.nil();
                         root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(READ, "READ"), root_1);
@@ -2300,7 +2304,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "expression"
-    // Looc.g:84:1: expression : ( operation | 'new' CLASS -> ^( 'new' CLASS ) );
+    // Looc.g:93:1: expression : ( operation | 'new' CLASS -> ^( 'new' CLASS ) );
     public final LoocParser.expression_return expression() throws RecognitionException {
         LoocParser.expression_return retval = new LoocParser.expression_return();
         retval.start = input.LT(1);
@@ -2314,18 +2318,18 @@ public class LoocParser extends Parser {
 
         Object string_literal75_tree=null;
         Object CLASS76_tree=null;
-        RewriteRuleTokenStream stream_67=new RewriteRuleTokenStream(adaptor,"token 67");
+        RewriteRuleTokenStream stream_68=new RewriteRuleTokenStream(adaptor,"token 68");
         RewriteRuleTokenStream stream_CLASS=new RewriteRuleTokenStream(adaptor,"token CLASS");
 
         try {
-            // Looc.g:84:12: ( operation | 'new' CLASS -> ^( 'new' CLASS ) )
+            // Looc.g:93:12: ( operation | 'new' CLASS -> ^( 'new' CLASS ) )
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==IDF||(LA22_0>=INT && LA22_0<=STRING)||LA22_0==46||LA22_0==69||(LA22_0>=73 && LA22_0<=74)) ) {
+            if ( (LA22_0==IDF||(LA22_0>=INT && LA22_0<=STRING)||LA22_0==47||LA22_0==70||(LA22_0>=73 && LA22_0<=74)) ) {
                 alt22=1;
             }
-            else if ( (LA22_0==67) ) {
+            else if ( (LA22_0==68) ) {
                 alt22=2;
             }
             else {
@@ -2336,11 +2340,11 @@ public class LoocParser extends Parser {
             }
             switch (alt22) {
                 case 1 :
-                    // Looc.g:84:16: operation
+                    // Looc.g:93:16: operation
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    pushFollow(FOLLOW_operation_in_expression700);
+                    pushFollow(FOLLOW_operation_in_expression722);
                     operation74=operation();
 
                     state._fsp--;
@@ -2350,18 +2354,18 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Looc.g:85:5: 'new' CLASS
+                    // Looc.g:94:5: 'new' CLASS
                     {
-                    string_literal75=(Token)match(input,67,FOLLOW_67_in_expression706);  
-                    stream_67.add(string_literal75);
+                    string_literal75=(Token)match(input,68,FOLLOW_68_in_expression728);  
+                    stream_68.add(string_literal75);
 
-                    CLASS76=(Token)match(input,CLASS,FOLLOW_CLASS_in_expression708);  
+                    CLASS76=(Token)match(input,CLASS,FOLLOW_CLASS_in_expression730);  
                     stream_CLASS.add(CLASS76);
 
 
 
                     // AST REWRITE
-                    // elements: 67, CLASS
+                    // elements: 68, CLASS
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2371,12 +2375,12 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 85:17: -> ^( 'new' CLASS )
+                    // 94:17: -> ^( 'new' CLASS )
                     {
-                        // Looc.g:85:20: ^( 'new' CLASS )
+                        // Looc.g:94:20: ^( 'new' CLASS )
                         {
                         Object root_1 = (Object)adaptor.nil();
-                        root_1 = (Object)adaptor.becomeRoot(stream_67.nextNode(), root_1);
+                        root_1 = (Object)adaptor.becomeRoot(stream_68.nextNode(), root_1);
 
                         adaptor.addChild(root_1, stream_CLASS.nextNode());
 
@@ -2414,7 +2418,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "operation"
-    // Looc.g:88:1: operation : ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )* ;
+    // Looc.g:97:1: operation : ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )* ;
     public final LoocParser.operation_return operation() throws RecognitionException {
         LoocParser.operation_return retval = new LoocParser.operation_return();
         retval.start = input.LT(1);
@@ -2430,17 +2434,17 @@ public class LoocParser extends Parser {
 
         Object char_literal78_tree=null;
         Object char_literal79_tree=null;
-        RewriteRuleTokenStream stream_68=new RewriteRuleTokenStream(adaptor,"token 68");
         RewriteRuleTokenStream stream_69=new RewriteRuleTokenStream(adaptor,"token 69");
+        RewriteRuleTokenStream stream_70=new RewriteRuleTokenStream(adaptor,"token 70");
         RewriteRuleSubtreeStream stream_multiop=new RewriteRuleSubtreeStream(adaptor,"rule multiop");
         try {
-            // Looc.g:88:11: ( ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )* )
-            // Looc.g:88:13: ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )*
+            // Looc.g:97:11: ( ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )* )
+            // Looc.g:97:13: ( multiop -> multiop ) ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )*
             {
-            // Looc.g:88:13: ( multiop -> multiop )
-            // Looc.g:88:14: multiop
+            // Looc.g:97:13: ( multiop -> multiop )
+            // Looc.g:97:14: multiop
             {
-            pushFollow(FOLLOW_multiop_in_operation726);
+            pushFollow(FOLLOW_multiop_in_operation748);
             multiop77=multiop();
 
             state._fsp--;
@@ -2459,7 +2463,7 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 88:22: -> multiop
+            // 97:22: -> multiop
             {
                 adaptor.addChild(root_0, stream_multiop.nextTree());
 
@@ -2468,28 +2472,28 @@ public class LoocParser extends Parser {
             retval.tree = root_0;
             }
 
-            // Looc.g:88:34: ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )*
+            // Looc.g:97:34: ( '+' mult= multiop -> ^( PLUS $operation $mult) | '-' mult= multiop -> ^( DIFF $operation $mult) )*
             loop23:
             do {
                 int alt23=3;
                 int LA23_0 = input.LA(1);
 
-                if ( (LA23_0==68) ) {
+                if ( (LA23_0==69) ) {
                     alt23=1;
                 }
-                else if ( (LA23_0==69) ) {
+                else if ( (LA23_0==70) ) {
                     alt23=2;
                 }
 
 
                 switch (alt23) {
             	case 1 :
-            	    // Looc.g:88:35: '+' mult= multiop
+            	    // Looc.g:97:35: '+' mult= multiop
             	    {
-            	    char_literal78=(Token)match(input,68,FOLLOW_68_in_operation734);  
-            	    stream_68.add(char_literal78);
+            	    char_literal78=(Token)match(input,69,FOLLOW_69_in_operation756);  
+            	    stream_69.add(char_literal78);
 
-            	    pushFollow(FOLLOW_multiop_in_operation738);
+            	    pushFollow(FOLLOW_multiop_in_operation760);
             	    mult=multiop();
 
             	    state._fsp--;
@@ -2509,9 +2513,9 @@ public class LoocParser extends Parser {
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             	    root_0 = (Object)adaptor.nil();
-            	    // 88:52: -> ^( PLUS $operation $mult)
+            	    // 97:52: -> ^( PLUS $operation $mult)
             	    {
-            	        // Looc.g:88:55: ^( PLUS $operation $mult)
+            	        // Looc.g:97:55: ^( PLUS $operation $mult)
             	        {
             	        Object root_1 = (Object)adaptor.nil();
             	        root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(PLUS, "PLUS"), root_1);
@@ -2528,12 +2532,12 @@ public class LoocParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // Looc.g:89:4: '-' mult= multiop
+            	    // Looc.g:98:4: '-' mult= multiop
             	    {
-            	    char_literal79=(Token)match(input,69,FOLLOW_69_in_operation755);  
-            	    stream_69.add(char_literal79);
+            	    char_literal79=(Token)match(input,70,FOLLOW_70_in_operation777);  
+            	    stream_70.add(char_literal79);
 
-            	    pushFollow(FOLLOW_multiop_in_operation759);
+            	    pushFollow(FOLLOW_multiop_in_operation781);
             	    mult=multiop();
 
             	    state._fsp--;
@@ -2553,9 +2557,9 @@ public class LoocParser extends Parser {
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             	    root_0 = (Object)adaptor.nil();
-            	    // 89:21: -> ^( DIFF $operation $mult)
+            	    // 98:21: -> ^( DIFF $operation $mult)
             	    {
-            	        // Looc.g:89:24: ^( DIFF $operation $mult)
+            	        // Looc.g:98:24: ^( DIFF $operation $mult)
             	        {
             	        Object root_1 = (Object)adaptor.nil();
             	        root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(DIFF, "DIFF"), root_1);
@@ -2604,7 +2608,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "multiop"
-    // Looc.g:91:1: multiop : ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )* ;
+    // Looc.g:100:1: multiop : ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )* ;
     public final LoocParser.multiop_return multiop() throws RecognitionException {
         LoocParser.multiop_return retval = new LoocParser.multiop_return();
         retval.start = input.LT(1);
@@ -2620,17 +2624,17 @@ public class LoocParser extends Parser {
 
         Object char_literal81_tree=null;
         Object char_literal82_tree=null;
-        RewriteRuleTokenStream stream_70=new RewriteRuleTokenStream(adaptor,"token 70");
         RewriteRuleTokenStream stream_71=new RewriteRuleTokenStream(adaptor,"token 71");
+        RewriteRuleTokenStream stream_72=new RewriteRuleTokenStream(adaptor,"token 72");
         RewriteRuleSubtreeStream stream_comparaison=new RewriteRuleSubtreeStream(adaptor,"rule comparaison");
         try {
-            // Looc.g:91:9: ( ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )* )
-            // Looc.g:91:11: ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )*
+            // Looc.g:100:9: ( ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )* )
+            // Looc.g:100:11: ( comparaison -> comparaison ) ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )*
             {
-            // Looc.g:91:11: ( comparaison -> comparaison )
-            // Looc.g:91:12: comparaison
+            // Looc.g:100:11: ( comparaison -> comparaison )
+            // Looc.g:100:12: comparaison
             {
-            pushFollow(FOLLOW_comparaison_in_multiop782);
+            pushFollow(FOLLOW_comparaison_in_multiop804);
             comparaison80=comparaison();
 
             state._fsp--;
@@ -2649,7 +2653,7 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 91:24: -> comparaison
+            // 100:24: -> comparaison
             {
                 adaptor.addChild(root_0, stream_comparaison.nextTree());
 
@@ -2658,28 +2662,28 @@ public class LoocParser extends Parser {
             retval.tree = root_0;
             }
 
-            // Looc.g:91:40: ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )*
+            // Looc.g:100:40: ( '*' cmp= comparaison -> ^( MUL $multiop $cmp) | '/' cmp= comparaison -> ^( DIV $multiop $cmp) )*
             loop24:
             do {
                 int alt24=3;
                 int LA24_0 = input.LA(1);
 
-                if ( (LA24_0==70) ) {
+                if ( (LA24_0==71) ) {
                     alt24=1;
                 }
-                else if ( (LA24_0==71) ) {
+                else if ( (LA24_0==72) ) {
                     alt24=2;
                 }
 
 
                 switch (alt24) {
             	case 1 :
-            	    // Looc.g:91:41: '*' cmp= comparaison
+            	    // Looc.g:100:41: '*' cmp= comparaison
             	    {
-            	    char_literal81=(Token)match(input,70,FOLLOW_70_in_multiop790);  
-            	    stream_70.add(char_literal81);
+            	    char_literal81=(Token)match(input,71,FOLLOW_71_in_multiop812);  
+            	    stream_71.add(char_literal81);
 
-            	    pushFollow(FOLLOW_comparaison_in_multiop794);
+            	    pushFollow(FOLLOW_comparaison_in_multiop816);
             	    cmp=comparaison();
 
             	    state._fsp--;
@@ -2699,9 +2703,9 @@ public class LoocParser extends Parser {
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             	    root_0 = (Object)adaptor.nil();
-            	    // 91:61: -> ^( MUL $multiop $cmp)
+            	    // 100:61: -> ^( MUL $multiop $cmp)
             	    {
-            	        // Looc.g:91:64: ^( MUL $multiop $cmp)
+            	        // Looc.g:100:64: ^( MUL $multiop $cmp)
             	        {
             	        Object root_1 = (Object)adaptor.nil();
             	        root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(MUL, "MUL"), root_1);
@@ -2718,12 +2722,12 @@ public class LoocParser extends Parser {
             	    }
             	    break;
             	case 2 :
-            	    // Looc.g:92:4: '/' cmp= comparaison
+            	    // Looc.g:101:4: '/' cmp= comparaison
             	    {
-            	    char_literal82=(Token)match(input,71,FOLLOW_71_in_multiop811);  
-            	    stream_71.add(char_literal82);
+            	    char_literal82=(Token)match(input,72,FOLLOW_72_in_multiop833);  
+            	    stream_72.add(char_literal82);
 
-            	    pushFollow(FOLLOW_comparaison_in_multiop815);
+            	    pushFollow(FOLLOW_comparaison_in_multiop837);
             	    cmp=comparaison();
 
             	    state._fsp--;
@@ -2743,9 +2747,9 @@ public class LoocParser extends Parser {
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             	    root_0 = (Object)adaptor.nil();
-            	    // 92:24: -> ^( DIV $multiop $cmp)
+            	    // 101:24: -> ^( DIV $multiop $cmp)
             	    {
-            	        // Looc.g:92:27: ^( DIV $multiop $cmp)
+            	        // Looc.g:101:27: ^( DIV $multiop $cmp)
             	        {
             	        Object root_1 = (Object)adaptor.nil();
             	        root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(DIV, "DIV"), root_1);
@@ -2794,7 +2798,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "comparaison"
-    // Looc.g:94:1: comparaison : moinsunaire ( OPER moinsunaire )? ;
+    // Looc.g:103:1: comparaison : moinsunaire ( OPER moinsunaire )? ;
     public final LoocParser.comparaison_return comparaison() throws RecognitionException {
         LoocParser.comparaison_return retval = new LoocParser.comparaison_return();
         retval.start = input.LT(1);
@@ -2810,18 +2814,18 @@ public class LoocParser extends Parser {
         Object OPER84_tree=null;
 
         try {
-            // Looc.g:95:2: ( moinsunaire ( OPER moinsunaire )? )
-            // Looc.g:95:4: moinsunaire ( OPER moinsunaire )?
+            // Looc.g:104:2: ( moinsunaire ( OPER moinsunaire )? )
+            // Looc.g:104:4: moinsunaire ( OPER moinsunaire )?
             {
             root_0 = (Object)adaptor.nil();
 
-            pushFollow(FOLLOW_moinsunaire_in_comparaison838);
+            pushFollow(FOLLOW_moinsunaire_in_comparaison860);
             moinsunaire83=moinsunaire();
 
             state._fsp--;
 
             adaptor.addChild(root_0, moinsunaire83.getTree());
-            // Looc.g:95:16: ( OPER moinsunaire )?
+            // Looc.g:104:16: ( OPER moinsunaire )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -2830,13 +2834,13 @@ public class LoocParser extends Parser {
             }
             switch (alt25) {
                 case 1 :
-                    // Looc.g:95:17: OPER moinsunaire
+                    // Looc.g:104:17: OPER moinsunaire
                     {
-                    OPER84=(Token)match(input,OPER,FOLLOW_OPER_in_comparaison841); 
+                    OPER84=(Token)match(input,OPER,FOLLOW_OPER_in_comparaison863); 
                     OPER84_tree = (Object)adaptor.create(OPER84);
                     root_0 = (Object)adaptor.becomeRoot(OPER84_tree, root_0);
 
-                    pushFollow(FOLLOW_moinsunaire_in_comparaison844);
+                    pushFollow(FOLLOW_moinsunaire_in_comparaison866);
                     moinsunaire85=moinsunaire();
 
                     state._fsp--;
@@ -2875,7 +2879,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "moinsunaire"
-    // Looc.g:97:1: moinsunaire : ( '-' )? atom ;
+    // Looc.g:106:1: moinsunaire : ( '-' )? atom ;
     public final LoocParser.moinsunaire_return moinsunaire() throws RecognitionException {
         LoocParser.moinsunaire_return retval = new LoocParser.moinsunaire_return();
         retval.start = input.LT(1);
@@ -2889,23 +2893,23 @@ public class LoocParser extends Parser {
         Object char_literal86_tree=null;
 
         try {
-            // Looc.g:98:2: ( ( '-' )? atom )
-            // Looc.g:98:4: ( '-' )? atom
+            // Looc.g:107:2: ( ( '-' )? atom )
+            // Looc.g:107:4: ( '-' )? atom
             {
             root_0 = (Object)adaptor.nil();
 
-            // Looc.g:98:4: ( '-' )?
+            // Looc.g:107:4: ( '-' )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
-            if ( (LA26_0==69) ) {
+            if ( (LA26_0==70) ) {
                 alt26=1;
             }
             switch (alt26) {
                 case 1 :
-                    // Looc.g:98:5: '-'
+                    // Looc.g:107:5: '-'
                     {
-                    char_literal86=(Token)match(input,69,FOLLOW_69_in_moinsunaire856); 
+                    char_literal86=(Token)match(input,70,FOLLOW_70_in_moinsunaire878); 
                     char_literal86_tree = (Object)adaptor.create(char_literal86);
                     root_0 = (Object)adaptor.becomeRoot(char_literal86_tree, root_0);
 
@@ -2915,7 +2919,7 @@ public class LoocParser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_atom_in_moinsunaire861);
+            pushFollow(FOLLOW_atom_in_moinsunaire883);
             atom87=atom();
 
             state._fsp--;
@@ -2948,7 +2952,7 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "atom"
-    // Looc.g:100:1: atom : ( INT | STRING | IDF ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> IDF ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | 'this' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> 'this' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | 'super' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> 'super' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | '(' expression ')' -> expression );
+    // Looc.g:109:1: atom : ( INT | STRING | IDF ( call )? | 'this' ( call )? | 'super' ( call )? | '(' expression ')' -> expression );
     public final LoocParser.atom_return atom() throws RecognitionException {
         LoocParser.atom_return retval = new LoocParser.atom_return();
         retval.start = input.LT(1);
@@ -2958,118 +2962,77 @@ public class LoocParser extends Parser {
         Token INT88=null;
         Token STRING89=null;
         Token IDF90=null;
-        Token char_literal91=null;
-        Token IDF92=null;
-        Token char_literal93=null;
-        Token char_literal95=null;
-        Token char_literal97=null;
-        Token string_literal98=null;
-        Token char_literal99=null;
-        Token IDF100=null;
-        Token char_literal101=null;
-        Token char_literal103=null;
-        Token char_literal105=null;
-        Token string_literal106=null;
-        Token char_literal107=null;
-        Token IDF108=null;
-        Token char_literal109=null;
-        Token char_literal111=null;
-        Token char_literal113=null;
-        Token char_literal114=null;
-        Token char_literal116=null;
-        LoocParser.expression_return expression94 = null;
+        Token string_literal92=null;
+        Token string_literal94=null;
+        Token char_literal96=null;
+        Token char_literal98=null;
+        LoocParser.call_return call91 = null;
 
-        LoocParser.expression_return expression96 = null;
+        LoocParser.call_return call93 = null;
 
-        LoocParser.expression_return expression102 = null;
+        LoocParser.call_return call95 = null;
 
-        LoocParser.expression_return expression104 = null;
-
-        LoocParser.expression_return expression110 = null;
-
-        LoocParser.expression_return expression112 = null;
-
-        LoocParser.expression_return expression115 = null;
+        LoocParser.expression_return expression97 = null;
 
 
         Object INT88_tree=null;
         Object STRING89_tree=null;
         Object IDF90_tree=null;
-        Object char_literal91_tree=null;
-        Object IDF92_tree=null;
-        Object char_literal93_tree=null;
-        Object char_literal95_tree=null;
-        Object char_literal97_tree=null;
-        Object string_literal98_tree=null;
-        Object char_literal99_tree=null;
-        Object IDF100_tree=null;
-        Object char_literal101_tree=null;
-        Object char_literal103_tree=null;
-        Object char_literal105_tree=null;
-        Object string_literal106_tree=null;
-        Object char_literal107_tree=null;
-        Object IDF108_tree=null;
-        Object char_literal109_tree=null;
-        Object char_literal111_tree=null;
-        Object char_literal113_tree=null;
-        Object char_literal114_tree=null;
-        Object char_literal116_tree=null;
-        RewriteRuleTokenStream stream_46=new RewriteRuleTokenStream(adaptor,"token 46");
+        Object string_literal92_tree=null;
+        Object string_literal94_tree=null;
+        Object char_literal96_tree=null;
+        Object char_literal98_tree=null;
         RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
-        RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
-        RewriteRuleTokenStream stream_72=new RewriteRuleTokenStream(adaptor,"token 72");
-        RewriteRuleTokenStream stream_73=new RewriteRuleTokenStream(adaptor,"token 73");
-        RewriteRuleTokenStream stream_52=new RewriteRuleTokenStream(adaptor,"token 52");
-        RewriteRuleTokenStream stream_74=new RewriteRuleTokenStream(adaptor,"token 74");
+        RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // Looc.g:100:5: ( INT | STRING | IDF ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> IDF ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | 'this' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> 'this' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | 'super' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )? -> 'super' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )? | '(' expression ')' -> expression )
-            int alt36=6;
+            // Looc.g:109:5: ( INT | STRING | IDF ( call )? | 'this' ( call )? | 'super' ( call )? | '(' expression ')' -> expression )
+            int alt30=6;
             switch ( input.LA(1) ) {
             case INT:
                 {
-                alt36=1;
+                alt30=1;
                 }
                 break;
             case STRING:
                 {
-                alt36=2;
+                alt30=2;
                 }
                 break;
             case IDF:
                 {
-                alt36=3;
+                alt30=3;
                 }
                 break;
             case 73:
                 {
-                alt36=4;
+                alt30=4;
                 }
                 break;
             case 74:
                 {
-                alt36=5;
+                alt30=5;
                 }
                 break;
-            case 46:
+            case 47:
                 {
-                alt36=6;
+                alt30=6;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 36, 0, input);
+                    new NoViableAltException("", 30, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt36) {
+            switch (alt30) {
                 case 1 :
-                    // Looc.g:100:7: INT
+                    // Looc.g:109:7: INT
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    INT88=(Token)match(input,INT,FOLLOW_INT_in_atom868); 
+                    INT88=(Token)match(input,INT,FOLLOW_INT_in_atom890); 
                     INT88_tree = (Object)adaptor.create(INT88);
                     adaptor.addChild(root_0, INT88_tree);
 
@@ -3077,11 +3040,11 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Looc.g:101:4: STRING
+                    // Looc.g:110:4: STRING
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    STRING89=(Token)match(input,STRING,FOLLOW_STRING_in_atom873); 
+                    STRING89=(Token)match(input,STRING,FOLLOW_STRING_in_atom895); 
                     STRING89_tree = (Object)adaptor.create(STRING89);
                     adaptor.addChild(root_0, STRING89_tree);
 
@@ -3089,90 +3052,101 @@ public class LoocParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // Looc.g:102:5: IDF ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
+                    // Looc.g:111:4: IDF ( call )?
                     {
-                    IDF90=(Token)match(input,IDF,FOLLOW_IDF_in_atom879);  
-                    stream_IDF.add(IDF90);
+                    root_0 = (Object)adaptor.nil();
 
-                    // Looc.g:102:9: ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
+                    IDF90=(Token)match(input,IDF,FOLLOW_IDF_in_atom900); 
+                    IDF90_tree = (Object)adaptor.create(IDF90);
+                    root_0 = (Object)adaptor.becomeRoot(IDF90_tree, root_0);
+
+                    // Looc.g:111:9: ( call )?
+                    int alt27=2;
+                    int LA27_0 = input.LA(1);
+
+                    if ( (LA27_0==75) ) {
+                        alt27=1;
+                    }
+                    switch (alt27) {
+                        case 1 :
+                            // Looc.g:111:10: call
+                            {
+                            pushFollow(FOLLOW_call_in_atom904);
+                            call91=call();
+
+                            state._fsp--;
+
+                            root_0 = (Object)adaptor.becomeRoot(call91.getTree(), root_0);
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+                case 4 :
+                    // Looc.g:112:4: 'this' ( call )?
+                    {
+                    root_0 = (Object)adaptor.nil();
+
+                    string_literal92=(Token)match(input,73,FOLLOW_73_in_atom912); 
+                    string_literal92_tree = (Object)adaptor.create(string_literal92);
+                    root_0 = (Object)adaptor.becomeRoot(string_literal92_tree, root_0);
+
+                    // Looc.g:112:12: ( call )?
+                    int alt28=2;
+                    int LA28_0 = input.LA(1);
+
+                    if ( (LA28_0==75) ) {
+                        alt28=1;
+                    }
+                    switch (alt28) {
+                        case 1 :
+                            // Looc.g:112:13: call
+                            {
+                            pushFollow(FOLLOW_call_in_atom916);
+                            call93=call();
+
+                            state._fsp--;
+
+                            root_0 = (Object)adaptor.becomeRoot(call93.getTree(), root_0);
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+                case 5 :
+                    // Looc.g:113:4: 'super' ( call )?
+                    {
+                    root_0 = (Object)adaptor.nil();
+
+                    string_literal94=(Token)match(input,74,FOLLOW_74_in_atom924); 
+                    string_literal94_tree = (Object)adaptor.create(string_literal94);
+                    root_0 = (Object)adaptor.becomeRoot(string_literal94_tree, root_0);
+
+                    // Looc.g:113:13: ( call )?
                     int alt29=2;
                     int LA29_0 = input.LA(1);
 
-                    if ( (LA29_0==72) ) {
+                    if ( (LA29_0==75) ) {
                         alt29=1;
                     }
                     switch (alt29) {
                         case 1 :
-                            // Looc.g:102:10: '.' IDF '(' ( expression ( ',' expression )* )? ')'
+                            // Looc.g:113:14: call
                             {
-                            char_literal91=(Token)match(input,72,FOLLOW_72_in_atom882);  
-                            stream_72.add(char_literal91);
+                            pushFollow(FOLLOW_call_in_atom928);
+                            call95=call();
 
-                            IDF92=(Token)match(input,IDF,FOLLOW_IDF_in_atom884);  
-                            stream_IDF.add(IDF92);
+                            state._fsp--;
 
-                            char_literal93=(Token)match(input,46,FOLLOW_46_in_atom886);  
-                            stream_46.add(char_literal93);
-
-                            // Looc.g:102:21: ( expression ( ',' expression )* )?
-                            int alt28=2;
-                            int LA28_0 = input.LA(1);
-
-                            if ( (LA28_0==IDF||(LA28_0>=INT && LA28_0<=STRING)||LA28_0==46||LA28_0==67||LA28_0==69||(LA28_0>=73 && LA28_0<=74)) ) {
-                                alt28=1;
-                            }
-                            switch (alt28) {
-                                case 1 :
-                                    // Looc.g:102:22: expression ( ',' expression )*
-                                    {
-                                    pushFollow(FOLLOW_expression_in_atom888);
-                                    expression94=expression();
-
-                                    state._fsp--;
-
-                                    stream_expression.add(expression94.getTree());
-                                    // Looc.g:102:32: ( ',' expression )*
-                                    loop27:
-                                    do {
-                                        int alt27=2;
-                                        int LA27_0 = input.LA(1);
-
-                                        if ( (LA27_0==52) ) {
-                                            alt27=1;
-                                        }
-
-
-                                        switch (alt27) {
-                                    	case 1 :
-                                    	    // Looc.g:102:33: ',' expression
-                                    	    {
-                                    	    char_literal95=(Token)match(input,52,FOLLOW_52_in_atom890);  
-                                    	    stream_52.add(char_literal95);
-
-                                    	    pushFollow(FOLLOW_expression_in_atom891);
-                                    	    expression96=expression();
-
-                                    	    state._fsp--;
-
-                                    	    stream_expression.add(expression96.getTree());
-
-                                    	    }
-                                    	    break;
-
-                                    	default :
-                                    	    break loop27;
-                                        }
-                                    } while (true);
-
-
-                                    }
-                                    break;
-
-                            }
-
-                            char_literal97=(Token)match(input,47,FOLLOW_47_in_atom896);  
-                            stream_47.add(char_literal97);
-
+                            root_0 = (Object)adaptor.becomeRoot(call95.getTree(), root_0);
 
                             }
                             break;
@@ -3180,363 +3154,22 @@ public class LoocParser extends Parser {
                     }
 
 
-
-                    // AST REWRITE
-                    // elements: IDF, expression, expression, IDF
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (Object)adaptor.nil();
-                    // 102:56: -> IDF ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                    {
-                        adaptor.addChild(root_0, stream_IDF.nextNode());
-                        // Looc.g:102:63: ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                        if ( stream_IDF.hasNext() ) {
-                            adaptor.addChild(root_0, stream_IDF.nextNode());
-                            // Looc.g:102:68: ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )?
-                            if ( stream_expression.hasNext() ) {
-                                // Looc.g:102:68: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
-                                {
-                                Object root_1 = (Object)adaptor.nil();
-                                root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(EFFECTIVE_PARAMS, "EFFECTIVE_PARAMS"), root_1);
-
-                                // Looc.g:102:87: ( expression ( expression )* )?
-                                if ( stream_expression.hasNext()||stream_expression.hasNext() ) {
-                                    adaptor.addChild(root_1, stream_expression.nextTree());
-                                    // Looc.g:102:98: ( expression )*
-                                    while ( stream_expression.hasNext() ) {
-                                        adaptor.addChild(root_1, stream_expression.nextTree());
-
-                                    }
-                                    stream_expression.reset();
-
-                                }
-                                stream_expression.reset();
-                                stream_expression.reset();
-
-                                adaptor.addChild(root_0, root_1);
-                                }
-
-                            }
-                            stream_expression.reset();
-
-                        }
-                        stream_IDF.reset();
-
-                    }
-
-                    retval.tree = root_0;
-                    }
-                    break;
-                case 4 :
-                    // Looc.g:103:5: 'this' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
-                    {
-                    string_literal98=(Token)match(input,73,FOLLOW_73_in_atom927);  
-                    stream_73.add(string_literal98);
-
-                    // Looc.g:103:12: ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
-                    int alt32=2;
-                    int LA32_0 = input.LA(1);
-
-                    if ( (LA32_0==72) ) {
-                        alt32=1;
-                    }
-                    switch (alt32) {
-                        case 1 :
-                            // Looc.g:103:13: '.' IDF '(' ( expression ( ',' expression )* )? ')'
-                            {
-                            char_literal99=(Token)match(input,72,FOLLOW_72_in_atom930);  
-                            stream_72.add(char_literal99);
-
-                            IDF100=(Token)match(input,IDF,FOLLOW_IDF_in_atom932);  
-                            stream_IDF.add(IDF100);
-
-                            char_literal101=(Token)match(input,46,FOLLOW_46_in_atom934);  
-                            stream_46.add(char_literal101);
-
-                            // Looc.g:103:24: ( expression ( ',' expression )* )?
-                            int alt31=2;
-                            int LA31_0 = input.LA(1);
-
-                            if ( (LA31_0==IDF||(LA31_0>=INT && LA31_0<=STRING)||LA31_0==46||LA31_0==67||LA31_0==69||(LA31_0>=73 && LA31_0<=74)) ) {
-                                alt31=1;
-                            }
-                            switch (alt31) {
-                                case 1 :
-                                    // Looc.g:103:25: expression ( ',' expression )*
-                                    {
-                                    pushFollow(FOLLOW_expression_in_atom936);
-                                    expression102=expression();
-
-                                    state._fsp--;
-
-                                    stream_expression.add(expression102.getTree());
-                                    // Looc.g:103:35: ( ',' expression )*
-                                    loop30:
-                                    do {
-                                        int alt30=2;
-                                        int LA30_0 = input.LA(1);
-
-                                        if ( (LA30_0==52) ) {
-                                            alt30=1;
-                                        }
-
-
-                                        switch (alt30) {
-                                    	case 1 :
-                                    	    // Looc.g:103:36: ',' expression
-                                    	    {
-                                    	    char_literal103=(Token)match(input,52,FOLLOW_52_in_atom938);  
-                                    	    stream_52.add(char_literal103);
-
-                                    	    pushFollow(FOLLOW_expression_in_atom939);
-                                    	    expression104=expression();
-
-                                    	    state._fsp--;
-
-                                    	    stream_expression.add(expression104.getTree());
-
-                                    	    }
-                                    	    break;
-
-                                    	default :
-                                    	    break loop30;
-                                        }
-                                    } while (true);
-
-
-                                    }
-                                    break;
-
-                            }
-
-                            char_literal105=(Token)match(input,47,FOLLOW_47_in_atom944);  
-                            stream_47.add(char_literal105);
-
-
-                            }
-                            break;
-
-                    }
-
-
-
-                    // AST REWRITE
-                    // elements: expression, expression, IDF, 73
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (Object)adaptor.nil();
-                    // 103:59: -> 'this' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                    {
-                        adaptor.addChild(root_0, stream_73.nextNode());
-                        // Looc.g:103:69: ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                        if ( stream_IDF.hasNext() ) {
-                            adaptor.addChild(root_0, stream_IDF.nextNode());
-                            // Looc.g:103:74: ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )?
-                            if ( stream_expression.hasNext() ) {
-                                // Looc.g:103:74: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
-                                {
-                                Object root_1 = (Object)adaptor.nil();
-                                root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(EFFECTIVE_PARAMS, "EFFECTIVE_PARAMS"), root_1);
-
-                                // Looc.g:103:92: ( expression ( expression )* )?
-                                if ( stream_expression.hasNext()||stream_expression.hasNext() ) {
-                                    adaptor.addChild(root_1, stream_expression.nextTree());
-                                    // Looc.g:103:103: ( expression )*
-                                    while ( stream_expression.hasNext() ) {
-                                        adaptor.addChild(root_1, stream_expression.nextTree());
-
-                                    }
-                                    stream_expression.reset();
-
-                                }
-                                stream_expression.reset();
-                                stream_expression.reset();
-
-                                adaptor.addChild(root_0, root_1);
-                                }
-
-                            }
-                            stream_expression.reset();
-
-                        }
-                        stream_IDF.reset();
-
-                    }
-
-                    retval.tree = root_0;
-                    }
-                    break;
-                case 5 :
-                    // Looc.g:104:4: 'super' ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
-                    {
-                    string_literal106=(Token)match(input,74,FOLLOW_74_in_atom974);  
-                    stream_74.add(string_literal106);
-
-                    // Looc.g:104:12: ( '.' IDF '(' ( expression ( ',' expression )* )? ')' )?
-                    int alt35=2;
-                    int LA35_0 = input.LA(1);
-
-                    if ( (LA35_0==72) ) {
-                        alt35=1;
-                    }
-                    switch (alt35) {
-                        case 1 :
-                            // Looc.g:104:13: '.' IDF '(' ( expression ( ',' expression )* )? ')'
-                            {
-                            char_literal107=(Token)match(input,72,FOLLOW_72_in_atom977);  
-                            stream_72.add(char_literal107);
-
-                            IDF108=(Token)match(input,IDF,FOLLOW_IDF_in_atom979);  
-                            stream_IDF.add(IDF108);
-
-                            char_literal109=(Token)match(input,46,FOLLOW_46_in_atom981);  
-                            stream_46.add(char_literal109);
-
-                            // Looc.g:104:24: ( expression ( ',' expression )* )?
-                            int alt34=2;
-                            int LA34_0 = input.LA(1);
-
-                            if ( (LA34_0==IDF||(LA34_0>=INT && LA34_0<=STRING)||LA34_0==46||LA34_0==67||LA34_0==69||(LA34_0>=73 && LA34_0<=74)) ) {
-                                alt34=1;
-                            }
-                            switch (alt34) {
-                                case 1 :
-                                    // Looc.g:104:25: expression ( ',' expression )*
-                                    {
-                                    pushFollow(FOLLOW_expression_in_atom983);
-                                    expression110=expression();
-
-                                    state._fsp--;
-
-                                    stream_expression.add(expression110.getTree());
-                                    // Looc.g:104:35: ( ',' expression )*
-                                    loop33:
-                                    do {
-                                        int alt33=2;
-                                        int LA33_0 = input.LA(1);
-
-                                        if ( (LA33_0==52) ) {
-                                            alt33=1;
-                                        }
-
-
-                                        switch (alt33) {
-                                    	case 1 :
-                                    	    // Looc.g:104:36: ',' expression
-                                    	    {
-                                    	    char_literal111=(Token)match(input,52,FOLLOW_52_in_atom985);  
-                                    	    stream_52.add(char_literal111);
-
-                                    	    pushFollow(FOLLOW_expression_in_atom986);
-                                    	    expression112=expression();
-
-                                    	    state._fsp--;
-
-                                    	    stream_expression.add(expression112.getTree());
-
-                                    	    }
-                                    	    break;
-
-                                    	default :
-                                    	    break loop33;
-                                        }
-                                    } while (true);
-
-
-                                    }
-                                    break;
-
-                            }
-
-                            char_literal113=(Token)match(input,47,FOLLOW_47_in_atom991);  
-                            stream_47.add(char_literal113);
-
-
-                            }
-                            break;
-
-                    }
-
-
-
-                    // AST REWRITE
-                    // elements: expression, expression, IDF, 74
-                    // token labels: 
-                    // rule labels: retval
-                    // token list labels: 
-                    // rule list labels: 
-                    // wildcard labels: 
-                    retval.tree = root_0;
-                    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
-
-                    root_0 = (Object)adaptor.nil();
-                    // 104:59: -> 'super' ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                    {
-                        adaptor.addChild(root_0, stream_74.nextNode());
-                        // Looc.g:104:70: ( IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )?
-                        if ( stream_IDF.hasNext() ) {
-                            adaptor.addChild(root_0, stream_IDF.nextNode());
-                            // Looc.g:104:75: ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )?
-                            if ( stream_expression.hasNext() ) {
-                                // Looc.g:104:75: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
-                                {
-                                Object root_1 = (Object)adaptor.nil();
-                                root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(EFFECTIVE_PARAMS, "EFFECTIVE_PARAMS"), root_1);
-
-                                // Looc.g:104:93: ( expression ( expression )* )?
-                                if ( stream_expression.hasNext()||stream_expression.hasNext() ) {
-                                    adaptor.addChild(root_1, stream_expression.nextTree());
-                                    // Looc.g:104:104: ( expression )*
-                                    while ( stream_expression.hasNext() ) {
-                                        adaptor.addChild(root_1, stream_expression.nextTree());
-
-                                    }
-                                    stream_expression.reset();
-
-                                }
-                                stream_expression.reset();
-                                stream_expression.reset();
-
-                                adaptor.addChild(root_0, root_1);
-                                }
-
-                            }
-                            stream_expression.reset();
-
-                        }
-                        stream_IDF.reset();
-
-                    }
-
-                    retval.tree = root_0;
                     }
                     break;
                 case 6 :
-                    // Looc.g:105:4: '(' expression ')'
+                    // Looc.g:114:4: '(' expression ')'
                     {
-                    char_literal114=(Token)match(input,46,FOLLOW_46_in_atom1022);  
-                    stream_46.add(char_literal114);
+                    char_literal96=(Token)match(input,47,FOLLOW_47_in_atom936);  
+                    stream_47.add(char_literal96);
 
-                    pushFollow(FOLLOW_expression_in_atom1024);
-                    expression115=expression();
+                    pushFollow(FOLLOW_expression_in_atom938);
+                    expression97=expression();
 
                     state._fsp--;
 
-                    stream_expression.add(expression115.getTree());
-                    char_literal116=(Token)match(input,47,FOLLOW_47_in_atom1026);  
-                    stream_47.add(char_literal116);
+                    stream_expression.add(expression97.getTree());
+                    char_literal98=(Token)match(input,48,FOLLOW_48_in_atom940);  
+                    stream_48.add(char_literal98);
 
 
 
@@ -3551,7 +3184,7 @@ public class LoocParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (Object)adaptor.nil();
-                    // 105:23: -> expression
+                    // 114:23: -> expression
                     {
                         adaptor.addChild(root_0, stream_expression.nextTree());
 
@@ -3580,44 +3213,224 @@ public class LoocParser extends Parser {
     }
     // $ANTLR end "atom"
 
+    public static class call_return extends ParserRuleReturnScope {
+        Object tree;
+        public Object getTree() { return tree; }
+    };
+
+    // $ANTLR start "call"
+    // Looc.g:117:1: call : '.' IDF '(' ( expression ( ',' expression )* )? ')' -> ^( CALL IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) ;
+    public final LoocParser.call_return call() throws RecognitionException {
+        LoocParser.call_return retval = new LoocParser.call_return();
+        retval.start = input.LT(1);
+
+        Object root_0 = null;
+
+        Token char_literal99=null;
+        Token IDF100=null;
+        Token char_literal101=null;
+        Token char_literal103=null;
+        Token char_literal105=null;
+        LoocParser.expression_return expression102 = null;
+
+        LoocParser.expression_return expression104 = null;
+
+
+        Object char_literal99_tree=null;
+        Object IDF100_tree=null;
+        Object char_literal101_tree=null;
+        Object char_literal103_tree=null;
+        Object char_literal105_tree=null;
+        RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
+        RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
+        RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
+        RewriteRuleTokenStream stream_75=new RewriteRuleTokenStream(adaptor,"token 75");
+        RewriteRuleTokenStream stream_53=new RewriteRuleTokenStream(adaptor,"token 53");
+        RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
+        try {
+            // Looc.g:117:6: ( '.' IDF '(' ( expression ( ',' expression )* )? ')' -> ^( CALL IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )
+            // Looc.g:117:8: '.' IDF '(' ( expression ( ',' expression )* )? ')'
+            {
+            char_literal99=(Token)match(input,75,FOLLOW_75_in_call953);  
+            stream_75.add(char_literal99);
+
+            IDF100=(Token)match(input,IDF,FOLLOW_IDF_in_call955);  
+            stream_IDF.add(IDF100);
+
+            char_literal101=(Token)match(input,47,FOLLOW_47_in_call957);  
+            stream_47.add(char_literal101);
+
+            // Looc.g:117:19: ( expression ( ',' expression )* )?
+            int alt32=2;
+            int LA32_0 = input.LA(1);
+
+            if ( (LA32_0==IDF||(LA32_0>=INT && LA32_0<=STRING)||LA32_0==47||LA32_0==68||LA32_0==70||(LA32_0>=73 && LA32_0<=74)) ) {
+                alt32=1;
+            }
+            switch (alt32) {
+                case 1 :
+                    // Looc.g:117:20: expression ( ',' expression )*
+                    {
+                    pushFollow(FOLLOW_expression_in_call959);
+                    expression102=expression();
+
+                    state._fsp--;
+
+                    stream_expression.add(expression102.getTree());
+                    // Looc.g:117:30: ( ',' expression )*
+                    loop31:
+                    do {
+                        int alt31=2;
+                        int LA31_0 = input.LA(1);
+
+                        if ( (LA31_0==53) ) {
+                            alt31=1;
+                        }
+
+
+                        switch (alt31) {
+                    	case 1 :
+                    	    // Looc.g:117:31: ',' expression
+                    	    {
+                    	    char_literal103=(Token)match(input,53,FOLLOW_53_in_call961);  
+                    	    stream_53.add(char_literal103);
+
+                    	    pushFollow(FOLLOW_expression_in_call962);
+                    	    expression104=expression();
+
+                    	    state._fsp--;
+
+                    	    stream_expression.add(expression104.getTree());
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    break loop31;
+                        }
+                    } while (true);
+
+
+                    }
+                    break;
+
+            }
+
+            char_literal105=(Token)match(input,48,FOLLOW_48_in_call967);  
+            stream_48.add(char_literal105);
+
+
+
+            // AST REWRITE
+            // elements: expression, IDF, expression
+            // token labels: 
+            // rule labels: retval
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
+            retval.tree = root_0;
+            RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
+
+            root_0 = (Object)adaptor.nil();
+            // 117:52: -> ^( CALL IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )
+            {
+                // Looc.g:117:55: ^( CALL IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? )
+                {
+                Object root_1 = (Object)adaptor.nil();
+                root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(CALL, "CALL"), root_1);
+
+                adaptor.addChild(root_1, stream_IDF.nextNode());
+                // Looc.g:117:66: ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )?
+                if ( stream_expression.hasNext() ) {
+                    // Looc.g:117:66: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
+                    {
+                    Object root_2 = (Object)adaptor.nil();
+                    root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(EFFECTIVE_PARAMS, "EFFECTIVE_PARAMS"), root_2);
+
+                    // Looc.g:117:85: ( expression ( expression )* )?
+                    if ( stream_expression.hasNext()||stream_expression.hasNext() ) {
+                        adaptor.addChild(root_2, stream_expression.nextTree());
+                        // Looc.g:117:96: ( expression )*
+                        while ( stream_expression.hasNext() ) {
+                            adaptor.addChild(root_2, stream_expression.nextTree());
+
+                        }
+                        stream_expression.reset();
+
+                    }
+                    stream_expression.reset();
+                    stream_expression.reset();
+
+                    adaptor.addChild(root_1, root_2);
+                    }
+
+                }
+                stream_expression.reset();
+
+                adaptor.addChild(root_0, root_1);
+                }
+
+            }
+
+            retval.tree = root_0;
+            }
+
+            retval.stop = input.LT(-1);
+
+            retval.tree = (Object)adaptor.rulePostProcessing(root_0);
+            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+    	retval.tree = (Object)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+
+        }
+        finally {
+        }
+        return retval;
+    }
+    // $ANTLR end "call"
+
     public static class print_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
     // $ANTLR start "print"
-    // Looc.g:107:1: print : 'write' expression ';' -> ^( WRITE expression ) ;
+    // Looc.g:119:1: print : 'write' expression ';' -> ^( WRITE expression ) ;
     public final LoocParser.print_return print() throws RecognitionException {
         LoocParser.print_return retval = new LoocParser.print_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        Token string_literal117=null;
-        Token char_literal119=null;
-        LoocParser.expression_return expression118 = null;
+        Token string_literal106=null;
+        Token char_literal108=null;
+        LoocParser.expression_return expression107 = null;
 
 
-        Object string_literal117_tree=null;
-        Object char_literal119_tree=null;
-        RewriteRuleTokenStream stream_75=new RewriteRuleTokenStream(adaptor,"token 75");
-        RewriteRuleTokenStream stream_54=new RewriteRuleTokenStream(adaptor,"token 54");
+        Object string_literal106_tree=null;
+        Object char_literal108_tree=null;
+        RewriteRuleTokenStream stream_55=new RewriteRuleTokenStream(adaptor,"token 55");
+        RewriteRuleTokenStream stream_76=new RewriteRuleTokenStream(adaptor,"token 76");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // Looc.g:107:6: ( 'write' expression ';' -> ^( WRITE expression ) )
-            // Looc.g:107:9: 'write' expression ';'
+            // Looc.g:119:6: ( 'write' expression ';' -> ^( WRITE expression ) )
+            // Looc.g:119:9: 'write' expression ';'
             {
-            string_literal117=(Token)match(input,75,FOLLOW_75_in_print1038);  
-            stream_75.add(string_literal117);
+            string_literal106=(Token)match(input,76,FOLLOW_76_in_print997);  
+            stream_76.add(string_literal106);
 
-            pushFollow(FOLLOW_expression_in_print1040);
-            expression118=expression();
+            pushFollow(FOLLOW_expression_in_print999);
+            expression107=expression();
 
             state._fsp--;
 
-            stream_expression.add(expression118.getTree());
-            char_literal119=(Token)match(input,54,FOLLOW_54_in_print1042);  
-            stream_54.add(char_literal119);
+            stream_expression.add(expression107.getTree());
+            char_literal108=(Token)match(input,55,FOLLOW_55_in_print1001);  
+            stream_55.add(char_literal108);
 
 
 
@@ -3632,9 +3445,9 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 107:32: -> ^( WRITE expression )
+            // 119:32: -> ^( WRITE expression )
             {
-                // Looc.g:107:35: ^( WRITE expression )
+                // Looc.g:119:35: ^( WRITE expression )
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot((Object)adaptor.create(WRITE, "WRITE"), root_1);
@@ -3673,44 +3486,44 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "return_decl"
-    // Looc.g:109:1: return_decl : 'return' '(' expression ')' -> expression ;
+    // Looc.g:121:1: return_decl : 'return' '(' expression ')' -> expression ;
     public final LoocParser.return_decl_return return_decl() throws RecognitionException {
         LoocParser.return_decl_return retval = new LoocParser.return_decl_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        Token string_literal120=null;
-        Token char_literal121=null;
-        Token char_literal123=null;
-        LoocParser.expression_return expression122 = null;
+        Token string_literal109=null;
+        Token char_literal110=null;
+        Token char_literal112=null;
+        LoocParser.expression_return expression111 = null;
 
 
-        Object string_literal120_tree=null;
-        Object char_literal121_tree=null;
-        Object char_literal123_tree=null;
-        RewriteRuleTokenStream stream_46=new RewriteRuleTokenStream(adaptor,"token 46");
+        Object string_literal109_tree=null;
+        Object char_literal110_tree=null;
+        Object char_literal112_tree=null;
+        RewriteRuleTokenStream stream_77=new RewriteRuleTokenStream(adaptor,"token 77");
         RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
-        RewriteRuleTokenStream stream_76=new RewriteRuleTokenStream(adaptor,"token 76");
+        RewriteRuleTokenStream stream_48=new RewriteRuleTokenStream(adaptor,"token 48");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // Looc.g:109:12: ( 'return' '(' expression ')' -> expression )
-            // Looc.g:109:15: 'return' '(' expression ')'
+            // Looc.g:121:12: ( 'return' '(' expression ')' -> expression )
+            // Looc.g:121:15: 'return' '(' expression ')'
             {
-            string_literal120=(Token)match(input,76,FOLLOW_76_in_return_decl1058);  
-            stream_76.add(string_literal120);
+            string_literal109=(Token)match(input,77,FOLLOW_77_in_return_decl1017);  
+            stream_77.add(string_literal109);
 
-            char_literal121=(Token)match(input,46,FOLLOW_46_in_return_decl1059);  
-            stream_46.add(char_literal121);
+            char_literal110=(Token)match(input,47,FOLLOW_47_in_return_decl1018);  
+            stream_47.add(char_literal110);
 
-            pushFollow(FOLLOW_expression_in_return_decl1061);
-            expression122=expression();
+            pushFollow(FOLLOW_expression_in_return_decl1020);
+            expression111=expression();
 
             state._fsp--;
 
-            stream_expression.add(expression122.getTree());
-            char_literal123=(Token)match(input,47,FOLLOW_47_in_return_decl1063);  
-            stream_47.add(char_literal123);
+            stream_expression.add(expression111.getTree());
+            char_literal112=(Token)match(input,48,FOLLOW_48_in_return_decl1022);  
+            stream_48.add(char_literal112);
 
 
 
@@ -3725,7 +3538,7 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 109:42: -> expression
+            // 121:42: -> expression
             {
                 adaptor.addChild(root_0, stream_expression.nextTree());
 
@@ -3758,30 +3571,30 @@ public class LoocParser extends Parser {
     };
 
     // $ANTLR start "read"
-    // Looc.g:111:1: read : 'read' IDF -> IDF ;
+    // Looc.g:123:1: read : 'read' IDF -> IDF ;
     public final LoocParser.read_return read() throws RecognitionException {
         LoocParser.read_return retval = new LoocParser.read_return();
         retval.start = input.LT(1);
 
         Object root_0 = null;
 
-        Token string_literal124=null;
-        Token IDF125=null;
+        Token string_literal113=null;
+        Token IDF114=null;
 
-        Object string_literal124_tree=null;
-        Object IDF125_tree=null;
-        RewriteRuleTokenStream stream_77=new RewriteRuleTokenStream(adaptor,"token 77");
+        Object string_literal113_tree=null;
+        Object IDF114_tree=null;
+        RewriteRuleTokenStream stream_78=new RewriteRuleTokenStream(adaptor,"token 78");
         RewriteRuleTokenStream stream_IDF=new RewriteRuleTokenStream(adaptor,"token IDF");
 
         try {
-            // Looc.g:111:6: ( 'read' IDF -> IDF )
-            // Looc.g:111:8: 'read' IDF
+            // Looc.g:123:6: ( 'read' IDF -> IDF )
+            // Looc.g:123:8: 'read' IDF
             {
-            string_literal124=(Token)match(input,77,FOLLOW_77_in_read1076);  
-            stream_77.add(string_literal124);
+            string_literal113=(Token)match(input,78,FOLLOW_78_in_read1035);  
+            stream_78.add(string_literal113);
 
-            IDF125=(Token)match(input,IDF,FOLLOW_IDF_in_read1078);  
-            stream_IDF.add(IDF125);
+            IDF114=(Token)match(input,IDF,FOLLOW_IDF_in_read1037);  
+            stream_IDF.add(IDF114);
 
 
 
@@ -3796,7 +3609,7 @@ public class LoocParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (Object)adaptor.nil();
-            // 111:19: -> IDF
+            // 123:19: -> IDF
             {
                 adaptor.addChild(root_0, stream_IDF.nextNode());
 
@@ -3828,136 +3641,125 @@ public class LoocParser extends Parser {
 
  
 
-    public static final BitSet FOLLOW_class_decl_in_program159 = new BitSet(new long[]{0xA424080800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_var_decl_in_program162 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_program165 = new BitSet(new long[]{0xA424000800000002L,0x0000000000003800L});
-    public static final BitSet FOLLOW_43_in_class_decl191 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_CLASS_in_class_decl193 = new BitSet(new long[]{0x0000300000000000L});
-    public static final BitSet FOLLOW_44_in_class_decl196 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_CLASS_in_class_decl198 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_class_decl203 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_class_decl205 = new BitSet(new long[]{0x0021800000000000L});
-    public static final BitSet FOLLOW_class_item_decl_in_class_decl206 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_class_decl207 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_var_decl_in_class_item_decl231 = new BitSet(new long[]{0x0021000000000002L});
-    public static final BitSet FOLLOW_method_decl_in_class_item_decl234 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_48_in_method_decl263 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_method_decl265 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_method_decl267 = new BitSet(new long[]{0x0000800800000000L});
-    public static final BitSet FOLLOW_method_args_in_method_decl269 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_method_decl272 = new BitSet(new long[]{0x0006000000000000L});
-    public static final BitSet FOLLOW_function_decl_in_method_decl274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_function_decl296 = new BitSet(new long[]{0x0180000400000000L});
-    public static final BitSet FOLLOW_type_in_function_decl298 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_50_in_function_decl299 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_var_decl_in_function_decl300 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_function_decl303 = new BitSet(new long[]{0xA42C000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_51_in_function_decl305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_function_decl327 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_var_decl_in_function_decl328 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_function_decl331 = new BitSet(new long[]{0xA42C000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_51_in_function_decl334 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_method_arg_in_method_args356 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_52_in_method_args359 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_method_arg_in_method_args361 = new BitSet(new long[]{0x0010000000000002L});
-    public static final BitSet FOLLOW_IDF_in_method_arg383 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_method_arg385 = new BitSet(new long[]{0x0180000400000000L});
-    public static final BitSet FOLLOW_type_in_method_arg387 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_53_in_var_decl405 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_var_decl407 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_var_decl409 = new BitSet(new long[]{0x0180000400000000L});
-    public static final BitSet FOLLOW_type_in_var_decl411 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_var_decl413 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_55_in_type433 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_56_in_type445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CLASS_in_type458 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDF_in_instruction471 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_57_in_instruction473 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_instruction475 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_instruction477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_instruction495 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_instruction497 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_59_in_instruction499 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_instruction501 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_60_in_instruction503 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_instruction505 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_instruction507 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_instruction509 = new BitSet(new long[]{0xE424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_62_in_instruction512 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_63_in_instruction538 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_instruction540 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_instruction542 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_instruction546 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003806L});
-    public static final BitSet FOLLOW_65_in_instruction550 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_instruction554 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003804L});
-    public static final BitSet FOLLOW_66_in_instruction559 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_print_in_instruction594 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_61_in_instruction606 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_instruction608 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_instruction610 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_instruction631 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_var_decl_in_instruction633 = new BitSet(new long[]{0xA424000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_instruction_in_instruction636 = new BitSet(new long[]{0xA42C000800000000L,0x0000000000003800L});
-    public static final BitSet FOLLOW_51_in_instruction639 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_return_decl_in_instruction660 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_instruction662 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_read_in_instruction681 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_instruction682 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_operation_in_expression700 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_67_in_expression706 = new BitSet(new long[]{0x0000000400000000L});
-    public static final BitSet FOLLOW_CLASS_in_expression708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_multiop_in_operation726 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000030L});
-    public static final BitSet FOLLOW_68_in_operation734 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_multiop_in_operation738 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000030L});
-    public static final BitSet FOLLOW_69_in_operation755 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_multiop_in_operation759 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000030L});
-    public static final BitSet FOLLOW_comparaison_in_multiop782 = new BitSet(new long[]{0x0000000000000002L,0x00000000000000C0L});
-    public static final BitSet FOLLOW_70_in_multiop790 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_comparaison_in_multiop794 = new BitSet(new long[]{0x0000000000000002L,0x00000000000000C0L});
-    public static final BitSet FOLLOW_71_in_multiop811 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_comparaison_in_multiop815 = new BitSet(new long[]{0x0000000000000002L,0x00000000000000C0L});
-    public static final BitSet FOLLOW_moinsunaire_in_comparaison838 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_OPER_in_comparaison841 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_moinsunaire_in_comparaison844 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_69_in_moinsunaire856 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000620L});
-    public static final BitSet FOLLOW_atom_in_moinsunaire861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INT_in_atom868 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRING_in_atom873 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IDF_in_atom879 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
-    public static final BitSet FOLLOW_72_in_atom882 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_atom884 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_atom886 = new BitSet(new long[]{0x0000C06800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom888 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_52_in_atom890 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom891 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_47_in_atom896 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_atom927 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
-    public static final BitSet FOLLOW_72_in_atom930 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_atom932 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_atom934 = new BitSet(new long[]{0x0000C06800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom936 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_52_in_atom938 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom939 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_47_in_atom944 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_atom974 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
-    public static final BitSet FOLLOW_72_in_atom977 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_atom979 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_atom981 = new BitSet(new long[]{0x0000C06800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom983 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_52_in_atom985 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom986 = new BitSet(new long[]{0x0010800000000000L});
-    public static final BitSet FOLLOW_47_in_atom991 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_atom1022 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_atom1024 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_atom1026 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_print1038 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_print1040 = new BitSet(new long[]{0x0040000000000000L});
-    public static final BitSet FOLLOW_54_in_print1042 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_return_decl1058 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_return_decl1059 = new BitSet(new long[]{0x0000406800000000L,0x0000000000000628L});
-    public static final BitSet FOLLOW_expression_in_return_decl1061 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_return_decl1063 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_77_in_read1076 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_IDF_in_read1078 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_class_decl_in_program181 = new BitSet(new long[]{0x4848101000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_var_decl_in_program184 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_program187 = new BitSet(new long[]{0x4848001000000002L,0x0000000000007001L});
+    public static final BitSet FOLLOW_44_in_class_decl213 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_CLASS_in_class_decl215 = new BitSet(new long[]{0x0000600000000000L});
+    public static final BitSet FOLLOW_45_in_class_decl218 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_CLASS_in_class_decl220 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_class_decl225 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_class_decl227 = new BitSet(new long[]{0x0043000000000000L});
+    public static final BitSet FOLLOW_class_item_decl_in_class_decl228 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_class_decl229 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_var_decl_in_class_item_decl253 = new BitSet(new long[]{0x0042000000000002L});
+    public static final BitSet FOLLOW_method_decl_in_class_item_decl256 = new BitSet(new long[]{0x0002000000000002L});
+    public static final BitSet FOLLOW_49_in_method_decl285 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_method_decl287 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_method_decl289 = new BitSet(new long[]{0x0001001000000000L});
+    public static final BitSet FOLLOW_method_args_in_method_decl291 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_method_decl294 = new BitSet(new long[]{0x000C000000000000L});
+    public static final BitSet FOLLOW_function_decl_in_method_decl296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_function_decl318 = new BitSet(new long[]{0x0300000800000000L});
+    public static final BitSet FOLLOW_type_in_function_decl320 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_function_decl321 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_var_decl_in_function_decl322 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_function_decl325 = new BitSet(new long[]{0x4858001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_52_in_function_decl327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_function_decl349 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_var_decl_in_function_decl350 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_function_decl353 = new BitSet(new long[]{0x4858001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_52_in_function_decl356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_method_arg_in_method_args378 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_53_in_method_args381 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_method_arg_in_method_args383 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_IDF_in_method_arg405 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_50_in_method_arg407 = new BitSet(new long[]{0x0300000800000000L});
+    public static final BitSet FOLLOW_type_in_method_arg409 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_var_decl427 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_var_decl429 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_50_in_var_decl431 = new BitSet(new long[]{0x0300000800000000L});
+    public static final BitSet FOLLOW_type_in_var_decl433 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_var_decl435 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_56_in_type455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_type467 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CLASS_in_type480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDF_in_instruction493 = new BitSet(new long[]{0x0400000000000000L});
+    public static final BitSet FOLLOW_58_in_instruction495 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_instruction497 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_instruction499 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_instruction517 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_instruction519 = new BitSet(new long[]{0x1000000000000000L});
+    public static final BitSet FOLLOW_60_in_instruction521 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_instruction523 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_instruction525 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_instruction527 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_62_in_instruction529 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_instruction531 = new BitSet(new long[]{0xC848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_63_in_instruction534 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_64_in_instruction560 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_instruction562 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_instruction564 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_instruction568 = new BitSet(new long[]{0x4848001000000000L,0x000000000000700DL});
+    public static final BitSet FOLLOW_66_in_instruction572 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_instruction576 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007009L});
+    public static final BitSet FOLLOW_67_in_instruction581 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_print_in_instruction616 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_62_in_instruction628 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_instruction630 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_instruction632 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_51_in_instruction653 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_var_decl_in_instruction655 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_instruction_in_instruction658 = new BitSet(new long[]{0x4858001000000000L,0x0000000000007001L});
+    public static final BitSet FOLLOW_52_in_instruction661 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_return_decl_in_instruction682 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_instruction684 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_read_in_instruction703 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_instruction704 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_operation_in_expression722 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_68_in_expression728 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_CLASS_in_expression730 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_multiop_in_operation748 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000060L});
+    public static final BitSet FOLLOW_69_in_operation756 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_multiop_in_operation760 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000060L});
+    public static final BitSet FOLLOW_70_in_operation777 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_multiop_in_operation781 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000060L});
+    public static final BitSet FOLLOW_comparaison_in_multiop804 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000180L});
+    public static final BitSet FOLLOW_71_in_multiop812 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_comparaison_in_multiop816 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000180L});
+    public static final BitSet FOLLOW_72_in_multiop833 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_comparaison_in_multiop837 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000180L});
+    public static final BitSet FOLLOW_moinsunaire_in_comparaison860 = new BitSet(new long[]{0x0000002000000002L});
+    public static final BitSet FOLLOW_OPER_in_comparaison863 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_moinsunaire_in_comparaison866 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_moinsunaire878 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000640L});
+    public static final BitSet FOLLOW_atom_in_moinsunaire883 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INT_in_atom890 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRING_in_atom895 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IDF_in_atom900 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+    public static final BitSet FOLLOW_call_in_atom904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_atom912 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+    public static final BitSet FOLLOW_call_in_atom916 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_atom924 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+    public static final BitSet FOLLOW_call_in_atom928 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_atom936 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_atom938 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_atom940 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_call953 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_call955 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_call957 = new BitSet(new long[]{0x000180D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_call959 = new BitSet(new long[]{0x0021000000000000L});
+    public static final BitSet FOLLOW_53_in_call961 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_call962 = new BitSet(new long[]{0x0021000000000000L});
+    public static final BitSet FOLLOW_48_in_call967 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_print997 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_print999 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_print1001 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_77_in_return_decl1017 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_return_decl1018 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_return_decl1020 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_return_decl1022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_read1035 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_read1037 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -2,6 +2,7 @@ SRC_DIR = src
 BIN_DIR = out
 CORE_DIR= core
 SAMPLE_DIR = samples
+SEMANTIC_ERRORS_DIR = errorSamples
 PGM = TestLoocMakefile
 EXTENSION = looc
 PGM_JAVA = $(PGM).java
@@ -12,21 +13,25 @@ $(shell mkdir -p $(BIN_DIR))
 
 export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):$$CLASSPATH
 
-all: java
+all: antlr
 
 java: antlr
+	@echo "\n --- Create out/ directory ---"
+	mkdir -p $(BIN_DIR)
 	@echo "\n --- Compile java classes ---"
 	javac -d $(BIN_DIR) $(SRC_DIR)/$(CORE_DIR)/LoocLexer.java $(SRC_DIR)/$(CORE_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
-antlr:
+antlr: clean
 	@echo "\n --- Execute Antlr ---"
-	java org.antlr.Tool -o $(CORE_DIR) Looc.g 2>&1 |tail -n 5
-	#java org.antlr.Tool -o $(CORE_DIR) Looc.g
+	java org.antlr.Tool -o $(SRC_DIR)/$(CORE_DIR) Looc.g 2>&1 |tail -n 5
 
 clean:
-	rm -r $(BIN_DIR)
+	rm -rf output/
+	rm -rf target/
+	rm -rf $(BIN_DIR)
 	rm -f $(LOG_FILE_ANTLR)
+
 
 parse: java
 	@echo " --- Execute TestLooc ---"
@@ -62,7 +67,8 @@ parse: java
 
 #test: level1 level2 level3 level4 level5 level6 levelHardcore
 
-test: java
+testSyntaxErrors: java
+	@echo "\n --- Test Syntax errors ---"
 	@for file in $(SAMPLE_DIR)/*.$(EXTENSION); do \
 		FILE=$$(basename $$file); \
 		TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
@@ -88,3 +94,21 @@ test: java
 		fi; \
 	done;
 	@echo  ""
+
+testSemanticErrors:
+	@echo "\n --- Test Semantic errors ---"
+	@for file in $(SAMPLE_DIR)/$(SEMANTIC_ERRORS_DIR)/*.$(EXTENSION); do \
+			FILE=$$(basename $$file); \
+			TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
+			if [ -z "$$TMP" ]; then \
+				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur sémantique)"; \
+			else \
+				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur sémantique)"; \
+				echo  "\t\033[91m$$TMP\033[0m"; \
+			fi; \
+		done;
+		@echo  ""
+
+test: java testSyntaxErrors testSemanticErrors
+	@echo "\n\033[0m --- Delete out/ directory ---"
+	rm -rf $(BIN_DIR)
