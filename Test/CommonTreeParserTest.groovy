@@ -1,11 +1,9 @@
 import TDS.Entry
 import TDS.SymbolTable
 import core.CommonTreeParser
-import core.Keywords
 import exceptions.MismatchOperationException
 import exceptions.MismatchTypeException
 import exceptions.StringOperationException
-import exceptions.SymbolAlreadyDeclaredException
 import exceptions.UndeclaredVariableException
 import factories.CommonTreeParserFactory
 import factories.EntryFactory
@@ -114,41 +112,6 @@ class CommonTreeParserTest extends GroovyTestCase {
 
     void testConstructTDSLevel7() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level7.looc");
-    }
-
-    void testConstruct__TDSLevel1MismatchOperationException() {
-        shouldFail(MismatchOperationException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level1OperationMismatch.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-        }
-    }
-
-    void testConstruct__TDSLevel2() {
-        shouldFail(UndeclaredVariableException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level2.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-        }
-    }
-
-    void testConstruct__TDSLevel3() {
-        shouldFail(MismatchTypeException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__Level3.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-        }
-    }
-
-    void testConstruct__StringOperationException() {
-        shouldFail(StringOperationException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__StringOperationException.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-        }
-    }
-
-    void testConstruct__MismatchTypeException() {
-        shouldFail(MismatchTypeException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/__MismatchTypeException.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
-        }
     }
 
 }

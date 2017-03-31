@@ -1,6 +1,7 @@
 SRC_DIR = src
 BIN_DIR = out
 CORE_DIR= core
+TMP_DIR= tmp
 SAMPLE_DIR = samples
 SEMANTIC_ERRORS_DIR = errorSamples
 PGM = TestLoocMakefile
@@ -11,7 +12,7 @@ LOG_FILE_ANTLR = antlr.log
 # Create needed directories
 $(shell mkdir -p $(BIN_DIR))
 
-export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):$$CLASSPATH
+export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):./$(TMP_DIR):$$CLASSPATH
 
 all: antlr
 
@@ -30,44 +31,27 @@ clean:
 	rm -rf output/
 	rm -rf target/
 	rm -rf $(BIN_DIR)
+	rm -rf $(TMP_DIR)
 	rm -f $(LOG_FILE_ANTLR)
 
+
+javaTest:
+	@echo "\n --- Create tmp/ directory ---"
+	mkdir -p $(TMP_DIR)
+	@echo "\n --- Create out/ directory ---"
+	mkdir -p $(BIN_DIR)
+	@echo "\n --- Execute Antlr ---"
+	java org.antlr.Tool -o $(TMP_DIR) Looc.g 2>&1 |tail -n 5
+	@echo "\n --- Compile java classes ---"
+	javac -d $(TMP_DIR) $(TMP_DIR)/LoocLexer.java $(TMP_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
+	@echo ""
 
 parse: java
 	@echo " --- Execute TestLooc ---"
 	@java $(PGM)
 
-#level1: java
-#	@echo " --- Check Level1.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level1.looc
 
-#level2: java
-#	@echo " --- Check Level2.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level2.looc
-
-#level3: java
-#	@echo " --- Check Level3.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level3.looc
-
-#level4: java
-#	@echo " --- Check Level4.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level4.looc
-
-#level5: java
-#	@echo " --- Check Level5.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level5.looc
-#
-# level6: java
-#	@echo " --- Check Level6.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level6.looc
-
-#levelHardcore: java
-#	@echo " --- Check levelHardcore.looc---"
-# @java $(PGM) $(SAMPLE_DIR)/LevelHardcore.looc
-
-#test: level1 level2 level3 level4 level5 level6 levelHardcore
-
-testSyntaxErrors: java
+testSyntaxErrors:
 	@echo "\n --- Test Syntax errors ---"
 	@for file in $(SAMPLE_DIR)/*.$(EXTENSION); do \
 		FILE=$$(basename $$file); \
@@ -109,6 +93,6 @@ testSemanticErrors:
 		done;
 		@echo  ""
 
-test: java testSyntaxErrors testSemanticErrors
+test:javaTest testSyntaxErrors testSemanticErrors
 	@echo "\n\033[0m --- Delete out/ directory ---"
-	rm -rf $(BIN_DIR)
+	rm -rf $(TMP_DIR)

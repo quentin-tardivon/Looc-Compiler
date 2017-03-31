@@ -15,21 +15,21 @@ class Comparator = (
 
 class Greater inherit Comparator = (
 
-  method compare(left :int, right: int) {
+  method compare(left :int, right: int): int {
     return (left > right);
   }
 )
 
 class Lower inherit Comparator = (
 
-  method compare(left :int, right: int) {
+  method compare(left :int, right: int): int {
     return (left < right);
   }
 )
 
 class Between = (
 
-  method test(left :int, right: int, value: int) {
+  method test(left :int, right: int, value: int): int {
     var g : Greater;
     var l : Lower;
     g := new Greater;

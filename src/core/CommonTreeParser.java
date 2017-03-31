@@ -28,6 +28,7 @@ public class CommonTreeParser {
 	protected SymbolTable tds;
 	private String filename;
 	protected ArrayList<String> list = new ArrayList<>();
+	private int currentLine = 0;
 
 	public CommonTreeParser(String filename) {
 		this.filename = filename;
@@ -40,10 +41,21 @@ public class CommonTreeParser {
 		}
 	}
 
+	private void printCurrentLine(Tree node) {
+		if(node != null) {
+			if (currentLine != node.getLine()) {
+				this.currentLine = node.getLine();
+				System.out.print("\nLine number: " + this.currentLine + " ");
+			}
+			else
+				System.out.print("+");
+		}
+	}
+
+
 	public void constructTDS(Tree tree, SymbolTable tds) throws Exception {
 		SymbolTable newtds;
-		if(tree != null)
-			System.out.println("Line number: "  + tree.getLine());
+		this.printCurrentLine(tree);
 
 		switch (tree.getText()) {
 			case "ROOT":
@@ -188,11 +200,11 @@ public class CommonTreeParser {
 				}
 
 				//MismatchTypeException
-				Util.testType(entry,subTreeType(tree.getChild(1),tds),tds);
+				Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds);
 
 				if (tree.getChild(1).getText().equals("new")) {
 					//System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
-					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
+					if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
 						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
 								entry.get(Entry.TYPE),
@@ -201,8 +213,9 @@ public class CommonTreeParser {
 
 
 				} //TODO : implementer case : CALL dans subTreeType et testType
+				  //TODO : Probleme lors d'une affectation avec nil (voir Level7 dans les tests):    a := nil;
 				else if(tree.getChild(1).getText().equals("call")) {
-					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
+					if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
 						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
 								entry.get(Entry.TYPE),
@@ -210,7 +223,7 @@ public class CommonTreeParser {
 								tree.getChild(0).getText());
 
 				}
-				else if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
+				else if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
 					Util.mismatchType(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText(), tds),
 							entry.get(Entry.TYPE),
@@ -250,8 +263,8 @@ public class CommonTreeParser {
 				break;
 
 			case "RETURN"://TODO : regarder return 1, et passer par getInfo ou autre ?
-				String realV=tds.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).toString();
-				String expectedV=tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE).toString();
+				String realV = Util.subTreeType(tree.getChild(0), tds);
+				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
 				Util.testReturnType(expectedV,realV);
 				break;
 
@@ -267,6 +280,15 @@ public class CommonTreeParser {
 				}
 				break;
 		}
+	}
+
+
+	public String toString() {
+		return this.list.toString();
+	}
+
+	public SymbolTable getRootSymbolTable() {
+		return this.tds;
 	}
 
 	/*public void constructTDSWithoutSemantic(Tree tree, SymbolTable tds) throws SymbolAlreadyDeclaredException{
@@ -400,42 +422,5 @@ public class CommonTreeParser {
 	}
 
 */
-	public String toString() {
-		return this.list.toString();
-	}
-
-	public SymbolTable getRootSymbolTable() {
-		return this.tds;
-	}
-
-	public String subTreeType(Tree node,SymbolTable tds) throws Exception {
-			//System.out.println("Appel subtreetype " + node.getText());
-
-			switch (node.getText()) {
-				case "PLUS":
-					//System.out.println("plus");
-					return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-				case "DIFF":
-					//System.out.println("diff");
-					return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-				case "MUL":
-					//System.out.println("mul");
-					return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-				case "DIV":
-					//System.out.println("div");
-					return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-				case "new":
-					//System.out.println("new subtreetype");
-					return node.getChild(0).getText();
-				case "CALL":
-					Util.testCall(node,tds);
-					return Util.callReturnType(node.getChild(0), tds);
-				case "-":
-					return this.subTreeType(node.getChild(0), tds);
-				default:
-					return Util.getType(node.getText(),tds);
-			}
-	}
-
 
 }

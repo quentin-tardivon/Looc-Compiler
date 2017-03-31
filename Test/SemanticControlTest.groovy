@@ -1,5 +1,6 @@
 import TDS.SymbolTable
 import core.CommonTreeParser
+import exceptions.IncorrectParamsMethodException
 import exceptions.MismatchOperationException
 import exceptions.MismatchTypeException
 import exceptions.ReturnValueTypeMismatchException
@@ -45,7 +46,7 @@ class SemanticControlTest extends GroovyTestCase {
     }
 
     void testInexactNumberParamsEx() {
-        shouldFail(UndeclaredInheritanceException) {
+        shouldFail(IncorrectParamsMethodException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
         }
     }
@@ -55,4 +56,12 @@ class SemanticControlTest extends GroovyTestCase {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredInheritanceEx.looc")
         }
     }
+
+    void testMismatchOperationException() {
+        shouldFail(MismatchOperationException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
 }

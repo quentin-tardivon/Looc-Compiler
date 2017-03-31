@@ -116,6 +116,21 @@ public class SymbolTable {
 	}
 
 	/**
+	 * @param idf key
+	 * @return Returns the entries of the idf or throw an UndeclaredException
+	 */
+	public SymbolTable getLinkRecursive(String idf) throws Exception {
+		if (this.links.containsKey(idf))
+			return this.links.get(idf);
+		else {
+			if (this.father != null)
+				return this.father.getLinkRecursive(idf);
+			else
+				return null;
+		}
+	}
+
+	/**
 	 * @param s Symbol to find
 	 * @return Entry associated to the given symbol
 	 */

@@ -27,6 +27,22 @@ public class Util {
         }
     }
 
+    public static String testTypeOperationExpression(Tree node, SymbolTable tds) throws Exception {
+        System.out.println(node.getText());
+        if(node.getChildCount() == 0)
+            return Util.getType(node.getText(), tds);
+        else {
+            // An operation must be composed of only two child every time !
+            assert node.getChildCount() == 2;
+            String typeLeft = Util.testTypeOperationExpression(node.getChild(0), tds);
+            if(!typeLeft.equals(Util.testTypeOperationExpression(node.getChild(1), tds)))
+                throw new MismatchOperationException(null, null);
+
+            return typeLeft;
+        }
+    }
+
+
     public static String testTypeOper(String nodeL, String nodeR) throws Exception {
         if (nodeL.equals(Keywords.INTEGER) && nodeR.equals(Keywords.INTEGER)) {
         	return Keywords.INTEGER;
@@ -35,19 +51,17 @@ public class Util {
 	        throw new StringOperationException();
         }
         else {
-			throw new MismatchOperationException();
+			throw new MismatchOperationException(null, null);
         }
     }
 
     public static String getType(String s, SymbolTable tds) throws Exception {
-        if (s.matches("[0-9]+")) {return Keywords.INTEGER;}
-        else if (s.matches("'.*'")){
+        if (s.matches("[0-9]+"))
+            return Keywords.INTEGER;
+        if (s.matches("'.*'"))
             return Keywords.STRING;
-        }
-        else {
+        else
             return tds.getInfo(s).get(Entry.TYPE);
-
-        }
     }
 
     public static void testReturnType(String expected, String real) throws Exception {
@@ -77,6 +91,13 @@ public class Util {
             if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
                 throw new LoocException(null, null, "EXCEPTION NO GOOD NUMBER OF PARAMS // TODO CREATE THE DEDICATED EXCEPTION, " + called + " - " + tds);
         }
+    }
+
+    private static String getTypeReturnByMethod(Tree node, SymbolTable tds) throws Exception {
+        String receiver = node.getChild(node.getChildCount() - 1).getText();
+        String called = node.getChild(0).getText();
+        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds);
+        return symbolTableReceiver.get(called).get(Entry.RETURN_TYPE);
     }
 
     public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
@@ -111,7 +132,7 @@ public class Util {
     }
 
     public static String callReturnType(Tree node, SymbolTable tds)throws Exception{
-        return tds.getInfo(node.getText()).get(Entry.RETURN_TYPE);
+        return Util.subTreeType(node, tds);
     }
 
     /**
@@ -132,7 +153,42 @@ public class Util {
                 return currentTDS.getFather().getFather().getLink(inheritedClass);
             default:
                 String typeIdf = currentTDS.getInfo(receiver).get(Entry.TYPE);
-                return currentTDS.getLink(typeIdf);
+                return currentTDS.getLinkRecursive(typeIdf);
+        }
+    }
+
+    public static String subTreeType(Tree node,SymbolTable tds) throws Exception {
+        switch (node.getText()) {
+            case "PLUS":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "DIFF":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "MUL":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "DIV":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+
+            case ">":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case ">=":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "<":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "<=":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "==":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+            case "!=":
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+
+            case "new":
+                return node.getChild(0).getText();
+            case "CALL":
+                return Util.getTypeReturnByMethod(node, tds);
+            case "-":
+                return Util.subTreeType(node.getChild(0), tds);
+            default:
+                return Util.getType(node.getText(),tds);
         }
     }
 }
