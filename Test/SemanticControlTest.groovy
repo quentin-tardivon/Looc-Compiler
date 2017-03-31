@@ -18,22 +18,17 @@ class SemanticControlTest extends GroovyTestCase {
 
     void testMismatchTypeException() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc");
-
     }
 
     void testAlreadyDeclaredException() {
         shouldFail(SymbolAlreadyDeclaredException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AlreadyDeclaredEx.looc")
-
-
         }
     }
 
     void testUndeclaredClassEx() {
         shouldFail(UndeclaredClassException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredClassEx.looc")
-
-
         }
     }
 
@@ -46,6 +41,12 @@ class SemanticControlTest extends GroovyTestCase {
     void testStringOpEx() {
         shouldFail(StringOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/StringOpEx.looc")
+        }
+    }
+
+    void testInexactNumberParamsEx() {
+        shouldFail(UndeclaredInheritanceException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
         }
     }
 

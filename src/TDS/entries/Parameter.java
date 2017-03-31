@@ -1,5 +1,7 @@
 package TDS.entries;
 
+import TDS.Entry;
+
 /**
  * @author Maxime Escamez
  * @author Théo Le Donné
@@ -9,7 +11,7 @@ package TDS.entries;
 public class Parameter extends Variable {
 
 	public Parameter(String type) {
-		super("Parameter", type);
+		super(Entry.PARAMETER, type);
 	}
 
 }

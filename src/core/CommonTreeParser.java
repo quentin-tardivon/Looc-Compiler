@@ -42,6 +42,9 @@ public class CommonTreeParser {
 
 	public void constructTDS(Tree tree, SymbolTable tds) throws Exception {
 		SymbolTable newtds;
+		if(tree != null)
+			System.out.println("Line number: "  + tree.getLine());
+
 		switch (tree.getText()) {
 			case "ROOT":
 				this.tds = tds;
@@ -51,7 +54,7 @@ public class CommonTreeParser {
 				break;
 
 			case "METHOD":
-				System.out.println("Method encounter:" + tree.getChild(0).toString());
+				//System.out.println("Method encounter:" + tree.getChild(0).toString());
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(0).getText());
 				tds.putLink(tree.getChild(0).getText(), newtds);
 
@@ -105,7 +108,7 @@ public class CommonTreeParser {
 					}
 				}
 				tds.put(tree.getChild(0).getText(), newClass);
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(1).getText());
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(0).getText());
 				tds.putLink(tree.getChild(0).getText(), newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds);
@@ -185,16 +188,14 @@ public class CommonTreeParser {
 				}
 
 				//MismatchTypeException
-				System.out.println("entry: "+ entry);
 				Util.testType(entry,subTreeType(tree.getChild(1),tds),tds);
-
 
 				if (tree.getChild(1).getText().equals("new")) {
 					//System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
 					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
 						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
-								entry.get("type"),
+								entry.get(Entry.TYPE),
 								tree.getChild(1).getChild(0).getText(),
 								tree.getChild(0).getText());
 
@@ -204,7 +205,7 @@ public class CommonTreeParser {
 					if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
 						Util.mismatchType(this.filename, tree.getChild(1),
 								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
-								entry.get("type"),
+								entry.get(Entry.TYPE),
 								tree.getChild(1).getChild(0).getText(),
 								tree.getChild(0).getText());
 
@@ -212,13 +213,10 @@ public class CommonTreeParser {
 				else if (!Util.testType(entry,subTreeType(tree.getChild(1),tds),tds))
 					Util.mismatchType(this.filename, tree.getChild(1),
 							Util.getType(tree.getChild(1).getText(), tds),
-							entry.get("type"),
+							entry.get(Entry.TYPE),
 							tree.getChild(1).getText(),
 							tree.getChild(0).getText());
 
-
-				//System.out.println("Affect : " + tree.getChild(0).getText() + ":=" + tree.getChild(1).getText());
-				System.out.println("Line number: "  + tree.getChild(0).getLine());
 				break;
 
 
@@ -234,16 +232,7 @@ public class CommonTreeParser {
 				break;
 
 			case "DO":
-					//UndeclaredMethodException
-				System.out.println("child count : " + tree.getChildCount());
-				System.out.println("case DO tree : " +tree);
-					System.out.println("son fils: " + tree.getChild(0).getText());
-				System.out.println("son fils: " + tree.getChild(1).getText());
-				Util.testDo(tree.getChild(0),tds);
-				break;
-
-
-
+				Util.testDo(tree.getChild(0), tds);
 				/*if (tree.getChildCount()==1) {
 					//Controle sémantique ici ??
 					if (tree.getChild(0).getText().equals("new"))
@@ -257,13 +246,12 @@ public class CommonTreeParser {
 						System.out.println("c pa bi1");
 					}
 				}
-				tds.getInfo(tree.getChild(1).getText());
-				break;*/
-
+				tds.getInfo(tree.getChild(1).getText());*/
+				break;
 
 			case "RETURN"://TODO : regarder return 1, et passer par getInfo ou autre ?
-				String realV=tds.getInfo(tree.getChild(0).getText()).get("type").toString();
-				String expectedV=tds.getFather().get(tds.getName()).get("returnType").toString();
+				String realV=tds.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).toString();
+				String expectedV=tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE).toString();
 				Util.testReturnType(expectedV,realV);
 				break;
 
@@ -421,7 +409,7 @@ public class CommonTreeParser {
 	}
 
 	public String subTreeType(Tree node,SymbolTable tds) throws Exception {
-			System.out.println("Appel subtreetype " + node.getText());
+			//System.out.println("Appel subtreetype " + node.getText());
 
 			switch (node.getText()) {
 				case "PLUS":
@@ -443,8 +431,6 @@ public class CommonTreeParser {
 					Util.testCall(node,tds);
 					return Util.callReturnType(node.getChild(0), tds);
 				case "-":
-					System.out.printf("## It's a unary node %s\n nb children: %d\n", node.getText(), node.getChildCount());
-					//System.out.println("##### " + this.subTreeType(node.getChild(0), tds));
 					return this.subTreeType(node.getChild(0), tds);
 				default:
 					return Util.getType(node.getText(),tds);

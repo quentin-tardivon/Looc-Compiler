@@ -3,6 +3,7 @@ package TDS;
 import exceptions.*;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /** A symbol table is described by a Hashmap.
  *  A symbol table associate to a symbol (String) a entry.
@@ -191,6 +192,10 @@ public class SymbolTable {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public Set<String> getKeyEntries() {
+		return this.entries.keySet();
 	}
 
 

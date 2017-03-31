@@ -13,18 +13,13 @@ import TDS.Entry;
 public class Variable extends Entry {
 
 
-	public Variable() {
-		super("Variable");
-		System.out.println("DEPRECATED Variable constructor: TDS/entries/Variable.java");
-	}
-
 	public Variable(String type) {
-		super("Variable");
-		this.put("type", type);
+		super(Entry.VARIABLE);
+		this.put(Entry.TYPE, type);
 	}
 
 	protected Variable(String name, String type) {
 		super(name);
-		this.put("type", type);
+		this.put(Entry.TYPE, type);
 	}
 }

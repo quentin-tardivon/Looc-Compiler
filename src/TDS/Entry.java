@@ -13,6 +13,19 @@ import java.util.HashMap;
  */
 public abstract class Entry {
 
+	public static final String TYPE = 			"Type";
+	public static final String RETURN_TYPE = 	"ReturnType";
+	public static final String CLASS = 			"Class";
+	public static final String INHERIT = 		"Inherit";
+	public static final String METHOD = 		"Method";
+	public static final String PARAMETER = 		"Parameter";
+	public static final String VARIABLE = 		"Variable";
+	public static final String IF = 			"If";
+	public static final String ELSE = 			"Else";
+	public static final String FOR = 			"For";
+	public static final String ANONYMOUS_BLOC = "Anonymous Block";
+
+
 	protected HashMap<String, String> info;
 	protected String name;
 
@@ -37,6 +50,17 @@ public abstract class Entry {
 			s += String.format(" - %-10s -> %s\n", symbol, this.info.get(symbol));
 		}
 		return s;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Entry entry = (Entry) o;
+
+		if (info != null ? !info.equals(entry.info) : entry.info != null) return false;
+		return name != null ? name.equals(entry.name) : entry.name == null;
 	}
 
 }
