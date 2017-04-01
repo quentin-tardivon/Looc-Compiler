@@ -4,18 +4,11 @@ import TDS.SymbolTable;
 import core.CommonTreeParser;
 import core.LoocLexer;
 import core.LoocParser;
-import exceptions.MismatchTypeException;
-import exceptions.SymbolAlreadyDeclaredException;
-import exceptions.UndeclaredVariableException;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.DOTTreeGenerator;
-import org.antlr.stringtemplate.StringTemplate;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * Factory for a core.CommonTreeParser

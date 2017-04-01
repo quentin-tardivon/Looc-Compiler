@@ -1,6 +1,0 @@
-
-
-var n : string;
-
-
-n := "michel" + 4;

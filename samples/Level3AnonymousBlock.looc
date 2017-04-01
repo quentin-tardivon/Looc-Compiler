@@ -30,15 +30,17 @@ do f.init();
 do f.nextGen();
 do f.nextGen();
 {
-var f : Fibonacci;
-f := new Fibonacci;
+    var f : Fibonacci;
+    f := new Fibonacci;
+    {
+        var f : Fibonacci;
+        f := new Fibonacci;
+    }
+}
+
 {
-var f : Fibonacci;
-f := new Fibonacci;
+    var f : Fibonacci;
+    f := new Fibonacci;
 }
-}
-{
-var f : Fibonacci;
-f := new Fibonacci;
-}
+
 write f.nextGenAndGet();
