@@ -5,7 +5,7 @@ class Dev = (
     var age: int;
     var master: string;
 
-    method getNbLanguagues(godmod : int): int {
+    method getNbLanguages(godmod : int): int {
     	if godmod != -1 then
     		return (99999);
     	else
@@ -31,23 +31,23 @@ class Dev = (
 )
 
 class Engineer inherit Dev = (
-    method getNbLanguagues(godmod: int): int {
-        return (super.getNbLanguagues(godmod) - 1);
+    method getNblanguages(godmod: int): int {
+        return (super.getNbLanguages(godmod) - 1);
     }
 )
 
 var d : Dev;
 var e : Dev;
-b := new Dev;
-b := new Engineer;
-do b.init();
+d := new Dev;
+e := new Engineer;
+do d.init();
 do e.init();
 
-write d.getNbLanguagues(0);
-write e.getNbLanguagues(0);
+write d.getNbLanguages(0);
+write e.getNbLanguages(0);
 
 do d.levelUp();
 do e.levelUp();
 do e.levelUp();
-write d.getNbLanguagues(0);
-write e.getNbLanguagues(0);
+write d.getNbLanguages(0);
+write e.getNbLanguages(0);

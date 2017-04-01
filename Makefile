@@ -9,9 +9,6 @@ EXTENSION = looc
 PGM_JAVA = $(PGM).java
 LOG_FILE_ANTLR = antlr.log
 
-# Create needed directories
-$(shell mkdir -p $(BIN_DIR))
-
 export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):./$(TMP_DIR):$$CLASSPATH
 
 all: antlr
@@ -38,18 +35,16 @@ clean:
 javaTest:
 	@echo "\n --- Create tmp/ directory ---"
 	mkdir -p $(TMP_DIR)
-	@echo "\n --- Create out/ directory ---"
-	mkdir -p $(BIN_DIR)
 	@echo "\n --- Execute Antlr ---"
 	java org.antlr.Tool -o $(TMP_DIR) Looc.g 2>&1 |tail -n 5
 	@echo "\n --- Compile java classes ---"
 	javac -d $(TMP_DIR) $(TMP_DIR)/LoocLexer.java $(TMP_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
-parse: java
-	@echo " --- Execute TestLooc ---"
-	@java $(PGM)
-
+parse: javaTest
+	java $(PGM) samples/errorSamples/ReturnValueTypeMismatchEx.looc
+	@echo "\n\033[0m --- Delete tmp/ directory ---"
+	rm -rf $(TMP_DIR)
 
 testSyntaxErrors:
 	@echo "\n --- Test Syntax errors ---"
@@ -94,5 +89,5 @@ testSemanticErrors:
 		@echo  ""
 
 test:javaTest testSyntaxErrors testSemanticErrors
-	@echo "\n\033[0m --- Delete out/ directory ---"
+	@echo "\n\033[0m --- Delete tmp/ directory ---"
 	rm -rf $(TMP_DIR)

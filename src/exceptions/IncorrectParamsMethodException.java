@@ -7,7 +7,7 @@ import org.antlr.runtime.tree.Tree;
  */
 public class IncorrectParamsMethodException extends LoocException {
 
-	public IncorrectParamsMethodException(String filename, Tree t, String message) {
-		super(filename, t, "The call of thhe method " + message + " differs from its definition.");
+	public IncorrectParamsMethodException(String filename, Tree t, String method) {
+		super(filename, t, "The call of the method " + method + " differs from its definition.");
 	}
 }

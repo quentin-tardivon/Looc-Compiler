@@ -22,27 +22,27 @@ public class SymbolTable {
 	/**
 	 * An entry can be a function, variable, anonymous bloc
 	 */
-    private HashMap<String, Entry> entries;
+    private final HashMap<String, Entry> entries;
 	/** Imbrication level, root is 0 */
 	private final int imbricationLevel;
 	/** The parent Symbol Table */
     private final SymbolTable father;
 	/** Links between symbol tables (used to access symbol table of a function for example) */
-	private HashMap<String, SymbolTable> links;
+	private final HashMap<String, SymbolTable> links;
 	/** Number of for statement in this block **/
 	private int numberFor = 0;
 	/** Number of if statement in this block **/
 	private int numberIf = 0;
 	/** Number of block statement statement in this block **/
 	private int numberBlock = 0;
-	private String name;
+	private final String name;
 
 	/**
 	 * Default constructor
 	 */
 	public SymbolTable() {
-		this.entries = new HashMap<String, Entry>();
-		this.links = new HashMap<String, SymbolTable>();
+		this.entries = new HashMap<>();
+		this.links = new HashMap<>();
 		this.imbricationLevel = 0;
 		this.father = null;
 		this.name = "ROOT";
@@ -53,8 +53,8 @@ public class SymbolTable {
 	 * @param father The final Symbol table parent
 	 */
 	public SymbolTable(int imbricationLevel, SymbolTable father, String name) {
-        this.entries = new HashMap<String, Entry>();
-		this.links = new HashMap<String, SymbolTable>();
+        this.entries = new HashMap<>();
+		this.links = new HashMap<>();
         this.imbricationLevel = imbricationLevel;
         this.father = father;
         this.name = name;
@@ -88,7 +88,7 @@ public class SymbolTable {
 			throw new SymbolAlreadyDeclaredException("", null, symbol);
 		}
 		else {
-			if (type == "For") {
+			if (type.equals("For")) {
 				numberFor += 1;
 			}
 			else {
@@ -119,7 +119,7 @@ public class SymbolTable {
 	 * @param idf key
 	 * @return Returns the entries of the idf or throw an UndeclaredException
 	 */
-	public SymbolTable getLinkRecursive(String idf) throws Exception {
+	public SymbolTable getLinkRecursive(String idf) {
 		if (this.links.containsKey(idf))
 			return this.links.get(idf);
 		else {
@@ -148,21 +148,14 @@ public class SymbolTable {
 	 * @param idf key
 	 * @return Returns the entries of the idf or throw an UndeclaredException
 	 */
-	public Entry getInfo(String idf) throws Exception {
-
+	public Entry getInfo(String idf) {
 		if (this.entries.containsKey(idf)) {
 			return this.entries.get(idf);
 		}
 		else {
-			//System.out.println(this.toString());
-
-			//System.out.println(this.father.toString());
-
 			if (this.father != null) {
-				//System.out.println(this.father.getInfo(idf).toString());
 				return this.father.getInfo(idf);
 			} else {
-				//System.out.println("idf : " + idf + " entries : " + this.entries.get(idf));
 				return null;
 			}
 		}

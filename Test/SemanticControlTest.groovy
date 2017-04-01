@@ -1,14 +1,6 @@
 import TDS.SymbolTable
 import core.CommonTreeParser
-import exceptions.IncorrectParamsMethodException
-import exceptions.MismatchOperationException
-import exceptions.MismatchTypeException
-import exceptions.ReturnValueTypeMismatchException
-import exceptions.StringOperationException
-import exceptions.SymbolAlreadyDeclaredException
-import exceptions.UndeclaredClassException
-import exceptions.UndeclaredInheritanceException
-import exceptions.UndeclaredVariableException
+import exceptions.*
 import factories.CommonTreeParserFactory
 
 /**
@@ -18,7 +10,7 @@ class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser
 
     void testMismatchTypeException() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc")
     }
 
     void testAlreadyDeclaredException() {
@@ -35,7 +27,7 @@ class SemanticControlTest extends GroovyTestCase {
 
     void testReturnValTypeMisEx() {
         shouldFail(ReturnValueTypeMismatchException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMisEx.looc")
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMismatchEx.looc")
         }
     }
 
@@ -60,6 +52,13 @@ class SemanticControlTest extends GroovyTestCase {
     void testMismatchOperationException() {
         shouldFail(MismatchOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
+    void testNotVoidMethod() {
+        shouldFail(MethodNonVoidException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc")
             treeParser.constructTDS(tree, new SymbolTable())
         }
     }

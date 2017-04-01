@@ -1,7 +1,7 @@
 package core;
 
 /**
- * All reseerved keywords of the looc programming language !
+ * All reserved keywords of the Looc programming language !
  *
  * @author Maxime Escamez
  * @author Théo Le Donné
@@ -15,4 +15,5 @@ public class Keywords {
     public static final String SUPER = 		"super";
     public static final String THIS = 		"this";
     public static final String NIL =        "nil";
+    public static final String NEW =        "new";
 }

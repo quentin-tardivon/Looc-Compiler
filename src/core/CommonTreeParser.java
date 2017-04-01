@@ -2,20 +2,10 @@ package core;
 
 import TDS.Entry;
 import TDS.SymbolTable;
-import TDS.entries.Method;
-import TDS.entries.Parameter;
-import TDS.entries.Variable;
-
-import exceptions.MismatchTypeException;
 import TDS.entries.*;
 import TDS.entries.Class;
-
-
-import exceptions.ReturnValueTypeMismatchException;
-import exceptions.SymbolAlreadyDeclaredException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
-
 
 import java.util.ArrayList;
 
@@ -25,14 +15,12 @@ import java.util.ArrayList;
  */
 public class CommonTreeParser {
 
-	protected SymbolTable tds;
+	private SymbolTable tds;
 	private String filename;
-	protected ArrayList<String> list = new ArrayList<>();
+	private ArrayList<String> list = new ArrayList<>();
 	private int currentLine = 0;
 
-	public CommonTreeParser(String filename) {
-		this.filename = filename;
-	}
+	public CommonTreeParser(String filename) {  this.filename = filename;  }
 
 	public void parseCommonTreeParser(Tree tree) {
 		list.add(tree.toString());
@@ -65,6 +53,7 @@ public class CommonTreeParser {
 				}
 				break;
 
+
 			case "METHOD":
 				//System.out.println("Method encounter:" + tree.getChild(0).toString());
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, tree.getChild(0).getText());
@@ -77,7 +66,7 @@ public class CommonTreeParser {
 					constructTDS(tree.getChild(3), newtds);
 				}
 				//cas méthode sans type de retour et avec paramètres
-				else if ((tree.getChildCount() == 3) && tree.getChild(1).getText() == "FORMAL_PARAMS") {
+				else if ((tree.getChildCount() == 3) && tree.getChild(1).getText().equals("FORMAL_PARAMS")) {
 					tds.put(tree.getChild(0).getText(), new Method());
 					constructTDS(tree.getChild(1), newtds);
 					constructTDS(tree.getChild(2), newtds);
@@ -175,9 +164,8 @@ public class CommonTreeParser {
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					constructTDS(tree.getChild(i), tds);
 				}
-
-
 				break;
+
 
 			case "BODY":
 				for (int i = 0; i < tree.getChildCount(); i++) {
@@ -187,56 +175,13 @@ public class CommonTreeParser {
 
 
 			case "AFFECT":
-
-				//UndefinedVariableException
-				Entry entry = tds.getInfo(tree.getChild(0).getText());
-				if (entry == null) {
-					Util.undeclaredToken(tree.getChild(0).getText(), tds);
-				}
-
-				//UndefinedClassException
-				if(tree.getChild(1).getText().equals("new") && tds.getInfo(tree.getChild(1).getChild(0).getText()) == null){
-					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
-				}
-
-				//MismatchTypeException
-				Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds);
-
-				if (tree.getChild(1).getText().equals("new")) {
-					//System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
-					if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
-						Util.mismatchType(this.filename, tree.getChild(1),
-								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
-								entry.get(Entry.TYPE),
-								tree.getChild(1).getChild(0).getText(),
-								tree.getChild(0).getText());
-
-
-				} //TODO : implementer case : CALL dans subTreeType et testType
-				  //TODO : Probleme lors d'une affectation avec nil (voir Level7 dans les tests):    a := nil;
-				else if(tree.getChild(1).getText().equals("call")) {
-					if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
-						Util.mismatchType(this.filename, tree.getChild(1),
-								Util.getType(tree.getChild(1).getChild(0).getText(), tds),
-								entry.get(Entry.TYPE),
-								tree.getChild(1).getChild(0).getText(),
-								tree.getChild(0).getText());
-
-				}
-				else if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
-					Util.mismatchType(this.filename, tree.getChild(1),
-							Util.getType(tree.getChild(1).getText(), tds),
-							entry.get(Entry.TYPE),
-							tree.getChild(1).getText(),
-							tree.getChild(0).getText());
-
+				this.testAffectation(tree, tds);
 				break;
 
 
 			case "FOR":
 				nb = tds.getNumberBlock();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "for" + nb);
-				//System.out.println("for"+nb);
 				tds.put("for" +nb , new ForLoop(), "For");
 				tds.putLink("for" + nb, newtds);
 				for (int j = 1; j < tree.getChildCount(); j++) {
@@ -289,6 +234,82 @@ public class CommonTreeParser {
 
 	public SymbolTable getRootSymbolTable() {
 		return this.tds;
+	}
+
+
+	/**
+	 * This method must:
+	 *  - Check that the variable is correctly declared
+	 *  - The type of the variable corresponds to the right node's type
+	 *  - If the expression is the creation of object (new), check if the class exists
+	 *
+	 * @param tree
+	 * @param tds
+	 * @throws Exception
+	 */
+	private void testAffectation(Tree tree, SymbolTable tds) throws Exception {
+		Entry entry = tds.getInfo(tree.getChild(0).getText());
+
+		if (entry == null)
+			Util.undeclaredToken(tree.getChild(0).getText(), tds);
+
+		switch (tree.getChild(1).getText()) {
+			case Keywords.NEW:
+				// Check if the class has been declared previously
+				if (tds.getInfo(tree.getChild(1).getChild(0).getText()) == null)
+					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
+				break;
+			case Keywords.NIL:
+				entry.put(Entry.NIL, "true");
+				break;
+			default:
+				Util.subTreeType(tree.getChild(1), tds);
+		}
+
+				/*
+		//UndefinedVariableException
+		Entry entry = tds.getInfo(tree.getChild(0).getText());
+		if (entry == null) {
+			Util.undeclaredToken(tree.getChild(0).getText(), tds);
+		}
+
+		//UndefinedClassException
+		if(tree.getChild(1).getText().equals("new") && tds.getInfo(tree.getChild(1).getChild(0).getText()) == null){
+			Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
+		}
+
+		//MismatchTypeException
+		Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds);
+
+		if (tree.getChild(1).getText().equals("new")) {
+			//System.out.println("node: "+ tree.getChild(1).getChild(0).getText());
+			if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
+				Util.mismatchType(this.filename, tree.getChild(1),
+						Util.getType(tree.getChild(1).getChild(0).getText(), tds),
+						entry.get(Entry.TYPE),
+						tree.getChild(1).getChild(0).getText(),
+						tree.getChild(0).getText());
+
+
+		} //TODO : implementer case : CALL dans subTreeType et testType
+		//TODO : Probleme lors d'une affectation avec nil (voir Level7 dans les tests):    a := nil;
+		else if(tree.getChild(1).getText().equals("call")) {
+			if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
+				Util.mismatchType(this.filename, tree.getChild(1),
+						Util.getType(tree.getChild(1).getChild(0).getText(), tds),
+						entry.get(Entry.TYPE),
+						tree.getChild(1).getChild(0).getText(),
+						tree.getChild(0).getText());
+
+		}
+		else if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
+			Util.mismatchType(this.filename, tree.getChild(1),
+					Util.getType(tree.getChild(1).getText(), tds),
+					entry.get(Entry.TYPE),
+					tree.getChild(1).getText(),
+					tree.getChild(0).getText());
+
+*/
 	}
 
 	/*public void constructTDSWithoutSemantic(Tree tree, SymbolTable tds) throws SymbolAlreadyDeclaredException{

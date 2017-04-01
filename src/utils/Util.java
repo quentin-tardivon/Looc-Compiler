@@ -12,7 +12,7 @@ import org.antlr.runtime.tree.Tree;
  */
 public class Util {
 
-    public static Boolean testType(Entry l, String r, SymbolTable tds) throws Exception{
+    public static Boolean testType(Entry l, String r, SymbolTable tds) {
         if (l.get(Entry.TYPE).equals(r)) {
 	        return true;
         }
@@ -28,7 +28,6 @@ public class Util {
     }
 
     public static String testTypeOperationExpression(Tree node, SymbolTable tds) throws Exception {
-        System.out.println(node.getText());
         if(node.getChildCount() == 0)
             return Util.getType(node.getText(), tds);
         else {
@@ -43,7 +42,7 @@ public class Util {
     }
 
 
-    public static String testTypeOper(String nodeL, String nodeR) throws Exception {
+    private static String testTypeOper(String nodeL, String nodeR) throws Exception {
         if (nodeL.equals(Keywords.INTEGER) && nodeR.equals(Keywords.INTEGER)) {
         	return Keywords.INTEGER;
         }
@@ -58,7 +57,7 @@ public class Util {
     public static String getType(String s, SymbolTable tds) throws Exception {
         if (s.matches("[0-9]+"))
             return Keywords.INTEGER;
-        if (s.matches("'.*'"))
+        if (s.matches("\".*\""))
             return Keywords.STRING;
         else
             return tds.getInfo(s).get(Entry.TYPE);
@@ -71,7 +70,15 @@ public class Util {
     }
 
     public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
+        // Test if the method is declared
         Util.testCall(doChild, tds);
+
+        // Test if the method is void
+        String called = doChild.getChild(0).getText();
+        String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
+        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds);
+        if(symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null)
+            throw new MethodNonVoidException(null, null, called);
     }
 
     public static void testCall(Tree callNode,SymbolTable tds) throws Exception {
@@ -85,11 +92,11 @@ public class Util {
             int actualNbParams = callNode.getChildCount() == 3 ? callNode.getChild(1).getChildCount() : 0;
             // Check if method exists
             if(symbolTableReceiver.get(called) == null || !symbolTableReceiver.get(called).getName().equals(Entry.METHOD))
-                throw new UndeclaredMethodException(null, null, receiver);
+                throw new UndeclaredMethodException(null, null, called);
 
             // Check Number of params
             if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
-                throw new LoocException(null, null, "EXCEPTION NO GOOD NUMBER OF PARAMS // TODO CREATE THE DEDICATED EXCEPTION, " + called + " - " + tds);
+                throw new IncorrectParamsMethodException(null, null, called);
         }
     }
 
@@ -101,7 +108,7 @@ public class Util {
     }
 
     public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
-        if (tds.getInfo(callNode.getChild(0).getText()).get(Entry.RETURN_TYPE).equals(null)){
+        if (tds.getInfo(callNode.getChild(0).getText()).get(Entry.RETURN_TYPE) == null){
             throw new MethodNonVoidException(null,null,callNode.getChild(0).getText());
         }
     }
@@ -152,8 +159,10 @@ public class Util {
                 String inheritedClass = currentTDS.getFather().getFather().get(currentTDS.getFather().getName()).get(Entry.INHERIT);
                 return currentTDS.getFather().getFather().getLink(inheritedClass);
             default:
-                String typeIdf = currentTDS.getInfo(receiver).get(Entry.TYPE);
-                return currentTDS.getLinkRecursive(typeIdf);
+                Entry e = currentTDS.getInfo(receiver);
+                if(e == null || !(e.getName().equals(Entry.VARIABLE)))
+                    throw new UndeclaredVariableException(null,null, receiver);
+                return currentTDS.getLinkRecursive(e.get(Entry.TYPE));
         }
     }
 
@@ -180,13 +189,17 @@ public class Util {
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
             case "!=":
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-
-            case "new":
+            case Keywords.NEW:
                 return node.getChild(0).getText();
+            case Keywords.THIS:
+                return Util.getSymbolTable(node.getText(), tds).getName();
             case "CALL":
+                Util.testCall(node, tds);
                 return Util.getTypeReturnByMethod(node, tds);
             case "-":
                 return Util.subTreeType(node.getChild(0), tds);
+            case Keywords.NIL:
+                return Keywords.NIL;
             default:
                 return Util.getType(node.getText(),tds);
         }

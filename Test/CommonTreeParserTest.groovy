@@ -1,10 +1,5 @@
 import TDS.Entry
-import TDS.SymbolTable
 import core.CommonTreeParser
-import exceptions.MismatchOperationException
-import exceptions.MismatchTypeException
-import exceptions.StringOperationException
-import exceptions.UndeclaredVariableException
 import factories.CommonTreeParserFactory
 import factories.EntryFactory
 
@@ -69,7 +64,7 @@ class CommonTreeParserTest extends GroovyTestCase {
 
 
     void testConstructTDSLevel3AnonymousBlock() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3AnonymousBlock.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3AnonymousBlock.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
         assertEquals(treeParser.tds.getLink("Fibonacci").get("current"), EntryFactory.createIntVariable())
@@ -88,7 +83,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel4() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level4.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level4.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
         assertEquals(treeParser.tds.getLink("Fibonacci").get("current"), EntryFactory.createIntVariable())
@@ -103,15 +98,15 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel5() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level5.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level5.looc")
     }
 
     void testConstructTDSLevel6() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level6.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level6.looc")
     }
 
     void testConstructTDSLevel7() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level7.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level7.looc")
     }
 
 }
