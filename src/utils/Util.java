@@ -134,7 +134,8 @@ public class Util {
 
             // Check the Actualparams type
             for(int i=0; i<actualNbParams; i++){
-                if(!Util.getType(callNode.getChild(1).getChild(i).getText(),tds).equals(list.get(i).get(Entry.TYPE))){
+	            Tree effectiveParam = callNode.getChild(1).getChild(i);
+                if(!Util.subTreeType(effectiveParam, tds, rootTDS).equals(list.get(i).get(Entry.TYPE))){
                     throw new ParameterTypeMismatchException(null,null,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
                 }
             }
@@ -204,8 +205,15 @@ public class Util {
     }
 
     public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws Exception {
-    	SymbolTable rightTDS = rootTDS.findClass(nodeTypeRight);
-		return  rightTDS.findClass(nodeTypeLeft) != null;
+    	System.out.println(nodeTypeLeft +"nczro "+ nodeTypeRight);
+    	SymbolTable leftTDS = rootTDS.findClass(nodeTypeLeft);
+    	if (leftTDS == null) {
+    		return false;
+	    }
+	    else {
+		    return  leftTDS.findClass(nodeTypeRight) != null;
+	    }
+
 
     }
     /**

@@ -226,10 +226,8 @@ public class SymbolTable {
     	return s;
     }
 
-	public SymbolTable findClass(String name) throws UndeclaredClassException {
-		System.out.println("want to find " + name + " in " + this.name);
-		if(name.equals("Greater"))
-			System.out.println("coucou");
+	public SymbolTable findClass(String name) {
+
 		classList.forEach((k,v)->System.out.println("Key: " + k ));
 		SymbolTable res = null;
 		if (classList.containsKey(name))

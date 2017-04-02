@@ -13,7 +13,7 @@ import factories.CommonTreeParserFactory;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-        CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3.looc");
+        CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/MismatchTypeException.looc");
 
 
 	    SymbolTable root = new SymbolTable();
