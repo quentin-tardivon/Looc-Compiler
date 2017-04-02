@@ -1,4 +1,4 @@
-
+//Ligne 6 : Opération sur 2 string
 
 var n : string;
 var a : string;

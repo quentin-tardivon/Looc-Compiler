@@ -1,4 +1,4 @@
-//Ligne 37 : appel d'une méthode non-void après un Do
+//Ligne 38 Appel de new/oper après DO
 class Jukebox = (
 
     var price: int;
@@ -9,6 +9,7 @@ class Jukebox = (
         price := 2;
         playing := 0;
         loaded := nil;
+
     }
 
     method enoughMoney(money: int): int {
@@ -23,15 +24,15 @@ class Jukebox = (
         This method plays the song
         and returns the amount of change returned by the jukebox.
     */
-    method play(title: string, insertedCoin: int): int {
+    method play (title: string, insertedCoin: int) {
 		if this.enoughMoney(insertedCoin) then
 			do this.loadVinyl(title);
 			playing := 1;
 		fi
-		return (playing);
     }
 )
 
 var player: Jukebox;
 do player.init();
-do player.play("Sing, Sing, Sing - Benny Goodman",5);
+do player.play("Sing, Sing, Sing - Benny Goodman", 5);
+do new Jukebox;                                         //Impossible d'appeler new après Do

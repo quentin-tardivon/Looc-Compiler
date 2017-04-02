@@ -75,5 +75,31 @@ class SemanticControlTest extends GroovyTestCase {
     }
 
 
+    void testUndeclaredMethEx() {
+        shouldFail(UndeclaredMethodException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredMethEx.looc")
+        }
+    }
+
+    void testReadUsageEx() {
+        shouldFail(ReadUsageException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReadUsageEx.looc")
+        }
+    }
+
+    void testWriteUsageEx() {
+        shouldFail(WriteUsageException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/WriteUsageEx.looc")
+
+        }
+    }
+
+    void testInexactUsesOfDoException() {
+        shouldFail(InexactUsesOfDoException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactUsesOfDoEx.looc")
+
+
+        }
+    }
 
 }

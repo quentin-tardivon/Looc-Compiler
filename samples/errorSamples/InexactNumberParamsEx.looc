@@ -27,5 +27,4 @@ var n : int;
 var res : int;
 n := 3;
 m := new Math;
-res := m.pow(3);
-
+res := m.pow(3); // 1 param au lieu de 2

@@ -14,18 +14,18 @@ class Animal = (
 
 class Dog inherit Animal = (
 
+	method iLVersusTRS(canadiens: int, irlandais: int): int {
+		return (canadiens < irlandais);
+	}
 	method whoami() {
 		do super.setName("Rox", "Les TRS sont des gros nazes");
 		write "My name is ";
 		write name;
-		write this.whoami();
 		write this.iLVersusTRS(42, 999);
 		write ". And I am a dog.";
 	}
 
-	method iLVersusTRS(canadiens: int, irlandais: int): int {
-		return (canadiens < irlandais);
-	}
+
 )
 
 class Cat inherit Animal =

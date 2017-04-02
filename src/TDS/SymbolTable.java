@@ -1,8 +1,11 @@
 package TDS;
 
 import exceptions.*;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /** A symbol table is described by a Hashmap.
@@ -37,6 +40,9 @@ public class SymbolTable {
 	private int numberBlock = 0;
 	private final String name;
 
+	private HashMap<String, SymbolTable> classList;
+
+
 	/**
 	 * Default constructor
 	 */
@@ -46,6 +52,7 @@ public class SymbolTable {
 		this.imbricationLevel = 0;
 		this.father = null;
 		this.name = "ROOT";
+		this.classList = new HashMap<>();
 	}
 
 	/**
@@ -58,6 +65,7 @@ public class SymbolTable {
         this.imbricationLevel = imbricationLevel;
         this.father = father;
         this.name = name;
+		this.classList = new HashMap<>();
     }
 
 	/**
@@ -217,4 +225,30 @@ public class SymbolTable {
 	    }
     	return s;
     }
+
+	public SymbolTable findClass(String name) throws UndeclaredClassException {
+		System.out.println("want to find " + name + " in " + this.name);
+		if(name.equals("Greater"))
+			System.out.println("coucou");
+		classList.forEach((k,v)->System.out.println("Key: " + k ));
+		SymbolTable res = null;
+		if (classList.containsKey(name))
+			return classList.get(name);
+		else {
+			for(String key: classList.keySet()) {
+				res = classList.get(key).findClass(name);
+			}
+		}
+		return res;
+	}
+
+
+
+	public SymbolTable putClass(String symbol, SymbolTable tds) {  return this.classList.put(symbol, tds);  }
+
+	public SymbolTable getClass(String symbol) {
+		return this.classList.get(symbol);
+	}
+
+
 }

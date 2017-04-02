@@ -1,3 +1,4 @@
+//Ligne 9 : type de retour de la méthode ne correspond pas au type de la valeur retournée
 class Math =
 (
 	method pow(a : int, b : int) : string {
@@ -5,7 +6,7 @@ class Math =
 
 		retval := 1;
 
-		return (1);
+		return (retval);        //retval est du type int, le type de retour de pow est string
 	}
 
 )

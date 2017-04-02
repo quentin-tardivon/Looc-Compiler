@@ -1,3 +1,4 @@
+//Ligne 39 : classe non définie
 class Animal = (
 
     var name : string ;
@@ -35,7 +36,7 @@ var a1 : Animal;
 
 var a2 : Animal;
 
-a1 := new Michel;
+a1 := new Michel;       //La classe Michel n'est pas définie
 
 
 
