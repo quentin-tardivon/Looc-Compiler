@@ -100,7 +100,7 @@ public class Util {
 
             // Check Number of params
             if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
-                throw new IncorrectParamsMethodException(null, null, called);
+                throw new InexactParamsNumberException(null, null, called);
         }
     }
 
