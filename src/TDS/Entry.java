@@ -25,6 +25,8 @@ public abstract class Entry {
 	public static final String FOR = 			"For";
 	public static final String ANONYMOUS_BLOC = "Anonymous Block";
 	public static final String NIL = 			"Nil";
+	public static final String ORDER = 			"Order";
+
 
 
 	protected final HashMap<String, String> info;

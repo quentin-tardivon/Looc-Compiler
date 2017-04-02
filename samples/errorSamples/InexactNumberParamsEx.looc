@@ -1,4 +1,4 @@
-//pow n'est pas appelé avec les bons paramètres
+//pow n'est pas appelé avec les bons paramètres (nombre)
 //ligne 27
 
 class Math =
@@ -27,5 +27,5 @@ var n : int;
 var res : int;
 n := 3;
 m := new Math;
-res := m.pow(3,3,3);
+res := m.pow(3);
 
