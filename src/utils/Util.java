@@ -59,8 +59,12 @@ public class Util {
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
             return Keywords.STRING;
-        else
-            return tds.getInfo(s).get(Entry.TYPE);
+        else {
+            if ( tds.getInfo(s)==null) {
+                throw new UndeclaredVariableException(null,null,s);}
+            else
+                return tds.getInfo(s).get(Entry.TYPE);
+        }
     }
 
     public static void testReturnType(String expected, String real) throws Exception {

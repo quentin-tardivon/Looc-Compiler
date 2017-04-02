@@ -2,7 +2,7 @@ class Jukebox = (
 
     var price: int;
     var playing: int;
-    var loaded: int;
+    var loaded: string;
 
     method init() {
         price := 2;
@@ -14,7 +14,7 @@ class Jukebox = (
         return (money >= price);
     }
 
-    method loadVinyl(title: String) {
+    method loadVinyl(title: string) {
         loaded := title;
     }
 
