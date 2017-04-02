@@ -37,7 +37,8 @@ public class TestLooc {
 		treeParser.parseCommonTreeParser(tree);
 
 		System.out.print(treeParser.toString() + "\n");
-		treeParser.constructTDS(tree, new SymbolTable());
+		SymbolTable tds = new SymbolTable();
+		treeParser.constructTDS(tree, tds, tds);
 		System.out.println(treeParser.getRootSymbolTable().toString());
 
 

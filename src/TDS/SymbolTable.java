@@ -1,8 +1,11 @@
 package TDS;
 
 import exceptions.*;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /** A symbol table is described by a Hashmap.
@@ -37,6 +40,9 @@ public class SymbolTable {
 	private int numberBlock = 0;
 	private final String name;
 
+	private HashMap<String, SymbolTable> classList;
+
+
 	/**
 	 * Default constructor
 	 */
@@ -46,6 +52,7 @@ public class SymbolTable {
 		this.imbricationLevel = 0;
 		this.father = null;
 		this.name = "ROOT";
+		this.classList = new HashMap<>();
 	}
 
 	/**
@@ -217,4 +224,18 @@ public class SymbolTable {
 	    }
     	return s;
     }
+
+	public SymbolTable findClass(String name) throws UndeclaredClassException {
+		if (classList.containsKey(name)) {
+			return classList.get(name);
+		}
+		else {
+			for(String key: classList.keySet()) {
+				return classList.get(key).findClass(name);
+			}
+		}
+		throw new UndeclaredClassException(null, null, name);
+	}
+
+
 }

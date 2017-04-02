@@ -164,11 +164,11 @@ TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
 
 NEW Exception :
 
-1) MismatchTypeException
-2) UndeclaredVariableException
-3) UndeclaredClassException
-4) UndeclaredMethodException
-5) AlreadyDeclaredException
+1) MismatchTypeException (ok)
+2) UndeclaredVariableException  (ok)
+3) UndeclaredClassException (ok)
+4) UndeclaredMethodException (ok)
+5) AlreadyDeclaredException (ok)
 6) InexactParametersException
 7) ReturnValueTypeMismatchException
 8) MismatchOperationException
@@ -176,7 +176,7 @@ NEW Exception :
 10) StringOperationException
 11) UndefinedInheritanceException
 12) InexactUsesOfDoStatement
-13) NonVoidMethodInDoException
+13) NonVoidMethodInDoException  (ok)
 14) InexactUsesofReadException
 15) InexactUsesofWriteException
 16) VarNotInitialisedException => var a; var b; b=a;
@@ -189,7 +189,8 @@ others :
 19)AlreadyDeclaredException
 20)WrongParameterOrder
 
-
+TODO: Passer les méthodes et les attributs dans les classes hérité
+TODO: Gérer la surcharge des méthodes
 Auteurs
 ==
 

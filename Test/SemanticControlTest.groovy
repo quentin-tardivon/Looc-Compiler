@@ -9,10 +9,6 @@ import factories.CommonTreeParserFactory
 class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser
 
-    void testMismatchTypeException() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc")
-    }
-
     void testAlreadyDeclaredException() {
         shouldFail(SymbolAlreadyDeclaredException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AlreadyDeclaredEx.looc")
@@ -52,14 +48,30 @@ class SemanticControlTest extends GroovyTestCase {
     void testMismatchOperationException() {
         shouldFail(MismatchOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
         }
     }
 
     void testNotVoidMethod() {
         shouldFail(MethodNonVoidException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc")
-            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
+    void testUndeclaredMethEx() {
+        shouldFail(UndeclaredMethodException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredMethEx.looc")
+        }
+    }
+
+    void testReadUsageEx() {
+        shouldFail(ReadUsageException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReadUsageEx.looc")
+        }
+    }
+
+    void testWriteUsageEx() {
+        shouldFail(WriteUsageException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/WriteUsageEx.looc")
         }
     }
 

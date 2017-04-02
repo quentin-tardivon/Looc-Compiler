@@ -1,6 +1,3 @@
-// la méthode michel n'est pas déclarée
-// ligne 25
-
 class Math =
 (
 	method pow(a : int, b : int) : int {
@@ -23,7 +20,5 @@ class Math =
 
 
 var m : Math;
-var h : int;
 m := new Math;
-
-h := m.michel();
+read m;

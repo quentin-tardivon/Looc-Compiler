@@ -59,8 +59,12 @@ public class Util {
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
             return Keywords.STRING;
-        else
-            return tds.getInfo(s).get(Entry.TYPE);
+        else if (tds.getInfo(s) != null) {
+	        return tds.getInfo(s).get(Entry.TYPE);
+        }
+	    else {
+        	throw new UndeclaredVariableException(null, null, s); //TODO Vérifier que c'est toujours une variable
+        }
     }
 
     public static void testReturnType(String expected, String real) throws Exception {
@@ -68,6 +72,18 @@ public class Util {
             throw new ReturnValueTypeMismatchException(expected, real);
 
     }
+
+    public static void testReadUse(String readingType) throws Exception{
+		if (!"int".equals(readingType)) {
+			throw new ReadUsageException(null, null, readingType);
+		}
+    }
+
+	public static void testWriteUse(String readingType) throws Exception{
+		if (!("int".equals(readingType) || "string".equals(readingType))) {
+			throw new WriteUsageException(null, null, readingType);
+		}
+	}
 
     public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
         // Test if the method is declared
