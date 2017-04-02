@@ -102,6 +102,12 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
+    void testUninitializedException() {
+        shouldFail (VarUninitializedException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/VarUninitializedException.looc")
+        }
+    }
+
 
 
 }

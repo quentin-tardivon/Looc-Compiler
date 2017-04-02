@@ -5,6 +5,7 @@ import TDS.SymbolTable;
 import TDS.entries.*;
 import TDS.entries.Class;
 import exceptions.MismatchTypeException;
+import exceptions.VarUninitializedException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
@@ -96,7 +97,9 @@ public class CommonTreeParser {
 				break;
 
 			case "VAR_DEC":
-				tds.put(tree.getChild(0).getText(), new Variable(tree.getChild(1).getText()));
+				Variable var = new Variable(tree.getChild(1).getText());
+				var.setInit(false);
+				tds.put(tree.getChild(0).getText(), var);
 				break;
 
 			case "CLASS_DEC":
@@ -194,6 +197,8 @@ public class CommonTreeParser {
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "for" + nb);
 				tds.put("for" +nb , new ForLoop(), "For");
 				tds.putLink("for" + nb, newtds);
+				//TODO Further testing on for loop
+				tds.getInfo(tree.getChild(0).getText()).setInit(true);
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
@@ -274,6 +279,7 @@ public class CommonTreeParser {
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
 
+		tds.getInfo(tree.getChild(0).getText()).setInit(true);
 		switch (tree.getChild(1).getText()) {
 			case Keywords.NEW:
 				// Check if the class has been declared previously
@@ -284,8 +290,9 @@ public class CommonTreeParser {
 				rightNodeType = tree.getChild(1).getChild(0).toString();
 				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
 					if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-							throw new MismatchTypeException(null,null,rightNodeType,entry.get(Entry.TYPE),entry.toString());
+							throw new MismatchTypeException(null, null, rightNodeType, entry.get(Entry.TYPE), entry.toString());
 					}
+
 				}
 				break;
 			case Keywords.NIL:

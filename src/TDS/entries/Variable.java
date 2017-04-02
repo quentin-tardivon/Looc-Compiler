@@ -22,4 +22,7 @@ public class Variable extends Entry {
 		super(name);
 		this.put(Entry.TYPE, type);
 	}
+
 }
+
+

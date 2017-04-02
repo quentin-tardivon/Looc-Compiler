@@ -27,7 +27,7 @@ public abstract class Entry {
 	public static final String NIL = 			"Nil";
 	public static final String ORDER = 			"Order";
 
-
+	private boolean init = true;
 
 	protected final HashMap<String, String> info;
 	protected final String name;
@@ -62,5 +62,14 @@ public abstract class Entry {
 		Entry entry = (Entry) o;
 		return (info != null ? info.equals(entry.info) : entry.info == null) && (name != null ? name.equals(entry.name) : entry.name == null);
 	}
+
+	public boolean isInit() {
+		return init;
+	}
+
+	public void setInit(boolean init) {
+		this.init = init;
+	}
+
 
 }

@@ -65,6 +65,7 @@ public class Util {
         if (s.matches("\".*\""))
             return Keywords.STRING;
         else if (tds.getInfo(s) != null) {
+	        isInit(s,tds, tds);
 	        return tds.getInfo(s).get(Entry.TYPE);
         }
 	    else {
@@ -276,5 +277,11 @@ public class Util {
             default:
                 return Util.getType(node.getText(),tds);
         }
+    }
+
+    public static void isInit(String symbol, SymbolTable tds, SymbolTable rootTDS) throws Exception{
+    	if (!tds.getInfo(symbol).isInit()) {
+    		throw new VarUninitializedException(null, null, symbol);
+	    }
     }
 }
