@@ -134,8 +134,8 @@ public class Util {
 		throw new UndeclaredInheritanceException(null, null, className);
 	}
 
-	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1, String idf2) throws Exception {
-        throw new MismatchTypeException(filename,node,type1,type2,idf1,idf2);
+	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1) throws Exception {
+        throw new MismatchTypeException(filename,node,type1,type2,idf1);
     }
 
     public static String callReturnType(Tree node, SymbolTable tds)throws Exception{
@@ -176,7 +176,6 @@ public class Util {
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
             case "DIV":
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
-
             case ">":
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
             case ">=":
