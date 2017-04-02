@@ -59,8 +59,12 @@ public class Util {
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
             return Keywords.STRING;
-        else
-            return tds.getInfo(s).get(Entry.TYPE);
+        else {
+            if ( tds.getInfo(s)==null) {
+                throw new UndeclaredVariableException(null,null,s);}
+            else
+                return tds.getInfo(s).get(Entry.TYPE);
+        }
     }
 
     public static void testReturnType(String expected, String real) throws Exception {
@@ -96,7 +100,7 @@ public class Util {
 
             // Check Number of params
             if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
-                throw new IncorrectParamsMethodException(null, null, called);
+                throw new InexactParamsNumberException(null, null, called);
         }
     }
 
