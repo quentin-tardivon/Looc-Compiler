@@ -7,7 +7,8 @@ import core.LoocParser;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
+import org.antlr.runtime.tree.DOTTreeGenerator;
+import org.antlr.stringtemplate.StringTemplate;
 
 import java.io.FileInputStream;
 

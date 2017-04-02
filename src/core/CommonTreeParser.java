@@ -4,7 +4,7 @@ import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.*;
 import TDS.entries.Class;
-import exceptions.UndeclaredMethodException;
+import exceptions.MismatchTypeException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
@@ -211,9 +211,11 @@ public class CommonTreeParser {
 				tds.getInfo(tree.getChild(1).getText());*/
 				break;
 
-			case "RETURN"://TODO : regarder return 1, et passer par getInfo ou autre ?
+			case "RETURN":
 				String realV = Util.subTreeType(tree.getChild(0), tds);
+				System.out.println("real value :"+realV);
 				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
+				System.out.println("expected value :"+expectedV);
 				Util.testReturnType(expectedV,realV);
 				break;
 
@@ -257,6 +259,7 @@ public class CommonTreeParser {
 	 */
 	private void testAffectation(Tree tree, SymbolTable tds) throws Exception {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
+		String rightNodeType;
 
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
@@ -266,16 +269,29 @@ public class CommonTreeParser {
 				// Check if the class has been declared previously
 				if (tds.getInfo(tree.getChild(1).getChild(0).getText()) == null)
 					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
+
+				//TODO : rightNodeType dans le cas de l'héritage , ici seul le cas sans héritage est testé
+				//System.out.println("case new : "+tree.getChild(1).getChild(0).getText());
+				rightNodeType = tree.getChild(1).getChild(0).toString();
 				break;
 			case Keywords.NIL:
 				entry.put(Entry.NIL, "true");
+				rightNodeType="nil";
 				break;
 			case "CALL":
 				Util.testCall(tree.getChild(1), tds);
 				break;
 			default:
-				Util.subTreeType(tree.getChild(1), tds);
+				rightNodeType = Util.subTreeType(tree.getChild(1), tds);
+
 		}
+
+		if (!entry.get(Entry.TYPE).equals(rightNodeType)){
+			if(!rightNodeType.equals("nil"))
+				throw new MismatchTypeException(null,null,entry.get(Entry.TYPE),rightNodeType,entry.toString());
+		}
+
+
 
 				/*
 		//UndefinedVariableException

@@ -1,7 +1,6 @@
-// La variable a n'est pas déclarée!
-// ligne 6
+
 
 var n : string;
 var a : string;
 
-n := n + a;
+n := "bb" - "bb";
