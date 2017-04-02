@@ -1,3 +1,4 @@
+import TDS.SymbolTable;
 import core.CommonTreeParser;
 import factories.CommonTreeParserFactory;
 
@@ -12,6 +13,11 @@ import factories.CommonTreeParserFactory;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-        CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc");
+        CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3.looc");
+
+
+	    SymbolTable root = new SymbolTable();
+	    SymbolTable comp = new SymbolTable();
+	    //root.putClass("Comparator")
     }
 }

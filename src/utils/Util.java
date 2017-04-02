@@ -5,6 +5,7 @@ import TDS.SymbolTable;
 import core.Keywords;
 import exceptions.*;
 import org.antlr.runtime.tree.Tree;
+import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 
 /**
@@ -59,11 +60,12 @@ public class Util {
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
             return Keywords.STRING;
-        else {
-            if ( tds.getInfo(s)==null) {
-                throw new UndeclaredVariableException(null,null,s);}
-            else
-                return tds.getInfo(s).get(Entry.TYPE);
+        else if (tds.getInfo(s) != null) {
+	        return tds.getInfo(s).get(Entry.TYPE);
+        }
+	    else {
+        	throw new UndeclaredVariableException(null, null, s); //TODO Vérifier que c'est toujours une variable
+
         }
     }
 
@@ -73,33 +75,44 @@ public class Util {
 
     }
 
-    public static void testDo(Tree doChild,SymbolTable tds) throws Exception {
 
-        if(doChild.getText().equals("CALL")) {
-            // Test if the method is declared
-            Util.testCall(doChild, tds);
-
-            // Test if the method is void
-            String called = doChild.getChild(0).getText();
-            String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
-            SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds);
-            if (symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null)
-                throw new MethodNonVoidException(null, null, called);
-        }
-        else throw new InexactUsesOfDoException(null,null,doChild.getText());
-
+    public static void testReadUse(String readingType) throws Exception{
+		if (!"int".equals(readingType)) {
+			throw new ReadUsageException(null, null, readingType);
+		}
     }
 
-    public static void testCall(Tree callNode,SymbolTable tds) throws Exception {
+	public static void testWriteUse(String readingType) throws Exception{
+		if (!("int".equals(readingType) || "string".equals(readingType))) {
+			throw new WriteUsageException(null, null, readingType);
+		}
+	}
+
+    public static void testDo(Tree doChild,SymbolTable tds,SymbolTable rootTDS) throws Exception {
+        // Test if the method is declared
+        Util.testCall(doChild, tds, rootTDS);
+
+        // Test if the method is void
+        String called = doChild.getChild(0).getText();
+        String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
+        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
+        if(symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null)
+            throw new MethodNonVoidException(null, null, called);
+
+        else throw new InexactUsesOfDoException(null,null,doChild.getText());
+    }
+
+    public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
         if(!(callNode.getChildCount() >= 2 && callNode.getChildCount() <= 3))
             throw new InexactDoCallException(null,null,callNode.getText());
         else {
             // Test the receiver: this / super / idf
             String receiver = callNode.getChild(callNode.getChildCount() - 1).getText();
             String called = callNode.getChild(0).getText();
-            SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds);
+            SymbolTable symbolTableReceiver = getSymbolTable(receiver, tds, rootTDS);
             int actualNbParams = callNode.getChildCount() == 3 ? callNode.getChild(1).getChildCount() : 0;
             // Check if method exists
+
             if(symbolTableReceiver.get(called) == null || !symbolTableReceiver.get(called).getName().equals(Entry.METHOD))
                 throw new UndeclaredMethodException(null, null, called);
 
@@ -109,10 +122,11 @@ public class Util {
         }
     }
 
-    private static String getTypeReturnByMethod(Tree node, SymbolTable tds) throws Exception {
+    private static String getTypeReturnByMethod(Tree node, SymbolTable tds,SymbolTable rootTDS) throws Exception {
         String receiver = node.getChild(node.getChildCount() - 1).getText();
         String called = node.getChild(0).getText();
-        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds);
+        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
+
         return symbolTableReceiver.get(called).get(Entry.RETURN_TYPE);
     }
 
@@ -147,8 +161,8 @@ public class Util {
         throw new MismatchTypeException(filename,node,type1,type2,idf1);
     }
 
-    public static String callReturnType(Tree node, SymbolTable tds)throws Exception{
-        return Util.subTreeType(node, tds);
+    public static String callReturnType(Tree node, SymbolTable tds, SymbolTable rootTDS)throws Exception{
+        return Util.subTreeType(node, tds, rootTDS);
     }
 
     /**
@@ -160,52 +174,54 @@ public class Util {
      *          // getSymbolTable(a, currentTDS) => returns the Symbol Table of Animal class
      *
      */
-    private static SymbolTable getSymbolTable(String receiver, SymbolTable currentTDS) throws Exception {
+    private static SymbolTable getSymbolTable(String receiver, SymbolTable currentTDS, SymbolTable rootTDS) throws Exception {
         switch (receiver) {
             case Keywords.THIS:
                 return currentTDS.getFather();
             case Keywords.SUPER:
                 String inheritedClass = currentTDS.getFather().getFather().get(currentTDS.getFather().getName()).get(Entry.INHERIT);
-                return currentTDS.getFather().getFather().getLink(inheritedClass);
+                return rootTDS.findClass(inheritedClass);
             default:
                 Entry e = currentTDS.getInfo(receiver);
                 if(e == null || !(e.getName().equals(Entry.VARIABLE)))
                     throw new UndeclaredVariableException(null,null, receiver);
-                return currentTDS.getLinkRecursive(e.get(Entry.TYPE));
+                return rootTDS.findClass(e.get(Entry.TYPE));
         }
     }
 
-    public static String subTreeType(Tree node,SymbolTable tds) throws Exception {
+
+
+	public static String subTreeType(Tree node,SymbolTable tds, SymbolTable rootTDS) throws Exception {
         switch (node.getText()) {
             case "PLUS":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "DIFF":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "MUL":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "DIV":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case ">":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case ">=":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "<":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "<=":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "==":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case "!=":
-                return Util.testTypeOper(subTreeType(node.getChild(0),tds),subTreeType(node.getChild(1),tds));
+                return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
             case Keywords.NEW:
                 return node.getChild(0).getText();
             case Keywords.THIS:
-                return Util.getSymbolTable(node.getText(), tds).getName();
+                return Util.getSymbolTable(node.getText(), tds, rootTDS).getName();
             case "CALL":
-                Util.testCall(node, tds);
-                return Util.getTypeReturnByMethod(node, tds);
+                Util.testCall(node, tds, rootTDS);
+                return Util.getTypeReturnByMethod(node, tds, rootTDS);
             case "-":
-                return Util.subTreeType(node.getChild(0), tds);
+                return Util.subTreeType(node.getChild(0), tds, rootTDS);
             case Keywords.NIL:
                 return Keywords.NIL;
             default:
