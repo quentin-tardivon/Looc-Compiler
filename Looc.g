@@ -106,7 +106,7 @@ atom: INT
 	| '(' expression ')' -> expression;
 
 
-call	: '.' IDF '('(expression(','expression)*)?')' -> ^(CALL IDF ^(EFFECTIVE_PARAMS (expression(expression)*)?)?);
+call	: '.' IDF '('(expression(','expression)*)?')' -> ^(CALL IDF (^(EFFECTIVE_PARAMS (expression(expression)*)?))?);
 
 print:		'write' expression ';' -> ^(WRITE expression);
 
