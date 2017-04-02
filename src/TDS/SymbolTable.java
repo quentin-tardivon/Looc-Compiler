@@ -226,9 +226,7 @@ public class SymbolTable {
     	return s;
     }
 
-	public SymbolTable findClass(String name) throws UndeclaredClassException {
-		//System.out.println("want to find " + name + " in " + this.name);
-
+	public SymbolTable findClass(String name) {
 		SymbolTable res = null;
 		if (classList.containsKey(name))
 			return classList.get(name);

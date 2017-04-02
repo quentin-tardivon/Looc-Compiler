@@ -111,9 +111,7 @@ public class Util {
 	}
 
     public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
-        if(!(callNode.getChildCount() >= 2 && callNode.getChildCount() <= 3))
-            throw new InexactDoCallException(null,null,callNode.getText());
-        else {
+
             // Test the receiver: this / super / idf
             String receiver = callNode.getChild(callNode.getChildCount() - 1).getText();
             String called = callNode.getChild(0).getText();
@@ -134,11 +132,12 @@ public class Util {
 
             // Check the Actualparams type
             for(int i=0; i<actualNbParams; i++){
-                if(!Util.getType(callNode.getChild(1).getChild(i).getText(),tds).equals(list.get(i).get(Entry.TYPE))){
+	            Tree effectiveParam = callNode.getChild(1).getChild(i);
+                if(!Util.subTreeType(effectiveParam, tds, rootTDS).equals(list.get(i).get(Entry.TYPE))){
                     throw new ParameterTypeMismatchException(null,null,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
                 }
             }
-        }
+
     }
 
 
@@ -203,6 +202,18 @@ public class Util {
         return Util.subTreeType(node, tds, rootTDS);
     }
 
+    public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws Exception {
+
+    	SymbolTable leftTDS = rootTDS.findClass(nodeTypeLeft);
+    	if (leftTDS == null) {
+    		return false;
+	    }
+	    else {
+		    return  leftTDS.findClass(nodeTypeRight) != null;
+	    }
+
+
+    }
     /**
      * This method will find the appropriate Symbol depending on the type of the receiver (idf , this or super in our case).
      *

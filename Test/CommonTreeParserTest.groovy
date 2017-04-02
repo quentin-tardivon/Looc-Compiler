@@ -53,13 +53,13 @@ class CommonTreeParserTest extends GroovyTestCase {
         assertEquals(treeParser.tds.findClass("Animal").get("name"), EntryFactory.createStringVariable())
         assertEquals(treeParser.tds.findClass("Animal").get("setName"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Animal").getLink("setName").get("n"), EntryFactory.createStringParameter())
-        assertEquals(treeParser.tds.get("Dog"), EntryFactory.createInheritClass("Dog", "Animal"))
+        assertEquals(treeParser.tds.findClass("Animal").get("Dog"), EntryFactory.createInheritClass("Dog", "Animal"))
         assertEquals(treeParser.tds.findClass("Dog").get("whoami"), EntryFactory.createMethod())
-        assertEquals(treeParser.tds.get("Cat"), EntryFactory.createInheritClass("Cat", "Animal"))
+        assertEquals(treeParser.tds.findClass("Animal").get("Cat"), EntryFactory.createInheritClass("Cat", "Animal"))
         assertEquals(treeParser.tds.findClass("Cat").get("whoami"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.get("a1"), EntryFactory.createVariable("Animal"))
         assertEquals(treeParser.tds.get("a2"), EntryFactory.createVariable("Animal"))
-        assertEquals(treeParser.tds.get("Cat").get(Entry.INHERIT), "Animal")
+        assertEquals(treeParser.tds.findClass("Animal").get("Cat").get(Entry.INHERIT), "Animal")
     }
 
 
