@@ -74,7 +74,7 @@ Semantic controls :
 5) AlreadyDeclaredException (OK)
 6) InexactNumberParametersException (OK)
 7) ReturnValueTypeMismatchException (OK)
-8) MismatchOperationException (WOP -> marche pas avec une operation sur la valeur de retour de méthode)
+8) MismatchOperationException (OK)
 9) InheritanceTypeMismatchException (TODO)
 10) StringOperationException (OK)
 11) UndefinedInheritanceException (OK)
@@ -83,15 +83,16 @@ Semantic controls :
 14) InexactUsesofReadException (TODO)
 15) InexactUsesofWriteException (TODO)
 16) ParameterTypeMismatchException (TODO)
+17) ForbiddenVariableException (TODO)
 
 others :
 
 
-17)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
-18)MissingReturn
-19)NeverUsedException
-20)WrongParameterOrder
-21)VarNotInitialisedException => var a; var b; b=a;
+18)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
+19)MissingReturn
+20)NeverUsedException
+21)WrongParameterOrder
+22)VarNotInitialisedException => var a; var b; b=a;
 
 
 Auteurs
