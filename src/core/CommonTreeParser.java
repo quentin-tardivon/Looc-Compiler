@@ -92,7 +92,7 @@ public class CommonTreeParser {
 				break;
 
 			case "FORMAL_PARAM":
-				tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText()));
+				tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
 				break;
 
 			case "VAR_DEC":
@@ -264,9 +264,12 @@ public class CommonTreeParser {
 	 * @param tds
 	 * @throws Exception
 	 */
+
 	private void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
 		String rightNodeType= null;
+
+
 
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
@@ -334,8 +337,7 @@ public class CommonTreeParser {
 						tree.getChild(0).getText());
 
 
-		} //TODO : implementer case : CALL dans subTreeType et testType
-		//TODO : Probleme lors d'une affectation avec nil (voir Level7 dans les tests):    a := nil;
+		}
 		else if(tree.getChild(1).getText().equals("call")) {
 			if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
 				Util.mismatchType(this.filename, tree.getChild(1),

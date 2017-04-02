@@ -2,10 +2,14 @@ package utils;
 
 import TDS.Entry;
 import TDS.SymbolTable;
+import TDS.entries.Parameter;
 import core.Keywords;
 import exceptions.*;
 import org.antlr.runtime.tree.Tree;
 import sun.jvm.hotspot.debugger.cdbg.Sym;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 
 /**
@@ -120,11 +124,41 @@ public class Util {
             if(symbolTableReceiver.get(called) == null || !symbolTableReceiver.get(called).getName().equals(Entry.METHOD))
                 throw new UndeclaredMethodException(null, null, called);
 
+
+            ArrayList<Parameter> list = Util.getParameters(Util.getSymbolTable(receiver,tds,rootTDS).getLink(called));
+            //System.out.println("list"+list);
             // Check Number of params
-            if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
+            if(list.size() != actualNbParams)
                 throw new InexactParamsNumberException(null, null, called);
+
+
+            // Check the Actualparams type
+            for(int i=0; i<actualNbParams; i++){
+                if(!Util.getType(callNode.getChild(1).getChild(i).getText(),tds).equals(list.get(i).get(Entry.TYPE))){
+                    throw new ParameterTypeMismatchException(null,null,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
+                }
+            }
         }
     }
+
+
+    private static ArrayList<Parameter> getParameters(SymbolTable tds){
+        ArrayList<Parameter> list= new ArrayList<>();
+        for(String key: tds.getKeyEntries()) {
+            if(tds.get(key).getName().equals(Entry.PARAMETER))
+                list.add((Parameter)tds.get(key));
+        }
+        list.sort(new Comparator<Parameter>() {
+            @Override
+            public int compare(Parameter o1, Parameter o2) {
+                return o1.getOrder() - o2.getOrder();
+            }
+        });
+        return list;
+
+    }
+
+
 
     private static String getTypeReturnByMethod(Tree node, SymbolTable tds,SymbolTable rootTDS) throws Exception {
         String receiver = node.getChild(node.getChildCount() - 1).getText();
