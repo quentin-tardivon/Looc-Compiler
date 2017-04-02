@@ -189,18 +189,17 @@ Semantic controls :
 6) InexactNumberParametersException (OK)
 7) ReturnValueTypeMismatchException (OK)
 8) MismatchOperationException (OK)
-9) InheritanceTypeMismatchException (TODO)
+9) InheritanceTypeMismatchException (OK)
 10) StringOperationException (OK)
 11) UndefinedInheritanceException (OK)
 12) InexactUsesOfDoStatement (TODO)
 13) NonVoidMethodInDoException (OK)
-14) InexactUsesofReadException (TODO)
-15) InexactUsesofWriteException (TODO)
-16) ParameterTypeMismatchException (TODO)
-17) ForbiddenVariableException (TODO)
+14) InexactUsesofReadException (OK)
+15) InexactUsesofWriteException (OK)
+16) ParameterTypeMismatchException (OK)
+
 
 others :
-
 
 18)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
 19)MissingReturn

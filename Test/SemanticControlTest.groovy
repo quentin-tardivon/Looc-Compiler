@@ -102,12 +102,6 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
-    void testInheritanceTypeMismatchException() {
-        shouldFail(InheritanceTypeMismatchException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InheritanceTypeMismatchEx.looc")
 
-
-        }
-    }
 
 }
