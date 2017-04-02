@@ -92,7 +92,7 @@ public class CommonTreeParser {
 				break;
 
 			case "FORMAL_PARAM":
-				tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText()));
+				tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
 				break;
 
 			case "VAR_DEC":
@@ -264,9 +264,12 @@ public class CommonTreeParser {
 	 * @param tds
 	 * @throws Exception
 	 */
+
 	private void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
 		String rightNodeType= null;
+
+
 
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
@@ -278,9 +281,12 @@ public class CommonTreeParser {
 				if (rootTDS.findClass(tree.getChild(1).getChild(0).getText()) == null)
 					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
 
-				//TODO : rightNodeType dans le cas de l'héritage , ici seul le cas sans héritage est testé
-				//System.out.println("case new : "+tree.getChild(1).getChild(0).getText());
 				rightNodeType = tree.getChild(1).getChild(0).toString();
+				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+					if (Util.validInherit(entry.get(Entry.TYPE),rightNodeType, tds)) {
+							throw new MismatchTypeException(null,null,rightNodeType,entry.get(Entry.TYPE),entry.toString());
+					}
+				}
 				break;
 			case Keywords.NIL:
 				entry.put(Entry.NIL, "true");
@@ -294,10 +300,15 @@ public class CommonTreeParser {
 
 		}
 
-		if (!entry.get(Entry.TYPE).equals(rightNodeType)){
-			if(!rightNodeType.equals("nil"))
-				throw new MismatchTypeException(null,null,entry.get(Entry.TYPE),rightNodeType,entry.toString());
+		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+			if(!rightNodeType.equals("nil")) {
+				if (Util.validInherit(entry.get(Entry.TYPE),rightNodeType, tds)) {
+
+					throw new MismatchTypeException(null, null, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+				}
+			}
 		}
+
 
 
 
@@ -326,8 +337,7 @@ public class CommonTreeParser {
 						tree.getChild(0).getText());
 
 
-		} //TODO : implementer case : CALL dans subTreeType et testType
-		//TODO : Probleme lors d'une affectation avec nil (voir Level7 dans les tests):    a := nil;
+		}
 		else if(tree.getChild(1).getText().equals("call")) {
 			if (!Util.testType(entry, Util.subTreeType(tree.getChild(1),tds),tds))
 				Util.mismatchType(this.filename, tree.getChild(1),

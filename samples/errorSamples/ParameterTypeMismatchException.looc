@@ -1,20 +1,15 @@
-//pow n'est pas appelé avec les bons paramètres (nombre)
+//pow n'est pas appelé avec les bons paramètres (type)
 //ligne 27
 
 class Math =
 (
-	method pow(a : int, b : int) : int {
+	method pow(a : string, b : string) : int {
 		var retval : int;
 		var i : int;
-
 		if b == 0 then
 			return (1);
 		fi
 		retval := 1;
-		for i in 1 .. b
-		do
-			retval := retval * a;
-		end
 
 		return (retval);
 	}
@@ -27,4 +22,4 @@ var n : int;
 var res : int;
 n := 3;
 m := new Math;
-res := m.pow(3); // 1 param au lieu de 2
+res := m.pow(3,3);

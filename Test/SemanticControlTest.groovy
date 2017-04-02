@@ -68,6 +68,12 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
+    void testParameterTypeMismatchException() {
+        shouldFail(ParameterTypeMismatchException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ParameterTypeMismatchException.looc")
+        }
+    }
+
 
     void testUndeclaredMethEx() {
         shouldFail(UndeclaredMethodException) {
