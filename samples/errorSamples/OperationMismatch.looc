@@ -1,9 +1,6 @@
-var n : int;
-
-
-class Math =
-(
-	method pow(a : int, b : int) : string {
+// Ligne 25 : Opération entre un entier et une string
+class Math = (
+	method pow(a : int, b : int) : string{
 		var retval : int;
 		var i : int;
 
@@ -16,10 +13,16 @@ class Math =
 			retval := retval * a;
 		end
 
-		return (1);
+		return ("cat");
 	}
-	n := 1 + this.pow(3,3);
+
 
 
 )
+var m : Math;
+var n : int;
+m := new Math;
+n := 1 + m.pow(3,3); //addition d'un int et d'une string
+
+
 

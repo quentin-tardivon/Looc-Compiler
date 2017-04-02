@@ -65,8 +65,6 @@ Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les ide
 
 
 
-Controle sémantiques
-====================
 
 -Une classe ne peut referencer que des classes déjà définies -> class not defined
 
@@ -180,14 +178,34 @@ NEW Exception :
 14) InexactUsesofReadException
 15) InexactUsesofWriteException
 16) VarNotInitialisedException => var a; var b; b=a;
+=======
+Semantic controls :
+
+1) MismatchTypeException (OK)
+2) UndeclaredVariableException (OK)
+3) UndeclaredClassException (OK)
+4) UndeclaredMethodException (OK)
+5) AlreadyDeclaredException (OK)
+6) InexactNumberParametersException (OK)
+7) ReturnValueTypeMismatchException (OK)
+8) MismatchOperationException (OK)
+9) InheritanceTypeMismatchException (TODO)
+10) StringOperationException (OK)
+11) UndefinedInheritanceException (OK)
+12) InexactUsesOfDoStatement (TODO)
+13) NonVoidMethodInDoException (OK)
+14) InexactUsesofReadException (TODO)
+15) InexactUsesofWriteException (TODO)
+16) ParameterTypeMismatchException (TODO)
 
 others :
 
 
 17)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
 18)MissingReturn
-19)AlreadyDeclaredException
+19)NeverUsedException
 20)WrongParameterOrder
+21)VarNotInitialisedException => var a; var b; b=a;
 
 TODO: Passer les méthodes et les attributs dans les classes hérité
 TODO: Gérer la surcharge des méthodes

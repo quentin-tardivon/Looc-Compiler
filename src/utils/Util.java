@@ -65,6 +65,7 @@ public class Util {
         }
 	    else {
         	throw new UndeclaredVariableException(null, null, s); //TODO Vérifier que c'est toujours une variable
+
         }
     }
 
@@ -73,6 +74,7 @@ public class Util {
             throw new ReturnValueTypeMismatchException(expected, real);
 
     }
+
 
     public static void testReadUse(String readingType) throws Exception{
 		if (!"int".equals(readingType)) {
@@ -96,6 +98,8 @@ public class Util {
         SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
         if(symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null)
             throw new MethodNonVoidException(null, null, called);
+
+        else throw new InexactUsesOfDoException(null,null,doChild.getText());
     }
 
     public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
@@ -114,7 +118,7 @@ public class Util {
 
             // Check Number of params
             if(Util.countParameters(symbolTableReceiver.getLink(called)) != actualNbParams)
-                throw new IncorrectParamsMethodException(null, null, called);
+                throw new InexactParamsNumberException(null, null, called);
         }
     }
 

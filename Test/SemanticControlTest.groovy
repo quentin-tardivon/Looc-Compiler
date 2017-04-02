@@ -1,4 +1,3 @@
-import TDS.SymbolTable
 import core.CommonTreeParser
 import exceptions.*
 import factories.CommonTreeParserFactory
@@ -46,7 +45,7 @@ class SemanticControlTest extends GroovyTestCase {
     }
 
     void testInexactNumberParamsEx() {
-        shouldFail(IncorrectParamsMethodException) {
+        shouldFail(InexactParamsNumberException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
         }
     }
@@ -69,6 +68,7 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
+
     void testUndeclaredMethEx() {
         shouldFail(UndeclaredMethodException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredMethEx.looc")
@@ -84,6 +84,15 @@ class SemanticControlTest extends GroovyTestCase {
     void testWriteUsageEx() {
         shouldFail(WriteUsageException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/WriteUsageEx.looc")
+
+        }
+    }
+
+    void testInexactUsesOfDoException() {
+        shouldFail(InexactUsesOfDoException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactUsesOfDoEx.looc")
+
+
         }
     }
 
