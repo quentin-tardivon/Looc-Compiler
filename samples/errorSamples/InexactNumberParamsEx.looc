@@ -23,8 +23,5 @@ class Math =
 
 
 var m : Math;
-var n : int
-n:=3;
-var res : Math;
 m := new Math;
-res := m.pow(n,n);
+res := m.pow(3,2,2);

@@ -68,11 +68,11 @@ Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les ide
 Semantic controls :
 
 1) MismatchTypeException (OK)
-2) UndeclaredVariableException (WOP -> membre de droite)
+2) UndeclaredVariableException (OK)
 3) UndeclaredClassException (OK)
 4) UndeclaredMethodException (OK)
 5) AlreadyDeclaredException (OK)
-6) InexactParametersException (WOP -> marche pour certains cas, pas d'autres)
+6) InexactNumberParametersException (OK)
 7) ReturnValueTypeMismatchException (OK)
 8) MismatchOperationException (WOP -> marche pas avec une operation sur la valeur de retour de méthode)
 9) InheritanceTypeMismatchException (TODO)
@@ -82,15 +82,16 @@ Semantic controls :
 13) NonVoidMethodInDoException (OK)
 14) InexactUsesofReadException (TODO)
 15) InexactUsesofWriteException (TODO)
-16) VarNotInitialisedException => var a; var b; b=a;(TODO)
+16) ParameterTypeMismatchException (TODO)
 
 others :
 
 
 17)Verifie le contexte lors de l'utilisation de this ou super (uniquement dans la def d'une classe)
 18)MissingReturn
-19)AlreadyDeclaredException
+19)NeverUsedException
 20)WrongParameterOrder
+21)VarNotInitialisedException => var a; var b; b=a;
 
 
 Auteurs

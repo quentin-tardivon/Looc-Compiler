@@ -3,4 +3,4 @@
 
 var a : int;
 
-n := a;
+a := n;
