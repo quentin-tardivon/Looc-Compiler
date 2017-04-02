@@ -24,9 +24,9 @@ public class CommonTreeParserFactory {
 		LoocParser parser = new LoocParser(tokens);
 		CommonTree tree = (CommonTree) parser.program().getTree();
 
-		DOTTreeGenerator gen = new DOTTreeGenerator();
+		/*DOTTreeGenerator gen = new DOTTreeGenerator();
 		StringTemplate st = gen.toDOT(tree);
-		System.out.println(st);
+		System.out.println(st);*/
 
 		CommonTreeParser treeParser = new CommonTreeParser(filename);
 		treeParser.constructTDS(tree, new SymbolTable());
