@@ -24,5 +24,6 @@ class Math =
 
 var m : int;
 var cat : Math;
+cat := new Math;
 m := cat;
-cat := m.pow(2,3);
+

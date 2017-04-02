@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-02 21:31:32
+=======
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-02 21:29:04
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
 
 package core;
 
@@ -242,7 +246,11 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
+<<<<<<< HEAD
             // elements: class_decl, instruction, var_decl
+=======
+            // elements: var_decl, instruction, class_decl
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -687,7 +695,11 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
+<<<<<<< HEAD
             // elements: function_decl, IDF, method_args
+=======
+            // elements: method_args, IDF, function_decl
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -883,7 +895,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: type, var_decl, instruction
+=======
+                    // elements: type, instruction, var_decl
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1001,7 +1017,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: instruction, var_decl
+=======
+                    // elements: var_decl, instruction
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1222,7 +1242,11 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
+<<<<<<< HEAD
             // elements: IDF, type
+=======
+            // elements: type, IDF
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1322,7 +1346,11 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
+<<<<<<< HEAD
             // elements: IDF, type
+=======
+            // elements: type, IDF
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1692,7 +1720,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: IDF, expression
+=======
+                    // elements: expression, IDF
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1791,7 +1823,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: instruction, IDF, expression, expression
+=======
+                    // elements: expression, expression, IDF, instruction
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1953,7 +1989,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: b, expression, a
+=======
+                    // elements: a, b, expression
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2365,7 +2405,11 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
+<<<<<<< HEAD
                     // elements: CLASS, 68
+=======
+                    // elements: 68, CLASS
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2502,7 +2546,11 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
+<<<<<<< HEAD
             	    // elements: mult, operation
+=======
+            	    // elements: operation, mult
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2546,7 +2594,11 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
+<<<<<<< HEAD
             	    // elements: mult, operation
+=======
+            	    // elements: operation, mult
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2692,7 +2744,11 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
+<<<<<<< HEAD
             	    // elements: cmp, multiop
+=======
+            	    // elements: multiop, cmp
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -2736,7 +2792,11 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
+<<<<<<< HEAD
             	    // elements: cmp, multiop
+=======
+            	    // elements: multiop, cmp
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -3322,7 +3382,11 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
+<<<<<<< HEAD
             // elements: expression, IDF, expression
+=======
+            // elements: expression, expression, IDF
+>>>>>>> 7149f0008e4599e840532edd56f558011547069e
             // token labels: 
             // rule labels: retval
             // token list labels: 
