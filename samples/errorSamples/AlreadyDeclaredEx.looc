@@ -2,6 +2,6 @@
 // ligne 4 et 5
 
 var n : int;
-var n : int;
+var n : int; //var n est déja déclarée
 
 n := 10;

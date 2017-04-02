@@ -1,5 +1,5 @@
-// la méthode michel n'est pas déclarée
-// ligne 25
+// Ligne 27 : la méthode michel n'est pas déclarée
+
 
 class Math =
 (
@@ -24,4 +24,4 @@ class Math =
 
 var m : Math;
 m := new Math;
-write m.michel(2, 3);
+write m.michel(2, 3); //La méthode michel n'est pas déclarée

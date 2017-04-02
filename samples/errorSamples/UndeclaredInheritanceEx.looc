@@ -1,3 +1,4 @@
+//Ligne 26 : La parente n'est pas définie
 class Animal = (
 
     var name : string ;
@@ -22,7 +23,7 @@ class Dog inherit Animal = (
 
 )
 
-class Cat inherit Michel = (
+class Cat inherit Michel = (        //La classe Michel n'est pas définie
 
     method whoami () {
 
@@ -34,9 +35,5 @@ class Cat inherit Michel = (
 var a1 : Animal;
 
 var a2 : Animal;
-
-
-
-
 
 a2 := new Cat ;

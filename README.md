@@ -74,7 +74,7 @@ Semantic controls :
 5) AlreadyDeclaredException (OK)
 6) InexactNumberParametersException (OK)
 7) ReturnValueTypeMismatchException (OK)
-8) MismatchOperationException (WOP -> marche pas avec une operation sur la valeur de retour de méthode)
+8) MismatchOperationException (OK)
 9) InheritanceTypeMismatchException (TODO)
 10) StringOperationException (OK)
 11) UndefinedInheritanceException (OK)

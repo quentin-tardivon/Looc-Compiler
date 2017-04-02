@@ -68,4 +68,11 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
+    void testInexactUsesOfDoException() {
+        shouldFail(InexactUsesOfDoException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactUsesOfDoEx.looc")
+
+        }
+    }
+
 }
