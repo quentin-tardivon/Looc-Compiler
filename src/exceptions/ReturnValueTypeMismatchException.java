@@ -1,7 +1,5 @@
 package exceptions;
 
-import org.antlr.runtime.tree.Tree;
-
 /**
  * Created by madmax on 29/03/2017.
  */

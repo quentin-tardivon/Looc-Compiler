@@ -7,6 +7,6 @@ import TDS.Entry;
  */
 public class Else extends Entry {
 	public Else() {
-		super("Else Statement");
+		super(Entry.ELSE);
 	}
 }

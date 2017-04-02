@@ -19,11 +19,11 @@ class Dog inherit Animal = (
 		write "My name is ";
 		write name;
 		write this.whoami();
-		write this.iLVersusTRS("Hipster", "le barbu");
+		write this.iLVersusTRS(42, 999);
 		write ". And I am a dog.";
 	}
 
-	method iLVersusTRS(canadiens: string, irlandais: string) {
+	method iLVersusTRS(canadiens: int, irlandais: int): int {
 		return (canadiens < irlandais);
 	}
 )
@@ -39,8 +39,8 @@ class Cat inherit Animal =
 var a1 : Animal;
 var a2 : Animal;
 a1 := new Dog;
-do 4+3;
+//do 4+3;
 a2 := new Cat;
-do a2.setName("foo");
+do a2.setName("foo", "Et oui Jamy !");
 do a1.whoami();
 do a2.whoami();

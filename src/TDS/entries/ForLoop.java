@@ -7,6 +7,6 @@ import TDS.Entry;
  */
 public class ForLoop extends Entry {
 	public ForLoop() {
-		super("For Loop");
+		super(Entry.FOR);
 	}
 }

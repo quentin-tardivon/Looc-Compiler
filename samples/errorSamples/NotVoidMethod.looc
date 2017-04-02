@@ -1,0 +1,35 @@
+class Jukebox = (
+
+    var price: int;
+    var playing: int;
+    var loaded: int;
+
+    method init() {
+        price := 2;
+        playing := 0;
+        loaded := nil;
+    }
+
+    method enoughMoney(money: int): int {
+        return (money >= price);
+    }
+
+    method loadVinyl(title: String) {
+        loaded := title;
+    }
+
+    /**
+        This method plays the song
+        and returns the amount of change returned by the jukebox.
+    */
+    method play (title: string, insertedCoin: int): int {
+		if this.enoughMoney(insertedCoin) then
+			do this.loadVinyl(title);
+			playing := 1;
+		fi
+    }
+)
+
+var player: Jukebox;
+do player.init();
+do player.play("Sing, Sing, Sing - Benny Goodman", 5);

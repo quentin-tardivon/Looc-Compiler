@@ -4,7 +4,6 @@ options {
 	k=1;
 	output=AST;
 }
-
 tokens{
 	CLASS_DEC;
 	VAR_DEC;
@@ -37,6 +36,15 @@ tokens{
 	BLOCK;
 	VARS;
 	METHODS;
+}
+
+
+@lexer::header {
+package core;
+}
+
+@parser::header {
+package core;
 }
 
 

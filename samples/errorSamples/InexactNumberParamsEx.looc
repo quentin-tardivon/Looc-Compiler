@@ -23,5 +23,6 @@ class Math =
 
 
 var m : Math;
+var res : Math;
 m := new Math;
-write m.pow(3);
+res := m.pow(3);

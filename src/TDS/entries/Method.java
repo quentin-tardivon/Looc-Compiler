@@ -11,12 +11,12 @@ import TDS.Entry;
 public class Method extends Entry {
 
 	public Method() {
-		super("Method");
+		super(Entry.METHOD);
 	}
 
 	public Method(String returnType) {
-		super("Method");
-		this.info.put("returnType", returnType);
+		super(Entry.METHOD);
+		this.info.put(Entry.RETURN_TYPE, returnType);
 
 	}
 }

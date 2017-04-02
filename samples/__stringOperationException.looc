@@ -1,9 +1,0 @@
-// addition de string impossible
-// ligne 8
-
-var a : string;
-var b : string;
-var n : string;
-
-n := a-b;
-

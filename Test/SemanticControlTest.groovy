@@ -1,13 +1,6 @@
 import TDS.SymbolTable
 import core.CommonTreeParser
-import exceptions.MismatchOperationException
-import exceptions.MismatchTypeException
-import exceptions.ReturnValueTypeMismatchException
-import exceptions.StringOperationException
-import exceptions.SymbolAlreadyDeclaredException
-import exceptions.UndeclaredClassException
-import exceptions.UndeclaredInheritanceException
-import exceptions.UndeclaredVariableException
+import exceptions.*
 import factories.CommonTreeParserFactory
 
 /**
@@ -17,29 +10,24 @@ class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser
 
     void testMismatchTypeException() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc");
-
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc")
     }
 
     void testAlreadyDeclaredException() {
         shouldFail(SymbolAlreadyDeclaredException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AlreadyDeclaredEx.looc")
-
-
         }
     }
 
     void testUndeclaredClassEx() {
         shouldFail(UndeclaredClassException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredClassEx.looc")
-
-
         }
     }
 
     void testReturnValTypeMisEx() {
         shouldFail(ReturnValueTypeMismatchException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMisEx.looc")
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMismatchEx.looc")
         }
     }
 
@@ -49,9 +37,30 @@ class SemanticControlTest extends GroovyTestCase {
         }
     }
 
+    void testInexactNumberParamsEx() {
+        shouldFail(IncorrectParamsMethodException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
+        }
+    }
+
     void testUndeclaredInheritanceEx() {
         shouldFail(UndeclaredInheritanceException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredInheritanceEx.looc")
         }
     }
+
+    void testMismatchOperationException() {
+        shouldFail(MismatchOperationException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
+    void testNotVoidMethod() {
+        shouldFail(MethodNonVoidException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc")
+            treeParser.constructTDS(tree, new SymbolTable())
+        }
+    }
+
 }
