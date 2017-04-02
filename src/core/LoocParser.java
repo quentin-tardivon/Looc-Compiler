@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-02 14:19:18
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-02 21:29:26
 
 package core;
 
@@ -242,7 +242,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: var_decl, instruction, class_decl
+            // elements: class_decl, instruction, var_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -687,7 +687,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_args, IDF, function_decl
+            // elements: function_decl, IDF, method_args
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -883,7 +883,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: type, instruction, var_decl
+                    // elements: type, var_decl, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1001,7 +1001,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: var_decl, instruction
+                    // elements: instruction, var_decl
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1222,7 +1222,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: type, IDF
+            // elements: IDF, type
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1322,7 +1322,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: type, IDF
+            // elements: IDF, type
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1692,7 +1692,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, IDF
+                    // elements: IDF, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1791,7 +1791,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, expression, IDF, instruction
+                    // elements: instruction, IDF, expression, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1953,7 +1953,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: a, b, expression
+                    // elements: b, expression, a
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2365,7 +2365,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: 68, CLASS
+                    // elements: CLASS, 68
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2502,7 +2502,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: operation, mult
+            	    // elements: mult, operation
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2546,7 +2546,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: operation, mult
+            	    // elements: mult, operation
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2692,7 +2692,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: multiop, cmp
+            	    // elements: cmp, multiop
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -2736,7 +2736,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: multiop, cmp
+            	    // elements: cmp, multiop
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -3322,7 +3322,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: expression, expression, IDF
+            // elements: expression, IDF, expression
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3342,15 +3342,15 @@ public class LoocParser extends Parser {
                 adaptor.addChild(root_1, stream_IDF.nextNode());
                 // Looc.g:117:66: ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )?
                 if ( stream_expression.hasNext() ) {
-                    // Looc.g:117:66: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
+                    // Looc.g:117:67: ^( EFFECTIVE_PARAMS ( expression ( expression )* )? )
                     {
                     Object root_2 = (Object)adaptor.nil();
                     root_2 = (Object)adaptor.becomeRoot((Object)adaptor.create(EFFECTIVE_PARAMS, "EFFECTIVE_PARAMS"), root_2);
 
-                    // Looc.g:117:85: ( expression ( expression )* )?
+                    // Looc.g:117:86: ( expression ( expression )* )?
                     if ( stream_expression.hasNext()||stream_expression.hasNext() ) {
                         adaptor.addChild(root_2, stream_expression.nextTree());
-                        // Looc.g:117:96: ( expression )*
+                        // Looc.g:117:97: ( expression )*
                         while ( stream_expression.hasNext() ) {
                             adaptor.addChild(root_2, stream_expression.nextTree());
 
@@ -3420,16 +3420,16 @@ public class LoocParser extends Parser {
             // Looc.g:119:6: ( 'write' expression ';' -> ^( WRITE expression ) )
             // Looc.g:119:9: 'write' expression ';'
             {
-            string_literal106=(Token)match(input,76,FOLLOW_76_in_print997);  
+            string_literal106=(Token)match(input,76,FOLLOW_76_in_print999);  
             stream_76.add(string_literal106);
 
-            pushFollow(FOLLOW_expression_in_print999);
+            pushFollow(FOLLOW_expression_in_print1001);
             expression107=expression();
 
             state._fsp--;
 
             stream_expression.add(expression107.getTree());
-            char_literal108=(Token)match(input,55,FOLLOW_55_in_print1001);  
+            char_literal108=(Token)match(input,55,FOLLOW_55_in_print1003);  
             stream_55.add(char_literal108);
 
 
@@ -3510,19 +3510,19 @@ public class LoocParser extends Parser {
             // Looc.g:121:12: ( 'return' '(' expression ')' -> expression )
             // Looc.g:121:15: 'return' '(' expression ')'
             {
-            string_literal109=(Token)match(input,77,FOLLOW_77_in_return_decl1017);  
+            string_literal109=(Token)match(input,77,FOLLOW_77_in_return_decl1019);  
             stream_77.add(string_literal109);
 
-            char_literal110=(Token)match(input,47,FOLLOW_47_in_return_decl1018);  
+            char_literal110=(Token)match(input,47,FOLLOW_47_in_return_decl1020);  
             stream_47.add(char_literal110);
 
-            pushFollow(FOLLOW_expression_in_return_decl1020);
+            pushFollow(FOLLOW_expression_in_return_decl1022);
             expression111=expression();
 
             state._fsp--;
 
             stream_expression.add(expression111.getTree());
-            char_literal112=(Token)match(input,48,FOLLOW_48_in_return_decl1022);  
+            char_literal112=(Token)match(input,48,FOLLOW_48_in_return_decl1024);  
             stream_48.add(char_literal112);
 
 
@@ -3590,10 +3590,10 @@ public class LoocParser extends Parser {
             // Looc.g:123:6: ( 'read' IDF -> IDF )
             // Looc.g:123:8: 'read' IDF
             {
-            string_literal113=(Token)match(input,78,FOLLOW_78_in_read1035);  
+            string_literal113=(Token)match(input,78,FOLLOW_78_in_read1037);  
             stream_78.add(string_literal113);
 
-            IDF114=(Token)match(input,IDF,FOLLOW_IDF_in_read1037);  
+            IDF114=(Token)match(input,IDF,FOLLOW_IDF_in_read1039);  
             stream_IDF.add(IDF114);
 
 
@@ -3752,14 +3752,14 @@ public class LoocParser extends Parser {
     public static final BitSet FOLLOW_53_in_call961 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
     public static final BitSet FOLLOW_expression_in_call962 = new BitSet(new long[]{0x0021000000000000L});
     public static final BitSet FOLLOW_48_in_call967 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_print997 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
-    public static final BitSet FOLLOW_expression_in_print999 = new BitSet(new long[]{0x0080000000000000L});
-    public static final BitSet FOLLOW_55_in_print1001 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_77_in_return_decl1017 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_return_decl1018 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
-    public static final BitSet FOLLOW_expression_in_return_decl1020 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_return_decl1022 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_78_in_read1035 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_IDF_in_read1037 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_print999 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_print1001 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_print1003 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_77_in_return_decl1019 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_return_decl1020 = new BitSet(new long[]{0x000080D000000000L,0x0000000000000650L});
+    public static final BitSet FOLLOW_expression_in_return_decl1022 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_return_decl1024 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_read1037 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_IDF_in_read1039 = new BitSet(new long[]{0x0000000000000002L});
 
 }
