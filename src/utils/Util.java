@@ -111,9 +111,7 @@ public class Util {
 	}
 
     public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
-        if(!(callNode.getChildCount() >= 2 && callNode.getChildCount() <= 3))
-            throw new InexactDoCallException(null,null,callNode.getText());
-        else {
+
             // Test the receiver: this / super / idf
             String receiver = callNode.getChild(callNode.getChildCount() - 1).getText();
             String called = callNode.getChild(0).getText();
@@ -138,7 +136,7 @@ public class Util {
                     throw new ParameterTypeMismatchException(null,null,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
                 }
             }
-        }
+
     }
 
 
