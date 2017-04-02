@@ -18,11 +18,7 @@ class Math =
 
 		return (retval);
 	}
-
 )
-
-
 var m : int;
 var cat : Math;
 m := cat;
-cat := m.pow(2,3);

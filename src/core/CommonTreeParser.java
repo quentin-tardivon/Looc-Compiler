@@ -44,7 +44,7 @@ public class CommonTreeParser {
 
 	public void constructTDS(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		SymbolTable newtds;
-		this.printCurrentLine(tree);
+		//this.printCurrentLine(tree);
 
 		switch (tree.getText()) {
 			case "ROOT":
