@@ -67,13 +67,13 @@ Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les ide
 
 Semantic controls :
 
-1) MismatchTypeException (WOP -> manque méthode)
+1) MismatchTypeException (OK)
 2) UndeclaredVariableException (WOP -> membre de droite)
 3) UndeclaredClassException (OK)
 4) UndeclaredMethodException (OK)
 5) AlreadyDeclaredException (OK)
 6) InexactParametersException (WOP -> marche pour certains cas, pas d'autres)
-7) ReturnValueTypeMismatchException (WOP -> marche pas pour valeur comme 1,2 ou "michel")
+7) ReturnValueTypeMismatchException (OK)
 8) MismatchOperationException (WOP -> marche pas avec une operation sur la valeur de retour de méthode)
 9) InheritanceTypeMismatchException (TODO)
 10) StringOperationException (OK)
