@@ -65,121 +65,24 @@ Dans le cas ou se retrouve sur un bloc de type IF, ELSE, ou FOR, comment les ide
 
 
 
-Controle sémantiques
-====================
-
--Une classe ne peut referencer que des classes déjà définies -> class not defined
-
--un programme ne peut rdéfinir une classe existante -> cannot override class
-
--Les noms des classes et des méthodes sont visibles partout ->
-
--Dans une classe, un idf ne peut pas désigner a la fois un argument ou un attribut et une méthode ->
-
--Les régles de portée des arguments et des variables locales sont celles habituellement définies dans les langages impératifs, tels que Java. ->
-
--La portée d'une déclaration d'une variable locale commence a la fin de sa declaration et se termine a la fin du bloc englobant cette declaration. -> "variable not defined"
-
--Une expression ne peut referencer que des variables ou attributs deja déclarés
-
--cohérence de typages
-
--division par zero ?
-
-
-
-
-
-
-
-
-
-
-
-TODO -> TypeUnknown (classe non déclarée mais référencé dans le code)
-
-
-1)MismatchTypeException : Cohérence de type (selon déclaration la plus récente) (OK)
-
-
-
-2)UndeclaredVariableException : variable non définie (OK)   
-
-
-
-3)UndeclaredClassException : classe non définie  (OK)    
-
-
-
-4)UndeclaredMethodException : méthode non définie (OK)
-
-
-
-
-5)AlreadyDeclaredException : plusieurs definitions du meme idf dans le bloc courant -> idf "is already defined" (OK)
-
-
-
-
-6)InexactParametersException : nb de params inexacte -> method "is missing parameters" ou method "has got to many parameters"  
-
-
-
-7.1)ReturnValueTypeMismatchException : respect de la valeur de retour des méthodes -> idf "is" type "but" type de retour "is expected"    (+void-handling)
-
-7.2)MissingReturnValueException : Missing return statement
-
-
-8)MismatchOperationException : cohérence de type lors d'un calcul ->  a= b+c; a= b+2;       
-
-
-9)UnusedVariableException : variable jamais utilisé -> idf "is never used"                                               
-
-
-
-10)InheritanceTypeMismatchException :  cohérence de type avec héritage -> Animal A; A=new Dog();       
-
-
-
-11)StringOperationException : Pas d'opérations sur les strings => Str = a - b  (OK)
-
-
-
-12)??? :Argument, attribut et méthode avec meme idf -> idf "is already used by"
-
-
-13)UndefinedInheritanceException: Héritage d'une classe inexistante -> Dog inherit Alien (but alien was never defined)
-
-14)InexactUsesOfDoStatement -> do 1+3; doesnt work
-
-15)do class.method() avec method ps void
-
-16)read =! entier
-
-17)write =! entier/string
-
-18) ordre des paramètres
-
-
-
-NEW Exception :
-
-1) MismatchTypeException
-2) UndeclaredVariableException
-3) UndeclaredClassException
-4) UndeclaredMethodException
-5) AlreadyDeclaredException
-6) InexactParametersException
-7) ReturnValueTypeMismatchException
-8) MismatchOperationException
-9) InheritanceTypeMismatchException
-10) StringOperationException
-11) UndefinedInheritanceException
-12) InexactUsesOfDoStatement
-13) NonVoidMethodInDoException
-14) InexactUsesofReadException
-15) InexactUsesofWriteException
-16) VarNotInitialisedException => var a; var b; b=a;
+Semantic controls :
+
+1) MismatchTypeException (OK)
+2) UndeclaredVariableException (WOP -> membre de droite)
+3) UndeclaredClassException (OK)
+4) UndeclaredMethodException (OK)
+5) AlreadyDeclaredException (OK)
+6) InexactParametersException (WOP -> marche pour certains cas, pas d'autres)
+7) ReturnValueTypeMismatchException (OK)
+8) MismatchOperationException (WOP -> marche pas avec une operation sur la valeur de retour de méthode)
+9) InheritanceTypeMismatchException (TODO)
+10) StringOperationException (OK)
+11) UndefinedInheritanceException (OK)
+12) InexactUsesOfDoStatement (TODO)
+13) NonVoidMethodInDoException (OK)
+14) InexactUsesofReadException (TODO)
+15) InexactUsesofWriteException (TODO)
+16) VarNotInitialisedException => var a; var b; b=a;(TODO)
 
 others :
 
