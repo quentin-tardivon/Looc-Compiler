@@ -4,7 +4,6 @@ import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 
 import java.io.FileInputStream;
-import java.nio.file.Paths;
 
 public class TestLoocMakefile {
 

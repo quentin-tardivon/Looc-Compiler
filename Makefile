@@ -1,68 +1,53 @@
 SRC_DIR = src
 BIN_DIR = out
 CORE_DIR= core
+TMP_DIR= tmp
 SAMPLE_DIR = samples
+SEMANTIC_ERRORS_DIR = errorSamples
 PGM = TestLoocMakefile
 EXTENSION = looc
 PGM_JAVA = $(PGM).java
 LOG_FILE_ANTLR = antlr.log
 
-# Create needed directories
-$(shell mkdir -p $(BIN_DIR))
+export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):./$(TMP_DIR):$$CLASSPATH
 
-export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):$$CLASSPATH
-
-all: java
+all: antlr
 
 java: antlr
+	@echo "\n --- Create out/ directory ---"
+	mkdir -p $(BIN_DIR)
 	@echo "\n --- Compile java classes ---"
 	javac -d $(BIN_DIR) $(SRC_DIR)/$(CORE_DIR)/LoocLexer.java $(SRC_DIR)/$(CORE_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
-antlr:
+antlr: clean
 	@echo "\n --- Execute Antlr ---"
-	java org.antlr.Tool -o $(CORE_DIR) Looc.g 2>&1 |tail -n 5
-	#java org.antlr.Tool -o $(CORE_DIR) Looc.g
+	java org.antlr.Tool -o $(SRC_DIR)/$(CORE_DIR) Looc.g 2>&1 |tail -n 5
 
 clean:
-	rm -r $(BIN_DIR)
+	rm -rf output/
+	rm -rf target/
+	rm -rf $(BIN_DIR)
+	rm -rf $(TMP_DIR)
 	rm -f $(LOG_FILE_ANTLR)
 
-parse: java
-	@echo " --- Execute TestLooc ---"
-	@java $(PGM)
 
-#level1: java
-#	@echo " --- Check Level1.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level1.looc
+javaTest:
+	@echo "\n --- Create tmp/ directory ---"
+	mkdir -p $(TMP_DIR)
+	@echo "\n --- Execute Antlr ---"
+	java org.antlr.Tool -o $(TMP_DIR) Looc.g 2>&1 |tail -n 5
+	@echo "\n --- Compile java classes ---"
+	javac -d $(TMP_DIR) $(TMP_DIR)/LoocLexer.java $(TMP_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
+	@echo ""
 
-#level2: java
-#	@echo " --- Check Level2.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level2.looc
+parse: javaTest
+	java $(PGM) samples/errorSamples/ReturnValueTypeMismatchEx.looc
+	@echo "\n\033[0m --- Delete tmp/ directory ---"
+	rm -rf $(TMP_DIR)
 
-#level3: java
-#	@echo " --- Check Level3.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level3.looc
-
-#level4: java
-#	@echo " --- Check Level4.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level4.looc
-
-#level5: java
-#	@echo " --- Check Level5.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level5.looc
-#
-# level6: java
-#	@echo " --- Check Level6.looc---"
-#	@java $(PGM) $(SAMPLE_DIR)/Level6.looc
-
-#levelHardcore: java
-#	@echo " --- Check levelHardcore.looc---"
-# @java $(PGM) $(SAMPLE_DIR)/LevelHardcore.looc
-
-#test: level1 level2 level3 level4 level5 level6 levelHardcore
-
-test: java
+testSyntaxErrors:
+	@echo "\n --- Test Syntax errors ---"
 	@for file in $(SAMPLE_DIR)/*.$(EXTENSION); do \
 		FILE=$$(basename $$file); \
 		TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
@@ -88,3 +73,21 @@ test: java
 		fi; \
 	done;
 	@echo  ""
+
+testSemanticErrors:
+	@echo "\n --- Test Semantic errors ---"
+	@for file in $(SAMPLE_DIR)/$(SEMANTIC_ERRORS_DIR)/*.$(EXTENSION); do \
+			FILE=$$(basename $$file); \
+			TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
+			if [ -z "$$TMP" ]; then \
+				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur sémantique)"; \
+			else \
+				echo "\033[92m --- Check $$(basename $$file)\033[94m (Fichier avec erreur sémantique)"; \
+				echo  "\t\033[91m$$TMP\033[0m"; \
+			fi; \
+		done;
+		@echo  ""
+
+test:javaTest testSyntaxErrors testSemanticErrors
+	@echo "\n\033[0m --- Delete tmp/ directory ---"
+	rm -rf $(TMP_DIR)

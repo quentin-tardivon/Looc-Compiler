@@ -11,8 +11,11 @@ import TDS.Entry;
 public class Class extends Entry {
 
 	public Class(String name) {
-		super("Class");
+		super(Entry.CLASS);
 	}
 
-
+	public Class(String name, String inherit) {
+		super(Entry.CLASS);
+		this.put(Entry.INHERIT, inherit);
+	}
 }

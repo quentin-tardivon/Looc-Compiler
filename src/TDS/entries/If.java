@@ -7,6 +7,6 @@ import TDS.Entry;
  */
 public class If extends Entry {
 	public If() {
-		super("If Statement");
+		super(Entry.IF);
 	}
 }
