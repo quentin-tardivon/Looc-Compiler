@@ -207,9 +207,11 @@ public class CommonTreeParser {
 				tds.getInfo(tree.getChild(1).getText());*/
 				break;
 
-			case "RETURN"://TODO : regarder return 1, et passer par getInfo ou autre ?
+			case "RETURN":
 				String realV = Util.subTreeType(tree.getChild(0), tds);
+				System.out.println("real value :"+realV);
 				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
+				System.out.println("expected value :"+expectedV);
 				Util.testReturnType(expectedV,realV);
 				break;
 
