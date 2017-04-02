@@ -1,5 +1,3 @@
-import core.LoocLexer;
-import core.LoocParser;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 

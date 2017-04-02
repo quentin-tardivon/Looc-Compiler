@@ -1,7 +1,5 @@
 import TDS.SymbolTable;
 import core.CommonTreeParser;
-import core.LoocLexer;
-import core.LoocParser;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.CommonTree;
