@@ -10,7 +10,9 @@ class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser
 
     void testMismatchTypeException() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level0.looc")
+        shouldFail(MismatchTypeException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/MismatchTypeException.looc")
+        }
     }
 
     void testAlreadyDeclaredException() {
@@ -34,6 +36,12 @@ class SemanticControlTest extends GroovyTestCase {
     void testStringOpEx() {
         shouldFail(StringOperationException) {
             treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/StringOpEx.looc")
+        }
+    }
+
+    void testUndeclaredVar() {
+        shouldFail(UndeclaredVariableException) {
+            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredVarEx.looc")
         }
     }
 
