@@ -65,6 +65,7 @@ public class SymbolTable {
         this.imbricationLevel = imbricationLevel;
         this.father = father;
         this.name = name;
+		this.classList = new HashMap<>();
     }
 
 	/**
@@ -226,15 +227,27 @@ public class SymbolTable {
     }
 
 	public SymbolTable findClass(String name) throws UndeclaredClassException {
-		if (classList.containsKey(name)) {
+		System.out.println("want to find " + name + " in " + this.name);
+		if(name.equals("Greater"))
+			System.out.println("coucou");
+		classList.forEach((k,v)->System.out.println("Key: " + k ));
+		SymbolTable res = null;
+		if (classList.containsKey(name))
 			return classList.get(name);
-		}
 		else {
 			for(String key: classList.keySet()) {
-				return classList.get(key).findClass(name);
+				res = classList.get(key).findClass(name);
 			}
 		}
-		throw new UndeclaredClassException(null, null, name);
+		return res;
+	}
+
+
+
+	public SymbolTable putClass(String symbol, SymbolTable tds) {  return this.classList.put(symbol, tds);  }
+
+	public SymbolTable getClass(String symbol) {
+		return this.classList.get(symbol);
 	}
 
 

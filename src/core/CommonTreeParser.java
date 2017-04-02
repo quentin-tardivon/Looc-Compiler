@@ -101,20 +101,25 @@ public class CommonTreeParser {
 
 			case "CLASS_DEC":
 				Class newClass = new Class(tree.getChild(0).getText());
+				String quentin = tree.getChild(0).getText();
 				SymbolTable parentTDS = rootTDS;
 				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
-					if (tds.getInfo(tree.getChild(1).getText()) == null) {
+					if (rootTDS.findClass(tree.getChild(1).getText()) == null) {
 						Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
 					}
 					else {
 						newClass.put("Inherit", tree.getChild(1).getText());
 						parentTDS = rootTDS.findClass(tree.getChild(1).getText());
-						//TODO Rajouter une TDS intermédiaire (celle dont hérite la classe)
+						if (parentTDS == null) {
+							Util.undeclaredClass(tree.getChild(1).getText(), tds);
+						}
 					}
 				}
+
 				parentTDS.put(tree.getChild(0).getText(), newClass);
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, parentTDS, tree.getChild(0).getText()); //Attention, l'imbrication level correspond ici au niveau d'héritage
-				parentTDS.putLink(tree.getChild(0).getText(), newtds);
+				parentTDS.putClass(tree.getChild(0).getText(), newtds);
+
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
@@ -179,7 +184,8 @@ public class CommonTreeParser {
 
 
 			case "AFFECT":
-				this.testAffectation(tree, tds);
+
+				this.testAffectation(tree, tds, rootTDS);
 				break;
 
 
@@ -194,7 +200,7 @@ public class CommonTreeParser {
 				break;
 
 			case "DO":
-				Util.testDo(tree.getChild(0), tds);
+				Util.testDo(tree.getChild(0), tds, rootTDS);
 				/*if (tree.getChildCount()==1) {
 					//Controle sémantique ici ??
 					if (tree.getChild(0).getText().equals("new"))
@@ -212,25 +218,26 @@ public class CommonTreeParser {
 				break;
 
 			case "RETURN":
-				String realV = Util.subTreeType(tree.getChild(0), tds);
-				System.out.println("real value :"+realV);
+				String realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
+
 				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
-				System.out.println("expected value :"+expectedV);
+
 				Util.testReturnType(expectedV,realV);
 				break;
 
 			case "READ":
-				realV = Util.subTreeType(tree.getChild(0), tds);
+				realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
 				Util.testReadUse(realV);
 				break;
 
 			case "WRITE":
-				realV = Util.subTreeType(tree.getChild(0), tds);
+				realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
+
 				Util.testWriteUse(realV);
 
 			default:
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					System.out.println("## Default case " + tree);
+
 					constructTDS(tree.getChild(i), tds, rootTDS);
 				}
 				break;
@@ -257,9 +264,9 @@ public class CommonTreeParser {
 	 * @param tds
 	 * @throws Exception
 	 */
-	private void testAffectation(Tree tree, SymbolTable tds) throws Exception {
+	private void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
-		String rightNodeType;
+		String rightNodeType= null;
 
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
@@ -267,7 +274,8 @@ public class CommonTreeParser {
 		switch (tree.getChild(1).getText()) {
 			case Keywords.NEW:
 				// Check if the class has been declared previously
-				if (tds.getInfo(tree.getChild(1).getChild(0).getText()) == null)
+
+				if (rootTDS.findClass(tree.getChild(1).getChild(0).getText()) == null)
 					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
 
 				//TODO : rightNodeType dans le cas de l'héritage , ici seul le cas sans héritage est testé
@@ -279,10 +287,10 @@ public class CommonTreeParser {
 				rightNodeType="nil";
 				break;
 			case "CALL":
-				Util.testCall(tree.getChild(1), tds);
+				Util.testCall(tree.getChild(1), tds, rootTDS);
 				break;
 			default:
-				rightNodeType = Util.subTreeType(tree.getChild(1), tds);
+				rightNodeType = Util.subTreeType(tree.getChild(1), tds, rootTDS);
 
 		}
 
