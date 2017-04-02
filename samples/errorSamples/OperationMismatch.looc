@@ -1,2 +1,25 @@
-var n : string;
-n := "michel" + 4;
+var n : int;
+
+
+class Math =
+(
+	method pow(a : int, b : int) : string {
+		var retval : int;
+		var i : int;
+
+		if b == 0 then
+			return (1);
+		fi
+		retval := 1;
+		for i in 1 .. b
+		do
+			retval := retval * a;
+		end
+
+		return (1);
+	}
+	n := 1 + this.pow(3,3);
+
+
+)
+

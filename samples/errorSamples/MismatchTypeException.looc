@@ -28,8 +28,10 @@ var a1 : Animal;
 var a2 : Animal;
 a1 := new Dog;
 
-var tmp : int;
-tmp := "String";
+var tmp : string;
+var tmp2 : int;
+tmp2:=2;
+tmp := tmp2;
 
 do a1.setName("boo") ;
 a2 := new Cat ;
