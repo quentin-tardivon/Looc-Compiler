@@ -273,8 +273,10 @@ public class CommonTreeParser {
 				rightNodeType = Util.subTreeType(tree.getChild(1), tds);
 
 		}
+
 		if (!entry.get(Entry.TYPE).equals(rightNodeType)){
-			throw new MismatchTypeException(null,null,entry.get(Entry.TYPE),rightNodeType,entry.toString());
+			if(!rightNodeType.equals("nil"))
+				throw new MismatchTypeException(null,null,entry.get(Entry.TYPE),rightNodeType,entry.toString());
 		}
 
 
