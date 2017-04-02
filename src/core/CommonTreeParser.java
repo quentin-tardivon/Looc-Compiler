@@ -278,9 +278,12 @@ public class CommonTreeParser {
 				if (rootTDS.findClass(tree.getChild(1).getChild(0).getText()) == null)
 					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
 
-				//TODO : rightNodeType dans le cas de l'héritage , ici seul le cas sans héritage est testé
-				//System.out.println("case new : "+tree.getChild(1).getChild(0).getText());
 				rightNodeType = tree.getChild(1).getChild(0).toString();
+				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+					if (Util.validInherit(entry.get(Entry.TYPE),rightNodeType, tds)) {
+							throw new MismatchTypeException(null,null,rightNodeType,entry.get(Entry.TYPE),entry.toString());
+					}
+				}
 				break;
 			case Keywords.NIL:
 				entry.put(Entry.NIL, "true");
@@ -294,10 +297,15 @@ public class CommonTreeParser {
 
 		}
 
-		if (!entry.get(Entry.TYPE).equals(rightNodeType)){
-			if(!rightNodeType.equals("nil"))
-				throw new MismatchTypeException(null,null,entry.get(Entry.TYPE),rightNodeType,entry.toString());
+		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+			if(!rightNodeType.equals("nil")) {
+				if (Util.validInherit(entry.get(Entry.TYPE),rightNodeType, tds)) {
+
+					throw new MismatchTypeException(null, null, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+				}
+			}
 		}
+
 
 
 

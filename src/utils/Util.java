@@ -169,6 +169,11 @@ public class Util {
         return Util.subTreeType(node, tds, rootTDS);
     }
 
+    public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws Exception {
+    	SymbolTable rightTDS = rootTDS.findClass(nodeTypeRight);
+		return  rightTDS.findClass(nodeTypeLeft) != null;
+
+    }
     /**
      * This method will find the appropriate Symbol depending on the type of the receiver (idf , this or super in our case).
      *
