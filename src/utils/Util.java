@@ -88,19 +88,23 @@ public class Util {
 		}
 	}
 
-    public static void testDo(Tree doChild,SymbolTable tds,SymbolTable rootTDS) throws Exception {
-        // Test if the method is declared
-        Util.testCall(doChild, tds, rootTDS);
+	public static void testDo(Tree doChild,SymbolTable tds, SymbolTable rootTDS) throws Exception {
 
-        // Test if the method is void
-        String called = doChild.getChild(0).getText();
-        String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
-        SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
-        if(symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null)
-            throw new MethodNonVoidException(null, null, called);
+		if(doChild.getText().equals("CALL")) {
+			// Test if the method is declared
+			Util.testCall(doChild, tds, rootTDS);
 
-        else throw new InexactUsesOfDoException(null,null,doChild.getText());
-    }
+			// Test if the method is void
+			String called = doChild.getChild(0).getText();
+			String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
+			SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
+			if (symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null) {
+				throw new MethodNonVoidException(null, null, called);
+			}
+		}
+		else throw new InexactUsesOfDoException(null,null,doChild.getText());
+
+	}
 
     public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
         if(!(callNode.getChildCount() >= 2 && callNode.getChildCount() <= 3))
