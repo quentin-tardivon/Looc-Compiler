@@ -2,6 +2,8 @@ package exceptions;
 
 import org.antlr.runtime.tree.Tree;
 
+import java.io.File;
+
 /**
  * All exceptions of the LOOC compiler,
  * should herit from this class
@@ -17,7 +19,7 @@ public class LoocException extends Exception {
 
 
     public LoocException(String filename, Tree t, String message) {
-        super(LoocException.prefixException(filename, t) + message);
+        super(LoocException.prefixException(filename, t) + message + "\n");
     }
 
     public LoocException(String filename, Tree t) {
@@ -25,14 +27,15 @@ public class LoocException extends Exception {
     }
 
     private static String prefixException(String filename, Tree t) {
+        File tmp = new File(filename);
         if(t == null && filename == null)
             return "Error: ";
         if(t != null && filename == null)
             return String.format("%d: error: ", t.getLine());
         if(t == null && filename != null)
-            return String.format("%s: error: ", filename);
+            return String.format("%s: error: ", tmp.getName());
         else
-            return String.format("%s:%d: error: ", filename, t.getLine());
+            return String.format("%s:%d: error: ", tmp.getName(), t.getLine());
     }
 
 }
