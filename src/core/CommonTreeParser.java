@@ -131,7 +131,8 @@ public class CommonTreeParser {
 					tds.put(tree.getChild(0).getText(), var);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+//					e.printStackTrace();
 				}
 				break;
 
@@ -145,7 +146,8 @@ public class CommonTreeParser {
 							Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
 						}
 						catch (Exception e) {
-							e.printStackTrace();
+							System.err.println( e.getClass().getName() + " " + e.getMessage());
+							//e.printStackTrace();
 						}
 					}
 					else {
@@ -160,7 +162,8 @@ public class CommonTreeParser {
 					parentTDS.put(tree.getChild(0).getText(), newClass);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, parentTDS, tree.getChild(0).getText()); //Attention, l'imbrication level correspond ici au niveau d'héritage
 				parentTDS.putClass(tree.getChild(0).getText(), newtds);
@@ -248,7 +251,8 @@ public class CommonTreeParser {
 					this.testAffectation(tree, tds, rootTDS);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				break;
 
@@ -261,7 +265,8 @@ public class CommonTreeParser {
 					tds.putLink("for" + nb, newtds);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+//					e.printStackTrace();
 				}
 				//TODO Further testing on for loop
 				tds.getInfo(tree.getChild(0).getText()).setInit(true);
@@ -275,7 +280,8 @@ public class CommonTreeParser {
 					Util.testDo(tree.getChild(0), tds, rootTDS);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				break;
 
@@ -288,7 +294,8 @@ public class CommonTreeParser {
 					Util.testReturnType(expectedV,realV);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				break;
 
@@ -298,7 +305,8 @@ public class CommonTreeParser {
 					Util.testReadUse(realV);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				break;
 
@@ -308,7 +316,8 @@ public class CommonTreeParser {
 					Util.testWriteUse(realV);
 				}
 				catch (Exception e) {
-					e.printStackTrace();
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+					//e.printStackTrace();
 				}
 				break;
 
