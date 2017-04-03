@@ -1,0 +1,105 @@
+
+
+
+class Math =
+(
+	method pow(a : int, b : int) : int {
+		var retval : int;
+		var i : int;
+
+		if b == 0 then
+			return (1);
+		fi
+		retval := 1;
+		for i in 1 .. b
+		do
+			retval := retval * a;
+		end
+
+		return (retval);
+	}
+
+  method testReturn(a : int) : string {
+    var retval : int;
+    retval := a;
+    return (retval);  //ReturnValueTypeMismatch
+  }
+)
+
+
+class Dog inherit Animal = (        //UndeclaredInheritanceException
+    method whoami () {
+        write ".And I am a cat. " ;
+        }
+)
+
+
+var a : Math;
+var b : int;
+var c : Math;
+var d : int;
+var e : Math;
+var f : string;
+var g : string;
+var h : Math;
+var i : Math;
+var j : int;
+var k : int;
+var l : int;
+var o : int
+var q : Math;
+
+
+var y : int;
+var y : int; //AlreadyDeclaredException
+
+var m : int;
+var cat : Math;
+cat := new Math;
+m := cat.pow(3,3,3,3); //InexactNumberParamsException
+
+
+do 1+2;  //InexactUsesOfDoException
+
+
+g:=3;       //MismatchTypeException
+
+
+a := new Math;
+do a.pow(3,3); //NotVoidMethodException
+
+
+b := 1 + "hello" //OperationMismatchException
+
+
+c := new Math
+d := c.pow("hello",3); //ParameterTypeMismatchException
+
+
+e := new Math;
+read e;       //ReadUsageException
+
+
+
+f:="bb"-"bb"; //StringOperationException
+
+
+
+h:= new UndeclaredClass; //UndeclaredClassException
+
+
+
+i:=new Math;
+j:= i.undeclaredMethod(); //UndeclaredMethodException
+
+
+
+k:=z; //UndeclaredVariableException
+
+
+
+m := o; //VarUninitializedException
+
+
+q := new Math;
+write q; //WriteUsageException
