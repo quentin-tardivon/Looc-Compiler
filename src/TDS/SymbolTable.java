@@ -1,11 +1,8 @@
 package TDS;
 
-import exceptions.*;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
+import exceptions.SymbolAlreadyDeclaredException;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 /** A symbol table is described by a Hashmap.
