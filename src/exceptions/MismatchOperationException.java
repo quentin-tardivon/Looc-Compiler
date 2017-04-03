@@ -7,6 +7,6 @@ import org.antlr.runtime.tree.Tree;
  */
 public class MismatchOperationException extends LoocException {
 	public MismatchOperationException(String filename, Tree node) {
-		super(filename, node, "Cannot operate these elements");
+		super(filename, node, "Cannot operate on these elements because of incompatible type");
 	}
 }

@@ -8,7 +8,7 @@ import org.antlr.runtime.tree.Tree;
 public class UndeclaredVariableException extends LoocException {
 
     public UndeclaredVariableException(String filename, Tree t, String idf) {
-        super(filename, t, "The variable '" + idf + "' is not declared");
+        super(filename, t, "Variable '" + idf + "' is not declared");
     }
 
 }

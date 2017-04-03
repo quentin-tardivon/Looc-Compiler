@@ -8,7 +8,7 @@ import org.antlr.runtime.tree.Tree;
 public class UndeclaredMethodException extends LoocException {
 
     public UndeclaredMethodException(String filename, Tree t, String idf) {
-        super(filename, t, "The method '" + idf + "' is not declared");
+        super(filename, t, "Method '" + idf + "' is not declared");
     }
 }
 

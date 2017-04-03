@@ -7,7 +7,7 @@ import org.antlr.runtime.tree.Tree;
  */
 public class InexactUsesOfDoException extends LoocException {
 
-    public InexactUsesOfDoException(String filename, Tree node, String call){ super( filename,node,"Cannot call '" + call +"' after DO");}
+    public InexactUsesOfDoException(String filename, Tree node, String call){ super( filename,node,"Only a void method is expected after DO");}
 
 
 }

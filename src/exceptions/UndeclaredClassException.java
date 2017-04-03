@@ -9,6 +9,6 @@ import org.antlr.runtime.tree.Tree;
 public class UndeclaredClassException extends LoocException {
 
     public UndeclaredClassException(String filename, Tree t, String idf) {
-        super(filename, t, "The class '" + idf + "' is not declared");
+        super(filename, t, "Class '" + idf + "' is not declared");
     }
 }

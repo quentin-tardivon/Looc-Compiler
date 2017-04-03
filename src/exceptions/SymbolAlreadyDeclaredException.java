@@ -13,7 +13,7 @@ import org.antlr.runtime.tree.Tree;
 public class SymbolAlreadyDeclaredException extends LoocException {
 
 	public SymbolAlreadyDeclaredException(String filename, Tree node, String doublonSymbol) {
-		super(filename, node, "The symbol '" + doublonSymbol + "' is already declared in the current symbol table");
+		super(filename, node, "The variable '" + doublonSymbol + "' is already declared");
 	}
 
 /*	public SymbolAlreadyDeclaredException() {

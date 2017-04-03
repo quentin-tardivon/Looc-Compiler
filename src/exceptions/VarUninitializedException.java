@@ -8,6 +8,6 @@ import org.antlr.runtime.tree.Tree;
 public class VarUninitializedException extends LoocException {
 
 	public VarUninitializedException(String filename, Tree t, String message) {
-		super(filename, t, message);
+		super(filename, t, "Variable '"+message+"' is uninitialized");
 	}
 }
