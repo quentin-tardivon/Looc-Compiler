@@ -17,6 +17,5 @@ public class Method extends Entry {
 	public Method(String returnType) {
 		super(Entry.METHOD);
 		this.info.put(Entry.RETURN_TYPE, returnType);
-
 	}
 }

@@ -48,9 +48,10 @@ public abstract class Entry {
 	public String getName() {  return this.name; }
 
 	public String toString() {
-		String s = String.format("### %s ###\n", this.name);
+		String s = String.format("%s, ", this.name);
+
 		for(String symbol: this.info.keySet()) {
-			s += String.format(" - %-10s -> %s\n", symbol, this.info.get(symbol));
+			s += String.format(" %s: %s", symbol, this.info.get(symbol));
 		}
 		return s;
 	}

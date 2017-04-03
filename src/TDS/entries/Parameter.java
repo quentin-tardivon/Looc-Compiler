@@ -27,8 +27,7 @@ public class Parameter extends Variable {
 	}
 
 	public String toString() {
-		return super.toString()
-				+ String.format(" - %-10s -> %d\n", "Order", this.order);
+		return super.toString() + "Order: " + this.order;
 	}
 
 }

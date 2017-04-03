@@ -14,7 +14,7 @@ public class Sandbox {
 
     public static void main(String[] args) throws Exception {
         CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AllSemantic.looc");
-
+        System.out.println(treeParser.getRootSymbolTable());
 
 	    SymbolTable root = new SymbolTable();
 	    SymbolTable comp = new SymbolTable();

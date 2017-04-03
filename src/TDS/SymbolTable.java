@@ -214,13 +214,18 @@ public class SymbolTable {
 
 
     public String toString() {
-	    String s = String.format("==== %d ====\n", this.getImbricationLevel());
+	    String s = String.format("==== %s[%d] ====\n", this.name, this.getImbricationLevel());
 	    for(String symbol: this.entries.keySet()) {
 	    	s += String.format(" - %-10s -> %s\n", symbol, this.entries.get(symbol));
 	    }
 	    for (String symbol: this.links.keySet()) {
 		    s += String.format(" - %-10s -> %s\n", symbol, this.links.get(symbol));
 	    }
+
+	    for(String cls: this.classList.keySet()) {
+			s += "\n\n" + this.classList.get(cls).toString() + "\n\n";
+//					String.format(" - %-10s -> %s\n", cls, this.links.get(symbol));
+		}
     	return s;
     }
 
