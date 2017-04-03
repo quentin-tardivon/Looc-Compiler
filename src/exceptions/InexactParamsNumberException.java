@@ -8,6 +8,6 @@ import org.antlr.runtime.tree.Tree;
 public class InexactParamsNumberException extends LoocException {
 
 	public InexactParamsNumberException(String filename, Tree t, String method) {
-		super(filename, t, "The call of the method " + method + " differs from its definition.");
+		super(filename, t, "The method " + method + " is called with a wrong number of parameters");
 	}
 }

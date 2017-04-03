@@ -362,7 +362,7 @@ public class CommonTreeParser {
 				rightNodeType = tree.getChild(1).getChild(0).toString();
 				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
 					if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-							throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+							throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
 					}
 
 				}
@@ -381,7 +381,7 @@ public class CommonTreeParser {
 		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
 			if(!rightNodeType.equals("nil")) {
 				if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-					throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+					throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
 				}
 			}
 		}

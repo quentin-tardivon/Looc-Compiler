@@ -8,6 +8,6 @@ import org.antlr.runtime.tree.Tree;
 public class MethodNonVoidException extends LoocException {
 
     public MethodNonVoidException(String filename, Tree node, String method){
-        super( filename,node,"Method '" + method +"'is non-void");
+        super( filename,node,"Method '" + method +"' is non-void");
     }
 }
