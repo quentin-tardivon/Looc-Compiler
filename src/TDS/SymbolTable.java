@@ -1,5 +1,6 @@
 package TDS;
 
+import core.CommonTreeParser;
 import exceptions.SymbolAlreadyDeclaredException;
 
 import java.util.HashMap;
@@ -73,7 +74,7 @@ public class SymbolTable {
 	 */
 	public Object put(String symbol, Entry entry) throws SymbolAlreadyDeclaredException {
         if(this.entries.containsKey(symbol)) {
-	        throw new SymbolAlreadyDeclaredException("",null, symbol);
+	        throw new SymbolAlreadyDeclaredException(CommonTreeParser.filename,CommonTreeParser.node, symbol);
 	    }
         else {
 	        return this.entries.put(symbol, entry);

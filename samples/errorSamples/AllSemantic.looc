@@ -46,7 +46,7 @@ var i : Math;
 var j : int;
 var k : int;
 var l : int;
-var o : int
+var o : int;
 var q : Math;
 
 
@@ -69,10 +69,10 @@ a := new Math;
 do a.pow(3,3); //NotVoidMethodException
 
 
-b := 1 + "hello" //OperationMismatchException
+b := 1 + "hello"; //OperationMismatchException
 
 
-c := new Math
+c := new Math;
 d := c.pow("hello",3); //ParameterTypeMismatchException
 
 

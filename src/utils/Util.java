@@ -52,7 +52,7 @@ public class Util {
         	return Keywords.INTEGER;
         }
         else if (nodeL.equals(Keywords.STRING) && nodeR.equals(Keywords.STRING)) {
-	        throw new StringOperationException();
+	        throw new StringOperationException(CommonTreeParser.filename, CommonTreeParser.node);
         }
         else {
 			throw new MismatchOperationException(CommonTreeParser.filename, CommonTreeParser.node);
@@ -76,7 +76,7 @@ public class Util {
 
     public static void testReturnType(String expected, String real) throws Exception {
         if(!expected.equals(real))
-            throw new ReturnValueTypeMismatchException(expected, real);
+            throw new ReturnValueTypeMismatchException(CommonTreeParser.filename, CommonTreeParser.node, expected, real);
 
     }
 
