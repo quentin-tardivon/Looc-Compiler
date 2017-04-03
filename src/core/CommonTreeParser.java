@@ -5,9 +5,7 @@ import TDS.SymbolTable;
 import TDS.entries.*;
 import TDS.entries.Class;
 import exceptions.MismatchTypeException;
-import exceptions.VarUninitializedException;
 import org.antlr.runtime.tree.Tree;
-import sun.jvm.hotspot.oops.ExceptionTableElement;
 import utils.Util;
 
 import java.util.ArrayList;
@@ -19,11 +17,13 @@ import java.util.ArrayList;
 public class CommonTreeParser {
 
 	private SymbolTable tds;
-	private String filename;
+	//private String filename;
+	public static Tree node;
+	public static String filename;
 	private ArrayList<String> list = new ArrayList<>();
 	private int currentLine = 0;
 
-	public CommonTreeParser(String filename) {  this.filename = filename;  }
+	public CommonTreeParser(String filename) {  CommonTreeParser.filename = filename;  }
 
 	public void parseCommonTreeParser(Tree tree) {
 		list.add(tree.toString());
@@ -46,6 +46,9 @@ public class CommonTreeParser {
 
 	public void constructTDS(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		SymbolTable newtds;
+
+		//this.printCurrentLine(tree);
+		CommonTreeParser.node = tree;
 
 		switch (tree.getText()) {
 			case "ROOT":
@@ -359,7 +362,7 @@ public class CommonTreeParser {
 				rightNodeType = tree.getChild(1).getChild(0).toString();
 				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
 					if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-							throw new MismatchTypeException(null, null, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+							throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.toString());
 					}
 
 				}
@@ -378,7 +381,7 @@ public class CommonTreeParser {
 		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
 			if(!rightNodeType.equals("nil")) {
 				if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-					throw new MismatchTypeException(null, null, rightNodeType, entry.get(Entry.TYPE), entry.toString());
+					throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.toString());
 				}
 			}
 		}

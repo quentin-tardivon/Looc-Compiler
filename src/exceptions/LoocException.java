@@ -32,7 +32,7 @@ public class LoocException extends Exception {
         if(t == null && filename != null)
             return String.format("%s: error: ", filename);
         else
-            return String.format("%s:d: error: ", filename, t.getLine());
+            return String.format("%s:%d: error: ", filename, t.getLine());
     }
 
 }

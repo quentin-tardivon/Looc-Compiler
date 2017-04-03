@@ -3,6 +3,7 @@ package utils;
 import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Parameter;
+import core.CommonTreeParser;
 import core.Keywords;
 import exceptions.*;
 import org.antlr.runtime.tree.Tree;
@@ -39,7 +40,7 @@ public class Util {
             assert node.getChildCount() == 2;
             String typeLeft = Util.testTypeOperationExpression(node.getChild(0), tds);
             if(!typeLeft.equals(Util.testTypeOperationExpression(node.getChild(1), tds)))
-                throw new MismatchOperationException(null, null);
+                throw new MismatchOperationException(CommonTreeParser.filename, CommonTreeParser.node);
 
             return typeLeft;
         }
@@ -54,7 +55,7 @@ public class Util {
 	        throw new StringOperationException();
         }
         else {
-			throw new MismatchOperationException(null, null);
+			throw new MismatchOperationException(CommonTreeParser.filename, CommonTreeParser.node);
         }
     }
 
@@ -68,7 +69,7 @@ public class Util {
 	        return tds.getInfo(s).get(Entry.TYPE);
         }
 	    else {
-        	throw new UndeclaredVariableException(null, null, s); //TODO Vérifier que c'est toujours une variable
+        	throw new UndeclaredVariableException(CommonTreeParser.filename, CommonTreeParser.node, s); //TODO Vérifier que c'est toujours une variable
 
         }
     }
@@ -82,13 +83,13 @@ public class Util {
 
     public static void testReadUse(String readingType) throws Exception{
 		if (!"int".equals(readingType)) {
-			throw new ReadUsageException(null, null, readingType);
+			throw new ReadUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
     }
 
 	public static void testWriteUse(String readingType) throws Exception{
 		if (!("int".equals(readingType) || "string".equals(readingType))) {
-			throw new WriteUsageException(null, null, readingType);
+			throw new WriteUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
 	}
 
@@ -103,10 +104,10 @@ public class Util {
 			String receiver = doChild.getChild(doChild.getChildCount() - 1).getText();
 			SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
 			if (symbolTableReceiver.get(called).get(Entry.RETURN_TYPE) != null) {
-				throw new MethodNonVoidException(null, null, called);
+				throw new MethodNonVoidException(CommonTreeParser.filename, CommonTreeParser.node, called);
 			}
 		}
-		else throw new InexactUsesOfDoException(null,null,doChild.getText());
+		else throw new InexactUsesOfDoException(CommonTreeParser.filename, CommonTreeParser.node,doChild.getText());
 
 	}
 
@@ -120,21 +121,21 @@ public class Util {
             // Check if method exists
 
             if(symbolTableReceiver.get(called) == null || !symbolTableReceiver.get(called).getName().equals(Entry.METHOD))
-                throw new UndeclaredMethodException(null, null, called);
+                throw new UndeclaredMethodException(CommonTreeParser.filename, CommonTreeParser.node, called);
 
 
             ArrayList<Parameter> list = Util.getParameters(Util.getSymbolTable(receiver,tds,rootTDS).getLink(called));
             //System.out.println("list"+list);
             // Check Number of params
             if(list.size() != actualNbParams)
-                throw new InexactParamsNumberException(null, null, called);
+                throw new InexactParamsNumberException(CommonTreeParser.filename, CommonTreeParser.node, called);
 
 
             // Check the Actualparams type
             for(int i=0; i<actualNbParams; i++){
 	            Tree effectiveParam = callNode.getChild(1).getChild(i);
                 if(!Util.subTreeType(effectiveParam, tds, rootTDS).equals(list.get(i).get(Entry.TYPE))){
-                    throw new ParameterTypeMismatchException(null,null,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
+                    throw new ParameterTypeMismatchException(CommonTreeParser.filename, CommonTreeParser.node,Util.getType(callNode.getChild(1).getChild(i).getText(),tds),list.get(i).get(Entry.TYPE),callNode.getChild(1).getChild(i).getText());
                 }
             }
 
@@ -169,12 +170,12 @@ public class Util {
 
     public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
         if (tds.getInfo(callNode.getChild(0).getText()).get(Entry.RETURN_TYPE) == null){
-            throw new MethodNonVoidException(null,null,callNode.getChild(0).getText());
+            throw new MethodNonVoidException(CommonTreeParser.filename, CommonTreeParser.node,callNode.getChild(0).getText());
         }
     }
 
     public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
-    	throw new UndeclaredClassException(null, null, className);
+    	throw new UndeclaredClassException(CommonTreeParser.filename, CommonTreeParser.node, className);
     }
 
     private static int countParameters(SymbolTable tds) {
@@ -187,11 +188,11 @@ public class Util {
     }
 
 	public static void undeclaredToken(String tokenName, SymbolTable tds) throws Exception {
-    	throw new UndeclaredVariableException(null, null, tokenName);
+    	throw new UndeclaredVariableException(CommonTreeParser.filename, CommonTreeParser.node, tokenName);
 	}
 
 	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
-		throw new UndeclaredInheritanceException(null, null, className);
+		throw new UndeclaredInheritanceException(CommonTreeParser.filename, CommonTreeParser.node, className);
 	}
 
 	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1) throws Exception {
@@ -233,7 +234,7 @@ public class Util {
             default:
                 Entry e = currentTDS.getInfo(receiver);
                 if(e == null || !(e.getName().equals(Entry.VARIABLE)))
-                    throw new UndeclaredVariableException(null,null, receiver);
+                    throw new UndeclaredVariableException(CommonTreeParser.filename, CommonTreeParser.node, receiver);
                 return rootTDS.findClass(e.get(Entry.TYPE));
         }
     }
@@ -280,7 +281,7 @@ public class Util {
 
     public static void isInit(String symbol, SymbolTable tds, SymbolTable rootTDS) throws Exception{
     	if (!tds.getInfo(symbol).isInit()) {
-    		throw new VarUninitializedException(null, null, symbol);
+    		throw new VarUninitializedException(CommonTreeParser.filename, CommonTreeParser.node, symbol);
 	    }
     }
 }
