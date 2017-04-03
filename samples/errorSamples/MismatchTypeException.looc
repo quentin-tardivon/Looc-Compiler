@@ -21,5 +21,8 @@ class Math =
 )
 var m : int;
 var cat : Math;
+var h : int;
 cat := new Math;
 m := cat;
+
+
