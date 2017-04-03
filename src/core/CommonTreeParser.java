@@ -7,6 +7,7 @@ import TDS.entries.Class;
 import exceptions.MismatchTypeException;
 import exceptions.VarUninitializedException;
 import org.antlr.runtime.tree.Tree;
+import sun.jvm.hotspot.oops.ExceptionTableElement;
 import utils.Util;
 
 import java.util.ArrayList;
@@ -45,7 +46,6 @@ public class CommonTreeParser {
 
 	public void constructTDS(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
 		SymbolTable newtds;
-		//this.printCurrentLine(tree);
 
 		switch (tree.getText()) {
 			case "ROOT":
@@ -63,24 +63,44 @@ public class CommonTreeParser {
 
 				//cas méthode avec type de retour et avec paramètres
 				if (tree.getChildCount() == 4) {
-					tds.put(tree.getChild(0).getText(), new Method(tree.getChild(2).getText()));
+					try {
+						tds.put(tree.getChild(0).getText(), new Method(tree.getChild(2).getText()));
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
 					constructTDS(tree.getChild(3), newtds, rootTDS);
 				}
 				//cas méthode sans type de retour et avec paramètres
 				else if ((tree.getChildCount() == 3) && tree.getChild(1).getText().equals("FORMAL_PARAMS")) {
-					tds.put(tree.getChild(0).getText(), new Method());
+					try {
+						tds.put(tree.getChild(0).getText(), new Method());
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
 					constructTDS(tree.getChild(2), newtds, rootTDS);
 				}
 				//cas méthode avec type de retour et sans paramètres
 				else if ((tree.getChildCount() == 3)) {
-					tds.put(tree.getChild(0).getText(), new Method(tree.getChild(1).getText()));
+					try {
+						tds.put(tree.getChild(0).getText(), new Method(tree.getChild(1).getText()));
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
 					constructTDS(tree.getChild(2), newtds, rootTDS);
 				}
 				//cas méthode sans type de retour et sans paramètres
 				else {
-					tds.put(tree.getChild(0).getText(), new Method());
+					try {
+						tds.put(tree.getChild(0).getText(), new Method());
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
 				}
 
@@ -93,13 +113,23 @@ public class CommonTreeParser {
 				break;
 
 			case "FORMAL_PARAM":
-				tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
+				try {
+					tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "VAR_DEC":
 				Variable var = new Variable(tree.getChild(1).getText());
 				var.setInit(false);
-				tds.put(tree.getChild(0).getText(), var);
+				try {
+					tds.put(tree.getChild(0).getText(), var);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "CLASS_DEC":
@@ -108,7 +138,12 @@ public class CommonTreeParser {
 				SymbolTable parentTDS = rootTDS;
 				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
 					if (rootTDS.findClass(tree.getChild(1).getText()) == null) {
-						Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
+						try {
+							Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 					else {
 						newClass.put("Inherit", tree.getChild(1).getText());
@@ -118,8 +153,12 @@ public class CommonTreeParser {
 						}
 					}
 				}
-
-				parentTDS.put(tree.getChild(0).getText(), newClass);
+				try {
+					parentTDS.put(tree.getChild(0).getText(), newClass);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, parentTDS, tree.getChild(0).getText()); //Attention, l'imbrication level correspond ici au niveau d'héritage
 				parentTDS.putClass(tree.getChild(0).getText(), newtds);
 
@@ -132,8 +171,13 @@ public class CommonTreeParser {
 			case "BLOCK":
 				int nb = tds.getNumberBlock();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "block" + nb);
-				tds.put("block" +nb , new AnonymousBloc(), "Block");
-				tds.putLink("block" + nb, newtds);
+				try {
+					tds.put("block" +nb , new AnonymousBloc(), "Block");
+					tds.putLink("block" + nb, newtds);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				for (int j = 0; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
@@ -149,8 +193,13 @@ public class CommonTreeParser {
 			case "THEN":
 				nb = tds.getNumberIf();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "if" + nb);
-				tds.put("if" +nb , new If());
-				tds.putLink("if" + nb, newtds);
+				try {
+					tds.put("if" +nb , new If());
+					tds.putLink("if" + nb, newtds);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
@@ -159,8 +208,13 @@ public class CommonTreeParser {
 			case "ELSE":
 				nb = tds.getNumberIf();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "else" + nb);
-				tds.put("else" +nb , new Else());
-				tds.putLink("else" + nb, newtds);
+				try {
+					tds.put("else" +nb , new Else());
+					tds.putLink("else" + nb, newtds);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
@@ -187,16 +241,25 @@ public class CommonTreeParser {
 
 
 			case "AFFECT":
-
-				this.testAffectation(tree, tds, rootTDS);
+				try {
+					this.testAffectation(tree, tds, rootTDS);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 
 			case "FOR":
 				nb = tds.getNumberBlock();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "for" + nb);
-				tds.put("for" +nb , new ForLoop(), "For");
-				tds.putLink("for" + nb, newtds);
+				try {
+					tds.put("for" +nb , new ForLoop(), "For");
+					tds.putLink("for" + nb, newtds);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				//TODO Further testing on for loop
 				tds.getInfo(tree.getChild(0).getText()).setInit(true);
 				for (int j = 1; j < tree.getChildCount(); j++) {
@@ -205,21 +268,12 @@ public class CommonTreeParser {
 				break;
 
 			case "DO":
-				Util.testDo(tree.getChild(0), tds, rootTDS);
-				/*if (tree.getChildCount()==1) {
-					//Controle sémantique ici ??
-					if (tree.getChild(0).getText().equals("new"))
-						tds.getInfo(tree.getChild(0).getChild(0).getText());
-					else {
-
-					}
+				try {
+					Util.testDo(tree.getChild(0), tds, rootTDS);
 				}
-				else {
-					if (!Util.testExecMethod(tree.getChild(0).getText(),tree.getChild(1).getText(),tds)){
-						System.out.println("c pa bi1");
-					}
+				catch (Exception e) {
+					e.printStackTrace();
 				}
-				tds.getInfo(tree.getChild(1).getText());*/
 				break;
 
 			case "RETURN":
@@ -227,18 +281,33 @@ public class CommonTreeParser {
 
 				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
 
-				Util.testReturnType(expectedV,realV);
+				try {
+					Util.testReturnType(expectedV,realV);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "READ":
 				realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
-				Util.testReadUse(realV);
+				try {
+					Util.testReadUse(realV);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 
 			case "WRITE":
 				realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
-
-				Util.testWriteUse(realV);
+				try {
+					Util.testWriteUse(realV);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
 
 			default:
 				for (int i = 0; i < tree.getChildCount(); i++) {
