@@ -17,37 +17,14 @@ import java.util.Comparator;
  */
 public class Util {
 
-    public static Boolean testType(Entry l, String r, SymbolTable tds) {
-        if (l.get(Entry.TYPE).equals(r)) {
-	        return true;
-        }
-        else if (tds.get(r)!=null) {
-        	return l.get(Entry.TYPE).equals(tds.get(r).get(Entry.INHERIT));
-        }
-        else if(tds.getFather() != null) {
-        	return testType(l,r,tds.getFather());
-        }
-        else {
-	        return false;
-        }
-    }
-
-    public static String testTypeOperationExpression(Tree node, SymbolTable tds) throws Exception {
-        if(node.getChildCount() == 0)
-            return Util.getType(node.getText(), tds);
-        else {
-            // An operation must be composed of only two child every time !
-            assert node.getChildCount() == 2;
-            String typeLeft = Util.testTypeOperationExpression(node.getChild(0), tds);
-            if(!typeLeft.equals(Util.testTypeOperationExpression(node.getChild(1), tds)))
-                throw new MismatchOperationException(CommonTreeParser.filename, CommonTreeParser.node);
-
-            return typeLeft;
-        }
-    }
-
-
-    private static String testTypeOper(String nodeL, String nodeR) throws Exception {
+	/**
+	 * Detect semantic error caused by wrong operation
+	 * @param nodeL
+	 * @param nodeR
+	 * @return
+	 * @throws Exception
+	 */
+	private static String testTypeOper(String nodeL, String nodeR) throws Exception {
         if (nodeL.equals(Keywords.INTEGER) && nodeR.equals(Keywords.INTEGER)) {
         	return Keywords.INTEGER;
         }
@@ -59,7 +36,14 @@ public class Util {
         }
     }
 
-    public static String getType(String s, SymbolTable tds) throws Exception {
+	/**
+	 * Return type of a token
+	 * @param s
+	 * @param tds
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getType(String s, SymbolTable tds) throws Exception {
         if (s.matches("[0-9]+"))
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
@@ -74,25 +58,48 @@ public class Util {
         }
     }
 
-    public static void testReturnType(String expected, String real) throws Exception {
+	/**
+	 * Detect semantic error caused by wrong return type
+	 * @param expected
+	 * @param real
+	 * @throws Exception
+	 */
+	public static void testReturnType(String expected, String real) throws Exception {
         if(!expected.equals(real))
             throw new ReturnValueTypeMismatchException(CommonTreeParser.filename, CommonTreeParser.node, expected, real);
 
     }
 
 
-    public static void testReadUse(String readingType) throws Exception{
+	/**
+	 * Detect semantic error caused by wrong utilization of read expression
+	 * @param readingType
+	 * @throws Exception
+	 */
+	public static void testReadUse(String readingType) throws Exception{
 		if (!"int".equals(readingType)) {
 			throw new ReadUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
     }
 
+	/**
+	 * Detect semantic error caused by wrong utilization of write expression
+	 * @param readingType
+	 * @throws Exception
+	 */
 	public static void testWriteUse(String readingType) throws Exception{
 		if (!("int".equals(readingType) || "string".equals(readingType))) {
 			throw new WriteUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
 	}
 
+	/**
+	 * Detect semantic error with wrong utilization of do expression
+	 * @param doChild
+	 * @param tds
+	 * @param rootTDS
+	 * @throws Exception
+	 */
 	public static void testDo(Tree doChild,SymbolTable tds, SymbolTable rootTDS) throws Exception {
 
 		if(doChild.getText().equals("CALL")) {
@@ -111,6 +118,13 @@ public class Util {
 
 	}
 
+	/**
+	 * Detect semantic error cause by wrong utilization of call
+	 * @param callNode
+	 * @param tds
+	 * @param rootTDS
+	 * @throws Exception
+	 */
     public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
 
             // Test the receiver: this / super / idf
@@ -142,7 +156,12 @@ public class Util {
     }
 
 
-    private static ArrayList<Parameter> getParameters(SymbolTable tds){
+	/**
+	 * Return parameters of a method
+	 * @param tds
+	 * @return
+	 */
+	private static ArrayList<Parameter> getParameters(SymbolTable tds){
         ArrayList<Parameter> list= new ArrayList<>();
         for(String key: tds.getKeyEntries()) {
             if(tds.get(key).getName().equals(Entry.PARAMETER))
@@ -159,7 +178,14 @@ public class Util {
     }
 
 
-
+	/**
+	 * Return the return type of a method
+	 * @param node
+	 * @param tds
+	 * @param rootTDS
+	 * @return
+	 * @throws Exception
+	 */
     private static String getTypeReturnByMethod(Tree node, SymbolTable tds,SymbolTable rootTDS) throws Exception {
         String receiver = node.getChild(node.getChildCount() - 1).getText();
         String called = node.getChild(0).getText();
@@ -168,41 +194,47 @@ public class Util {
         return symbolTableReceiver.get(called).get(Entry.RETURN_TYPE);
     }
 
-    public static void testVoidCall(Tree callNode, SymbolTable tds) throws Exception {
-        if (tds.getInfo(callNode.getChild(0).getText()).get(Entry.RETURN_TYPE) == null){
-            throw new MethodNonVoidException(CommonTreeParser.filename, CommonTreeParser.node,callNode.getChild(0).getText());
-        }
-    }
 
-    public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
+	/**
+	 * Detect semantic error if a class is undeclared
+	 * @param className
+	 * @param tds
+	 * @throws Exception
+	 */
+	public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
     	throw new UndeclaredClassException(CommonTreeParser.filename, CommonTreeParser.node, className);
     }
 
-    private static int countParameters(SymbolTable tds) {
-        int count = 0;
-        for(String key: tds.getKeyEntries()) {
-            if(tds.get(key).getName().equals(Entry.PARAMETER))
-                count++;
-        }
-        return count;
-    }
 
+	/**
+	 * Detect semantic error if a token is not declared before usage
+	 * @param tokenName
+	 * @param tds
+	 * @throws Exception
+	 */
 	public static void undeclaredToken(String tokenName, SymbolTable tds) throws Exception {
     	throw new UndeclaredVariableException(CommonTreeParser.filename, CommonTreeParser.node, tokenName);
 	}
 
+	/**
+	 * Detect semantic error in case of undeclared inheritance class
+	 * @param className
+	 * @param tds
+	 * @throws Exception
+	 */
 	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
 		throw new UndeclaredInheritanceException(CommonTreeParser.filename, CommonTreeParser.node, className);
 	}
 
-	public static void mismatchType(String filename, Tree node, String type1 , String type2, String idf1) throws Exception {
-        throw new MismatchTypeException(filename,node,type1,type2,idf1);
-    }
 
-    public static String callReturnType(Tree node, SymbolTable tds, SymbolTable rootTDS)throws Exception{
-        return Util.subTreeType(node, tds, rootTDS);
-    }
-
+	/**
+	 * Detect semantic error in case of unauthorized inheritance
+	 * @param nodeTypeLeft
+	 * @param nodeTypeRight
+	 * @param rootTDS
+	 * @return
+	 * @throws Exception
+	 */
     public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws Exception {
 
     	SymbolTable leftTDS = rootTDS.findClass(nodeTypeLeft);
@@ -240,7 +272,14 @@ public class Util {
     }
 
 
-
+	/**
+	 * Return the type of a subtree expression
+	 * @param node
+	 * @param tds
+	 * @param rootTDS
+	 * @return
+	 * @throws Exception
+	 */
 	public static String subTreeType(Tree node,SymbolTable tds, SymbolTable rootTDS) throws Exception {
         switch (node.getText()) {
             case "PLUS":
@@ -279,9 +318,68 @@ public class Util {
         }
     }
 
+	/**
+	 * Detect semantic error on initialization
+	 * @param symbol
+	 * @param tds
+	 * @param rootTDS
+	 * @throws Exception
+	 */
     public static void isInit(String symbol, SymbolTable tds, SymbolTable rootTDS) throws Exception{
     	if (!tds.getInfo(symbol).isInit()) {
     		throw new VarUninitializedException(CommonTreeParser.filename, CommonTreeParser.node, symbol);
 	    }
     }
+
+	/**
+	 * Detect semantic errors on affectation
+	 * @param tree
+	 * @param tds
+	 * @param rootTDS
+	 * @throws Exception
+	 */
+	public static void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
+		Entry entry = tds.getInfo(tree.getChild(0).getText());
+		String rightNodeType= null;
+
+
+
+		if (entry == null)
+			Util.undeclaredToken(tree.getChild(0).getText(), tds);
+
+		tds.getInfo(tree.getChild(0).getText()).setInit(true);
+		switch (tree.getChild(1).getText()) {
+			case Keywords.NEW:
+				// Check if the class has been declared previously
+
+				if (rootTDS.findClass(tree.getChild(1).getChild(0).getText()) == null)
+					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
+
+				rightNodeType = tree.getChild(1).getChild(0).toString();
+				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+					if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
+						throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
+					}
+
+				}
+				break;
+			case Keywords.NIL:
+				entry.put(Entry.NIL, "true");
+				rightNodeType="nil";
+				break;
+			case "CALL":
+				Util.testCall(tree.getChild(1), tds, rootTDS);
+				break;
+			default:
+				rightNodeType = Util.subTreeType(tree.getChild(1), tds, rootTDS);
+		}
+
+		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
+			if(!rightNodeType.equals("nil")) {
+				if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
+					throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
+				}
+			}
+		}
+	}
 }

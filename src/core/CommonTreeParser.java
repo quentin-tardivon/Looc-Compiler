@@ -248,7 +248,7 @@ public class CommonTreeParser {
 
 			case "AFFECT":
 				try {
-					this.testAffectation(tree, tds, rootTDS);
+					Util.testAffectation(tree, tds, rootTDS);
 				}
 				catch (Exception e) {
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
@@ -266,7 +266,7 @@ public class CommonTreeParser {
 				}
 				catch (Exception e) {
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-//					e.printStackTrace();
+					//e.printStackTrace();
 				}
 				//TODO Further testing on for loop
 				tds.getInfo(tree.getChild(0).getText()).setInit(true);
@@ -351,50 +351,7 @@ public class CommonTreeParser {
 	 * @throws Exception
 	 */
 
-	private void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
-		Entry entry = tds.getInfo(tree.getChild(0).getText());
-		String rightNodeType= null;
 
-
-
-		if (entry == null)
-			Util.undeclaredToken(tree.getChild(0).getText(), tds);
-
-		tds.getInfo(tree.getChild(0).getText()).setInit(true);
-		switch (tree.getChild(1).getText()) {
-			case Keywords.NEW:
-				// Check if the class has been declared previously
-
-				if (rootTDS.findClass(tree.getChild(1).getChild(0).getText()) == null)
-					Util.undeclaredClass(tree.getChild(1).getChild(0).getText(), tds);
-
-				rightNodeType = tree.getChild(1).getChild(0).toString();
-				if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
-					if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-							throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
-					}
-
-				}
-				break;
-			case Keywords.NIL:
-				entry.put(Entry.NIL, "true");
-				rightNodeType="nil";
-				break;
-			case "CALL":
-				Util.testCall(tree.getChild(1), tds, rootTDS);
-				break;
-			default:
-				rightNodeType = Util.subTreeType(tree.getChild(1), tds, rootTDS);
-		}
-
-		if (!entry.get(Entry.TYPE).equals(rightNodeType)) {
-			if(!rightNodeType.equals("nil")) {
-				if (!Util.validInherit(entry.get(Entry.TYPE),rightNodeType, rootTDS)) {
-					throw new MismatchTypeException(CommonTreeParser.filename, CommonTreeParser.node, rightNodeType, entry.get(Entry.TYPE), entry.getName());
-				}
-			}
-		}
-	}
 
 
 
