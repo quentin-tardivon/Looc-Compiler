@@ -4,11 +4,12 @@ import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.*;
 import TDS.entries.Class;
-import exceptions.MismatchTypeException;
+import exceptions.LoocException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,8 +23,12 @@ public class CommonTreeParser {
 	public static String filename;
 	private ArrayList<String> list = new ArrayList<>();
 	private int currentLine = 0;
+	private List<LoocException> exceptions;
 
-	public CommonTreeParser(String filename) {  CommonTreeParser.filename = filename;  }
+	public CommonTreeParser(String filename) {
+		CommonTreeParser.filename = filename;
+		this.exceptions = new ArrayList<>();
+	}
 
 	public void parseCommonTreeParser(Tree tree) {
 		list.add(tree.toString());
@@ -69,7 +74,8 @@ public class CommonTreeParser {
 					try {
 						tds.put(tree.getChild(0).getText(), new Method(tree.getChild(2).getText()));
 					}
-					catch (Exception e) {
+					catch (LoocException e) {
+						this.exceptions.add(e);
 						e.printStackTrace();
 					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
@@ -80,7 +86,8 @@ public class CommonTreeParser {
 					try {
 						tds.put(tree.getChild(0).getText(), new Method());
 					}
-					catch (Exception e) {
+					catch (LoocException e) {
+						this.exceptions.add(e);
 						e.printStackTrace();
 					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
@@ -91,7 +98,8 @@ public class CommonTreeParser {
 					try {
 						tds.put(tree.getChild(0).getText(), new Method(tree.getChild(1).getText()));
 					}
-					catch (Exception e) {
+					catch (LoocException e) {
+						this.exceptions.add(e);
 						e.printStackTrace();
 					}
 					constructTDS(tree.getChild(2), newtds, rootTDS);
@@ -101,7 +109,8 @@ public class CommonTreeParser {
 					try {
 						tds.put(tree.getChild(0).getText(), new Method());
 					}
-					catch (Exception e) {
+					catch (LoocException e) {
+						this.exceptions.add(e);
 						e.printStackTrace();
 					}
 					constructTDS(tree.getChild(1), newtds, rootTDS);
@@ -119,7 +128,8 @@ public class CommonTreeParser {
 				try {
 					tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					e.printStackTrace();
 				}
 				break;
@@ -130,9 +140,9 @@ public class CommonTreeParser {
 				try {
 					tds.put(tree.getChild(0).getText(), var);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-//					e.printStackTrace();
 				}
 				break;
 
@@ -145,9 +155,9 @@ public class CommonTreeParser {
 						try {
 							Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
 						}
-						catch (Exception e) {
+						catch (LoocException e) {
+							this.exceptions.add(e);
 							System.err.println( e.getClass().getName() + " " + e.getMessage());
-							//e.printStackTrace();
 						}
 					}
 					else {
@@ -161,9 +171,9 @@ public class CommonTreeParser {
 				try {
 					parentTDS.put(tree.getChild(0).getText(), newClass);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, parentTDS, tree.getChild(0).getText()); //Attention, l'imbrication level correspond ici au niveau d'héritage
 				parentTDS.putClass(tree.getChild(0).getText(), newtds);
@@ -181,7 +191,8 @@ public class CommonTreeParser {
 					tds.put("block" +nb , new AnonymousBloc(), "Block");
 					tds.putLink("block" + nb, newtds);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					e.printStackTrace();
 				}
 				for (int j = 0; j < tree.getChildCount(); j++) {
@@ -203,7 +214,8 @@ public class CommonTreeParser {
 					tds.put("if" +nb , new If());
 					tds.putLink("if" + nb, newtds);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					e.printStackTrace();
 				}
 				for (int j = 1; j < tree.getChildCount(); j++) {
@@ -218,7 +230,8 @@ public class CommonTreeParser {
 					tds.put("else" +nb , new Else());
 					tds.putLink("else" + nb, newtds);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					e.printStackTrace();
 				}
 				for (int j = 1; j < tree.getChildCount(); j++) {
@@ -250,9 +263,9 @@ public class CommonTreeParser {
 				try {
 					Util.testAffectation(tree, tds, rootTDS);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				break;
 
@@ -264,9 +277,9 @@ public class CommonTreeParser {
 					tds.put("for" +nb , new ForLoop(), "For");
 					tds.putLink("for" + nb, newtds);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				//TODO Further testing on for loop
 				tds.getInfo(tree.getChild(0).getText()).setInit(true);
@@ -279,23 +292,22 @@ public class CommonTreeParser {
 				try {
 					Util.testDo(tree.getChild(0), tds, rootTDS);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				break;
 
 			case "RETURN":
 				String realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
-
 				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
 
 				try {
 					Util.testReturnType(expectedV,realV);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				break;
 
@@ -304,20 +316,20 @@ public class CommonTreeParser {
 				try {
 					Util.testReadUse(realV);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				break;
 
 			case "WRITE":
-				realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
 				try {
+					realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
 					Util.testWriteUse(realV);
 				}
-				catch (Exception e) {
+				catch (LoocException e) {
+					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
-					//e.printStackTrace();
 				}
 				break;
 
@@ -339,6 +351,9 @@ public class CommonTreeParser {
 		return this.tds;
 	}
 
+	public List<LoocException> getExceptions() {
+		return this.exceptions;
+	}
 
 	/**
 	 * This method must:

@@ -8,6 +8,7 @@ import core.Keywords;
 import exceptions.*;
 import org.antlr.runtime.tree.Tree;
 
+import java.awt.image.LookupOp;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -24,7 +25,7 @@ public class Util {
 	 * @return
 	 * @throws Exception
 	 */
-	private static String testTypeOper(String nodeL, String nodeR) throws Exception {
+	private static String testTypeOper(String nodeL, String nodeR) throws LoocException {
         if (nodeL.equals(Keywords.INTEGER) && nodeR.equals(Keywords.INTEGER)) {
         	return Keywords.INTEGER;
         }
@@ -43,7 +44,7 @@ public class Util {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getType(String s, SymbolTable tds) throws Exception {
+	public static String getType(String s, SymbolTable tds) throws LoocException {
         if (s.matches("[0-9]+"))
             return Keywords.INTEGER;
         if (s.matches("\".*\""))
@@ -64,7 +65,7 @@ public class Util {
 	 * @param real
 	 * @throws Exception
 	 */
-	public static void testReturnType(String expected, String real) throws Exception {
+	public static void testReturnType(String expected, String real) throws LoocException {
         if(!expected.equals(real))
             throw new ReturnValueTypeMismatchException(CommonTreeParser.filename, CommonTreeParser.node, expected, real);
 
@@ -76,7 +77,7 @@ public class Util {
 	 * @param readingType
 	 * @throws Exception
 	 */
-	public static void testReadUse(String readingType) throws Exception{
+	public static void testReadUse(String readingType) throws LoocException {
 		if (!"int".equals(readingType)) {
 			throw new ReadUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
@@ -87,7 +88,7 @@ public class Util {
 	 * @param readingType
 	 * @throws Exception
 	 */
-	public static void testWriteUse(String readingType) throws Exception{
+	public static void testWriteUse(String readingType) throws LoocException {
 		if (!("int".equals(readingType) || "string".equals(readingType))) {
 			throw new WriteUsageException(CommonTreeParser.filename, CommonTreeParser.node, readingType);
 		}
@@ -100,7 +101,7 @@ public class Util {
 	 * @param rootTDS
 	 * @throws Exception
 	 */
-	public static void testDo(Tree doChild,SymbolTable tds, SymbolTable rootTDS) throws Exception {
+	public static void testDo(Tree doChild,SymbolTable tds, SymbolTable rootTDS) throws LoocException {
 
 		if(doChild.getText().equals("CALL")) {
 			// Test if the method is declared
@@ -125,7 +126,7 @@ public class Util {
 	 * @param rootTDS
 	 * @throws Exception
 	 */
-    public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws Exception {
+    public static void testCall(Tree callNode,SymbolTable tds, SymbolTable rootTDS) throws LoocException {
 
             // Test the receiver: this / super / idf
             String receiver = callNode.getChild(callNode.getChildCount() - 1).getText();
@@ -186,7 +187,7 @@ public class Util {
 	 * @return
 	 * @throws Exception
 	 */
-    private static String getTypeReturnByMethod(Tree node, SymbolTable tds,SymbolTable rootTDS) throws Exception {
+    private static String getTypeReturnByMethod(Tree node, SymbolTable tds,SymbolTable rootTDS) throws LoocException {
         String receiver = node.getChild(node.getChildCount() - 1).getText();
         String called = node.getChild(0).getText();
         SymbolTable symbolTableReceiver = Util.getSymbolTable(receiver, tds, rootTDS);
@@ -201,7 +202,7 @@ public class Util {
 	 * @param tds
 	 * @throws Exception
 	 */
-	public static void undeclaredClass(String className, SymbolTable tds) throws Exception {
+	public static void undeclaredClass(String className, SymbolTable tds) throws LoocException {
     	throw new UndeclaredClassException(CommonTreeParser.filename, CommonTreeParser.node, className);
     }
 
@@ -212,7 +213,7 @@ public class Util {
 	 * @param tds
 	 * @throws Exception
 	 */
-	public static void undeclaredToken(String tokenName, SymbolTable tds) throws Exception {
+	public static void undeclaredToken(String tokenName, SymbolTable tds) throws LoocException {
     	throw new UndeclaredVariableException(CommonTreeParser.filename, CommonTreeParser.node, tokenName);
 	}
 
@@ -222,7 +223,7 @@ public class Util {
 	 * @param tds
 	 * @throws Exception
 	 */
-	public static void undeclaredInheritance(String className, SymbolTable tds) throws Exception {
+	public static void undeclaredInheritance(String className, SymbolTable tds) throws LoocException {
 		throw new UndeclaredInheritanceException(CommonTreeParser.filename, CommonTreeParser.node, className);
 	}
 
@@ -235,7 +236,7 @@ public class Util {
 	 * @return
 	 * @throws Exception
 	 */
-    public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws Exception {
+    public static Boolean validInherit(String nodeTypeLeft, String nodeTypeRight, SymbolTable rootTDS) throws LoocException {
 
     	SymbolTable leftTDS = rootTDS.findClass(nodeTypeLeft);
     	if (leftTDS == null) {
@@ -256,7 +257,7 @@ public class Util {
      *          // getSymbolTable(a, currentTDS) => returns the Symbol Table of Animal class
      *
      */
-    private static SymbolTable getSymbolTable(String receiver, SymbolTable currentTDS, SymbolTable rootTDS) throws Exception {
+    private static SymbolTable getSymbolTable(String receiver, SymbolTable currentTDS, SymbolTable rootTDS) throws LoocException {
         switch (receiver) {
             case Keywords.THIS:
                 return currentTDS.getFather();
@@ -280,7 +281,7 @@ public class Util {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String subTreeType(Tree node,SymbolTable tds, SymbolTable rootTDS) throws Exception {
+	public static String subTreeType(Tree node,SymbolTable tds, SymbolTable rootTDS) throws LoocException {
         switch (node.getText()) {
             case "PLUS":
                 return Util.testTypeOper(subTreeType(node.getChild(0),tds, rootTDS),subTreeType(node.getChild(1),tds, rootTDS));
@@ -325,7 +326,7 @@ public class Util {
 	 * @param rootTDS
 	 * @throws Exception
 	 */
-    public static void isInit(String symbol, SymbolTable tds, SymbolTable rootTDS) throws Exception{
+    public static void isInit(String symbol, SymbolTable tds, SymbolTable rootTDS) throws LoocException {
     	if (!tds.getInfo(symbol).isInit()) {
     		throw new VarUninitializedException(CommonTreeParser.filename, CommonTreeParser.node, symbol);
 	    }
@@ -338,7 +339,7 @@ public class Util {
 	 * @param rootTDS
 	 * @throws Exception
 	 */
-	public static void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws Exception {
+	public static void testAffectation(Tree tree, SymbolTable tds, SymbolTable rootTDS) throws LoocException {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
 		String rightNodeType= null;
 

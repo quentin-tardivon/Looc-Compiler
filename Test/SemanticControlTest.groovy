@@ -1,6 +1,7 @@
 import core.CommonTreeParser
 import exceptions.*
 import factories.CommonTreeParserFactory
+import org.junit.Ignore
 
 /**
  * Created by quentin on 30/03/2017.
@@ -9,103 +10,93 @@ class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser
 
     void testMismatchTypeException() {
-        shouldFail(MismatchTypeException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/MismatchTypeException.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/MismatchTypeException.looc")
+        testException(treeParser, MismatchTypeException)
+
     }
 
     void testAlreadyDeclaredException() {
-        shouldFail(SymbolAlreadyDeclaredException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AlreadyDeclaredEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AlreadyDeclaredEx.looc")
+        testException(treeParser, SymbolAlreadyDeclaredException)
     }
 
     void testUndeclaredClassEx() {
-        shouldFail(UndeclaredClassException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredClassEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredClassEx.looc")
+        testException(treeParser, UndeclaredClassException)
     }
 
     void testReturnValTypeMisEx() {
-        shouldFail(ReturnValueTypeMismatchException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMismatchEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReturnValueTypeMismatchEx.looc")
+        testException(treeParser, ReturnValueTypeMismatchException, UndeclaredMethodException)
     }
 
     void testStringOpEx() {
-        shouldFail(StringOperationException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/StringOpEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/StringOpEx.looc")
+        testException(treeParser, StringOperationException)
     }
 
     void testUndeclaredVar() {
-        shouldFail(UndeclaredVariableException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredVarEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredVarEx.looc")
+        testException(treeParser, UndeclaredVariableException)
     }
 
     void testInexactNumberParamsEx() {
-        shouldFail(InexactParamsNumberException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactNumberParamsEx.looc")
+        testException(treeParser, InexactParamsNumberException)
     }
 
     void testUndeclaredInheritanceEx() {
-        shouldFail(UndeclaredInheritanceException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredInheritanceEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredInheritanceEx.looc")
+        testException(treeParser, UndeclaredInheritanceException, MismatchTypeException)
     }
 
     void testMismatchOperationException() {
-        shouldFail(MismatchOperationException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/OperationMismatch.looc")
+        testException(treeParser, MismatchOperationException)
     }
 
     void testNotVoidMethod() {
-        shouldFail(MethodNonVoidException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/NotVoidMethod.looc")
+        testException(treeParser, MethodNonVoidException)
     }
 
     void testParameterTypeMismatchException() {
-        shouldFail(ParameterTypeMismatchException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ParameterTypeMismatchException.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ParameterTypeMismatchException.looc")
+        testException(treeParser, ParameterTypeMismatchException)
     }
 
 
     void testUndeclaredMethEx() {
-        shouldFail(UndeclaredMethodException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredMethEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/UndeclaredMethEx.looc")
+        testException(treeParser, UndeclaredMethodException)
     }
 
     void testReadUsageEx() {
-        shouldFail(ReadUsageException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReadUsageEx.looc")
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/ReadUsageEx.looc")
+        testException(treeParser, ReadUsageException)
     }
 
     void testWriteUsageEx() {
-        shouldFail(WriteUsageException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/WriteUsageEx.looc")
-
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/WriteUsageEx.looc")
+        testException(treeParser, WriteUsageException)
     }
 
     void testInexactUsesOfDoException() {
-        shouldFail(InexactUsesOfDoException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactUsesOfDoEx.looc")
-
-
-        }
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/InexactUsesOfDoEx.looc")
+        testException(treeParser, InexactUsesOfDoException)
     }
 
     void testUninitializedException() {
-        shouldFail (VarUninitializedException) {
-            treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/VarUninitializedException.looc")
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/VarUninitializedException.looc")
+        testException(treeParser, VarUninitializedException)
+    }
+
+    void testException(CommonTreeParser treeParser, Class... cls) {
+        assertEquals("Should throw only one LoocException", cls.length, treeParser.getExceptions().size())
+        for(int i = 0; i < cls.length; i++) {
+            assertTrue("Should throw only " + cls[i].getSimpleName(), cls[i].isInstance(treeParser.getExceptions().get(i)))
         }
+
     }
 
 

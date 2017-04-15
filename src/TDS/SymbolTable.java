@@ -3,6 +3,7 @@ package TDS;
 import core.CommonTreeParser;
 import exceptions.SymbolAlreadyDeclaredException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -36,6 +37,7 @@ public class SymbolTable {
 	private int numberIf = 0;
 	/** Number of block statement statement in this block **/
 	private int numberBlock = 0;
+
 	private final String name;
 
 	private HashMap<String, SymbolTable> classList;
@@ -172,6 +174,16 @@ public class SymbolTable {
 	 */
     public SymbolTable getFather(){return this.father;}
 
+    public String getNameOfSymbolTable() {
+		if(this.father != null) {
+			for(String key: this.father.links.keySet()) {
+				if(this.father.links.get(key).equals(this))
+					return key;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 *
 	 * @return The number of for statement
@@ -214,17 +226,29 @@ public class SymbolTable {
 
 
     public String toString() {
-	    String s = String.format("==== %s[%d] ====\n", this.name, this.getImbricationLevel());
-	    for(String symbol: this.entries.keySet()) {
-	    	s += String.format(" - %-10s -> %s\n", symbol, this.entries.get(symbol));
-	    }
-	    for (String symbol: this.links.keySet()) {
-		    s += String.format(" - %-10s -> %s\n", symbol, this.links.get(symbol));
-	    }
+		String s;
+		String prefix = " - ";
+		String entry = this.getNameOfSymbolTable();
+		if(entry != null && this.father.get(entry).getName().equals(Entry.METHOD)) {
+			s = String.format(" Imbrication: %d\n", this.getImbricationLevel());
+			prefix = "              - ";
+		}
+		else
+			s = String.format("==== %s[%d] ====\n", this.name, this.getImbricationLevel());
 
+		for(String symbol: this.entries.keySet()) {
+	    	s += String.format("%s%-10s -> %s", prefix, symbol, this.entries.get(symbol));
+	    	if((this.entries.get(symbol).getName().equals(Entry.METHOD)))
+				s+= this.links.get(symbol).toString() + "\n";
+	    	else
+	    		s += "\n";
+		}
+	    for (String symbol: this.links.keySet()) {
+	    	if(!this.entries.get(symbol).getName().equals(Entry.METHOD))
+		    	s += String.format("%s%-10s -> %s", prefix, symbol, this.links.get(symbol));
+	    }
 	    for(String cls: this.classList.keySet()) {
 			s += "\n\n" + this.classList.get(cls).toString() + "\n\n";
-//					String.format(" - %-10s -> %s\n", cls, this.links.get(symbol));
 		}
     	return s;
     }
@@ -240,7 +264,6 @@ public class SymbolTable {
 		}
 		return res;
 	}
-
 
 
 	public SymbolTable putClass(String symbol, SymbolTable tds) {  return this.classList.put(symbol, tds);  }
