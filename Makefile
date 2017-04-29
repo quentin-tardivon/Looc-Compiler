@@ -2,7 +2,9 @@ SRC_DIR = src
 BIN_DIR = out
 CORE_DIR= core
 TMP_DIR= tmp
+ASM_DIR= asm
 SAMPLE_DIR = samples
+MICROPIUPK = microPIUPK.jar
 SEMANTIC_ERRORS_DIR = errorSamples
 PGM = TestLoocMakefile
 EXTENSION = looc
@@ -10,6 +12,8 @@ PGM_JAVA = $(PGM).java
 LOG_FILE_ANTLR = antlr.log
 
 export CLASSPATH=/usr/local/lib/antlr-3.3-complete.jar:.:./$(BIN_DIR):./$(TMP_DIR):$$CLASSPATH
+
+#$(shell mkdir -p $(ASM_DIR))
 
 all: antlr
 
@@ -30,7 +34,6 @@ clean:
 	rm -rf $(BIN_DIR)
 	rm -rf $(TMP_DIR)
 	rm -f $(LOG_FILE_ANTLR)
-
 
 javaTest:
 	@echo "\n --- Create tmp/ directory ---"
@@ -91,3 +94,11 @@ testSemanticErrors:
 test:javaTest testSyntaxErrors testSemanticErrors
 	@echo "\n\033[0m --- Delete tmp/ directory ---"
 	rm -rf $(TMP_DIR)
+
+
+ass:
+	java -jar $(MICROPIUPK) -ass $(file)
+
+sim: ass
+	#ASM_FILE=ASM_DIR/$$(basename $$file .asm).iup
+	java -jar $(MICROPIUPK) -sim &
