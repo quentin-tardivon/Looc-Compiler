@@ -1,3 +1,4 @@
+import ASMGenerator.ASMWriter;
 import TDS.SymbolTable;
 import core.CommonTreeParser;
 import factories.CommonTreeParserFactory;
@@ -14,6 +15,8 @@ public class Sandbox {
 
     public static void main(String[] args) throws Exception {
         CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AllSemantic.looc");
+
+	    new ASMWriter().initASMFile("test");
         System.out.println(treeParser.getRootSymbolTable());
 
 	    SymbolTable root = new SymbolTable();

@@ -1,3 +1,4 @@
+import ASMGenerator.ASMWriter;
 import TDS.SymbolTable;
 import core.CommonTreeParser;
 import core.LoocLexer;
@@ -44,6 +45,9 @@ public class TestLooc {
 
 		DOTTreeGenerator gen = new DOTTreeGenerator();
 		StringTemplate st = gen.toDOT(tree);
+
+
+
 
 	}
 }

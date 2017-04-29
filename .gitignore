@@ -7,3 +7,4 @@ output/
 .DS_Store
 target/
 antlrworks-1.4.jar
+doc/*
