@@ -30,6 +30,10 @@ public class Variable extends Entry {
 		this.put(Entry.TYPE, type);
 	}
 
+	public int getDepl(){
+		return this.depl;
+	}
+
 	public String toString() {
 		return super.toString() + " Depl : " + this.depl;
 	}

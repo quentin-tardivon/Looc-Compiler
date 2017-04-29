@@ -4,5 +4,3 @@ var i : int;
 
 n := 10;
 total := 0;
-
-write total;
