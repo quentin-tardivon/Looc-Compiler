@@ -36,7 +36,7 @@ public class Sandbox {
 	    SymbolTable tds = new SymbolTable();
 	    treeParser.constructTDS(tree, tds, tds);
 
-        ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".src");
+        ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".asm");
         writer.generateASMFile(tree, tds);
     }
 }

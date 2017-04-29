@@ -33,36 +33,32 @@ public class ASMWriter {
 
 			writer.write(formatASM("SP", "EQU", "R15") +
 					formatASM("WR", "EQU", "R14") +
-					formatASM("BP", "EQU", "R13") +
 					formatASM("BP", "EQU", "R13\n") +
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
-					formatASM("WRITE_EXC", "EQU", "66") +
 					formatASM("WRITE_EXC", "EQU", "66\n") +
 					formatASM("NUL", "EQU", "0") +
 					formatASM("NULL", "EQU", "0") +
 					formatASM("NIL", "EQU", "0\n") +
 
-					formatASM("STACK_ADRS", "EQU", "0X1000") +
-					formatASM("LOAD_ADRS", "EQU", "0XfE00\n") +
-					formatASM("ORG", "LOAD_ADRS", "") +
-					formatASM("START", "main", "\n") +
+					formatASM("STACK_ADRS", "EQU", "0x1000") +
+					formatASM("LOAD_ADRS", "EQU", "0xFE00\n") +
+					formatASM("", "ORG", "LOAD_ADRS") +
+					formatASM("", "START", "main_") +
 
 					formatASM("main_", "LDW SP, #STACK_ADRS", "") +
-					formatASM("", "LDW BP, #NIL", "") +
 					formatASM("", "LDW BP, #NIL", "\n") +
 					formatASM("", "STW BP, -(SP)", "") +
-					formatASM("", "STW BP, SP", "")
+					formatASM("", "LDW BP, SP", "")
 			);
 
 			this.constructASM(tree, writer, TDS);
 
-			writer.write(
-					formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
-							formatASM("", "LDW SP, BP", "") +
-							formatASM("", "LDW BP, (SP)+", "") +
-							formatASM("", "TRP #EXIT_EXC", "") +
-							formatASM("", "JEA @main_", "")
+			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
+					formatASM("", "LDW SP, BP", "") +
+					formatASM("", "LDW BP, (SP)+", "") +
+					formatASM("", "TRP #EXIT_EXC", "") +
+					formatASM("", "JEA @main_", "")
 			);	
 		}
 		catch (Exception e) {

@@ -1,29 +1,25 @@
 SP        		EQU       		R15       
 WR        		EQU       		R14       
-BP        		EQU       		R13       
 BP        		EQU       		R13
       
 EXIT_EXC  		EQU       		64        
 READ_EXC  		EQU       		65        
-WRITE_EXC 		EQU       		66        
 WRITE_EXC 		EQU       		66
        
 NUL       		EQU       		0         
 NULL      		EQU       		0         
 NIL       		EQU       		0
         
-STACK_ADRS		EQU       		0X1000    
-LOAD_ADRS 		EQU       		0XfE00
+STACK_ADRS		EQU       		0x1000    
+LOAD_ADRS 		EQU       		0xFE00
    
-ORG       		LOAD_ADRS 		          
-START     		main      		
-         
+          		ORG       		LOAD_ADRS 
+          		START     		main_     
 main_     		LDW SP, #STACK_ADRS		          
-          		LDW BP, #NIL		          
           		LDW BP, #NIL		
          
           		STW BP, -(SP)		          
-          		STW BP, SP		          
+          		LDW BP, SP		          
           		ADI SP, SP, #-2		          
           		ADI SP, SP, #-2		          
           		ADI SP, SP, #-2		          
