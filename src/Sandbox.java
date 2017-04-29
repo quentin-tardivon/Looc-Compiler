@@ -33,6 +33,6 @@ public class Sandbox {
         CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
         treeParser.parseCommonTreeParser(tree);
 
-        new ASMWriter(f.getName() + ".s).generateASMFile(tree);
+        //new ASMWriter(f.getName() + ".s).generateASMFile(tree);
     }
 }

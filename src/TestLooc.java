@@ -48,8 +48,8 @@ public class TestLooc {
 		StringTemplate st = gen.toDOT(tree);
 
 
-		ASMWriter asm = new ASMWriter();
-		asm.initASMFile(Paths.get(DIR_TESTS, DIR_ASM, "test.src").toString(), tree);
+		//ASMWriter asm = new ASMWriter();
+		//asm.initASMFile(Paths.get(DIR_TESTS, DIR_ASM, "test.src").toString(), tree);
 
 	}
 }
