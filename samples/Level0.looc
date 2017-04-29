@@ -3,4 +3,4 @@ var total : int;
 var i : int;
 
 n := 10;
-total := 0;
+total := 12;

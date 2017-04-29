@@ -15,7 +15,8 @@ import java.nio.file.Paths;
 public class TestLooc {
 
 	private static final String LANGUAGE_NAME = "LOOC";
-	private static final String DIR_TESTS = "samples";	
+	private static final String DIR_TESTS = "samples";
+	private static final String DIR_ASM = "asmSamples";
 	private static final String DEFAULT_TEST_FILE = Paths.get(DIR_TESTS, "coucou.looc").toString();
 
 	public static void main(String[] args) throws Exception {
@@ -47,7 +48,8 @@ public class TestLooc {
 		StringTemplate st = gen.toDOT(tree);
 
 
-
+		//ASMWriter asm = new ASMWriter();
+		//asm.initASMFile(Paths.get(DIR_TESTS, DIR_ASM, "test.src").toString(), tree);
 
 	}
 }
