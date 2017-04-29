@@ -23,8 +23,7 @@ import java.io.FileInputStream;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-
-        String filename = "./samples//level0.looc";
+        String filename = "./samples/Level0.looc";
         File f = new File(filename);
         ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(f));
         LoocLexer lexer = new LoocLexer(input);
@@ -37,6 +36,7 @@ public class Sandbox {
 	    SymbolTable tds = new SymbolTable();
 	    treeParser.constructTDS(tree, tds, tds);
 
-        new ASMWriter(f.getName() + ".asm").generateASMFile(tree, treeParser.getRootSymbolTable());
+        ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".src");
+        writer.generateASMFile(tree, tds);
     }
 }

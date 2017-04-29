@@ -21,42 +21,49 @@ public class ASMWriter {
 		this.output = asmFile;
 	}
 
+
+	public static String formatASM(String left, String asm, String value) {
+		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
+	}
+
 	public void generateASMFile(Tree tree, SymbolTable TDS) {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(this.output), "utf-8"))) {
-
 			//Début du programme
-			writer.write("SP          EQU r15\n" +
-					"WR          EQU r14\n" +
-					"BP          EQU r13\n" +
-					"\n" +
-					"EXIT_EXC   EQU   64\n" +
-					"READ_EXC   EQU   65\n" +
-					"WRITE_EXC  EQU   66\n" +
-					"\n" +
-					"NUL         EQU  0\n" +
-					"NULL        EQU  0\n" +
-					"NIL         EQU  0\n" +
-					"\n" +
-					"STACK_ADRS  EQU  0x1000\n" +
-					"LOAD_ADRS   EQU  0xFE00\n" +
-					"\n" +
-					"            ORG LOAD_ADRS\n" +
-					"            START main_\n" +
-					"\n" +
-					"\n" +
-					"main_   LDW SP, #STACK_ADRS\n" +
-					"        LDW BP, #NIL\n" +
-					"\n" +
-					"        STW BP, -(SP)\n" +
-					"        LDW BP, SP\n");
+
+			writer.write(formatASM("SP", "EQU", "R15") +
+					formatASM("WR", "EQU", "R14") +
+					formatASM("BP", "EQU", "R13") +
+					formatASM("BP", "EQU", "R13\n") +
+					formatASM("EXIT_EXC", "EQU", "64") +
+					formatASM("READ_EXC", "EQU", "65") +
+					formatASM("WRITE_EXC", "EQU", "66") +
+					formatASM("WRITE_EXC", "EQU", "66\n") +
+					formatASM("NUL", "EQU", "0") +
+					formatASM("NULL", "EQU", "0") +
+					formatASM("NIL", "EQU", "0\n") +
+
+					formatASM("STACK_ADRS", "EQU", "0X1000") +
+					formatASM("LOAD_ADRS", "EQU", "0XfE00\n") +
+					formatASM("ORG", "LOAD_ADRS", "") +
+					formatASM("START", "main", "\n") +
+
+					formatASM("main_", "LDW SP, #STACK_ADRS", "") +
+					formatASM("", "LDW BP, #NIL", "") +
+					formatASM("", "LDW BP, #NIL", "\n") +
+					formatASM("", "STW BP, -(SP)", "") +
+					formatASM("", "STW BP, SP", "")
+			);
 
 			this.constructASM(tree, writer, TDS);
 
-			//Fin du programme
-			writer.write("LDW SP, BP\n" +
-					"        LDW BP, (SP)+\n" +
-					"        TRP #EXIT_EXC\n");
+			writer.write(
+					formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
+							formatASM("", "LDW SP, BP", "") +
+							formatASM("", "LDW BP, (SP)+", "") +
+							formatASM("", "TRP #EXIT_EXC", "") +
+							formatASM("", "JEA @main_", "")
+			);	
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -65,36 +72,33 @@ public class ASMWriter {
 	}
 
 	public String varDecl(int deplType) {
-		//#-2 ==> depl
-		return "ADI SP, SP, #-"+ deplType + "\n";
+		return this.formatASM("", "ADI SP, SP, #-" + deplType, "");
 	}
 
 	public String varAffect(int depl, int value) {
-		//#-23 ==> Value
-		//(bp)-10 ==> Depl
-		return "LDW R0, #" + value + "\n" +
-				"STW R0, (BP)-"+ depl + "\n";
+		return this.formatASM("", "LDW R0, #" + value, "") +
+				this.formatASM("", "STW R0, (BP)-" + depl, "");
 	}
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
-
-		return "ADQ " + constante + ", R1";
+		return this.formatASM("", "ADQ" + constante + ", R1", "");
 	}
 
 	public String addToStack(String reg) {
-		return "ADQ -2, SP\n" +
-				"STW " + reg + ", (SP)\n";
+		return this.formatASM("", "ADQ -2, SP", "") +
+				this.formatASM("", "STW " + reg + ", (SP)", "");
 	}
 
 	public String removeFromStack(String reg) {
-		return "LDW " + reg + ", (SP)\n" +
-				"ADQ 2, SP\n";
+		return this.formatASM("", "LDW" + reg + ", (SP)", "") +
+			this.formatASM("", "ADQ 2, SP", "");
 	}
 
 	public String getVar(String reg, int depl) {
-		return "LDW " + reg + ", (BP)-" + depl;
+		return this.formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
 	}
+
 
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
@@ -112,6 +116,9 @@ public class ASMWriter {
 			case "AFFECT":
 				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
 				break;
+				//System.out.println(tree.getText());
+				//Declaration d = new Declaration(new Variable("int"));
+				//writer.write(formatASM(d.generate()));
 		}
 	}
 
