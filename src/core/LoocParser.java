@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-02 22:12:09
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-04-29 17:02:46
 
 package core;
 
@@ -242,7 +242,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: class_decl, instruction, var_decl
+            // elements: class_decl, var_decl, instruction
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -533,7 +533,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_decl, var_decl
+            // elements: var_decl, method_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -687,7 +687,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: function_decl, IDF, method_args
+            // elements: method_args, function_decl, IDF
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -883,7 +883,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: type, var_decl, instruction
+                    // elements: instruction, type, var_decl
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1222,7 +1222,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: IDF, type
+            // elements: type, IDF
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1322,7 +1322,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: IDF, type
+            // elements: type, IDF
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1791,7 +1791,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: instruction, IDF, expression, expression
+                    // elements: expression, instruction, IDF, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1953,7 +1953,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: b, expression, a
+                    // elements: expression, a, b
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2365,7 +2365,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: CLASS, 68
+                    // elements: 68, CLASS
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2502,7 +2502,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: mult, operation
+            	    // elements: operation, mult
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2546,7 +2546,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: mult, operation
+            	    // elements: operation, mult
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2692,7 +2692,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: cmp, multiop
+            	    // elements: multiop, cmp
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -2736,7 +2736,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: cmp, multiop
+            	    // elements: multiop, cmp
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 

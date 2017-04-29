@@ -1,7 +1,15 @@
 import ASMGenerator.ASMWriter;
 import TDS.SymbolTable;
 import core.CommonTreeParser;
+import core.LoocLexer;
+import core.LoocParser;
 import factories.CommonTreeParserFactory;
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.tree.CommonTree;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * Class for testing things !
@@ -14,13 +22,17 @@ import factories.CommonTreeParserFactory;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-        CommonTreeParser treeParser = CommonTreeParserFactory.createFromFile("./samples/errorSamples/AllSemantic.looc");
+        String filename = "./samples//level0.looc";
+        File f = new File(filename);
+        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(f));
+        LoocLexer lexer = new LoocLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        LoocParser parser = new LoocParser(tokens);
+        CommonTree tree = (CommonTree)parser.program().getTree();
 
-	    new ASMWriter().initASMFile("test");
-        System.out.println(treeParser.getRootSymbolTable());
+        CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
+        treeParser.parseCommonTreeParser(tree);
 
-	    SymbolTable root = new SymbolTable();
-	    SymbolTable comp = new SymbolTable();
-	    //root.putClass("Comparator")
+        new ASMWriter(f.getName() + ".s).generateASMFile(tree);
     }
 }

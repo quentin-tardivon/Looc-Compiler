@@ -1,18 +1,28 @@
 package ASMGenerator;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import ASMGenerator.instructions.Declaration;
+import TDS.Entry;
+import TDS.entries.Variable;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
+
+import java.io.*;
 
 /**
  * Created by quentin on 29/04/2017.
  */
 public class ASMWriter {
 
-	public void initASMFile(String filename) {
+	public static final int INT_SIZE = 2;
+	private String output;
+
+	public ASMWriter(String asmFile) {
+		this.output = asmFile;
+	}
+
+	public void generateASMFile( Tree tree) {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream("./samples/asmSamples/"+ filename + ".asm"), "utf-8"))) {
+				new FileOutputStream(this.output), "utf-8"))) {
 
 			//Début du programme
 			writer.write("SP          EQU R15\n" +
@@ -43,6 +53,8 @@ public class ASMWriter {
 					"\n" +
 					"        STW BP, -(SP)\n" +
 					"        LDW BP, SP\n");
+
+			this.constructASM(tree, writer);
 
 			//Fin du programme
 			writer.write("LDW SP, BP\n" +
@@ -88,6 +100,18 @@ public class ASMWriter {
 	}
 
 
+	private void constructASM(Tree tree, Writer writer) throws IOException {
+		switch(tree.getText()) {
+			case "ROOT":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer);
+				}
+				break;
 
+			case "VAR_DECL":
+				Declaration d = new Declaration(new Variable("int"));
+				writer.write(d.generate());
+		}
+	}
 
 }
