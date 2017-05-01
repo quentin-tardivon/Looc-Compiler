@@ -1,10 +1,7 @@
 package ASMGenerator;
 
-import ASMGenerator.instructions.Declaration;
-import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
-import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -31,7 +28,8 @@ public class ASMWriter {
 				new FileOutputStream(this.output), "utf-8"))) {
 			//Début du programme
 
-			writer.write(formatASM("SP", "EQU", "R15") +
+			writer.write(formatASM("\n\n\n\n// ------------- DEBUT DU PGM", "", "\n") +
+					formatASM("SP", "EQU", "R15") +
 					formatASM("WR", "EQU", "R14") +
 					formatASM("BP", "EQU", "R13\n") +
 					formatASM("EXIT_EXC", "EQU", "64") +
@@ -95,6 +93,14 @@ public class ASMWriter {
 		return this.formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
 	}
 
+	public String printFunc(String varName) { //Equivalent à charger une fonction classique, inspiration
+		return this.formatASM("", "ADI BP, RO, #-8", "") +
+				this.formatASM("", "STW RO, -(SP)", "") +
+				this.formatASM("", "JSR @print", "") +
+				this.formatASM("", "ADI SP, SP, #2", "");
+
+	}
+
 
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
@@ -106,15 +112,20 @@ public class ASMWriter {
 				break;
 
 			case "VAR_DEC":
-				writer.write(varDecl(2));
+				if (tree.getChild(0).getText() == "int") {
+					writer.write(varDecl(2));
+				}
+				else if(tree.getChild(0).getText() == "string") {
+					writer.write(varDecl(2));
+				}
 				break;
 
 			case "AFFECT":
 				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
 				break;
-				//System.out.println(tree.getText());
-				//Declaration d = new Declaration(new Variable("int"));
-				//writer.write(formatASM(d.generate()));
+
+			case "WRITE":
+				writer.write(printFunc(tree.getChild(0).getText()));
 		}
 	}
 

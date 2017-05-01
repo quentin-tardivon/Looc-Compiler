@@ -4,3 +4,5 @@ var i : int;
 
 n := 10;
 total := 12;
+
+write total;
