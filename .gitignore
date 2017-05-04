@@ -10,4 +10,4 @@ target/
 antlrworks-1.4.jar
 doc/*
 PFSI/
-samples/asmSamples/*.iup
+samples/asmSamples/
