@@ -1,3 +1,9 @@
+
+
+
+
+// ------------- DEBUT DU PGM		          		
+         
 SP        		EQU       		R15       
 WR        		EQU       		R14       
 BP        		EQU       		R13
@@ -20,13 +26,14 @@ main_     		LDW SP, #STACK_ADRS
          
           		STW BP, -(SP)		          
           		LDW BP, SP		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
           		LDW R0, #10		          
           		STW R0, (BP)-0		          
           		LDW R0, #12		          
           		STW R0, (BP)-2		          
+          		ADI BP, R0, #-8		          
+          		STW R0, -(SP)		          
+          		JSR @print_		          
+          		ADI SP, SP, #2		          
 
 
 
@@ -37,3 +44,18 @@ main_     		LDW SP, #STACK_ADRS
           		LDW BP, (SP)+		          
           		TRP #EXIT_EXC		          
           		JEA @main_		          
+
+
+
+
+// ------------- PRINT FUNCT		          		
+         
+          		print_ LDQ 0,R1		          
+          		STW BP, -(SP)		          
+          		LDW BP, SP		          
+          		SUB SP, R1, SP		          
+          		LDW R0, (BP)4		          
+          		TRP #WRITE_EXC		          
+          		LDW SP, BP		          
+          		LDW BP, (SP)+		          
+          		RTS       		          

@@ -57,7 +57,9 @@ public class ASMWriter {
 					formatASM("", "LDW BP, (SP)+", "") +
 					formatASM("", "TRP #EXIT_EXC", "") +
 					formatASM("", "JEA @main_", "")
-			);	
+			);
+
+			writer.write(defPrintFunc());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -94,15 +96,16 @@ public class ASMWriter {
 	}
 
 	private String printFuncCall(String varName) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "ADI BP, RO, #-8", "") +
-				formatASM("", "STW RO, -(SP)", "") +
-				formatASM("", "JSR @print", "") +
+		return formatASM("", "ADI BP, R0, #-8", "") +
+				formatASM("", "STW R0, -(SP)", "") +
+				formatASM("", "JSR @print_", "") +
 				formatASM("", "ADI SP, SP, #2", "");
 
 	}
 
 	private String defPrintFunc() {
-		return formatASM("", "print LDQ 0,R1", "") +
+		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
+				formatASM("", "print_ LDQ 0,R1", "") +
 				formatASM("", "STW BP, -(SP)", "") +
 				formatASM("", "LDW BP, SP", "") +
 				formatASM("", "SUB SP, R1, SP", "") +
