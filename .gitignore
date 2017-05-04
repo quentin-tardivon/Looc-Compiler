@@ -3,6 +3,7 @@
 **.jar
 output/
 .idea/*
+*.asm
 *.iml
 .DS_Store
 target/
