@@ -8,6 +8,7 @@ import java.io.*;
 
 /**
  * Created by quentin on 29/04/2017.
+ * Note: Une adresse 2 octets, un entier 2 octets
  */
 public class ASMWriter {
 
@@ -76,6 +77,10 @@ public class ASMWriter {
 				formatASM("", "STW R0, (BP)-" + depl, "");
 	}
 
+	private String classAffect() {
+		return formatASM("", "Here comes a Class ADDR", "");
+	}
+
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
 		return formatASM("", "ADQ" + constante + ", R1", "");
@@ -136,11 +141,22 @@ public class ASMWriter {
 				break;
 
 			case "AFFECT":
-				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
+				if (tree.getChild(1).getText().equals("new")) {
+					writer.write(classAffect());
+				}
+				else {
+					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
+				}
+
 				break;
 
 			case "WRITE":
 				writer.write(printFuncCall(tree.getChild(0).getText()));
+				break;
+
+			case "CLASS_DEC":
+				writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
+				break;
 		}
 	}
 
