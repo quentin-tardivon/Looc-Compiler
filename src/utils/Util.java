@@ -343,8 +343,6 @@ public class Util {
 		Entry entry = tds.getInfo(tree.getChild(0).getText());
 		String rightNodeType= null;
 
-
-
 		if (entry == null)
 			Util.undeclaredToken(tree.getChild(0).getText(), tds);
 

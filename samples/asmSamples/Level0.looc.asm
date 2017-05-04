@@ -1,3 +1,9 @@
+
+
+
+
+// ------------- DEBUT DU PGM		          		
+         
 SP        		EQU       		R15       
 WR        		EQU       		R14       
 BP        		EQU       		R13
@@ -20,13 +26,14 @@ main_     		LDW SP, #STACK_ADRS
          
           		STW BP, -(SP)		          
           		LDW BP, SP		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
           		LDW R0, #10		          
           		STW R0, (BP)-0		          
           		LDW R0, #12		          
           		STW R0, (BP)-2		          
+          		ADI BP, RO, #-8		          
+          		STW RO, -(SP)		          
+          		JSR @print		          
+          		ADI SP, SP, #2		          
 
 
 

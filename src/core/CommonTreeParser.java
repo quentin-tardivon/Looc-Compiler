@@ -5,6 +5,7 @@ import TDS.SymbolTable;
 import TDS.entries.*;
 import TDS.entries.Class;
 import exceptions.LoocException;
+import exceptions.MismatchTypeException;
 import org.antlr.runtime.tree.Tree;
 import utils.Util;
 
@@ -147,7 +148,7 @@ public class CommonTreeParser {
 						depl+=2;
 						break;
 					case "string":
-						depl+=4;
+						depl+=2;
 						break;
 					default:
 						depl+=0;
@@ -292,7 +293,8 @@ public class CommonTreeParser {
 					this.exceptions.add(e);
 					System.err.println( e.getClass().getName() + " " + e.getMessage());
 				}
-				break;
+					break;
+
 
 
 			case "FOR":
