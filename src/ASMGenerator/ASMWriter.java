@@ -1,5 +1,8 @@
 package ASMGenerator;
 
+import ASMGenerator.instructions.Block;
+import ASMGenerator.instructions.Condition;
+import ASMGenerator.instructions.For;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import org.antlr.runtime.tree.Tree;
@@ -19,7 +22,7 @@ public class ASMWriter {
 	}
 
 
-	private static String formatASM(String left, String asm, String value) {
+	public static String formatASM(String left, String asm, String value) {
 		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
 	}
 
@@ -28,7 +31,7 @@ public class ASMWriter {
 				new FileOutputStream(this.output), "utf-8"))) {
 			//Début du programme
 
-			writer.write(formatASM("\n\n\n\n// ------------- DEBUT DU PGM", "", "\n") +
+			writer.write(formatASM("// ------------- ASM FOR LOOC", "", "\n") +
 					formatASM("SP", "EQU", "R15") +
 					formatASM("WR", "EQU", "R14") +
 					formatASM("BP", "EQU", "R13\n") +
@@ -44,10 +47,10 @@ public class ASMWriter {
 					formatASM("", "ORG", "LOAD_ADRS") +
 					formatASM("", "START", "main_") +
 
-					formatASM("main_", "LDW SP, #STACK_ADRS", "") +
-					formatASM("", "LDW BP, #NIL", "\n") +
-					formatASM("", "STW BP, -(SP)", "") +
-					formatASM("", "LDW BP, SP", "")
+					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
+					formatASM("", "LDW", "BP, #NIL") +
+					formatASM("", "STW", "BP, -(SP)") +
+					formatASM("", "LDW", "BP, SP")
 			);
 
 			this.constructASM(tree, writer, TDS);
@@ -71,14 +74,14 @@ public class ASMWriter {
 		return formatASM("", "ADI SP, SP, #-" + deplType, "");
 	}
 
-	private String varAffect(int depl, int value) {
-		return formatASM("", "LDW R0, #" + value, "") +
-				formatASM("", "STW R0, (BP)-" + depl, "");
+	public String varAffect(int depl, int value) {
+		return this.formatASM("", "LDW", "R0, #" + value) +
+				this.formatASM("", "STW", "R0, (BP)-" + depl);
 	}
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
-		return formatASM("", "ADQ" + constante + ", R1", "");
+		return this.formatASM("", "ADQ", constante + ", R1");
 	}
 
 	public String addToStack(String reg) {
@@ -87,35 +90,33 @@ public class ASMWriter {
 	}
 
 	public String removeFromStack(String reg) {
-		return formatASM("", "LDW" + reg + ", (SP)", "") +
-			formatASM("", "ADQ 2, SP", "");
+		return this.formatASM("", "LDW", reg + ", (SP)") +
+			this.formatASM("", "ADQ", "2, SP");
 	}
 
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
 	}
 
-	private String printFuncCall(String varName) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "ADI BP, R0, #-8", "") +
-				formatASM("", "STW R0, -(SP)", "") +
-				formatASM("", "JSR @print_", "") +
-				formatASM("", "ADI SP, SP, #2", "");
-
-	}
-
 	private String defPrintFunc() {
 		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				formatASM("", "print_ LDQ 0,R1", "") +
-				formatASM("", "STW BP, -(SP)", "") +
-				formatASM("", "LDW BP, SP", "") +
-				formatASM("", "SUB SP, R1, SP", "") +
-				formatASM("", "LDW R0, (BP)4","") +
-				formatASM("", "TRP #WRITE_EXC", "") +
-				formatASM("", "LDW SP, BP", "") +
-				formatASM("", "LDW BP, (SP)+", "") +
+				formatASM("print_", "LDQ", "0,R1") +
+				formatASM("", "STW", "BP, -(SP)") +
+				formatASM("", "LDW", "BP, SP") +
+				formatASM("", "SUB", "SP, R1, SP") +
+				formatASM("", "LDW", "R0, (BP)4") +
+				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "LDW", "SP, BP") +
+				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("", "RTS", "");
 	}
 
+	public String printFuncCall(String varName) { //Equivalent à charger une fonction classique, inspiration
+		return this.formatASM("", "ADI","BP, R0, #-8") +
+				this.formatASM("", "STW", "R0, -(SP)") +
+				this.formatASM("", "JSR", "@print_") +
+				this.formatASM("", "ADI", "SP, SP, #2");
+	}
 
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
@@ -138,9 +139,15 @@ public class ASMWriter {
 			case "AFFECT":
 				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
 				break;
+			case "FOR":
+				writer.write(new For(new Condition(), new Block()).generate());
+				break;
 
 			case "WRITE":
 				writer.write(printFuncCall(tree.getChild(0).getText()));
+			//default:
+//				System.out.println(tree.getText() + " ");
+
 		}
 	}
 
