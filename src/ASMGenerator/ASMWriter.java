@@ -19,7 +19,7 @@ public class ASMWriter {
 	}
 
 
-	public static String formatASM(String left, String asm, String value) {
+	private static String formatASM(String left, String asm, String value) {
 		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
 	}
 
@@ -65,40 +65,52 @@ public class ASMWriter {
 		}
 	}
 
-	public String varDecl(int deplType) {
-		return this.formatASM("", "ADI SP, SP, #-" + deplType, "");
+	private String varDecl(int deplType) {
+		return formatASM("", "ADI SP, SP, #-" + deplType, "");
 	}
 
-	public String varAffect(int depl, int value) {
-		return this.formatASM("", "LDW R0, #" + value, "") +
-				this.formatASM("", "STW R0, (BP)-" + depl, "");
+	private String varAffect(int depl, int value) {
+		return formatASM("", "LDW R0, #" + value, "") +
+				formatASM("", "STW R0, (BP)-" + depl, "");
 	}
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
-		return this.formatASM("", "ADQ" + constante + ", R1", "");
+		return formatASM("", "ADQ" + constante + ", R1", "");
 	}
 
 	public String addToStack(String reg) {
-		return this.formatASM("", "ADQ -2, SP", "") +
-				this.formatASM("", "STW " + reg + ", (SP)", "");
+		return formatASM("", "ADQ -2, SP", "") +
+				formatASM("", "STW " + reg + ", (SP)", "");
 	}
 
 	public String removeFromStack(String reg) {
-		return this.formatASM("", "LDW" + reg + ", (SP)", "") +
-			this.formatASM("", "ADQ 2, SP", "");
+		return formatASM("", "LDW" + reg + ", (SP)", "") +
+			formatASM("", "ADQ 2, SP", "");
 	}
 
-	public String getVar(String reg, int depl) {
-		return this.formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
+	private String getVar(String reg, int depl) {
+		return formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
 	}
 
-	public String printFunc(String varName) { //Equivalent à charger une fonction classique, inspiration
-		return this.formatASM("", "ADI BP, RO, #-8", "") +
-				this.formatASM("", "STW RO, -(SP)", "") +
-				this.formatASM("", "JSR @print", "") +
-				this.formatASM("", "ADI SP, SP, #2", "");
+	private String printFuncCall(String varName) { //Equivalent à charger une fonction classique, inspiration
+		return formatASM("", "ADI BP, RO, #-8", "") +
+				formatASM("", "STW RO, -(SP)", "") +
+				formatASM("", "JSR @print", "") +
+				formatASM("", "ADI SP, SP, #2", "");
 
+	}
+
+	private String defPrintFunc() {
+		return formatASM("", "print LDQ 0,R1", "") +
+				formatASM("", "STW BP, -(SP)", "") +
+				formatASM("", "LDW BP, SP", "") +
+				formatASM("", "SUB SP, R1, SP", "") +
+				formatASM("", "LDW R0, (BP)4","") +
+				formatASM("", "TRP #WRITE_EXC", "") +
+				formatASM("", "LDW SP, BP", "") +
+				formatASM("", "LDW BP, (SP)+", "") +
+				formatASM("", "RTS", "");
 	}
 
 
@@ -112,10 +124,10 @@ public class ASMWriter {
 				break;
 
 			case "VAR_DEC":
-				if (tree.getChild(0).getText() == "int") {
+				if (tree.getChild(0).getText().equals("int")) {
 					writer.write(varDecl(2));
 				}
-				else if(tree.getChild(0).getText() == "string") {
+				else if(tree.getChild(0).getText().equals("string")) {
 					writer.write(varDecl(2));
 				}
 				break;
@@ -125,7 +137,7 @@ public class ASMWriter {
 				break;
 
 			case "WRITE":
-				writer.write(printFunc(tree.getChild(0).getText()));
+				writer.write(printFuncCall(tree.getChild(0).getText()));
 		}
 	}
 
