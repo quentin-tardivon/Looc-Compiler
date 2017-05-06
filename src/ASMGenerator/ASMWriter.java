@@ -1,7 +1,9 @@
 package ASMGenerator;
 
+import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
+import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -71,10 +73,14 @@ public class ASMWriter {
 		return formatASM("", "ADI SP, SP, #-" + deplType, "");
 	}
 
+
 	private String varAffect(int depl, int value) {
 		return formatASM("", "LDW R0, #" + value, "") +
 				formatASM("", "STW R0, (BP)-" + depl, "");
 	}
+
+	//private String varStringAffect(int depl, int value) {
+	//}
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
@@ -118,6 +124,7 @@ public class ASMWriter {
 
 
 
+
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 		switch(tree.getText()) {
 			case "ROOT":
@@ -136,7 +143,12 @@ public class ASMWriter {
 				break;
 
 			case "AFFECT":
-				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
+				if (TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.INTEGER)) {
+					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
+				}
+				else if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
+					//writer.write(varStringAffect());
+				}
 				break;
 
 			case "WRITE":
