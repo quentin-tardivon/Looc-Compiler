@@ -12,6 +12,7 @@ import java.io.*;
 public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
+	public static int CPT =0;
 	private String output;
 
 	public ASMWriter(String asmFile) {
@@ -89,6 +90,96 @@ public class ASMWriter {
 			this.formatASM("", "ADQ 2, SP", "");
 	}
 
+
+	public String ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw){
+
+		//if(3>2)
+		if(leftValueisRaw&&rightValueisRaw){
+			 return this.formatASM("","//DEBUT IF"+CPT,"") +
+					this.formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
+					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					this.formatASM("","//FIN IF","");
+		//if(b>2)
+		}else if(!leftValueisRaw&&rightValueisRaw){
+
+			 return this.formatASM("","//DEBUT IF"+CPT,"") +
+				    this.formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+			 		this.formatASM("", "CMP", "R0, "+ valueRight) +
+					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					this.formatASM("","//FIN IF","");
+
+		//if(2>b)
+		}else if(leftValueisRaw&&!rightValueisRaw){
+
+			return  this.formatASM("","//DEBUT IF"+CPT,"") +
+					this.formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
+					this.formatASM("", "CMP", "R0, "+ valueLeft) +
+					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					this.formatASM("","//FIN IF","");
+
+		//if(a>b)
+		}else {
+
+			return  this.formatASM("","//DEBUT IF"+CPT,"") +
+					this.formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+					this.formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
+					this.formatASM("", "CMP", valueLeft+", "+ valueRight) +
+					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					this.formatASM("","//FIN IF","");
+		}
+	}
+
+	public String ifLabelMaker(int cpt){
+		String label = "ELSE"+cpt;
+		return label;
+	}
+
+	public String afterIfLabelMaker(int cpt){
+		String label = "FI"+cpt;
+		return label;
+	}
+
+	public String jumpCondition(String comparator){
+		String jump="";
+		switch(comparator){
+			case "<":
+				jump="JGE";
+				break;
+			case "<=":
+				jump="JG";
+				break;
+			case ">":
+				jump="JBE";
+				break;
+			case ">=":
+				jump="JB";
+				break;
+			case "==":
+				jump="JNE";
+				break;
+			case "!=":
+				jump="JE";
+				break;
+		}
+		return jump;
+	}
+
 	public String getVar(String reg, int depl) {
 		return this.formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
 	}
@@ -100,6 +191,7 @@ public class ASMWriter {
 				this.formatASM("", "ADI SP, SP, #2", "");
 
 	}
+
 
 
 
@@ -123,6 +215,30 @@ public class ASMWriter {
 			case "AFFECT":
 				writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
 				break;
+
+			case "IF":
+				CPT++;
+				int leftValue;
+				int rightValue;
+				boolean leftValueisRaw=true;
+				boolean rightValueisRaw=true;
+				try{
+					leftValue=Integer.parseInt(tree.getChild(0).getChild(0).getText());
+				}catch(NumberFormatException e){
+					leftValue=((Variable)TDS.get(tree.getChild(0).getChild(0).getText())).getDepl();
+					leftValueisRaw=false;
+				}
+
+				try{
+					rightValue=Integer.parseInt(tree.getChild(0).getChild(1).getText());
+				}catch(NumberFormatException e){
+					rightValue=((Variable)TDS.get(tree.getChild(0).getChild(1).getText())).getDepl();
+					 rightValueisRaw=false;
+				}
+
+				writer.write(ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw));
+				break;
+
 
 			case "WRITE":
 				writer.write(printFunc(tree.getChild(0).getText()));
