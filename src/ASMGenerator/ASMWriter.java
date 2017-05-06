@@ -100,57 +100,77 @@ public class ASMWriter {
 			this.formatASM("", "ADQ", "2, SP");
 	}
 
-	public String ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw){
+	public void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
 
 		//if(3>2)
 		if(leftValueisRaw&&rightValueisRaw){
-			 return this.formatASM("","//DEBUT IF"+CPT,"") +
-					this.formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
-					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					this.formatASM("","//FIN IF","");
+			 writer.write (formatASM("","//DEBUT IF"+CPT,"") +
+					 formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)));
+
+			         constructASM(tree.getChild(1), writer, TDS);
+
+			         writer.write(formatASM("", "JEA", "@" + afterIfLabelMaker(CPT))+
+					 formatASM("" + ifLabelMaker(CPT), "", ""));
+
+			         constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					 formatASM("","//FIN IF",""));
 		//if(b>2)
-		}else if(!leftValueisRaw&&rightValueisRaw){
-
-			 return this.formatASM("","//DEBUT IF"+CPT,"") +
-				    this.formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
-			 		this.formatASM("", "CMP", "R0, "+ valueRight) +
-					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					this.formatASM("","//FIN IF","");
-
-		//if(2>b)
 		}else if(leftValueisRaw&&!rightValueisRaw){
 
-			return  this.formatASM("","//DEBUT IF"+CPT,"") +
-					this.formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
-					this.formatASM("", "CMP", "R0, "+ valueLeft) +
-					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					this.formatASM("","//FIN IF","");
+			   		 writer.write ( formatASM("","//DEBUT IF"+CPT,"") +
+				     formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+			 		 formatASM("", "CMP", "R0, "+ valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)));
+
+			         constructASM(tree.getChild(1), writer, TDS);
+
+			         writer.write(formatASM("", "JEA", "@" + afterIfLabelMaker(CPT))+
+					 formatASM("" + ifLabelMaker(CPT), "", ""));
+
+					 constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					 formatASM("","//FIN IF",""));
+
+		//if(2>b)
+		}else if(!leftValueisRaw&&rightValueisRaw){
+
+					 writer.write( formatASM("","//DEBUT IF"+CPT,"") +
+					 formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
+					 formatASM("", "CMP", "R0, "+ valueLeft) +
+					 formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)));
+
+					 constructASM(tree.getChild(1), writer, TDS);
+
+					 writer.write(formatASM("", "JEA", "@" + afterIfLabelMaker(CPT))+
+					 formatASM("" + ifLabelMaker(CPT), "", ""));
+
+			         constructASM(tree.getChild(2), writer, TDS);
+
+					 writer.write(formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					 formatASM("","//FIN IF",""));
 
 		//if(a>b)
 		}else {
 
-			return  this.formatASM("","//DEBUT IF"+CPT,"") +
-					this.formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
-					this.formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
-					this.formatASM("", "CMP", valueLeft+", "+ valueRight) +
-					this.formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					this.formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					this.formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					this.formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					this.formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					this.formatASM("","//FIN IF","");
+			         writer.write(formatASM("","//DEBUT IF"+CPT,"") +
+					 formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+					 formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
+					 formatASM("", "CMP", valueLeft+", "+ valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)));
+
+			         constructASM(tree.getChild(1), writer, TDS);
+
+					 writer.write(formatASM("", "JEA", "@" + afterIfLabelMaker(CPT))+
+					 formatASM("" + ifLabelMaker(CPT), "", ""));
+
+					 constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					 formatASM("","//FIN IF",""));
 		}
 	}
 
@@ -266,7 +286,7 @@ public class ASMWriter {
 					 rightValueisRaw=false;
 				}
 
-				writer.write(ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw));
+				ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw, tree,  writer, TDS);
 				break;
 
 
@@ -276,6 +296,18 @@ public class ASMWriter {
 
 			case "CLASS_DEC":
 				writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
+				break;
+
+			case "THEN":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer, TDS);
+				}
+				break;
+
+			case "ELSE":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer, TDS);
+				}
 				break;
 			//default:
 //				System.out.println(tree.getText() + " ");

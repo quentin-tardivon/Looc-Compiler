@@ -6,9 +6,13 @@ n := 10;
 total := 12;
 
 		if n == 0 then
-			return (1);
+		    n := 666;
         else
-            return (2);
+            if n > 999 then
+                n:=777;
+            else
+                n:=333;
+            fi
 		fi
 
 write total;
