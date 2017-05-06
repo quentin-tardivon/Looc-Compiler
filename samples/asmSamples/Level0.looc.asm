@@ -1,3 +1,9 @@
+
+
+
+
+// ------------- DEBUT DU PGM		          		
+         
 SP        		EQU       		R15       
 WR        		EQU       		R14       
 BP        		EQU       		R13
@@ -20,13 +26,23 @@ main_     		LDW SP, #STACK_ADRS
          
           		STW BP, -(SP)		          
           		LDW BP, SP		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
-          		ADI SP, SP, #-2		          
           		LDW R0, #10		          
           		STW R0, (BP)-0		          
           		LDW R0, #12		          
           		STW R0, (BP)-2		          
+          		//DEBUT IF1		          
+          		LDW       		R0, (BP)-0
+          		CMP       		R0, 0     
+          		JNE       		@ELSE1    
+          		//TODO : then instructions		          
+          		JEA       		@FI1      
+ELSE1     		//TODO : else instructions		          
+FI1       		          		          
+          		//FIN IF  		          
+          		ADI BP, RO, #-8		          
+          		STW RO, -(SP)		          
+          		JSR @print		          
+          		ADI SP, SP, #2		          
 
 
 

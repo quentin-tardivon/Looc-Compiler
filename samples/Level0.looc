@@ -5,4 +5,11 @@ var i : int;
 n := 10;
 total := 12;
 
+		if n == 0 then
+			return (1);
+        else
+            return (2);
+		fi
+
 write total;
+

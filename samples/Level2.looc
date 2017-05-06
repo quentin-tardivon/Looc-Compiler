@@ -6,7 +6,10 @@ class Math =
 
 		if b == 0 then
 			return (1);
+        else
+            return (2);
 		fi
+
 		retval := 1;
 		for i in 1 .. b
 		do
