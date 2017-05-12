@@ -28,8 +28,16 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW       		BT, #NIL  
           		STW       		BT, -(ST) 
           		LDW       		BT, ST    
-          		LDW R0, #10		          
-          		STW R0, (BP)-0		          
+          		STW       		BP, -(SP) 		// Stack the dynamic link
+          		STW       		BP, -(SP) 		// Stack the static link
+          		ADI       		SP, SP, #-2
+          		ADI       		SP, SP, #-2
+          		ADI       		SP, SP, #-2
+          		ADI       		SP, SP, #-2
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-6		// Affection: move = 0
           		STW R12, (BP)-2		          
           		LDW R0, #71		          
           		STW R0, (ST)-2		          
@@ -49,8 +57,10 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW R0, #83		          
           		STW R0, (ST)-2		          
           		ADQ -2, ST		          
-          		LDW R0, #12		          
-          		STW R0, (BP)-4		          
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-10		// Affection: move = 4
           		STW R12, (BP)-6		          
           		LDW R0, #77		          
           		STW R0, (ST)-2		          
@@ -70,10 +80,15 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW R0, #73		          
           		STW R0, (ST)-2		          
           		ADQ -2, ST		          
-          		ADI       		BP, R0, #-8
+          		ADQ -2, SP		          
+          		STW BP, (SP)		          
+          		LDW4      		R0, (BP)- 
           		STW       		R0, -(SP) 
+          		LDW       		BP, SP    
           		JSR       		@print_   
-          		ADI       		SP, SP, #2
+          		LDW       		SP, BP    
+          		LDW       		BP, (SP)  
+          		ADQ       		2, SP     
 
 
 
@@ -92,12 +107,6 @@ main_     		LDW       		SP, #STACK_ADRS
 
 // ------------- PRINT FUNCT		          		
          
-print_    		LDQ       		0,R1      
-          		STW       		BP, -(SP) 
-          		LDW       		BP, SP    
-          		SUB       		SP, R1, SP
-          		LDW       		R0, (BP)4 
+print_    		LDW       		R0, (BP)0 
           		TRP       		#WRITE_EXC
-          		LDW       		SP, BP    
-          		LDW       		BP, (SP)+ 
           		RTS       		          
