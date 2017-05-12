@@ -23,7 +23,6 @@ import java.io.FileInputStream;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-        String filename = "./samples/Level1.looc";
         if(args.length == 0) {
             System.out.println("filename should be in arguments !");
             System.exit(0);

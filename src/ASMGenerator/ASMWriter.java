@@ -18,14 +18,27 @@ public class ASMWriter {
 	public static final int INT_SIZE = 2;
 	private static int CPT =0;
 	private String output;
+	private final int offsetEnvironment = INT_SIZE * 3;
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
 	}
 
 
-	public static String formatASM(String left, String asm, String value) {
-		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
+	public static String formatASM(String...params) {
+		if(params.length == 3)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\n", params);
+		if(params.length == 4)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n", params);
+
+		if(params.length != 3 || params.length != 4) {
+			try {
+				throw new Exception("Problem with usage of formatASM:\n" + " - Only 3 or 4 params possible !");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 
 	public void generateASMFile(Tree tree, SymbolTable TDS) {
@@ -54,6 +67,7 @@ public class ASMWriter {
 					formatASM("", "STW", "BP, -(SP)") +
 					formatASM("", "LDW", "BP, SP")
 			);
+			this.stackStaticAndDynamic(writer);
 
 			this.constructASM(tree, writer, TDS);
 
@@ -78,10 +92,11 @@ public class ASMWriter {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
 	}
 
+
 	private String varAffect(int depl) {
-		return removeFromStack("R1") +
+		return removeFromStack("R1")+
 				formatASM("", "LDW", "R0, R1") +
-				formatASM("", "STW", "R0, (BP)-" + depl);
+				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
 	}
 
 
@@ -104,6 +119,7 @@ public class ASMWriter {
 			formatASM("", "ADQ", "2, SP");
 	}
 
+
 	private String linkR(int R) {
 		return formatASM("", "ADQ", "-2, SP") +
 				formatASM("", "STW", "BP, (SP)") +
@@ -117,57 +133,74 @@ public class ASMWriter {
 				formatASM("", "ADQ", "2, SP");
 	}
 
-	private String ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw){
+	public void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
 
+
+		String afterIFLabel=afterIfLabelMaker(CPT);
+		String IFLabel=ifLabelMaker(CPT);
 		//if(3>2)
 		if(leftValueisRaw&&rightValueisRaw){
-			 return formatASM("","//DEBUT IF"+CPT,"") +
-					formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
-					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					formatASM("","//FIN IF","");
+			 writer.write (formatASM("", "CMP", "#" + valueLeft + ", #" + valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
+
+			         constructASM(tree.getChild(1), writer, TDS);
+
+			         writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
+					 formatASM(IFLabel, "EQU", "$"));
+
+
+			         constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM(afterIFLabel, "EQU", "$"));
+
 		//if(b>2)
-		}else if(!leftValueisRaw&&rightValueisRaw){
-
-			 return formatASM("","//DEBUT IF"+CPT,"") +
-				    formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
-			 		formatASM("", "CMP", "R0, "+ valueRight) +
-					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					formatASM("","//FIN IF","");
-
-		//if(2>b)
 		}else if(leftValueisRaw&&!rightValueisRaw){
 
-			return  formatASM("","//DEBUT IF"+CPT,"") +
-					formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
-					formatASM("", "CMP", "R0, "+ valueLeft) +
-					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					formatASM("","//FIN IF","");
+
+			   		 writer.write (formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+			 		 formatASM("", "CMP", "R0, #"+ valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
+
+			         constructASM(tree.getChild(1), writer, TDS);
+
+			         writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
+					 formatASM(IFLabel, "EQU", "$"));
+
+					 constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM(afterIFLabel, "EQU", "$"));
+
+
+		//if(2>b)
+		}else if(!leftValueisRaw&&rightValueisRaw){
+					 writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
+					 formatASM("", "CMP", "R0, #"+ valueLeft) +
+					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
+
+					 constructASM(tree.getChild(1), writer, TDS);
+
+					 writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
+					 formatASM(IFLabel, "EQU", "$"));
+
+			         constructASM(tree.getChild(2), writer, TDS);
+
+					 writer.write(formatASM(afterIFLabel, "EQU", "$"));
 
 		//if(a>b)
 		}else {
+			         writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+					 formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
+					 formatASM("", "CMP", valueLeft+", "+ valueRight) +
+					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
 
-			return  formatASM("","//DEBUT IF"+CPT,"") +
-					formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
-					formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
-					formatASM("", "CMP", valueLeft+", "+ valueRight) +
-					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
-					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
-					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
-					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
-					formatASM("" + afterIfLabelMaker(CPT), "", "") +
-					formatASM("","//FIN IF","");
+			         constructASM(tree.getChild(1), writer, TDS);
+
+					 writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
+					 formatASM(IFLabel, "EQU", "$"));
+
+					 constructASM(tree.getChild(2), writer, TDS);
+
+			         writer.write(formatASM(afterIFLabel, "EQU", "$"));
 		}
 	}
 
@@ -221,6 +254,7 @@ public class ASMWriter {
 				formatASM("", "TRP", "#WRITE_EXC") +
 				formatASM("", "RTS", "");
 	}
+
 
 	private String itoaCall() {
 		return formatASM("","LDW R0, #10", "") +
@@ -305,8 +339,14 @@ public class ASMWriter {
 				formatASM("", "ADQ", "2, SP");
 	}
 
+	public void stackStaticAndDynamic(Writer w) throws IOException {
+		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
+				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
+	}
+
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
+		int cpt=0;
 		switch(tree.getText()) {
 			case "ROOT":
 				for (int i = 0; i < tree.getChildCount(); i++) {
@@ -316,7 +356,7 @@ public class ASMWriter {
 
 			case "VAR_DEC":
 				if (tree.getChild(1).getText().equals("int")) {
-					writer.write(varDecl(2));
+					writer.write(varDecl(INT_SIZE));
 				}
 				else if(tree.getChild(1).getText().equals("string")) {
 					writer.write(varDecl(2));
@@ -354,10 +394,10 @@ public class ASMWriter {
 					rightValue=Integer.parseInt(tree.getChild(0).getChild(1).getText());
 				}catch(NumberFormatException e){
 					rightValue=((Variable)TDS.get(tree.getChild(0).getChild(1).getText())).getDepl();
-					 rightValueisRaw=false;
+					rightValueisRaw=false;
 				}
 
-				writer.write(ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw));
+				ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw, tree,  writer, TDS);
 				break;
 
 
@@ -406,6 +446,18 @@ public class ASMWriter {
 				writer.write(addToStack("R3"));
 				break;
 
+			case "THEN":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer, TDS);
+				}
+				break;
+
+			case "ELSE":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer, TDS);
+				}
+				break;
+
 			default:
 				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
 					writer.write(formatASM("", "LDW", "R1, #" + tree.getText()));
@@ -418,7 +470,6 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				}
-
 
 		}
 	}
