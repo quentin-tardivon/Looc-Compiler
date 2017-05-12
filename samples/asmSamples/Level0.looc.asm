@@ -38,48 +38,48 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-6		// Affection: move = 0
-          		STW R12, (BP)-2		          
-          		LDW R0, #71		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #65		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #82		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #82		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #85		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #83		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
+          		STW       		R12, (BP)-2
+          		LDW       		R0, #71   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #65   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #82   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #82   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #85   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #83   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-10		// Affection: move = 4
-          		STW R12, (BP)-6		          
-          		LDW R0, #77		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #79		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #71		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #87		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #65		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
-          		LDW R0, #73		          
-          		STW R0, (ST)-2		          
-          		ADQ -2, ST		          
+          		STW       		R12, (BP)-6
+          		LDW       		R0, #77   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #79   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #71   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #87   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #65   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
+          		LDW       		R0, #73   
+          		STW       		R0, (ST)-2
+          		ADQ       		-2, ST    
           		ADQ -2, SP		          
           		STW BP, (SP)		          
           		LDW4      		R0, (BP)- 

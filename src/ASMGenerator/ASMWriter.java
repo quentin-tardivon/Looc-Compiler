@@ -113,18 +113,18 @@ public class ASMWriter {
 	}
 
 	private String addToHeap(int depl){
-		return formatASM("","ADQ -" + depl + ", ST","");
+		return formatASM("","ADQ" , "-" + depl + ", ST");
 	}
 
 
 	private String varStringAffect(int depl,int charValue){
-		return formatASM("", "LDW R0, #" + charValue, "") +
-				formatASM("", "STW R0, (ST)-" + depl, "");
+		return formatASM("", "LDW ",  "R0, #" + charValue) +
+				formatASM("", "STW " , "R0, (ST)-" + depl);
 	}
 
 	private String addStringToStack(int depl) {
 		return //formatASM("","LDW R0, (R12)","")+
-				formatASM("","STW R12, (BP)-" + depl,"");
+				formatASM("","STW ", "R12, (BP)-" + depl);
 	}
 
 	private String stringTest(int depl){
@@ -285,7 +285,8 @@ public class ASMWriter {
 
 
 	private String getVar(String reg, int depl) {
-		return formatASM("", "LDW " + reg + ", (BP)-" + depl, "");
+		return formatASM("", "LDW " +
+				"" + reg + ", (BP)-" + depl, "");
 	}
 
 	private String defPrintFunc() {
