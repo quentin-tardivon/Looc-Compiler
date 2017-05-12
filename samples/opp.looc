@@ -1,0 +1,7 @@
+var n : int;
+var total : int;
+
+total := 10;
+
+n := total + 12;
+

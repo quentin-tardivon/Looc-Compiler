@@ -1,8 +1,4 @@
-
-
-
-
-// ------------- DEBUT DU PGM		          		
+// ------------- ASM FOR LOOC		          		
          
 SP        		EQU       		R15       
 WR        		EQU       		R14       
@@ -21,28 +17,33 @@ LOAD_ADRS 		EQU       		0xFE00
    
           		ORG       		LOAD_ADRS 
           		START     		main_     
-main_     		LDW SP, #STACK_ADRS		          
-          		LDW BP, #NIL		
-         
-          		STW BP, -(SP)		          
+main_     		LDW       		SP, #STACK_ADRS
+          		LDW       		BP, #NIL  
+          		STW       		BP, -(SP) 
+          		LDW       		BP, SP    
+LDW       		R1,       		#10       
+          		ADQ -2, SP		          
+          		STW R1, (SP)		          
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-0
+LDW       		R1,       		#12       
+          		ADQ -2, SP		          
+          		STW R1, (SP)		          
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-2
+          		ADQ -2, SP		          
+          		STW BP, (SP)		          
+          		LDW R0, (BP)-2		          
+          		STW R0, -(SP)		          
           		LDW BP, SP		          
-          		LDW R0, #10		          
-          		STW R0, (BP)-0		          
-          		LDW R0, #12		          
-          		STW R0, (BP)-2		          
-          		//DEBUT IF1		          
-          		LDW       		R0, (BP)-0
-          		CMP       		R0, 0     
-          		JNE       		@ELSE1    
-          		//TODO : then instructions		          
-          		JEA       		@FI1      
-ELSE1     		//TODO : else instructions		          
-FI1       		          		          
-          		//FIN IF  		          
-          		ADI BP, RO, #-8		          
-          		STW RO, -(SP)		          
-          		JSR @print		          
-          		ADI SP, SP, #2		          
+          		JSR       		@print_   
+          		LDW SP, BP		          
+          		LDW BP, (SP)		          
+          		ADQ 2, SP 		          
 
 
 
@@ -53,3 +54,12 @@ FI1
           		LDW BP, (SP)+		          
           		TRP #EXIT_EXC		          
           		JEA @main_		          
+
+
+
+
+// ------------- PRINT FUNCT		          		
+         
+print_    		LDW       		R0, (BP)0 
+          		TRP       		#WRITE_EXC
+          		RTS       		          
