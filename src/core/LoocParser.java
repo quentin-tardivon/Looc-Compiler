@@ -1,3 +1,5 @@
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-05-12 16:10:50
+
 package core;
 
 
@@ -240,7 +242,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: var_decl, instruction, class_decl
+            // elements: class_decl, instruction, var_decl
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -685,7 +687,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_args, IDF, function_decl
+            // elements: function_decl, IDF, method_args
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -881,7 +883,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: type, instruction, var_decl
+                    // elements: type, var_decl, instruction
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -999,7 +1001,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: var_decl, instruction
+                    // elements: instruction, var_decl
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1220,7 +1222,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: type, IDF
+            // elements: IDF, type
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1320,7 +1322,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: type, IDF
+            // elements: IDF, type
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1690,7 +1692,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, IDF
+                    // elements: IDF, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1789,7 +1791,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: expression, expression, IDF, instruction
+                    // elements: instruction, IDF, expression, expression
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1951,7 +1953,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: a, b, expression
+                    // elements: b, expression, a
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2363,7 +2365,7 @@ public class LoocParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: 68, CLASS
+                    // elements: CLASS, 68
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -2500,7 +2502,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: operation, mult
+            	    // elements: mult, operation
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2544,7 +2546,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: operation, mult
+            	    // elements: mult, operation
             	    // token labels: 
             	    // rule labels: mult, retval
             	    // token list labels: 
@@ -2690,7 +2692,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: multiop, cmp
+            	    // elements: cmp, multiop
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -2734,7 +2736,7 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: multiop, cmp
+            	    // elements: cmp, multiop
             	    // token labels: 
             	    // rule labels: cmp, retval
             	    // token list labels: 
@@ -3320,7 +3322,7 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: expression, expression, IDF
+            // elements: expression, IDF, expression
             // token labels: 
             // rule labels: retval
             // token list labels: 
