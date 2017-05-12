@@ -34,11 +34,17 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
+          		LDW       		R1, #10   
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-6		// Affection: move = 0
-          		STW       		R12, (BP)-2
+          		STW       		R12, -(SP)
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-8		// Affection: move = 2
           		LDW       		R0, #71   
           		STW       		R0, (ST)-2
           		ADQ       		-2, ST    
@@ -57,11 +63,17 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW       		R0, #83   
           		STW       		R0, (ST)-2
           		ADQ       		-2, ST    
+          		LDW       		R1, #12   
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-10		// Affection: move = 4
-          		STW       		R12, (BP)-6
+          		STW       		R12, -(SP)
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-12		// Affection: move = 6
           		LDW       		R0, #77   
           		STW       		R0, (ST)-2
           		ADQ       		-2, ST    
@@ -80,15 +92,10 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW       		R0, #73   
           		STW       		R0, (ST)-2
           		ADQ       		-2, ST    
-          		ADQ -2, SP		          
-          		STW BP, (SP)		          
-          		LDW4      		R0, (BP)- 
-          		STW       		R0, -(SP) 
-          		LDW       		BP, SP    
+          		LDW       		R0, (BP)-10
+          		STW       		R0, -(SP) 		// Stack param for 'write' function: move = 4
           		JSR       		@print_   
-          		LDW       		SP, BP    
-          		LDW       		BP, (SP)  
-          		ADQ       		2, SP     
+          		ADI       		SP, SP, #2		// Unstack the param of 'write'
 
 
 
@@ -107,6 +114,6 @@ main_     		LDW       		SP, #STACK_ADRS
 
 // ------------- PRINT FUNCT		          		
          
-print_    		LDW       		R0, (BP)0 
+print_    		LDW       		R0, (SP)2 
           		TRP       		#WRITE_EXC
           		RTS       		          

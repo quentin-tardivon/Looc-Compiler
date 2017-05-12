@@ -19,6 +19,7 @@ public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
 	public static final int ADDR_SIZE = 2;
+	public static final int CHAR_SIZE = 2;
 	private static int CPT =0;
 	private String output;
 	private final int offsetEnvironment = INT_SIZE * 3;
@@ -120,16 +121,13 @@ public class ASMWriter {
 
 	private String varStringAffect(int depl,int charValue){
 		return formatASM("", "LDW ",  "R0, #" + charValue) +
-				formatASM("", "STW " , "R0, (ST)-" + depl);
+				formatASM("", "STW " , "R0, (ST)-" + depl)+
+				formatASM("","ADQ" , "-" + depl + ", ST");
 	}
 
 	private String addStringToStack(int depl) {
 		return //formatASM("","LDW R0, (R12)","")+
-				formatASM("","STW ", "R12, (BP)-" + depl);
-	}
-
-	private String stringTest(int depl){
-		return formatASM("","LDW R0, #" ,"" );
+				formatASM("","STW ", "R12, (SP)-" + depl);
 	}
 
 
@@ -413,21 +411,20 @@ public class ASMWriter {
 					writer.write(varDecl(INT_SIZE));
 				}
 				else if(tree.getChild(1).getText().equals("string")) {
-					writer.write(varDecl(2));
+					writer.write(varDecl(ADDR_SIZE));
 				}
 				break;
 
 			case "AFFECT":
-				if (TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.INTEGER)) {
-					System.out.println("affect int");
-					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl() ));
-				}
-				else if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
+
+				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
 					if (tree.getChild(1).getText().matches("\".*\"")) {
-						writer.write(addStringToStack(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+						//writer.write(addStringToStack(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+						writer.write(addToStack("R12"));
+						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 						for (int i = 1; i < tree.getChild(1).getText().length() - 1; i++) {
 							writer.write(varStringAffect(2 , (int) tree.getChild(1).getText().charAt(i)));
-							writer.write(addToHeap(2));
+							//writer.write(addToHeap(2));
 							System.out.println(tree.getChild(1).getText().charAt(i));
 						}
 					}
