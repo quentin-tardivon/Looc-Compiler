@@ -27,15 +27,13 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
           		LDW       		R1, #10   
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-6		// Affection: move = 0
           		LDW       		R1, #12   
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
@@ -43,10 +41,9 @@ main_     		LDW       		SP, #STACK_ADRS
           		LDW       		R0, (BP)-0
           		LDW       		R10, #1   
           		CMP       		R0, R10   
-          		JNE       		#ELSE1-$  
+          		JNE       		#ELSE1-$-2
           		LDW       		R1, #666  
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
@@ -56,14 +53,13 @@ ELSE1
           		LDW       		R0, (BP)-0
           		LDW       		R10, #999 
           		CMP       		R0, R10   
-          		JBE       		#ELSE2-$  
+          		JBE       		#ELSE2-$-2
           		LDW       		R0, (BP)-0
           		LDW       		R10, #5   
           		CMP       		R0, R10   
-          		JNE       		#ELSE3-$  
+          		JNE       		#ELSE3-$-2
           		LDW       		R1, #777  
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
@@ -71,8 +67,7 @@ ELSE1
           		JEA       		@FI3      
 ELSE3     		          		          
           		LDW       		R1, #888  
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
@@ -81,23 +76,17 @@ FI3
           		JEA       		@FI2      
 ELSE2     		          		          
           		LDW       		R1, #333  
-          		ADQ       		-2, SP    
-          		STW       		R1, (SP)  
+          		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-6		// Affection: move = 0
 FI2       		          		          
 FI1       		          		          
-          		ADQ -2, SP		          
-          		STW BP, (SP)		          
-          		LDW2      		R0, (BP)- 
-          		STW       		R0, -(SP) 
-          		LDW       		BP, SP    
+          		LDW       		R0, (BP)-8
+          		STW       		R0, -(SP) 		// Stack param for 'write' function: move = 2
           		JSR       		@print_   
-          		LDW       		SP, BP    
-          		LDW       		BP, (SP)  
-          		ADQ       		2, SP     
+          		ADI       		SP, SP, #2		// Unstack the param of 'write'
 
 
 
@@ -114,6 +103,6 @@ FI1
 
 // ------------- PRINT FUNCT		          		
          
-print_    		LDW       		R0, (BP)0 
+print_    		LDW       		R0, (SP)2 
           		TRP       		#WRITE_EXC
           		RTS       		          

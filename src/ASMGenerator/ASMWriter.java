@@ -145,7 +145,7 @@ public class ASMWriter {
 			 writer.write (formatASM("","LDW","R9, #"+valueLeft)+
 					 formatASM("","LDW","R10, #"+valueRight)+
 					 formatASM("", "CMP", "R9, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$"));
+					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
 
 			         constructASM(tree.getChild(1), writer, TDS);
 
@@ -163,7 +163,7 @@ public class ASMWriter {
             writer.write (formatASM("" ,"LDW","R0, (BP)-"+valueLeft)+
                     formatASM("","LDW", "R10, #"+valueRight)+
                     formatASM("", "CMP", "R0, R10") +
-                    formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$"));
+                    formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
 
                     constructASM(tree.getChild(1), writer, TDS);
 
@@ -179,7 +179,7 @@ public class ASMWriter {
 		    writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
                      formatASM("","LDW","R10, #"+valueLeft)+
 					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$"));
+					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
 
 					 constructASM(tree.getChild(1), writer, TDS);
 
@@ -195,7 +195,7 @@ public class ASMWriter {
             writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
 					 formatASM("" ,"LDW","R10, (BP)-"+valueRight) +
 					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#"+ IFLabel+"-$"));
+					 formatASM("","" + jumpCondition(comparator),"#"+ IFLabel+"-$-2"));
 
 			         constructASM(tree.getChild(1), writer, TDS);
 
@@ -325,25 +325,10 @@ public class ASMWriter {
 
 	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
 		return
-				//Charger les param ici pour une func
-/*<<<<<<< da315872e63467694944cd6767479696593bb980
-				formatASM("", "LDW" + depl, "R0, (BP)-") +
-				formatASM("", "STW", "R0, -(SP)") +
-				formatASM("", "LDW", "BP, SP") +
-				formatASM("", "JSR", "@print_") +
-				formatASM("", "LDW", "SP, BP") +
-				formatASM("", "LDW", "BP, (SP)") +
-				formatASM("", "ADQ", "2, SP");
-=======*/
 				formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
-				formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
-				//this.addToStack("BP") +
-				//formatASM("", "LDW", "BP, SP", "// New Base because new environment") +
-				formatASM("", "JSR", "@print_") +
-				formatASM("", "ADI", "SP, SP, #2", "// Unstack the param of 'write'");
-				/*formatASM("", "LDW", "SP, BP", "") +
-				formatASM("", "LDW BP, (SP)", "") +
-				formatASM("", "ADQ 2, SP", "");*/
+						formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
+						formatASM("", "JSR", "@print_") +
+						formatASM("", "ADI", "SP, SP, #2", "// Unstack the param of 'write'");
 	}
 
 	private String defPrintFunc() {
