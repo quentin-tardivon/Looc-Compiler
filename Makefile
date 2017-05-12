@@ -98,4 +98,4 @@ ass:
 	java -jar $(MICROPIUPK) -ass $(file)
 
 sim: ass
-	java -jar $(MICROPIUPK) -sim &
+	java -jar $(MICROPIUPK) -sim

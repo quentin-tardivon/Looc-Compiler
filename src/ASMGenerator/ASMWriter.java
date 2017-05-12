@@ -18,14 +18,27 @@ public class ASMWriter {
 	public static final int INT_SIZE = 2;
 	private static int CPT =0;
 	private String output;
+	private final int offsetEnvironment = INT_SIZE * 3;
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
 	}
 
 
-	public static String formatASM(String left, String asm, String value) {
-		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
+	public static String formatASM(String...params) {
+		if(params.length == 3)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\n", params);
+		if(params.length == 4)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n", params);
+
+		if(params.length != 3 || params.length != 4) {
+			try {
+				throw new Exception("Problem with usage of formatASM:\n" + " - Only 3 or 4 params possible !");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 
 	public void generateASMFile(Tree tree, SymbolTable TDS) {
@@ -54,6 +67,7 @@ public class ASMWriter {
 					formatASM("", "STW", "BP, -(SP)") +
 					formatASM("", "LDW", "BP, SP")
 			);
+			this.stackStaticAndDynamic(writer);
 
 			this.constructASM(tree, writer, TDS);
 
@@ -66,6 +80,7 @@ public class ASMWriter {
 
 			writer.write(defPrintFunc());
 
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -74,13 +89,14 @@ public class ASMWriter {
 	}
 
 	private String varDecl(int deplType) {
-		return formatASM("", "ADI SP, SP, #-" + deplType, "");
+		return formatASM("", "ADI", "SP, SP, #-" + deplType);
 	}
 
 
-	private String varAffect(int depl, int value) {
-		return formatASM("", "LDW", "R0, #" + value) +
-				formatASM("", "STW", "R0, (BP)-" + depl);
+	private String varAffect(int depl) {
+		return removeFromStack("R1")+
+				formatASM("", "LDW", "R0, R1") +
+				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
 	}
 
 
@@ -94,8 +110,8 @@ public class ASMWriter {
 	}
 
 	public String addToStack(String reg) {
-		return formatASM("", "ADQ -2, SP", "") +
-				formatASM("", "STW " + reg + ", (SP)", "");
+		return formatASM("", "ADQ", "-2, SP") +
+				formatASM("", "STW", reg + ", (SP)");
 	}
 
 	public String removeFromStack(String reg) {
@@ -105,16 +121,16 @@ public class ASMWriter {
 
 
 	private String linkR(int R) {
-		return formatASM("", "ADQ -2, SP", "") +
-				formatASM("", "STW BP, (SP)", "") +
+		return formatASM("", "ADQ", "-2, SP") +
+				formatASM("", "STW", "BP, (SP)") +
 				//Charger les param ici pour une func
-				formatASM("", "LDW BP, SP", "");
+				formatASM("", "LDW", "BP, SP");
 	}
 
 	private String unlink() {
-		return formatASM("", "LDW SP, BP", "") +
-				formatASM("", "LDW BP, (SP)", "") +
-				formatASM("", "ADQ 2, SP", "");
+		return formatASM("", "LDW", "SP, BP") +
+				formatASM("", "LDW", "BP, (SP)") +
+				formatASM("", "ADQ", "2, SP");
 	}
 
 	public void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
@@ -225,6 +241,10 @@ public class ASMWriter {
 		return jump;
 	}
 
+	private String loadVar(int depl) {
+		return formatASM("", "LDW", "R1, (BP)-" + depl);
+	}
+
 
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
@@ -242,12 +262,11 @@ public class ASMWriter {
 		return formatASM("","LDW R0, #10", "") +
 				formatASM("","STW R0, -(SP)", "") +
 				formatASM("","ADI BP, R0, #-8", "") +
-				formatASM("","STW r0, -(SP)", "") +
-				formatASM("","LDW r0, (BP)-10", "") +
-				formatASM("","STW r0, -(SP)", "") +
+				formatASM("","STW R0, -(SP)", "") +
+				formatASM("","LDW R0, (BP)-10", "") +
+				formatASM("","STW R0, -(SP)", "") +
 				formatASM("","JSR @itoa_", "") +
 				formatASM("","ADI SP, SP, #6", "");
-
 	}
 
 	private String itoaDef() {
@@ -264,7 +283,7 @@ public class ASMWriter {
 				formatASM("", "ASCII_A     equ 65", "") +
 				formatASM("", "itoa_  STW BP, -(SP)", "") +
 				formatASM("", "LDW BP, SP", "") +
-				formatASM("", "LDW r0, (BP)ITOA_I", "") +
+				formatASM("", "LDW R0, (BP)ITOA_I", "") +
 				formatASM("", "LDW R1, (BP)ITOA_", "") +
 				formatASM("", "LDQ ASCII_SP, R3", "") +
 				formatASM("", "LDQ 10, WR", "") +
@@ -285,7 +304,7 @@ public class ASMWriter {
 				formatASM("", "SHL R0, R0", "") +
 				formatASM("", "ADD R0, R4, R0", "") +
 				formatASM("", "SHL R1, R1", "") +
-				formatASM("", "ADQ -10, r0 ", "") +
+				formatASM("", "ADQ -10, R0 ", "") +
 				formatASM("", "BGE LETTER-$-2", "") +
 				formatASM("", "ADQ 10+ASCII_0, R0", "") +
 				formatASM("", "BMP STKCHR-$-2", "") +
@@ -313,15 +332,19 @@ public class ASMWriter {
 		return formatASM("", "ADQ -2, SP", "") +
 				formatASM("", "STW BP, (SP)", "") +
 				//Charger les param ici pour une func
-				formatASM("", "LDW R0, (BP)-" + depl + "", "") +
-				formatASM("", "STW R0, -(SP)", "") +
-				formatASM("", "LDW BP, SP", "") +
+				formatASM("", "LDW" + depl, "R0, (BP)-") +
+				formatASM("", "STW", "R0, -(SP)") +
+				formatASM("", "LDW", "BP, SP") +
 				formatASM("", "JSR", "@print_") +
-				formatASM("", "LDW SP, BP", "") +
-				formatASM("", "LDW BP, (SP)", "") +
-				formatASM("", "ADQ 2, SP", "");
+				formatASM("", "LDW", "SP, BP") +
+				formatASM("", "LDW", "BP, (SP)") +
+				formatASM("", "ADQ", "2, SP");
 	}
 
+	public void stackStaticAndDynamic(Writer w) throws IOException {
+		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
+				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
+	}
 
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
@@ -334,10 +357,10 @@ public class ASMWriter {
 				break;
 
 			case "VAR_DEC":
-				if (tree.getChild(0).getText().equals("int")) {
-					writer.write(varDecl(2));
+				if (tree.getChild(1).getText().equals("int")) {
+					writer.write(varDecl(INT_SIZE));
 				}
-				else if(tree.getChild(0).getText().equals("string")) {
+				else if(tree.getChild(1).getText().equals("string")) {
 					writer.write(varDecl(2));
 				}
 				break;
@@ -347,7 +370,8 @@ public class ASMWriter {
 					writer.write(classAffect());
 				}
 				else {
-					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl(), Integer.parseInt(tree.getChild(1).getText())));
+					constructASM(tree.getChild(1), writer, TDS);
+					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 				}
 
 				break;
@@ -387,6 +411,43 @@ public class ASMWriter {
 				writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
 				break;
 
+			case "PLUS":
+				constructASM(tree.getChild(0), writer, TDS);
+				constructASM(tree.getChild(1), writer, TDS);
+				writer.write(removeFromStack("R1"));
+				writer.write(removeFromStack("R2"));
+				writer.write(formatASM("", "ADD", "R1, R2, R3"));
+				writer.write(addToStack("R3"));
+
+				break;
+
+			case "DIFF":
+				constructASM(tree.getChild(0), writer, TDS);
+				constructASM(tree.getChild(1), writer, TDS);
+				writer.write(removeFromStack("R1"));
+				writer.write(removeFromStack("R2"));
+				writer.write(formatASM("", "SUB", "R1, R2, R3"));
+				writer.write(addToStack("R3"));
+				break;
+
+			case "MUL":
+				constructASM(tree.getChild(0), writer, TDS);
+				constructASM(tree.getChild(1), writer, TDS);
+				writer.write(removeFromStack("R1"));
+				writer.write(removeFromStack("R2"));
+				writer.write(formatASM("", "MUL", "R1, R2, R3"));
+				writer.write(addToStack("R3"));
+				break;
+
+			case "DIV":
+				constructASM(tree.getChild(0), writer, TDS);
+				constructASM(tree.getChild(1), writer, TDS);
+				writer.write(removeFromStack("R1"));
+				writer.write(removeFromStack("R2"));
+				writer.write(formatASM("", "DIV", "R1, R2, R3"));
+				writer.write(addToStack("R3"));
+				break;
+
 			case "THEN":
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					constructASM(tree.getChild(i), writer, TDS);
@@ -398,8 +459,19 @@ public class ASMWriter {
 					constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
-			//default:
-			//System.out.println(tree.getText() + " ");
+
+			default:
+				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
+					writer.write(formatASM("", "LDW", "R1, #" + tree.getText()));
+					writer.write(addToStack("R1"));
+					System.out.println(tree.getText() + "\n");
+				}
+
+				else { //Cas de variable
+					loadVar(((Variable)TDS.get(tree.getText())).getDepl());
+					writer.write(addToStack("R1"));
+					System.out.println(tree.getText() + "\n");
+				}
 
 		}
 	}

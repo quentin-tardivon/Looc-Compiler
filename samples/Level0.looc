@@ -4,8 +4,7 @@ var i : int;
 
 n := 10;
 total := 12;
-
-		if n-2 == (1 + 2) then
+		if n == 1 then
 		    n := 666;
         else
             if n > 999 then
