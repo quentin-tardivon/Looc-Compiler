@@ -8,4 +8,5 @@ y := "GARRUS";
 total := 12;
 x := "MOGWAI";
 
+
 write total;
