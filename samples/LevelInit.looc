@@ -1,6 +1,6 @@
 var n : int;
-var total : int;
 var i : int;
+var total : int;
 
 n := 10;
 total := 12;
