@@ -105,10 +105,6 @@ public class ASMWriter {
 		return formatASM("", "Here comes a Class ADDR", "");
 	}
 
-	public String addConst(int constante, int depl) {
-		getVar("R1", depl);
-		return formatASM("", "ADQ", constante + ", R1");
-	}
 
 	public String addToStack(String reg) {
 		/*return formatASM("", "ADQ", "-2, SP") +
@@ -116,7 +112,7 @@ public class ASMWriter {
 		return formatASM("", "STW", reg + ", -(SP)");
 	}
 
-	public String removeFromStack(String reg) {
+	private String removeFromStack(String reg) {
 		return formatASM("", "LDW", reg + ", (SP)") +
 			formatASM("", "ADQ", "2, SP");
 	}
@@ -135,7 +131,7 @@ public class ASMWriter {
 				formatASM("", "ADQ", "2, SP");
 	}
 
-	public void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
+	private void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
 
 
 		String afterIFLabel=afterIfLabelMaker(CPT);
