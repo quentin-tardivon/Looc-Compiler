@@ -1,0 +1,8 @@
+var n : int;
+var total : int;
+var i : int;
+
+n := 10;
+total := 12;
+
+write total;

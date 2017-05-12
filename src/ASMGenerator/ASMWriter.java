@@ -18,14 +18,27 @@ public class ASMWriter {
 	public static final int INT_SIZE = 2;
 	private static int CPT =0;
 	private String output;
+	private final int offsetEnvironment = INT_SIZE * 3;
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
 	}
 
 
-	public static String formatASM(String left, String asm, String value) {
-		return String.format("%-10s\t\t%-10s\t\t%-10s\n",left, asm, value);
+	public static String formatASM(String...params) {
+		if(params.length == 3)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\n", params);
+		if(params.length == 4)
+			return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n", params);
+
+		if(params.length != 3 || params.length != 4) {
+			try {
+				throw new Exception("Problem with usage of formatASM:\n" + " - Only 3 or 4 params possible !");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 
 	public void generateASMFile(Tree tree, SymbolTable TDS) {
@@ -52,10 +65,9 @@ public class ASMWriter {
 					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
 					formatASM("", "LDW", "BP, #NIL") +
 					formatASM("", "STW", "BP, -(SP)") +
-					formatASM("", "LDW", "BP, SP") +
-					formatASM("", "STW", "BP, -(SP)") +
-					formatASM("", "STW", "BP, -(SP)")
+					formatASM("", "LDW", "BP, SP")
 			);
+			this.stackStaticAndDynamic(writer);
 
 			this.constructASM(tree, writer, TDS);
 
@@ -76,13 +88,13 @@ public class ASMWriter {
 	}
 
 	private String varDecl(int deplType) {
-		return formatASM("", "ADI SP, SP, #-" + deplType, "");
+		return formatASM("", "ADI", "SP, SP, #-" + deplType, "// Declaration: size = " + deplType);
 	}
 
 
 	private String varAffect(int depl, int value) {
 		return formatASM("", "LDW", "R0, #" + value) +
-				formatASM("", "STW", "R0, (BP)-" + depl);
+				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl + ", value = " + value);
 	}
 
 
@@ -96,8 +108,8 @@ public class ASMWriter {
 	}
 
 	public String addToStack(String reg) {
-		return formatASM("", "ADQ -2, SP", "") +
-				formatASM("", "STW " + reg + ", (SP)", "");
+		return formatASM("", "ADQ", "-2, SP") +
+				formatASM("", "STW", reg + ", (SP)");
 	}
 
 	public String removeFromStack(String reg) {
@@ -322,6 +334,11 @@ public class ASMWriter {
 				formatASM("", "ADQ 2, SP", "");
 	}
 
+	public void stackStaticAndDynamic(Writer w) throws IOException {
+		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
+				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
+	}
+
 
 
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
@@ -334,10 +351,10 @@ public class ASMWriter {
 				break;
 
 			case "VAR_DEC":
-				if (tree.getChild(0).getText().equals("int")) {
-					writer.write(varDecl(2));
+				if (tree.getChild(1).getText().equals("int")) {
+					writer.write(varDecl(INT_SIZE));
 				}
-				else if(tree.getChild(0).getText().equals("string")) {
+				else if(tree.getChild(1).getText().equals("string")) {
 					writer.write(varDecl(2));
 				}
 				break;
