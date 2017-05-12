@@ -13,6 +13,7 @@ total := 12;
                     n:=777;
                 else
                     n:=888;
+                fi
             else
                 n:=333;
             fi

@@ -51,10 +51,15 @@ ELSE2
           		STW       		R0, (BP)-0
 FI2       		          		          
 FI1       		          		          
-          		ADI       		BP, R0, #-8
-          		STW       		R0, -(SP) 
+          		ADQ -2, SP		          
+          		STW BP, (SP)		          
+          		LDW R0, (BP)-2		          
+          		STW R0, -(SP)		          
+          		LDW BP, SP		          
           		JSR       		@print_   
-          		ADI       		SP, SP, #2
+          		LDW SP, BP		          
+          		LDW BP, (SP)		          
+          		ADQ 2, SP 		          
 
 
 
@@ -71,12 +76,6 @@ FI1
 
 // ------------- PRINT FUNCT		          		
          
-print_    		LDQ       		0,R1      
-          		STW       		BP, -(SP) 
-          		LDW       		BP, SP    
-          		SUB       		SP, R1, SP
-          		LDW       		R0, (BP)4 
+print_    		LDW       		R0, (BP)0 
           		TRP       		#WRITE_EXC
-          		LDW       		SP, BP    
-          		LDW       		BP, (SP)+ 
           		RTS       		          
