@@ -1,8 +1,11 @@
 var n : int;
+var y : string;
 var total : int;
-var i : int;
+var x : string;
 
 n := 10;
+y := "GARRUS";
 total := 12;
+x := "MOGWAI";
 
 write total;

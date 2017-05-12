@@ -23,8 +23,14 @@ import java.io.FileInputStream;
 public class Sandbox {
 
     public static void main(String[] args) throws Exception {
-        String filename = "./samples/Level0.looc";
-        File f = new File(filename);
+        String filename = "./samples/Level1.looc";
+        if(args.length == 0) {
+            System.out.println("filename should be in arguments !");
+            System.exit(0);
+        }
+        System.out.println(" -- Generate ASM for " + args[0]);
+        File f = new File(args[0]);
+
         ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(f));
         LoocLexer lexer = new LoocLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -33,8 +39,12 @@ public class Sandbox {
 
         CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
         treeParser.parseCommonTreeParser(tree);
-	    SymbolTable tds = new SymbolTable();
+	      SymbolTable tds = new SymbolTable();
+
 	    treeParser.constructTDS(tree, tds, tds);
+
+
+	    System.out.println(tds.toString());
 
         ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".asm");
         writer.generateASMFile(tree, tds);
