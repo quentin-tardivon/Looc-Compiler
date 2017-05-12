@@ -17,7 +17,10 @@ public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
 	private static int CPT =0;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 	private String output;
 
 	public ASMWriter(String asmFile) {
@@ -66,6 +69,7 @@ public class ASMWriter {
 			);
 
 			writer.write(defPrintFunc());
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -77,10 +81,15 @@ public class ASMWriter {
 		return formatASM("", "ADI SP, SP, #-" + deplType, "");
 	}
 
+<<<<<<< HEAD
 	public String varAffect(int depl, int value) {
+=======
+	private String varAffect(int depl, int value) {
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 		return formatASM("", "LDW", "R0, #" + value) +
 				formatASM("", "STW", "R0, (BP)-" + depl);
 	}
+
 
 	private String classAffect() {
 		return formatASM("", "Here comes a Class ADDR", "");
@@ -99,15 +108,35 @@ public class ASMWriter {
 	public String removeFromStack(String reg) {
 		return formatASM("", "LDW", reg + ", (SP)") +
 			formatASM("", "ADQ", "2, SP");
+<<<<<<< HEAD
 	}
 
 	public void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException{
+=======
+	}
+
+	private String linkR(int R) {
+		return formatASM("", "ADQ -2, SP", "") +
+				formatASM("", "STW BP, (SP)", "") +
+				//Charger les param ici pour une func
+				formatASM("", "LDW BP, SP", "");
+	}
+
+	private String unlink() {
+		return formatASM("", "LDW SP, BP", "") +
+				formatASM("", "LDW BP, (SP)", "") +
+				formatASM("", "ADQ 2, SP", "");
+	}
+
+	private String ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw){
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 
 		//TODO problème dans le CPT static
 		String afterIFLabel=afterIfLabelMaker(CPT);
 		String IFLabel=ifLabelMaker(CPT);
 		//if(3>2)
 		if(leftValueisRaw&&rightValueisRaw){
+<<<<<<< HEAD
 			 writer.write (formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
 					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
 
@@ -120,9 +149,20 @@ public class ASMWriter {
 			         constructASM(tree.getChild(2), writer, TDS);
 
 			         writer.write(formatASM("" + afterIFLabel, "", ""));
+=======
+			 return formatASM("","//DEBUT IF"+CPT,"") +
+					formatASM("", "CMP", "" + valueLeft + ", " + valueRight) +
+					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					formatASM("","//FIN IF","");
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 		//if(b>2)
 		}else if(leftValueisRaw&&!rightValueisRaw){
 
+<<<<<<< HEAD
 			   		 writer.write (formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
 			 		 formatASM("", "CMP", "R0, "+ valueRight) +
 					 formatASM("","" + jumpCondition(comparator),"@" + IFLabel));
@@ -135,6 +175,17 @@ public class ASMWriter {
 					 constructASM(tree.getChild(2), writer, TDS);
 
 			         writer.write(formatASM("" + afterIFLabel, "", ""));
+=======
+			 return formatASM("","//DEBUT IF"+CPT,"") +
+				    formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+			 		formatASM("", "CMP", "R0, "+ valueRight) +
+					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					formatASM("","//FIN IF","");
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 
 		//if(2>b)
 		}else if(!leftValueisRaw&&rightValueisRaw){
@@ -145,16 +196,29 @@ public class ASMWriter {
 
 					 constructASM(tree.getChild(1), writer, TDS);
 
+<<<<<<< HEAD
 					 writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
 					 formatASM("" + IFLabel, "", ""));
 
 			         constructASM(tree.getChild(2), writer, TDS);
 
 					 writer.write(formatASM("" + afterIFLabel, "", ""));
+=======
+			return  formatASM("","//DEBUT IF"+CPT,"") +
+					formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
+					formatASM("", "CMP", "R0, "+ valueLeft) +
+					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					formatASM("","//FIN IF","");
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 
 		//if(a>b)
 		}else {
 
+<<<<<<< HEAD
 			         writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
 					 formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
 					 formatASM("", "CMP", valueLeft+", "+ valueRight) +
@@ -168,20 +232,32 @@ public class ASMWriter {
 					 constructASM(tree.getChild(2), writer, TDS);
 
 			         writer.write(formatASM("" + afterIFLabel, "", ""));
+=======
+			return  formatASM("","//DEBUT IF"+CPT,"") +
+					formatASM("" ,"LDW","R0, (BP)-"+valueLeft) +
+					formatASM("" ,"LDW","R1, (BP)-"+valueRight) +
+					formatASM("", "CMP", valueLeft+", "+ valueRight) +
+					formatASM("","" + jumpCondition(comparator),"@" + ifLabelMaker(CPT)) +
+					formatASM("", "//TODO : then instructions", "") +                        //then instructions (constructASM)
+					formatASM("", "JEA", "@" + afterIfLabelMaker(CPT)) +
+					formatASM("" + ifLabelMaker(CPT), "//TODO : else instructions", "") +        //else instructions
+					formatASM("" + afterIfLabelMaker(CPT), "", "") +
+					formatASM("","//FIN IF","");
+>>>>>>> 931291c91efc45b73c513900ebcc1e61f106c754
 		}
 	}
 
-	public String ifLabelMaker(int cpt){
+	private String ifLabelMaker(int cpt){
 		String label = "ELSE"+cpt;
 		return label;
 	}
 
-	public String afterIfLabelMaker(int cpt){
+	private String afterIfLabelMaker(int cpt){
 		String label = "FI"+cpt;
 		return label;
 	}
 
-	public String jumpCondition(String comparator){
+	private String jumpCondition(String comparator){
 		String jump="";
 		switch(comparator){
 			case "<":
@@ -213,22 +289,93 @@ public class ASMWriter {
 
 	private String defPrintFunc() {
 		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				formatASM("print_", "LDQ", "0,R1") +
-				formatASM("", "STW", "BP, -(SP)") +
-				formatASM("", "LDW", "BP, SP") +
-				formatASM("", "SUB", "SP, R1, SP") +
-				formatASM("", "LDW", "R0, (BP)4") +
+				formatASM("print_", "LDW", "R0, (BP)0") +
 				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "LDW", "SP, BP") +
-				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("", "RTS", "");
 	}
+	
+	private String itoaCall() {
+		return formatASM("","LDW R0, #10", "") +
+				formatASM("","STW R0, -(SP)", "") +
+				formatASM("","ADI BP, R0, #-8", "") +
+				formatASM("","STW r0, -(SP)", "") +
+				formatASM("","LDW r0, (BP)-10", "") +
+				formatASM("","STW r0, -(SP)", "") +
+				formatASM("","JSR @itoa_", "") +
+				formatASM("","ADI SP, SP, #6", "");
 
-	public String printFuncCall(String varName) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "ADI","BP, R0, #-8") +
-				formatASM("", "STW", "R0, -(SP)") +
+	}
+
+	private String itoaDef() {
+
+
+
+		return formatASM("", "ITOA_I      equ 4 ", "") +
+				formatASM("", "ITOA_P      equ 6 ", "") +
+				formatASM("", "ITOA_B      equ 8", "") +
+				formatASM("", "ASCII_MINUS equ 45 ", "") +
+				formatASM("", "ASCII_PLUS  equ 43", "") +
+				formatASM("", "ASCII_SP    equ 32", "") +
+				formatASM("", "ASCII_0     equ 48", "") +
+				formatASM("", "ASCII_A     equ 65", "") +
+				formatASM("", "itoa_  STW BP, -(SP)", "") +
+				formatASM("", "LDW BP, SP", "") +
+				formatASM("", "LDW r0, (BP)ITOA_I", "") +
+				formatASM("", "LDW R1, (BP)ITOA_", "") +
+				formatASM("", "LDQ ASCII_SP, R3", "") +
+				formatASM("", "LDQ 10, WR", "") +
+				formatASM("", "CMP R1, WR", "") +
+				formatASM("", "BNE NOSIGN-$-2", "") +
+				formatASM("", "LDQ ASCII_PLUS, R3", "") +
+				formatASM("", "TST R0", "") +
+				formatASM("", "BGE POSIT-$-2", "") +
+				formatASM("", "NEG R0, R0", "") +
+				formatASM("", "LDQ ASCII_MINUS, R3", "") +
+				formatASM("", "POSIT   NOP ", "") +
+				formatASM("", "NOSIGN  LDW R2, R0 ", "") +
+				formatASM("", "CNVLOOP LDW R0, R2", "") +
+				formatASM("", "SRL R1, R1", "") +
+				formatASM("", "ANI R0, R4, #1", "") +
+				formatASM("", "SRL R0, R0", "") +
+				formatASM("", "DIV R0, R1, R2", "") +
+				formatASM("", "SHL R0, R0", "") +
+				formatASM("", "ADD R0, R4, R0", "") +
+				formatASM("", "SHL R1, R1", "") +
+				formatASM("", "ADQ -10, r0 ", "") +
+				formatASM("", "BGE LETTER-$-2", "") +
+				formatASM("", "ADQ 10+ASCII_0, R0", "") +
+				formatASM("", "BMP STKCHR-$-2", "") +
+				formatASM("", "LETTER  ADQ ASCII_A, R0", "") +
+				formatASM("", "STKCHR  STW R0, -(SP)", "") +
+				formatASM("", "TST R2", "") +
+				formatASM("", "BNE CNVLOOP-$-2", "") +
+				formatASM("", "LDW R1, (BP)ITOA_P", "") +
+				formatASM("", "STB R3, (R1)+", "") +
+				formatASM("", "CPYLOOP LDW R0, (SP)+", "") +
+				formatASM("", "STB R0, (R1)+", "") +
+				formatASM("", "CMP SP, BP", "") +
+				formatASM("", "BNE CPYLOOP-$-2", "") +
+				formatASM("", "LDQ NUL, R0", "") +
+				formatASM("", "STB R0, (R1)+", "") +
+				formatASM("", "LDW R0, (BP)ITOA_P ", "") +
+				formatASM("", "LDW SP, BP ", "") +
+				formatASM("", "LDW BP, (SP)+", "") +
+				formatASM("", "RTS", "");
+
+	}
+
+
+	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
+		return formatASM("", "ADQ -2, SP", "") +
+				formatASM("", "STW BP, (SP)", "") +
+				//Charger les param ici pour une func
+				formatASM("", "LDW R0, (BP)-" + depl + "", "") +
+				formatASM("", "STW R0, -(SP)", "") +
+				formatASM("", "LDW BP, SP", "") +
 				formatASM("", "JSR", "@print_") +
-				formatASM("", "ADI", "SP, SP, #2");
+				formatASM("", "LDW SP, BP", "") +
+				formatASM("", "LDW BP, (SP)", "") +
+				formatASM("", "ADQ 2, SP", "");
 	}
 
 
@@ -289,7 +436,7 @@ public class ASMWriter {
 
 
 			case "WRITE":
-				writer.write(printFuncCall(tree.getChild(0).getText()));
+				writer.write(printFuncCall(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 				break;
 
 			case "CLASS_DEC":
