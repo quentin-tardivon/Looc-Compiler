@@ -9,11 +9,13 @@ total := 12;
 		    n := 666;
         else
             if n > 999 then
-                n:=777;
+                if n==5 then
+                    n:=777;
+                else
+                    n:=888;
             else
                 n:=333;
             fi
 		fi
 
 write total;
-
