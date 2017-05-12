@@ -18,6 +18,7 @@ import java.io.*;
 public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
+	public static final int ADDR_SIZE = 2;
 	private static int CPT =0;
 	private String output;
 	private final int offsetEnvironment = INT_SIZE * 3;
@@ -150,8 +151,9 @@ public class ASMWriter {
 	}
 
 	public String addToStack(String reg) {
-		return formatASM("", "ADQ", "-2, SP") +
-				formatASM("", "STW", reg + ", (SP)");
+		/*return formatASM("", "ADQ", "-2, SP") +
+				formatASM("", "STW", reg + ", (SP)");*/
+		return formatASM("", "STW", reg + ", -(SP)");
 	}
 
 	public String removeFromStack(String reg) {
@@ -289,13 +291,6 @@ public class ASMWriter {
 				"" + reg + ", (BP)-" + depl, "");
 	}
 
-	private String defPrintFunc() {
-		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				formatASM("print_", "LDW", "R0, (BP)0") +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "RTS", "");
-	}
-
 
 	private String itoaCall() {
 		return formatASM("","LDW R0, #10", "") +
@@ -368,9 +363,9 @@ public class ASMWriter {
 
 
 	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "ADQ -2, SP", "") +
-				formatASM("", "STW BP, (SP)", "") +
+		return
 				//Charger les param ici pour une func
+/*<<<<<<< da315872e63467694944cd6767479696593bb980
 				formatASM("", "LDW" + depl, "R0, (BP)-") +
 				formatASM("", "STW", "R0, -(SP)") +
 				formatASM("", "LDW", "BP, SP") +
@@ -378,6 +373,23 @@ public class ASMWriter {
 				formatASM("", "LDW", "SP, BP") +
 				formatASM("", "LDW", "BP, (SP)") +
 				formatASM("", "ADQ", "2, SP");
+=======*/
+				formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
+				formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
+				//this.addToStack("BP") +
+				//formatASM("", "LDW", "BP, SP", "// New Base because new environment") +
+				formatASM("", "JSR", "@print_") +
+				formatASM("", "ADI", "SP, SP, #2", "// Unstack the param of 'write'");
+				/*formatASM("", "LDW", "SP, BP", "") +
+				formatASM("", "LDW BP, (SP)", "") +
+				formatASM("", "ADQ 2, SP", "");*/
+	}
+
+	private String defPrintFunc() {
+		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
+				formatASM("print_", "LDW", "R0, (SP)" + ADDR_SIZE) +
+				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "RTS", "");
 	}
 
 	public void stackStaticAndDynamic(Writer w) throws IOException {
