@@ -67,8 +67,8 @@ public class ASMWriter {
 
 
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
-					formatASM("HEAP_ADRS", "EQU", "0xFD00") +
-					formatASM("LOAD_ADRS", "EQU", "0xFE00\n") +
+					formatASM("HEAP_ADRS", "EQU", "0xF000") +
+					formatASM("LOAD_ADRS", "EQU", "0xFA00\n") +
 
 
 					formatASM("", "ORG", "LOAD_ADRS") +
