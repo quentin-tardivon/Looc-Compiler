@@ -371,6 +371,7 @@ public class ASMWriter {
 			case "FOR":
 				writer.write(new For(new Condition(), new Block()).generate());
 				break;
+				//TODO : avec addtostack empiler les valeurs necessaires pour faire le for (dans le cas imbriqué..) + exemple dans mainprogram.asm
 
 			case "IF":
 				CPT++;
