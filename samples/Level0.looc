@@ -9,4 +9,7 @@ total := 12;
 x := "MOGWAI";
 
 
+write x;
+write n;
+write y;
 write total;

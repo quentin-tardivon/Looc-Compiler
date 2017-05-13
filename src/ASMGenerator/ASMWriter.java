@@ -19,7 +19,7 @@ public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
 	public static final int ADDR_SIZE = 2;
-	public static final int CHAR_SIZE = 2;
+	public static final int CHAR_SIZE = 1;
 	private static int CPT =0;
 	private String output;
 	private final int offsetEnvironment = INT_SIZE * 3;
@@ -100,7 +100,7 @@ public class ASMWriter {
 					formatASM("", "JEA @main_", "")
 			);
 
-			writer.write(defPrintFunc());
+			//writer.write(defPrintFunc());
 
 
 		}
@@ -113,22 +113,15 @@ public class ASMWriter {
 	private String varDecl(int deplType) {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
 	}
-
-	private String addToHeap(int depl){
-		return formatASM("","ADQ" , "-" + depl + ", ST");
-	}
+	
 
 
-	private String varStringAffect(int depl,int charValue){
-		return formatASM("", "LDW ",  "R0, #" + charValue) +
-				formatASM("", "STW " , "R0, (ST)-" + depl)+
+	private String varStringAffect(int depl, String charValue){
+		return formatASM("", "LDB ",  "R0, #0x" + charValue + "00") +
+				formatASM("", "STB " , "R0, (ST)-" + depl)+
 				formatASM("","ADQ" , "-" + depl + ", ST");
 	}
 
-	private String addStringToStack(int depl) {
-		return //formatASM("","LDW R0, (R12)","")+
-				formatASM("","STW ", "R12, (SP)-" + depl);
-	}
 
 
 	private String varAffect(int depl) {
@@ -287,8 +280,7 @@ public class ASMWriter {
 
 
 	private String getVar(String reg, int depl) {
-		return formatASM("", "LDW " +
-				"" + reg + ", (BP)-" + depl, "");
+		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
 	}
 
 
@@ -363,16 +355,17 @@ public class ASMWriter {
 
 
 	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
-		return
-				formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
-						formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
-						formatASM("", "JSR", "@print_") +
-						formatASM("", "ADI", "SP, SP, #2", "// Unstack the param of 'write'");
+		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
+				formatASM("", "TRP", "#WRITE_EXC");
+
+		//formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
+						//formatASM("", "JSR", "@print_") +
+						//formatASM("", "ADI", "SP, SP, #2", "// Unstack the param of 'write'");
 	}
 
 	private String defPrintFunc() {
 		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				formatASM("print_", "LDW", "R0, (SP)" + ADDR_SIZE) +
+				//formatASM("print_", "LDW", "R0, (BP)" + ADDR_SIZE) +
 				formatASM("", "TRP", "#WRITE_EXC") +
 				formatASM("", "RTS", "");
 	}
@@ -406,14 +399,14 @@ public class ASMWriter {
 
 				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
 					if (tree.getChild(1).getText().matches("\".*\"")) {
-						//writer.write(addStringToStack(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+						writer.write(formatASM("", "LDW ",  "R0, #0x0000")) ;
+						writer.write(formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE));
+						writer.write(formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
+						for (int i = tree.getChild(1).getText().length()-2; i > 0 ; i--) {
+							writer.write(varStringAffect(CHAR_SIZE ,  String.format("%04x", (int) tree.getChild(1).getText().charAt(i)).substring(2)));
+						}
 						writer.write(addToStack("R12"));
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
-						for (int i = 1; i < tree.getChild(1).getText().length() - 1; i++) {
-							writer.write(varStringAffect(2 , (int) tree.getChild(1).getText().charAt(i)));
-							//writer.write(addToHeap(2));
-							System.out.println(tree.getChild(1).getText().charAt(i));
-						}
 					}
 					//else if (TDS.getInfo(tree.getChild(1).getText()))
 
