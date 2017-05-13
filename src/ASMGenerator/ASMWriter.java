@@ -113,7 +113,7 @@ public class ASMWriter {
 	private String varDecl(int deplType) {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
 	}
-	
+
 
 
 	private String varStringAffect(int depl, String charValue){
@@ -408,7 +408,12 @@ public class ASMWriter {
 						writer.write(addToStack("R12"));
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 					}
-					//else if (TDS.getInfo(tree.getChild(1).getText()))
+					else if (TDS.getInfo(tree.getChild(1).getText()) != null) {
+						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment+((Variable)TDS.get(tree.getChild(1).getText())).getDepl()) )) ;
+						writer.write(addToStack("R0"));
+						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+
+					}
 
 				}
 				else if (tree.getChild(1).getText().equals("new")) {

@@ -34,6 +34,7 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
+          		ADI       		SP, SP, #-2
           		LDW       		R1, #10   
           		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
@@ -66,45 +67,49 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADQ       		2, SP     
           		LDW       		R0, R1    
           		STW       		R0, (BP)-8		// Affection: move = 2
-          		LDW       		R1, #12   
-          		STW       		R1, -(SP) 
-          		LDW       		R1, (SP)  
-          		ADQ       		2, SP     
-          		LDW       		R0, R1    
-          		STW       		R0, (BP)-10		// Affection: move = 4
           		LDW       		R0, #0x0000
           		STW       		R0, (ST)-2
           		ADQ       		-2, ST    
-          		LDB       		R0, #0x4900
+          		LDB       		R0, #0x6900
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
-          		LDB       		R0, #0x4100
+          		LDB       		R0, #0x6100
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
-          		LDB       		R0, #0x5700
+          		LDB       		R0, #0x7700
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
-          		LDB       		R0, #0x4700
+          		LDB       		R0, #0x6700
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
-          		LDB       		R0, #0x4f00
+          		LDB       		R0, #0x6f00
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
-          		LDB       		R0, #0x4d00
+          		LDB       		R0, #0x6d00
           		STB       		R0, (ST)-1
           		ADQ       		-1, ST    
           		STW       		R12, -(SP)
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
+          		STW       		R0, (BP)-14		// Affection: move = 8
+          		LDW       		R1, #12   
+          		STW       		R1, -(SP) 
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
+          		STW       		R0, (BP)-10		// Affection: move = 4
+          		LDW       		R0, (BP)-8
+          		STW       		R0, -(SP) 
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R0, R1    
           		STW       		R0, (BP)-12		// Affection: move = 6
-          		LDW       		R0, (BP)-12
-          		TRP       		#WRITE_EXC
-          		LDW       		R0, (BP)-6
-          		TRP       		#WRITE_EXC
           		LDW       		R0, (BP)-8
           		TRP       		#WRITE_EXC
-          		LDW       		R0, (BP)-10
+          		LDW       		R0, (BP)-14
+          		TRP       		#WRITE_EXC
+          		LDW       		R0, (BP)-12
           		TRP       		#WRITE_EXC
 
 
