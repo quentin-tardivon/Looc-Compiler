@@ -1,12 +1,18 @@
 package ASMGenerator;
 
 import TDS.Entry;
+<<<<<<< 45cfd452882dd7e7a56bab456f3dcd2089bcf179
+=======
+import ASMGenerator.instructions.Condition;
+import ASMGenerator.instructions.For;
+>>>>>>> DOn't worry
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by quentin on 29/04/2017.
@@ -90,7 +96,7 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, ST") +
 					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
 			);
-			this.stackStaticAndDynamic(writer);
+			writer.write(ASMUtils.stackStaticAndDynamic());
 
 			this.constructASM(tree, writer, TDS);
 
@@ -544,6 +550,7 @@ public class ASMWriter {
 				formatASM("", "RTS", "");
 	}
 
+<<<<<<< 45cfd452882dd7e7a56bab456f3dcd2089bcf179
 	public void stackStaticAndDynamic(Writer w) throws IOException {
 		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
 				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
@@ -557,12 +564,100 @@ public class ASMWriter {
 				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
 	}
 
+=======
+
+	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
+		int cpt=0;
+		switch(tree.getText()) {
+			case "ROOT":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					ArrayList<Generable> l = new ArrayList<Generable>();
+					ASMParser.parse(tree.getChild(i), TDS, l);
+					generateInstructions(writer, l);
+					//constructASM(tree.getChild(i), writer, TDS);
+					//constructASM(tree.getChild(i), writer, TDS);
+
+				}
+
+				break;
+
+			case "VAR_DEC":
+				if (tree.getChild(1).getText().equals("int")) {
+					writer.write(varDecl(INT_SIZE));
+				}
+				else if(tree.getChild(1).getText().equals("string")) {
+					writer.write(varDecl(ADDR_SIZE));
+				}
+				break;
+
+			case "AFFECT":
+
+				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
+					if (tree.getChild(1).getText().matches("\".*\"")) {
+						writer.write(formatASM("", "LDW ",  "R0, #0x0000")) ;
+						writer.write(formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE));
+						writer.write(formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
+						for (int i = tree.getChild(1).getText().length()-2; i > 0 ; i--) {
+							writer.write(varStringAffect(CHAR_SIZE ,  String.format("%04x", (int) tree.getChild(1).getText().charAt(i)).substring(2)));
+						}
+						writer.write(addToStack("R12"));
+						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+					}
+					//else if (TDS.getInfo(tree.getChild(1).getText()))
+
+				}
+				else if (tree.getChild(1).getText().equals("new")) {
+					writer.write(classAffect());
+				}
+				else {
+					constructASM(tree.getChild(1), writer, TDS);
+					writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+				}
+
+				break;
+
+			case "FOR":
+				writer.write(new For(new Condition(), new Block()).generate());
+				break;
+
+			case "IF":
+				CPT++;
+				int leftValue;
+				int rightValue;
+				boolean leftValueisRaw=true;
+				boolean rightValueisRaw=true;
+				try{
+					leftValue=Integer.parseInt(tree.getChild(0).getChild(0).getText());
+				}catch(NumberFormatException e){
+					leftValue=((Variable)TDS.get(tree.getChild(0).getChild(0).getText())).getDepl();
+					leftValueisRaw=false;
+				}
+
+				try{
+					rightValue=Integer.parseInt(tree.getChild(0).getChild(1).getText());
+				}catch(NumberFormatException e){
+					rightValue=((Variable)TDS.get(tree.getChild(0).getChild(1).getText())).getDepl();
+					rightValueisRaw=false;
+				}
+
+				ifCondition(leftValue,rightValue,tree.getChild(0).getText(),rightValueisRaw, leftValueisRaw, tree,  writer, TDS);
+				break;
+>>>>>>> DOn't worry
 
 
 	private String classAffect() {
 		return formatASM("", "Here comes a Class ADDR", "");
 	}
 
+<<<<<<< 45cfd452882dd7e7a56bab456f3dcd2089bcf179
+=======
+			case "CLASS_DEC":
+				//writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
+				ArrayList<Generable> l = new ArrayList<Generable>();
+				l = ASMParser.parse(tree, TDS, l);
+				generateInstructions(writer, l);
+				break;
+>>>>>>> DOn't worry
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
@@ -607,4 +702,9 @@ public class ASMWriter {
 				formatASM("", "ADQ", "2, SP");
 	}
 
+	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
+		for(Generable g: l) {
+			w.write(g.generate());
+		}
+	}
 }

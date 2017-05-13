@@ -1,5 +1,6 @@
 package ASMGenerator.instructions;
 
+import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
 import TDS.Entry;
 import TDS.entries.Variable;
@@ -19,9 +20,6 @@ public class Declaration implements Generable {
     }
     @Override
     public String generate() {
-        if(this.variable.get(Entry.TYPE).equals("int"))
-            return "// Declaration of int\n" +
-                    "ADQ -INT_SIZE, SP\n";
-        return "";
+        return ASMUtils.generateDeclaration(ASMUtils.sizeof(this.variable));
     }
 }
