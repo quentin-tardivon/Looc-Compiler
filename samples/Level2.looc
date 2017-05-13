@@ -1,5 +1,8 @@
 class Math =
 (
+
+    var pi: int;
+
 	method pow(a : int, b : int) : int {
 		var retval : int;
 		var i : int;

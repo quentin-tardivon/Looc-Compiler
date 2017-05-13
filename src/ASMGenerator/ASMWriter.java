@@ -1,9 +1,6 @@
 package ASMGenerator;
 
 import TDS.Entry;
-import ASMGenerator.instructions.Block;
-import ASMGenerator.instructions.Condition;
-import ASMGenerator.instructions.For;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
@@ -58,6 +55,9 @@ public class ASMWriter {
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
 
+					formatASM("BT", "EQU", "R11") +
+					formatASM("SC", "EQU", "R7") +
+
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
 					formatASM("WRITE_EXC", "EQU", "66\n") +
@@ -67,7 +67,8 @@ public class ASMWriter {
 
 
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
-					formatASM("HEAP_ADRS", "EQU", "0xFD00") +
+					formatASM("HEAP_ADRS","EQU","0xF100")+
+					formatASM("CLASS_ADRS","EQU","0xFD00")+
 					formatASM("LOAD_ADRS", "EQU", "0xFE00\n") +
 
 
@@ -83,8 +84,11 @@ public class ASMWriter {
 					formatASM("", "STW", "BP, -(SP)") +
 					formatASM("", "LDW", "BP, SP") +
 
-					formatASM("", "LDW", "ST, #HEAP_ADRS")
-
+					formatASM("", "LDW","ST, #HEAP_ADRS")+
+					formatASM("", "LDW","BT, #NIL")+
+					formatASM("", "STW","BT, -(ST)")+
+					formatASM("", "LDW","BT, ST") +
+					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
 			);
 			this.stackStaticAndDynamic(writer);
 
@@ -570,7 +574,6 @@ public class ASMWriter {
 				formatASM("", "STB ", "R0, (ST)-" + depl) +
 				formatASM("", "ADQ", "-" + depl + ", ST");
 	}
-
 
 	private String varDecl(int deplType) {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
