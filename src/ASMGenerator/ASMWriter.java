@@ -19,8 +19,10 @@ public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
 	public static final int ADDR_SIZE = 2;
+	private static int CPTIF =0;
+	private static int CPTFOR =0;
 	public static final int CHAR_SIZE = 1;
-	private static int CPT = 0;
+
 	private String output;
 	private final int offsetEnvironment = INT_SIZE * 3;
 
@@ -118,6 +120,12 @@ public class ASMWriter {
 				}
 				break;
 
+			case "BODY":
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructASM(tree.getChild(i), writer, TDS);
+				}
+				break;
+
 			case "VAR_DEC":
 				if (tree.getChild(1).getText().equals("int")) {
 					writer.write(varDecl(INT_SIZE));
@@ -158,11 +166,37 @@ public class ASMWriter {
 				break;
 
 			case "FOR":
-				writer.write(new For(new Condition(), new Block()).generate());
+				CPTFOR++;
+				int deplIndice;
+				int upperBound;
+				int lowerBound;
+				boolean lowerBoundisRaw=true;
+				boolean upperBoundisRaw=true;
+
+
+				deplIndice=((Variable)TDS.get(tree.getChild(0).getText())).getDepl();
+
+
+				try{
+					lowerBound=Integer.parseInt(tree.getChild(1).getText());
+				}catch(NumberFormatException e){
+					lowerBound=((Variable)TDS.get(tree.getChild(1).getText())).getDepl();
+					upperBoundisRaw=false;
+				}
+
+				try{
+					upperBound=Integer.parseInt(tree.getChild(2).getText());
+				}catch(NumberFormatException e){
+					upperBound=((Variable)TDS.get(tree.getChild(2).getText())).getDepl();
+					upperBoundisRaw=false;
+				}
+
+				forCondition(deplIndice,lowerBound,upperBound,lowerBoundisRaw, upperBoundisRaw, tree,  writer, TDS);
 				break;
 
+
 			case "IF":
-				CPT++;
+				CPTIF++;
 				int leftValue;
 				int rightValue;
 				boolean leftValueisRaw = true;
@@ -261,12 +295,73 @@ public class ASMWriter {
 		}
 	}
 
+	private void forCondition(int deplIndice, int lowerBound, int upperBound, boolean lowerBoundisRaw, boolean upperBoundisRaw, Tree tree,  Writer writer, SymbolTable TDS) throws IOException{
+		String FORLabel=forLabelMaker(CPTFOR);
+		     //for i in 2..3
+		if(lowerBoundisRaw&&upperBoundisRaw){
+
+			writer.write (formatASM("","LDW","R0, #"+lowerBound)+
+					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
+					formatASM(""+FORLabel,"",""));
+
+			constructASM(tree.getChild(3), writer, TDS);
+
+			writer.write (formatASM("","LDW","R8, #"+upperBound));
+
+
+			//for i in b..2
+		}else if(!lowerBoundisRaw&&upperBoundisRaw){
+
+			writer.write (formatASM("" ,"LDW","R0, (BP)-"+(lowerBound+this.offsetEnvironment))+
+					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
+					formatASM(""+FORLabel,"",""));
+
+			constructASM(tree.getChild(3), writer, TDS);
+
+			writer.write (formatASM("","LDW","R8, #"+upperBound));
+
+
+			//for i in 2..b
+		}else if(lowerBoundisRaw&&!upperBoundisRaw){
+
+			writer.write (formatASM("","LDW","R0, #"+lowerBound)+
+					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
+					formatASM(""+FORLabel,"",""));
+
+			constructASM(tree.getChild(3), writer, TDS);
+
+			writer.write (formatASM("","LDW","R8, (BP)-"+(upperBound+this.offsetEnvironment)));
+
+
+			//for i in a..b
+		}else {
+
+			writer.write (formatASM("","LDW","R0, (BP)-"+(this.offsetEnvironment + deplIndice))+
+					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
+					formatASM(""+FORLabel,"",""));
+
+			constructASM(tree.getChild(3), writer, TDS);
+
+			writer.write (formatASM("","LDW","R8, (BP)-"+(upperBound+this.offsetEnvironment)));
+
+		}
+
+		writer.write(formatASM("","LDW","R0, (BP)-"+(this.offsetEnvironment + deplIndice))+
+				formatASM("","LDW","R10, #1")+
+				formatASM("","ADD","R0, R10, R0")+
+				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice++ "+FORLabel+" : move = " + deplIndice)+
+				formatASM("","CMP","R0, R8")+
+				formatASM("","JLW","#" + FORLabel + "-$-2"));
+
+	}
+
 
 	private void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 
 
-		String afterIFLabel = afterIfLabelMaker(CPT);
-		String IFLabel = ifLabelMaker(CPT);
+		String afterIFLabel=afterIfLabelMaker(CPTIF);
+		String IFLabel=ifLabelMaker(CPTIF);
+
 		//if(3>2)
 		if (leftValueisRaw && rightValueisRaw) {
 			writer.write(formatASM("", "LDW", "R9, #" + valueLeft) +
@@ -274,65 +369,37 @@ public class ASMWriter {
 					formatASM("", "CMP", "R9, R10") +
 					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
 
-			constructASM(tree.getChild(1), writer, TDS);
+		//if(b>2)
+		}else if(leftValueisRaw&&!rightValueisRaw){
+            writer.write (formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment))+
+                    formatASM("","LDW", "R10, #"+valueRight)+
+                    formatASM("", "CMP", "R0, R10") +
+                    formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
 
-			writer.write(formatASM("", "JEA", "@" + afterIFLabel) +
-					formatASM(IFLabel, "", ""));
+		//if(2>b)
+		}else if(!leftValueisRaw&&rightValueisRaw){
+		    writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
+                     formatASM("","LDW","R10, #"+(valueLeft+this.offsetEnvironment))+
+					 formatASM("", "CMP", "R0, R10") +
+					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
 
-			constructASM(tree.getChild(2), writer, TDS);
-
-			writer.write(formatASM(afterIFLabel, "", ""));
-
-			//if(b>2)
-		} else if (leftValueisRaw && !rightValueisRaw) {
-
-
-			writer.write(formatASM("", "LDW", "R0, (BP)-" + valueLeft) +
-					formatASM("", "LDW", "R10, #" + valueRight) +
-					formatASM("", "CMP", "R0, R10") +
-					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
-
-			constructASM(tree.getChild(1), writer, TDS);
-
-			writer.write(formatASM("", "JEA", "@" + afterIFLabel) +
-					formatASM(IFLabel, "", ""));
-			constructASM(tree.getChild(2), writer, TDS);
-			writer.write(formatASM(afterIFLabel, "", ""));
-
-
-			//if(2>b)
-		} else if (!leftValueisRaw && rightValueisRaw) {
-
-			writer.write(formatASM("", "LDW", "R0, (BP)-" + valueRight) +
-					formatASM("", "LDW", "R10, #" + valueLeft) +
-					formatASM("", "CMP", "R0, R10") +
-					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
-
-			constructASM(tree.getChild(1), writer, TDS);
-
-			writer.write(formatASM("", "JEA", "@" + afterIFLabel) +
-					formatASM(IFLabel, "", ""));
-
-			constructASM(tree.getChild(2), writer, TDS);
-
-			writer.write(formatASM(afterIFLabel, "", ""));
-
-			//if(a>b)
-		} else {
-			writer.write(formatASM("", "LDW", "R0, (BP)-" + valueLeft) +
-					formatASM("", "LDW", "R10, (BP)-" + valueRight) +
-					formatASM("", "CMP", "R0, R10") +
-					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
-
-			constructASM(tree.getChild(1), writer, TDS);
-
-			writer.write(formatASM("", "JEA", "@" + afterIFLabel) +
-					formatASM(IFLabel, "", ""));
-
-			constructASM(tree.getChild(2), writer, TDS);
-
-			writer.write(formatASM(afterIFLabel, "", ""));
+		//if(a>b)
+		}else {
+            writer.write(formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment)) +
+					 formatASM("" ,"LDW","R10, (BP)-"+(valueRight+this.offsetEnvironment)) +
+					 formatASM("", "CMP", "R0, R10") +
+					 formatASM("","" + jumpCondition(comparator),"#"+ IFLabel+"-$-2"));
 		}
+
+		constructASM(tree.getChild(1), writer, TDS);
+
+		writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
+				formatASM(IFLabel, "", ""));
+
+		constructASM(tree.getChild(2), writer, TDS);
+
+		writer.write(formatASM(afterIFLabel, "", ""));
+
 	}
 
 
@@ -347,10 +414,15 @@ public class ASMWriter {
 		return label;
 	}
 
+	private String forLabelMaker(int cpt){
+		String label = "LOOP"+cpt;
+		return label;
+	}
 
-	private String jumpCondition(String comparator) {
-		String jump = "";
-		switch (comparator) {
+	private String jumpCondition(String comparator){
+		String jump="";
+		switch(comparator){
+
 			case "<":
 				jump = "JGE";
 				break;
@@ -473,17 +545,13 @@ public class ASMWriter {
 	}
 
 
-	private String addToHeap(int depl) {
-		return formatASM("", "ADQ", "-" + depl + ", ST");
-	}
-
-
 
 	private String varAffect(int depl) {
 		return removeFromStack("R1") +
 				formatASM("", "LDW", "R0, R1") +
 				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
 	}
+
 
 
 	private String classAffect() {
