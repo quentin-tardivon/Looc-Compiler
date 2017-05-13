@@ -283,7 +283,8 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				} else { //Cas de variable
-					loadVar(((Variable) TDS.get(tree.getText())).getDepl());
+					System.out.println("Load var");
+					writer.write(loadVar(((Variable) TDS.get(tree.getText())).getDepl()));
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				}
