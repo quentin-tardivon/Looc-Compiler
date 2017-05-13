@@ -444,7 +444,7 @@ public class ASMWriter {
 
 
 	private String loadVar(int depl) {
-		return formatASM("", "LDW", "R1, (BP)-" + depl);
+		return formatASM("", "LDW", "R1, (BP)-" + depl + this.offsetEnvironment);
 	}
 
 
