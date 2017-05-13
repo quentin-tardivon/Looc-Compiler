@@ -4,8 +4,6 @@ SP        		EQU       		R15
 WR        		EQU       		R14       
 BP        		EQU       		R13       
 ST        		EQU       		R12       
-BT        		EQU       		R11
-      
 EXIT_EXC  		EQU       		64        
 READ_EXC  		EQU       		65        
 WRITE_EXC 		EQU       		66
@@ -21,13 +19,12 @@ LOAD_ADRS 		EQU       		0xFE00
           		ORG       		LOAD_ADRS 
           		START     		main_     
 main_     		LDW       		SP, #STACK_ADRS
+          		LDW       		R0, #0x0d0a
+          		STW       		R0, @0x0000
           		LDW       		BP, #NIL  
           		STW       		BP, -(SP) 
           		LDW       		BP, SP    
           		LDW       		ST, #HEAP_ADRS
-          		LDW       		BT, #NIL  
-          		STW       		BT, -(ST) 
-          		LDW       		BT, ST    
           		STW       		BP, -(SP) 		// Stack the dynamic link
           		STW       		BP, -(SP) 		// Stack the static link
           		ADI       		SP, SP, #-2
@@ -111,9 +108,15 @@ main_     		LDW       		SP, #STACK_ADRS
           		ADI       		SP, SP, #2		// Unstack params
           		LDW       		R0, (BP)-8
           		TRP       		#WRITE_EXC
+          		LDW       		R0, #0x0000
+          		TRP       		#WRITE_EXC
           		LDW       		R0, (BP)-14
           		TRP       		#WRITE_EXC
+          		LDW       		R0, #0x0000
+          		TRP       		#WRITE_EXC
           		LDW       		R0, (BP)-12
+          		TRP       		#WRITE_EXC
+          		LDW       		R0, #0x0000
           		TRP       		#WRITE_EXC
           		LDW       		R0, (BP)-6
           		STW       		R0, -(SP) 		// Stack param for 'write' function: move = 0
@@ -127,8 +130,6 @@ main_     		LDW       		SP, #STACK_ADRS
          
           		LDW SP, BP		          
           		LDW BP, (SP)+		          
-          		LDW ST, BT		          
-          		LDW BT, (ST)+		          
           		TRP #EXIT_EXC		          
           		JEA @main_		          
 
@@ -184,6 +185,8 @@ CPYLOOP   		LDW       		R0, (SP)+
           		LDQ       		NUL, R0   
           		STB       		R0, (R1)+ 
           		LDW       		R0, #ITOA_P		// Pointeur sur chaine de caract
+          		TRP       		#WRITE_EXC
+          		LDW       		R0, #0x0000		// Pointeur sur retour ligne
           		TRP       		#WRITE_EXC
           		LDW       		SP, BP    
           		LDW       		BP, (SP)+ 
