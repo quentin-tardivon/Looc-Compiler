@@ -477,7 +477,7 @@ public class ASMWriter {
 		return formatASM("", "ADQ", "-" + depl + ", ST");
 	}
 
-	
+
 
 	private String varAffect(int depl) {
 		return removeFromStack("R1") +
