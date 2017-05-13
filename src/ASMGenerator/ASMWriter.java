@@ -146,7 +146,7 @@ public class ASMWriter {
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 					}
 					else if (TDS.getInfo(tree.getChild(1).getText()) != null) {
-						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment+((Variable)TDS.get(tree.getChild(1).getText())).getDepl()) )) ;
+						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment +  ((Variable)TDS.get(tree.getChild(1).getText())).getDepl() ) )) ;
 						writer.write(addToStack("R0"));
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 
@@ -283,7 +283,7 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				} else { //Cas de variable
-					System.out.println("Load var");
+					System.out.println("Load var" + ((Variable) TDS.get(tree.getText())).getDepl());
 					writer.write(loadVar(((Variable) TDS.get(tree.getText())).getDepl()));
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
@@ -444,7 +444,7 @@ public class ASMWriter {
 
 
 	private String loadVar(int depl) {
-		return formatASM("", "LDW", "R1, (BP)-" + depl + this.offsetEnvironment);
+		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
 	}
 
 
