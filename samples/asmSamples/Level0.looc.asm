@@ -4,8 +4,6 @@ SP        		EQU       		R15
 WR        		EQU       		R14       
 BP        		EQU       		R13       
 ST        		EQU       		R12       
-BT        		EQU       		R11
-      
 EXIT_EXC  		EQU       		64        
 READ_EXC  		EQU       		65        
 WRITE_EXC 		EQU       		66
@@ -15,106 +13,58 @@ NULL      		EQU       		0
 NIL       		EQU       		0
         
 STACK_ADRS		EQU       		0x1000    
-HEAP_ADRS 		EQU       		0xFD00    
-LOAD_ADRS 		EQU       		0xFE00
+HEAP_ADRS 		EQU       		0xF000    
+LOAD_ADRS 		EQU       		0xFA00
    
           		ORG       		LOAD_ADRS 
           		START     		main_     
 main_     		LDW       		SP, #STACK_ADRS
+          		LDW       		R0, #0x0d0a
+          		STW       		R0, @0x0000
           		LDW       		BP, #NIL  
           		STW       		BP, -(SP) 
           		LDW       		BP, SP    
           		LDW       		ST, #HEAP_ADRS
-          		LDW       		BT, #NIL  
-          		STW       		BT, -(ST) 
-          		LDW       		BT, ST    
           		STW       		BP, -(SP) 		// Stack the dynamic link
           		STW       		BP, -(SP) 		// Stack the static link
           		ADI       		SP, SP, #-2
           		ADI       		SP, SP, #-2
-          		ADI       		SP, SP, #-2
-          		ADI       		SP, SP, #-2
-          		ADI       		SP, SP, #-2
-          		LDW       		R1, #10   
-          		STW       		R1, -(SP) 
-          		LDW       		R1, (SP)  
-          		ADQ       		2, SP     
-          		LDW       		R0, R1    
-          		STW       		R0, (BP)-6		// Affection: move = 0
-          		LDW       		R0, #0x0000
-          		STW       		R0, (ST)-2
-          		ADQ       		-2, ST    
-          		LDB       		R0, #0x5300
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x5500
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x5200
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x5200
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x4100
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x4700
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		STW       		R12, -(SP)
-          		LDW       		R1, (SP)  
-          		ADQ       		2, SP     
-          		LDW       		R0, R1    
-          		STW       		R0, (BP)-8		// Affection: move = 2
-          		LDW       		R0, #0x0000
-          		STW       		R0, (ST)-2
-          		ADQ       		-2, ST    
-          		LDB       		R0, #0x6900
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x6100
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x7700
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x6700
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x6f00
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		LDB       		R0, #0x6d00
-          		STB       		R0, (ST)-1
-          		ADQ       		-1, ST    
-          		STW       		R12, -(SP)
-          		LDW       		R1, (SP)  
-          		ADQ       		2, SP     
-          		LDW       		R0, R1    
-          		STW       		R0, (BP)-14		// Affection: move = 8
           		LDW       		R1, #12   
           		STW       		R1, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
-          		STW       		R0, (BP)-10		// Affection: move = 4
-          		LDW       		R0, (BP)-8
-          		STW       		R0, -(SP) 
+          		STW       		R0, (BP)-8		// Affection: move = 2
+          		LDW       		R1, (BP)-8
+          		STW       		R1, -(SP) 
+          		LDW       		R1, #10   
+          		STW       		R1, -(SP) 
+          		LDW       		R1, #2    
+          		STW       		R1, -(SP) 
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R2, (SP)  
+          		ADQ       		2, SP     
+          		DIV       		R2, R1, R3
+          		STW       		R3, -(SP) 
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R2, (SP)  
+          		ADQ       		2, SP     
+          		SUB       		R2, R1, R3
+          		STW       		R3, -(SP) 
+          		LDW       		R1, #100  
+          		STW       		R1, -(SP) 
+          		LDW       		R1, (SP)  
+          		ADQ       		2, SP     
+          		LDW       		R2, (SP)  
+          		ADQ       		2, SP     
+          		SUB       		R2, R1, R3
+          		STW       		R3, -(SP) 
           		LDW       		R1, (SP)  
           		ADQ       		2, SP     
           		LDW       		R0, R1    
-          		STW       		R0, (BP)-12		// Affection: move = 6
-          		LDW       		R0, (BP)-10
-          		STW       		R0, -(SP) 		// Stack param for 'write' function: move = 4
-          		JSR @itoa_		          
-          		ADI       		SP, SP, #2		// Unstack params
-          		LDW       		R0, (BP)-8
-          		TRP       		#WRITE_EXC
-          		LDW       		R0, (BP)-14
-          		TRP       		#WRITE_EXC
-          		LDW       		R0, (BP)-12
-          		TRP       		#WRITE_EXC
+          		STW       		R0, (BP)-6		// Affection: move = 0
           		LDW       		R0, (BP)-6
           		STW       		R0, -(SP) 		// Stack param for 'write' function: move = 0
           		JSR @itoa_		          
@@ -127,8 +77,6 @@ main_     		LDW       		SP, #STACK_ADRS
          
           		LDW SP, BP		          
           		LDW BP, (SP)+		          
-          		LDW ST, BT		          
-          		LDW BT, (ST)+		          
           		TRP #EXIT_EXC		          
           		JEA @main_		          
 
@@ -184,6 +132,8 @@ CPYLOOP   		LDW       		R0, (SP)+
           		LDQ       		NUL, R0   
           		STB       		R0, (R1)+ 
           		LDW       		R0, #ITOA_P		// Pointeur sur chaine de caract
+          		TRP       		#WRITE_EXC
+          		LDW       		R0, #0x0000		// Pointeur sur retour ligne
           		TRP       		#WRITE_EXC
           		LDW       		SP, BP    
           		LDW       		BP, (SP)+ 

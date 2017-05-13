@@ -233,7 +233,7 @@ public class ASMWriter {
 				constructASM(tree.getChild(1), writer, TDS);
 				writer.write(removeFromStack("R1"));
 				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "ADD", "R1, R2, R3"));
+				writer.write(formatASM("", "ADD", "R2, R1, R3"));
 				writer.write(addToStack("R3"));
 
 				break;
@@ -243,7 +243,7 @@ public class ASMWriter {
 				constructASM(tree.getChild(1), writer, TDS);
 				writer.write(removeFromStack("R1"));
 				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "SUB", "R1, R2, R3"));
+				writer.write(formatASM("", "SUB", "R2, R1, R3"));
 				writer.write(addToStack("R3"));
 				break;
 
@@ -252,7 +252,7 @@ public class ASMWriter {
 				constructASM(tree.getChild(1), writer, TDS);
 				writer.write(removeFromStack("R1"));
 				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "MUL", "R1, R2, R3"));
+				writer.write(formatASM("", "MUL", "R2, R1, R3"));
 				writer.write(addToStack("R3"));
 				break;
 
@@ -261,7 +261,7 @@ public class ASMWriter {
 				constructASM(tree.getChild(1), writer, TDS);
 				writer.write(removeFromStack("R1"));
 				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "DIV", "R1, R2, R3"));
+				writer.write(formatASM("", "DIV", "R2, R1, R3"));
 				writer.write(addToStack("R3"));
 				break;
 
@@ -444,7 +444,7 @@ public class ASMWriter {
 
 
 	private String loadVar(int depl) {
-		return formatASM("", "LDW", "R1, (BP)-" + depl + this.offsetEnvironment);
+		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
 	}
 
 
