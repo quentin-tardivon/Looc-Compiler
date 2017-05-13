@@ -4,6 +4,8 @@ SP        		EQU       		R15
 WR        		EQU       		R14       
 BP        		EQU       		R13       
 ST        		EQU       		R12       
+BT        		EQU       		R11       
+SC        		EQU       		R7        
 EXIT_EXC  		EQU       		64        
 READ_EXC  		EQU       		65        
 WRITE_EXC 		EQU       		66
@@ -16,6 +18,7 @@ STACK_ADRS		EQU       		0x1000
 HEAP_ADRS 		EQU       		0xF000    
 LOAD_ADRS 		EQU       		0xFA00
    
+CLASS_ADRS		EQU       		0xFD00    
           		ORG       		LOAD_ADRS 
           		START     		main_     
 main_     		LDW       		SP, #STACK_ADRS
@@ -25,6 +28,10 @@ main_     		LDW       		SP, #STACK_ADRS
           		STW       		BP, -(SP) 
           		LDW       		BP, SP    
           		LDW       		ST, #HEAP_ADRS
+          		LDW       		BT, #NIL  
+          		STW       		BT, -(ST) 
+          		LDW       		BT, ST    
+          		LDW       		SC, #CLASS_ADRS		// load into SC the base of class descriptors
           		STW       		BP, -(SP) 		// Stack the dynamic link
           		STW       		BP, -(SP) 		// Stack the static link
           		ADI       		SP, SP, #-2

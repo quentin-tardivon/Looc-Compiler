@@ -1,7 +1,7 @@
 package ASMGenerator;
 
 import TDS.Entry;
-import ASMGenerator.instructions.Block;
+
 import ASMGenerator.instructions.Condition;
 import ASMGenerator.instructions.For;
 import TDS.SymbolTable;
@@ -10,6 +10,7 @@ import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Created by quentin on 29/04/2017.
@@ -58,6 +59,9 @@ public class ASMWriter {
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
 
+					formatASM("BT", "EQU", "R11") +
+					formatASM("SC", "EQU", "R7") +
+
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
 					formatASM("WRITE_EXC", "EQU", "66\n") +
@@ -69,6 +73,8 @@ public class ASMWriter {
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
 					formatASM("HEAP_ADRS", "EQU", "0xF000") +
 					formatASM("LOAD_ADRS", "EQU", "0xFA00\n") +
+					formatASM("CLASS_ADRS","EQU","0xFD00")+
+
 
 
 					formatASM("", "ORG", "LOAD_ADRS") +
@@ -83,10 +89,13 @@ public class ASMWriter {
 					formatASM("", "STW", "BP, -(SP)") +
 					formatASM("", "LDW", "BP, SP") +
 
-					formatASM("", "LDW", "ST, #HEAP_ADRS")
-
+					formatASM("", "LDW","ST, #HEAP_ADRS")+
+					formatASM("", "LDW","BT, #NIL")+
+					formatASM("", "STW","BT, -(ST)")+
+					formatASM("", "LDW","BT, ST") +
+					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
 			);
-			this.stackStaticAndDynamic(writer);
+			writer.write(ASMUtils.stackStaticAndDynamic());
 
 			this.constructASM(tree, writer, TDS);
 
@@ -146,14 +155,15 @@ public class ASMWriter {
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 					}
 					else if (TDS.getInfo(tree.getChild(1).getText()) != null) {
-						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment+((Variable)TDS.get(tree.getChild(1).getText())).getDepl()) )) ;
+						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment +  ((Variable)TDS.get(tree.getChild(1).getText())).getDepl() ) )) ;
 						writer.write(addToStack("R0"));
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 
 					}
 				} else if (tree.getChild(1).getText().equals("new")) {
-					writer.write(classAffect());
-				} else {
+				}
+
+				else {
 					constructASM(tree.getChild(1), writer, TDS);
 					writer.write(varAffect(((Variable) TDS.get(tree.getChild(0).getText())).getDepl()));
 				}
@@ -225,7 +235,10 @@ public class ASMWriter {
 				break;
 
 			case "CLASS_DEC":
-				writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
+				//writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
+				ArrayList<Generable> l = new ArrayList<Generable>();
+				l = ASMParser.parse(tree, TDS, l);
+				generateInstructions(writer, l);
 				break;
 
 			case "PLUS":
@@ -283,7 +296,7 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				} else { //Cas de variable
-					System.out.println("Load var");
+					System.out.println("Load var" + ((Variable) TDS.get(tree.getText())).getDepl());
 					writer.write(loadVar(((Variable) TDS.get(tree.getText())).getDepl()));
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
@@ -555,10 +568,6 @@ public class ASMWriter {
 
 
 
-	private String classAffect() {
-		return formatASM("", "Here comes a Class ADDR", "");
-	}
-
 
 	public String addConst(int constante, int depl) {
 		getVar("R1", depl);
@@ -570,7 +579,6 @@ public class ASMWriter {
 				formatASM("", "STB ", "R0, (ST)-" + depl) +
 				formatASM("", "ADQ", "-" + depl + ", ST");
 	}
-
 
 	private String varDecl(int deplType) {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
@@ -604,4 +612,9 @@ public class ASMWriter {
 				formatASM("", "ADQ", "2, SP");
 	}
 
+	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
+		for(Generable g: l) {
+			w.write(g.generate());
+		}
+	}
 }

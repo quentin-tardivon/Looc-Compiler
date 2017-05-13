@@ -1,20 +1,23 @@
 class Math =
 (
+
+    var pi: int;
+
 	method pow(a : int, b : int) : int {
 		var retval : int;
 		var i : int;
 
-		if b == 0 then
+		/*if b == 0 then
 			return (1);
         else
             return (2);
-		fi
+		fi*/
 
-		retval := 1;
-		for i in 1 .. b
+		retval := 1 * 3 + 2;
+		/*for i in 1 .. b
 		do
 			retval := retval * a;
-		end
+		end*/
 
 		return (retval);
 	}
@@ -23,5 +26,5 @@ class Math =
 
 
 var m : Math;
-m := new Math;
+//m := new Math;
 write m.pow(2, 3);

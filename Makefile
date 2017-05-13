@@ -95,7 +95,10 @@ test:javaTest testSyntaxErrors testSemanticErrors
 	rm -rf $(TMP_DIR)
 
 ass:
-	java -jar $(MICROPIUPK) -ass $(file)
+	java -jar $(MICROPIUPK) -ass $(file).asm
 
 sim: ass
 	java -jar $(MICROPIUPK) -sim
+
+batch: ass
+	java -jar $(MICROPIUPK) -batch $(file).iup

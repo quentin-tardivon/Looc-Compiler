@@ -1,6 +1,7 @@
 package ASMGenerator.instructions;
 
 import ASMGenerator.ASMWriter;
+import ASMGenerator.Block;
 import ASMGenerator.Generable;
 
 /**
