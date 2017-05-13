@@ -1,21 +1,12 @@
 var n : int;
+var y : string;
 var total : int;
-var i : int;
+var x : string;
 
 n := 10;
+y := "GARRUS";
 total := 12;
-		if n == 1 then
-		    n := 666;
-        else
-            if n > 999 then
-                if n==5 then
-                    n:=777;
-                else
-                    n:=888;
-                fi
-            else
-                n:=333;
-            fi
-		fi
+x := "MOGWAI";
+
 
 write total;

@@ -1,10 +1,12 @@
 package ASMGenerator;
 
+import TDS.Entry;
 import ASMGenerator.instructions.Block;
 import ASMGenerator.instructions.Condition;
 import ASMGenerator.instructions.For;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
+import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -17,6 +19,7 @@ public class ASMWriter {
 
 	public static final int INT_SIZE = 2;
 	public static final int ADDR_SIZE = 2;
+	public static final int CHAR_SIZE = 2;
 	private static int CPT =0;
 	private String output;
 	private final int offsetEnvironment = INT_SIZE * 3;
@@ -50,7 +53,10 @@ public class ASMWriter {
 			writer.write(formatASM("// ------------- ASM FOR LOOC", "", "\n") +
 					formatASM("SP", "EQU", "R15") +
 					formatASM("WR", "EQU", "R14") +
-					formatASM("BP", "EQU", "R13\n") +
+					formatASM("BP", "EQU", "R13") +
+					formatASM("ST", "EQU", "R12") +
+					formatASM("BT", "EQU", "R11\n") +
+
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
 					formatASM("WRITE_EXC", "EQU", "66\n") +
@@ -58,15 +64,28 @@ public class ASMWriter {
 					formatASM("NULL", "EQU", "0") +
 					formatASM("NIL", "EQU", "0\n") +
 
+
+
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
+					formatASM("HEAP_ADRS","EQU","0xFD00")+
 					formatASM("LOAD_ADRS", "EQU", "0xFE00\n") +
+
+
 					formatASM("", "ORG", "LOAD_ADRS") +
 					formatASM("", "START", "main_") +
+					//formatASM("CHAR","STRING","\"Chienne de caractere\"")+
+
 
 					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
 					formatASM("", "LDW", "BP, #NIL") +
 					formatASM("", "STW", "BP, -(SP)") +
-					formatASM("", "LDW", "BP, SP")
+					formatASM("", "LDW", "BP, SP") +
+
+					formatASM("", "LDW","ST, #HEAP_ADRS")+
+					formatASM("", "LDW","BT, #NIL")+
+					formatASM("", "STW","BT, -(ST)")+
+					formatASM("", "LDW","BT, ST")
+
 			);
 			this.stackStaticAndDynamic(writer);
 
@@ -75,6 +94,8 @@ public class ASMWriter {
 			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
 					formatASM("", "LDW SP, BP", "") +
 					formatASM("", "LDW BP, (SP)+", "") +
+					formatASM("", "LDW ST, BT", "") +
+					formatASM("", "LDW BT, (ST)+", "") +
 					formatASM("", "TRP #EXIT_EXC", "") +
 					formatASM("", "JEA @main_", "")
 			);
@@ -93,6 +114,22 @@ public class ASMWriter {
 		return formatASM("", "ADI", "SP, SP, #-" + deplType);
 	}
 
+	private String addToHeap(int depl){
+		return formatASM("","ADQ" , "-" + depl + ", ST");
+	}
+
+
+	private String varStringAffect(int depl,int charValue){
+		return formatASM("", "LDW ",  "R0, #" + charValue) +
+				formatASM("", "STW " , "R0, (ST)-" + depl)+
+				formatASM("","ADQ" , "-" + depl + ", ST");
+	}
+
+	private String addStringToStack(int depl) {
+		return //formatASM("","LDW R0, (R12)","")+
+				formatASM("","STW ", "R12, (SP)-" + depl);
+	}
+
 
 	private String varAffect(int depl) {
 		return removeFromStack("R1")+
@@ -105,6 +142,11 @@ public class ASMWriter {
 		return formatASM("", "Here comes a Class ADDR", "");
 	}
 
+
+	public String addConst(int constante, int depl) {
+		getVar("R1", depl);
+		return formatASM("", "ADQ", constante + ", R1");
+	}
 
 	public String addToStack(String reg) {
 		/*return formatASM("", "ADQ", "-2, SP") +
@@ -245,7 +287,8 @@ public class ASMWriter {
 
 
 	private String getVar(String reg, int depl) {
-		return formatASM("", "LDW" + reg + ", (BP)-" + depl, "");
+		return formatASM("", "LDW " +
+				"" + reg + ", (BP)-" + depl, "");
 	}
 
 
@@ -340,6 +383,7 @@ public class ASMWriter {
 	}
 
 
+
 	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 		int cpt=0;
 		switch(tree.getText()) {
@@ -354,12 +398,27 @@ public class ASMWriter {
 					writer.write(varDecl(INT_SIZE));
 				}
 				else if(tree.getChild(1).getText().equals("string")) {
-					writer.write(varDecl(2));
+					writer.write(varDecl(ADDR_SIZE));
 				}
 				break;
 
 			case "AFFECT":
-				if (tree.getChild(1).getText().equals("new")) {
+
+				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
+					if (tree.getChild(1).getText().matches("\".*\"")) {
+						//writer.write(addStringToStack(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+						writer.write(addToStack("R12"));
+						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
+						for (int i = 1; i < tree.getChild(1).getText().length() - 1; i++) {
+							writer.write(varStringAffect(2 , (int) tree.getChild(1).getText().charAt(i)));
+							//writer.write(addToHeap(2));
+							System.out.println(tree.getChild(1).getText().charAt(i));
+						}
+					}
+					//else if (TDS.getInfo(tree.getChild(1).getText()))
+
+				}
+				else if (tree.getChild(1).getText().equals("new")) {
 					writer.write(classAffect());
 				}
 				else {
@@ -368,6 +427,7 @@ public class ASMWriter {
 				}
 
 				break;
+
 			case "FOR":
 				writer.write(new For(new Condition(), new Block()).generate());
 				break;
