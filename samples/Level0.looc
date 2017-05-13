@@ -10,8 +10,10 @@ z := "mogwai";
 total := 12;
 x := y;
 
-
+write total;
 write y;
 write z;
 write x;
+write n;
+
 
