@@ -57,7 +57,6 @@ public class ASMWriter {
 					formatASM("WR", "EQU", "R14") +
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
-					formatASM("BT", "EQU", "R11\n") +
 
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
@@ -78,14 +77,13 @@ public class ASMWriter {
 
 
 					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
+					formatASM("", "LDW", "R0, #0x0d0a") +
+					formatASM("", "STW", "R0, @0x0000") +
 					formatASM("", "LDW", "BP, #NIL") +
 					formatASM("", "STW", "BP, -(SP)") +
 					formatASM("", "LDW", "BP, SP") +
 
-					formatASM("", "LDW", "ST, #HEAP_ADRS") +
-					formatASM("", "LDW", "BT, #NIL") +
-					formatASM("", "STW", "BT, -(ST)") +
-					formatASM("", "LDW", "BT, ST")
+					formatASM("", "LDW", "ST, #HEAP_ADRS")
 
 			);
 			this.stackStaticAndDynamic(writer);
@@ -95,8 +93,6 @@ public class ASMWriter {
 			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
 					formatASM("", "LDW SP, BP", "") +
 					formatASM("", "LDW BP, (SP)+", "") +
-					formatASM("", "LDW ST, BT", "") +
-					formatASM("", "LDW BT, (ST)+", "") +
 					formatASM("", "TRP #EXIT_EXC", "") +
 					formatASM("", "JEA @main_", "")
 			);
@@ -287,7 +283,8 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				} else { //Cas de variable
-					loadVar(((Variable) TDS.get(tree.getText())).getDepl());
+					System.out.println("Load var");
+					writer.write(loadVar(((Variable) TDS.get(tree.getText())).getDepl()));
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				}
@@ -518,6 +515,8 @@ public class ASMWriter {
 
 				formatASM("", "LDW", "R0, #ITOA_P", "// Pointeur sur chaine de caract") +
 				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
+				formatASM("", "TRP", "#WRITE_EXC") +
 				formatASM("", "LDW", "SP, BP") +
 				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("", "RTS", "");
@@ -528,6 +527,8 @@ public class ASMWriter {
 
 	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
 		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
+				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "LDW", "R0, #0x0000") +
 				formatASM("", "TRP", "#WRITE_EXC");
 	}
 
