@@ -1,9 +1,7 @@
 package ASMGenerator;
 
-import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
-import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -15,14 +13,10 @@ import java.util.ArrayList;
  */
 public class ASMWriter {
 
-	public static final int INT_SIZE = 2;
-	public static final int ADDR_SIZE = 2;
-	private static int CPTIF =0;
 	private static int CPTFOR =0;
-	public static final int CHAR_SIZE = 1;
 
 	private String output;
-	private final int offsetEnvironment = INT_SIZE * 3;
+	public static final String BUILTIN_FIND_STATIC = "FIND_STATIC";
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
@@ -91,6 +85,10 @@ public class ASMWriter {
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
 					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+					/*formatASM("", "ADQ", "-2, SP") +
+					formatASM("", "LDW", "BP, SP") +
+					formatASM("", "STW", "SP, (BP)")*/
+
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
 
@@ -106,7 +104,7 @@ public class ASMWriter {
 			generateInstructions(writer, meths);
 
 			writer.write(itoaDef());
-
+			writer.write(generateFindVariableStatic());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,33 +122,11 @@ public class ASMWriter {
 					ArrayList<Generable> l = new ArrayList<Generable>();
 					ASMParser.parse(tree.getChild(i), TDS, l, meths);
 					generateInstructions(writer, l);
+					//writer.write("\n\n");
 					//System.exit(0);
 					//constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
-
-/*			case "AFFECT":
-
-				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
-					if (tree.getChild(1).getText().matches("\".*\"")) {
-						writer.write(formatASM("", "LDW ",  "R0, #0x0000")) ;
-						writer.write(formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE));
-						writer.write(formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
-						for (int i = tree.getChild(1).getText().length()-2; i > 0 ; i--) {
-							writer.write(varStringAffect(CHAR_SIZE ,  String.format("%04x", (int) tree.getChild(1).getText().charAt(i)).substring(2)));
-						}
-						writer.write(addToStack("R12"));
-						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
-					}
-					else if (TDS.getInfo(tree.getChild(1).getText()) != null) {
-						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment +  ((Variable)TDS.get(tree.getChild(1).getText())).getDepl() ) )) ;
-						writer.write(addToStack("R0"));
-						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
-
-					}
-				}
-
-				break;*/
 
 			case "FOR":
 				CPTFOR++;
@@ -178,7 +154,7 @@ public class ASMWriter {
 					upperBoundisRaw=false;
 				}
 
-				forCondition(deplIndice,lowerBound,upperBound,lowerBoundisRaw, upperBoundisRaw, tree,  writer, TDS);
+				//forCondition(deplIndice,lowerBound,upperBound,lowerBoundisRaw, upperBoundisRaw, tree,  writer, TDS);
 				break;
 
 
@@ -218,7 +194,7 @@ public class ASMWriter {
 				break;
 				*/
 
-			default:
+			/*default:
 				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
 					writer.write(formatASM("", "LDW", "R1, #" + tree.getText()));
 					writer.write(addToStack("R1"));
@@ -229,12 +205,12 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				}
-
+*/
 		}
 		return meths;
 	}
 
-	private void forCondition(int deplIndice, int lowerBound, int upperBound, boolean lowerBoundisRaw, boolean upperBoundisRaw, Tree tree,  Writer writer, SymbolTable TDS) throws IOException{
+	/*private void forCondition(int deplIndice, int lowerBound, int upperBound, boolean lowerBoundisRaw, boolean upperBoundisRaw, Tree tree,  Writer writer, SymbolTable TDS) throws IOException{
 		String FORLabel=forLabelMaker(CPTFOR);
 		     //for i in 2..3
 		if(lowerBoundisRaw&&upperBoundisRaw){
@@ -351,7 +327,7 @@ public class ASMWriter {
 	private String afterIfLabelMaker(int cpt) {
 		String label = "FI" + cpt;
 		return label;
-	}*/
+	}
 
 	private String forLabelMaker(int cpt){
 		String label = "LOOP"+cpt;
@@ -387,7 +363,7 @@ public class ASMWriter {
 	private String loadVar(int depl) {
 		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
 	}
-
+*/
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
 	}
@@ -477,58 +453,22 @@ public class ASMWriter {
 
 */
 
-	private String varAffect(int depl) {
-		return removeFromStack("R1") +
-				formatASM("", "LDW", "R0, R1") +
-				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
-	}
-
-
-
-
-	public String addConst(int constante, int depl) {
-		getVar("R1", depl);
-		return formatASM("", "ADQ", constante + ", R1");
-	}
-
-	private String varStringAffect(int depl, String charValue) {
-		return formatASM("", "LDB ", "R0, #0x" + charValue + "00") +
-				formatASM("", "STB ", "R0, (ST)-" + depl) +
-				formatASM("", "ADQ", "-" + depl + ", ST");
-	}
-
-
-
-	public String addToStack(String reg) {
-		/*return formatASM("", "ADQ", "-2, SP") +
-				formatASM("", "STW", reg + ", (SP)");*/
-		return formatASM("", "STW", reg + ", -(SP)");
-	}
-
-
-	private String removeFromStack(String reg) {
-		return formatASM("", "LDW", reg + ", (SP)") +
-				formatASM("", "ADQ", "2, SP");
-	}
-
-
-	private String linkR(int R) {
-		return formatASM("", "ADQ", "-2, SP") +
-				formatASM("", "STW", "BP, (SP)") +
-				//Charger les param ici pour une func
-				formatASM("", "LDW", "BP, SP");
-	}
-
-
-	private String unlink() {
-		return formatASM("", "LDW", "SP, BP") +
-				formatASM("", "LDW", "BP, (SP)") +
-				formatASM("", "ADQ", "2, SP");
-	}
-
 	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
 		for(Generable g: l) {
 			w.write(g.generate());
 		}
+	}
+
+	public String generateFindVariableStatic() {
+		return ASMUtils.formatASM("\n\n//", "Function for finding variable with static link", "") +
+				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
+				ASMUtils.loadParameter("R0", 1) +
+				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +
+				ASMUtils.formatASM("", "LDW", "R1, #1") +
+				ASMUtils.formatASM("", "SUB", "R0, R1, R0") +
+				ASMUtils.formatASM("", "LDW", "R1, #0") +
+				ASMUtils.formatASM("", "CMP", "R0, R1") +
+				ASMUtils.formatASM( "", "BNE", "STATIC_LOOP-$-2") +
+				ASMUtils.formatASM("", "RTS", "");
 	}
 }

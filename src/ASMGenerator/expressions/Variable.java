@@ -14,4 +14,8 @@ public class Variable extends Expression {
     public String generate(){
         return ASMUtils.generateVariable(this.v.getDepl());
     }
+
+    public TDS.entries.Variable getVariableEntry() {
+        return this.v;
+    }
 }

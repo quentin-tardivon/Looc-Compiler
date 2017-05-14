@@ -1,12 +1,9 @@
 package TDS;
 
+import ASMGenerator.expressions.Variable;
 import core.CommonTreeParser;
-import core.Keywords;
 import exceptions.SymbolAlreadyDeclaredException;
-import utils.EnvironmentCounter;
 
-import java.security.Key;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -172,6 +169,17 @@ public class SymbolTable {
 				return null;
 			}
 		}
+	}
+
+	public boolean contains(Entry e) {
+		return this.entries.containsValue(e);
+	}
+
+	public SymbolTable getSymbolTable(Entry entry) {
+		if(this.entries.containsValue(entry))
+			return this;
+		else
+			return (this.father != null ? this.father.getSymbolTable(entry) : null);
 	}
 
 	/**

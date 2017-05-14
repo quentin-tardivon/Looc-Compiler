@@ -1,9 +1,6 @@
 package ASMGenerator;
 
-import ASMGenerator.expressions.ConstantInteger;
-import ASMGenerator.expressions.ConstantString;
-import ASMGenerator.expressions.Expression;
-import ASMGenerator.expressions.LoocClassAffect;
+import ASMGenerator.expressions.*;
 import ASMGenerator.expressions.binaries.*;
 import ASMGenerator.instructions.*;
 import TDS.Entry;
@@ -96,17 +93,19 @@ public class ASMParser {
                 break;
 
             case "FOR":
-                Variable v = (Variable) TDS.getInfo(tree.getChild(0).getText());
-                Affectation a = new Affectation(v, parseExpression(tree.getChild(1), TDS));
-                Comparison c = new LowerOrEqual(new ASMGenerator.expressions.Variable(v), parseExpression(tree.getChild(2), TDS));
+                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
+                Affectation a = new Affectation(vFor, TDS, parseExpression(tree.getChild(1), TDS));
+                Comparison c = new LowerOrEqual(vFor, parseExpression(tree.getChild(2), TDS));
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
                 Tree tmpFor = tree.getChild(3);
                 for (int i = 0; i < tmpFor.getChildCount(); i++) {
                     parse(tmpFor.getChild(i), TDS, instFor,meths);
+
                 }
                 Block forBlock = new Block();
                 forBlock.addAllInstructions(instFor);
-                res.add(new For(new ConditionFor(a, c), forBlock));
+                res.add(new For(new ConditionFor(a, c), forBlock, TDS));
+                break;
 
 
             case "VAR_DEC":
@@ -114,8 +113,9 @@ public class ASMParser {
                 break;
 
             case "AFFECT":
+                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
                 Expression right = parseExpression(tree.getChild(1), TDS);
-                res.add(new Affectation( (Variable) TDS.getInfo(tree.getChild(0).getText()), right));
+                res.add(new Affectation(varAffect, TDS, right));
                 break;
 
             case "RETURN":
@@ -126,6 +126,16 @@ public class ASMParser {
             case "WRITE":
                 res.add(new Write(parseExpression(tree.getChild(0), TDS)));
                 break;
+
+	        case "DO":
+		        for (int i = 0; i < tree.getChildCount(); i++) {
+			        parse(tree.getChild(i), TDS, res, meths);
+		        }
+	        	break;
+
+	        case "CALL":
+	        	res.add(new MethodCall(tree.getChild(0).getText(), TDS, tree.getChild(1).getText()));
+	        	break;
 
             default:
                 System.err.println(tree.getText() + " is not supported [line "+ tree.getLine() + "]");

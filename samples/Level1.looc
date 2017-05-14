@@ -1,11 +1,10 @@
-//var n : int;
-var total : int;
-//var i : int;
+var n : int;
+n := 1;
 
-/*n := 10;
-total := 1;
-i := 2;*/
+{
+    {
+        n := 3;
+    }
+}
 
-total := 1;
-total := 3;
-write total + 3;
+write n;
