@@ -1,11 +1,13 @@
-var n : int;
-var total : int;
+//var n : int;
+//var total : int;
+var band: string;
 
+band := "le";
 
-total := 12;
-n := total - 10/2 -100;
+//total := 12;
+//n := total * 2;
 
-write n;
+write -8 + 2 * 4;
 
 
 

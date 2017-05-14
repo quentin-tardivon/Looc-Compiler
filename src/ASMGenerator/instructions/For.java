@@ -1,8 +1,10 @@
 package ASMGenerator.instructions;
 
+import ASMGenerator.ASMUtils;
 import ASMGenerator.ASMWriter;
 import ASMGenerator.Block;
 import ASMGenerator.Generable;
+import ASMGenerator.expressions.binaries.Comparison;
 
 /**
  * @author Maxime Escamez
@@ -13,19 +15,15 @@ import ASMGenerator.Generable;
 public class For implements Generable {
 
     private Block block;
-    private Condition cond;
+    private Comparison cond;
 
-    public For(Condition c, Block b) {
+    public For(Comparison c, Block b) {
         this.block = b;
         this.cond = c;
     }
 
     @Override
     public String generate() {
-        String labelFor = "LOOP";
-        return ASMWriter.formatASM(labelFor, "EQU", "$") +
-                this.block.generate() +
-                this.cond.generate();
-
+        return ASMUtils.generateFor();
     }
 }

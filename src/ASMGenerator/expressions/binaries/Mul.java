@@ -5,10 +5,10 @@ import ASMGenerator.expressions.Binary;
 import ASMGenerator.expressions.Expression;
 
 
-public class Plus extends Operation {
+public class Mul extends Operation {
 
-    public Plus(Expression left, Expression right) {
-        super(left, right, ASMUtils.ADD);
+    public Mul(Expression left, Expression right) {
+        super(left, right, ASMUtils.MUL);
     }
 
 }

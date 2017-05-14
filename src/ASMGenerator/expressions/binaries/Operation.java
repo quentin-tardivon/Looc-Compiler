@@ -4,17 +4,18 @@ import ASMGenerator.ASMUtils;
 import ASMGenerator.expressions.Binary;
 import ASMGenerator.expressions.Expression;
 
-/**
- * Created by mcdostone on 13/05/17.
- */
-public class Multiplication extends Binary {
 
-    public Multiplication(Expression left, Expression right) {
+public abstract class Operation extends Binary {
+
+    protected String operator;
+
+    public Operation(Expression left, Expression right, String operator) {
         super(left, right);
+        this.operator = operator;
     }
 
     @Override
     public String generateOperation() {
-        return ASMUtils.generateMultiplication();
+        return ASMUtils.generateOperator(this.operator);
     }
 }

@@ -43,7 +43,7 @@ public class Sandbox {
 	    treeParser.constructTDS(tree, tds, tds);
 
 
-	    System.out.println(tds.toString());
+//	    System.out.println(tds.toString());
 
         ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".asm");
         writer.generateASMFile(tree, tds);

@@ -1,18 +1,24 @@
 package ASMGenerator.instructions;
 
-import ASMGenerator.ASMWriter;
+import ASMGenerator.Block;
 import ASMGenerator.Generable;
+import ASMGenerator.expressions.binaries.Comparison;
 
-/**
- * Created by mcdostone on 04/05/17.
- */
+
 public class Condition implements Generable {
 
-    public Condition() {}
+    private Comparison condition;
+    private Block then;
+    private Block otherwise;
+
+    public Condition(Comparison c, Block then, Block otherwise) {
+        this.condition = c;
+        this.then = then;
+        this.otherwise = otherwise;
+    }
 
     @Override
     public String generate() {
-        return ASMWriter.formatASM("", "CMP", "R0, R0") +
-            ASMWriter.formatASM("", "BNE", "LOOP - ($ + 2)");
+        return null;
     }
 }

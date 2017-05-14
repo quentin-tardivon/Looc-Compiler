@@ -139,8 +139,6 @@ public class CommonTreeParser {
 				break;
 
 			case "VAR_DEC":
-
-				System.out.println("Var : " + tree.getChild(0).getText() + " Depl : " + depl);
 				Variable var = new Variable(tree.getChild(1).getText(),depl);
 				var.setInit(false);
 				switch(tree.getChild(1).getText()){

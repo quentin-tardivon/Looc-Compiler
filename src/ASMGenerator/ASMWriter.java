@@ -1,9 +1,6 @@
 package ASMGenerator;
 
 import TDS.Entry;
-
-import ASMGenerator.instructions.Condition;
-import ASMGenerator.instructions.For;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
@@ -121,27 +118,15 @@ public class ASMWriter {
 		switch (tree.getText()) {
 			case "ROOT":
 				for (int i = 0; i < tree.getChildCount(); i++) {
-					constructASM(tree.getChild(i), writer, TDS);
+					ArrayList<Generable> l = new ArrayList<Generable>();
+					ASMParser.parse(tree.getChild(i), TDS, l);
+					generateInstructions(writer, l);
+					//System.exit(0);
+					//constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
 
-			case "BODY":
-				for (int i = 0; i < tree.getChildCount(); i++) {
-					constructASM(tree.getChild(i), writer, TDS);
-				}
-				break;
-
-			case "VAR_DEC":
-				if (tree.getChild(1).getText().equals("int")) {
-					writer.write(varDecl(INT_SIZE));
-				} else if (tree.getChild(1).getText().equals("string")) {
-					writer.write(varDecl(ADDR_SIZE));
-				}
-				break;
-
-
-			case "AFFECT":
-
+/*			case "AFFECT":
 
 				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
 					if (tree.getChild(1).getText().matches("\".*\"")) {
@@ -160,16 +145,9 @@ public class ASMWriter {
 						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
 
 					}
-				} else if (tree.getChild(1).getText().equals("new")) {
 				}
 
-				else {
-					constructASM(tree.getChild(1), writer, TDS);
-					writer.write(varAffect(((Variable) TDS.get(tree.getChild(0).getText())).getDepl()));
-				}
-
-
-				break;
+				break;*/
 
 			case "FOR":
 				CPTFOR++;
@@ -201,7 +179,7 @@ public class ASMWriter {
 				break;
 
 
-			case "IF":
+			/*case "IF":
 				CPTIF++;
 				int leftValue;
 				int rightValue;
@@ -224,60 +202,6 @@ public class ASMWriter {
 				ifCondition(leftValue, rightValue, tree.getChild(0).getText(), rightValueisRaw, leftValueisRaw, tree, writer, TDS);
 				break;
 
-
-			case "WRITE":
-				if (TDS.get(tree.getChild(0).getText()).get("Type").equals("int")) {
-					writer.write(itoaCall(((Variable) TDS.get(tree.getChild(0).getText())).getDepl()));
-				} else {
-					writer.write(printFuncCall(((Variable) TDS.get(tree.getChild(0).getText())).getDepl()));
-				}
-
-				break;
-
-			case "CLASS_DEC":
-				//writer.write(formatASM(tree.getChild(0).getText(), "RSB", "size"));
-				ArrayList<Generable> l = new ArrayList<Generable>();
-				l = ASMParser.parse(tree, TDS, l);
-				generateInstructions(writer, l);
-				break;
-
-			case "PLUS":
-				constructASM(tree.getChild(0), writer, TDS);
-				constructASM(tree.getChild(1), writer, TDS);
-				writer.write(removeFromStack("R1"));
-				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "ADD", "R2, R1, R3"));
-				writer.write(addToStack("R3"));
-
-				break;
-
-			case "DIFF":
-				constructASM(tree.getChild(0), writer, TDS);
-				constructASM(tree.getChild(1), writer, TDS);
-				writer.write(removeFromStack("R1"));
-				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "SUB", "R2, R1, R3"));
-				writer.write(addToStack("R3"));
-				break;
-
-			case "MUL":
-				constructASM(tree.getChild(0), writer, TDS);
-				constructASM(tree.getChild(1), writer, TDS);
-				writer.write(removeFromStack("R1"));
-				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "MUL", "R2, R1, R3"));
-				writer.write(addToStack("R3"));
-				break;
-
-			case "DIV":
-				constructASM(tree.getChild(0), writer, TDS);
-				constructASM(tree.getChild(1), writer, TDS);
-				writer.write(removeFromStack("R1"));
-				writer.write(removeFromStack("R2"));
-				writer.write(formatASM("", "DIV", "R2, R1, R3"));
-				writer.write(addToStack("R3"));
-				break;
-
 			case "THEN":
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					constructASM(tree.getChild(i), writer, TDS);
@@ -289,6 +213,7 @@ public class ASMWriter {
 					constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
+				*/
 
 			default:
 				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
@@ -365,7 +290,7 @@ public class ASMWriter {
 
 	}
 
-
+/*
 	private void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 
 
@@ -422,7 +347,7 @@ public class ASMWriter {
 	private String afterIfLabelMaker(int cpt) {
 		String label = "FI" + cpt;
 		return label;
-	}
+	}*/
 
 	private String forLabelMaker(int cpt){
 		String label = "LOOP"+cpt;
@@ -455,28 +380,16 @@ public class ASMWriter {
 		return jump;
 	}
 
-
 	private String loadVar(int depl) {
 		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
 	}
-
 
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
 	}
 
 
-	private String itoaCall(int depl) {
-		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
-				formatASM("", "STW", "R0, -(SP)", "// Stack param for 'write' function: move = " + depl) +
-				formatASM("", "JSR @itoa_", "") +
-				formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack params");
-	}
-
-
 	private String itoaDef() {
-
-
 		return formatASM("\n\n\n\n// ------------- I_TO_A FUNCT", "", "\n") +
 				formatASM("ITOA_P", "EQU", "40") +
 				formatASM("ITOA_I", "EQU", "4") +
@@ -538,7 +451,7 @@ public class ASMWriter {
 	}
 
 
-	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
+/*	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
 		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
 				formatASM("", "TRP", "#WRITE_EXC") +
 				formatASM("", "LDW", "R0, #0x0000") +
@@ -558,7 +471,7 @@ public class ASMWriter {
 				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
 	}
 
-
+*/
 
 	private String varAffect(int depl) {
 		return removeFromStack("R1") +
@@ -580,9 +493,6 @@ public class ASMWriter {
 				formatASM("", "ADQ", "-" + depl + ", ST");
 	}
 
-	private String varDecl(int deplType) {
-		return formatASM("", "ADI", "SP, SP, #-" + deplType);
-	}
 
 
 	public String addToStack(String reg) {
@@ -614,6 +524,7 @@ public class ASMWriter {
 
 	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
 		for(Generable g: l) {
+			//System.out.println(g.generate());
 			w.write(g.generate());
 		}
 	}

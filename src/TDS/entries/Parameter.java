@@ -25,8 +25,7 @@ public class Parameter extends Variable {
 		this.order=order;
 		if (type.equals(Keywords.INTEGER)) this.depl=-((order+1)*2);
 		else if (type.equals(Keywords.STRING)) System.out.println("Zut, c'est une chaine de caractère");
-		System.out.println("Param type : " + type + " Depl : " + depl);
-
+		//System.out.println("Param type : " + type + " Depl : " + depl);
 	}
 
 	public int getOrder(){

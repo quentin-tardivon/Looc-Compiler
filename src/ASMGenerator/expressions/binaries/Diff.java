@@ -5,10 +5,9 @@ import ASMGenerator.expressions.Binary;
 import ASMGenerator.expressions.Expression;
 
 
-public class Plus extends Operation {
+public class Diff extends Operation {
 
-    public Plus(Expression left, Expression right) {
-        super(left, right, ASMUtils.ADD);
+    public Diff(Expression left, Expression right) {
+        super(left, right, ASMUtils.DIFF);
     }
-
 }
