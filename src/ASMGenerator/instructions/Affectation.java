@@ -19,4 +19,12 @@ public class Affectation implements Generable {
     public String generate() {
         return ASMUtils.generateAffection(v.getDepl(), e);
     }
+
+    public Variable getVariable() {
+        return this.v;
+    }
+
+    public Expression getExpression() {
+        return this.e;
+    }
 }

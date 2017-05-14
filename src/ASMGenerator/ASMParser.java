@@ -90,6 +90,20 @@ public class ASMParser {
                 res.add(new If((Comparison) comparaison, then, elseBlock));
                 break;
 
+            case "FOR":
+                Variable v = (Variable) TDS.getInfo(tree.getChild(0).getText());
+                Affectation a = new Affectation(v, parseExpression(tree.getChild(1), TDS));
+                Comparison c = new LowerOrEqual(new ASMGenerator.expressions.Variable(v), parseExpression(tree.getChild(2), TDS));
+                ArrayList<Generable> instFor = new ArrayList<Generable>();
+                Tree tmpFor = tree.getChild(3);
+                for (int i = 0; i < tmpFor.getChildCount(); i++) {
+                    parse(tmpFor.getChild(i), TDS, instFor);
+                }
+                Block forBlock = new Block();
+                forBlock.addAllInstructions(instFor);
+                res.add(new For(new ConditionFor(a, c), forBlock));
+
+
             case "VAR_DEC":
                 res.add(new Declaration((Variable) TDS.get(tree.getChild(0).getText())));
                 break;
@@ -102,6 +116,7 @@ public class ASMParser {
             case "RETURN":
                 res.add(new Return( (Variable) TDS.get(tree.getChild(0).getText())));
                 break;
+
 
             case "WRITE":
                 res.add(new Write(parseExpression(tree.getChild(0), TDS)));

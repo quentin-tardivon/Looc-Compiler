@@ -4,6 +4,7 @@ import ASMGenerator.ASMUtils;
 import ASMGenerator.ASMWriter;
 import ASMGenerator.Block;
 import ASMGenerator.Generable;
+import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.Comparison;
 
 /**
@@ -15,15 +16,15 @@ import ASMGenerator.expressions.binaries.Comparison;
 public class For implements Generable {
 
     private Block block;
-    private Comparison cond;
+    private ConditionFor cond;
 
-    public For(Comparison c, Block b) {
+    public For(ConditionFor cond,  Block b) {
         this.block = b;
-        this.cond = c;
+        this.cond = cond;
     }
 
     @Override
     public String generate() {
-        return ASMUtils.generateFor();
+        return ASMUtils.generateFor(this.cond, this.block);
     }
 }

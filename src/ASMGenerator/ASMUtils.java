@@ -1,8 +1,13 @@
 package ASMGenerator;
 
 
+import ASMGenerator.expressions.ConstantInteger;
 import ASMGenerator.expressions.Expression;
+import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.Comparison;
+import ASMGenerator.expressions.binaries.Plus;
+import ASMGenerator.instructions.Affectation;
+import ASMGenerator.instructions.ConditionFor;
 import TDS.Entry;
 
 public class ASMUtils {
@@ -148,11 +153,11 @@ public class ASMUtils {
                 addToStack("R3");
     }
 
-    public static String generateComparison(String operator, String label) {
+    public static String generateComparison(String operator, String gotoLabel, String labelBase) {
         return removeFromStack("R2") +
                 removeFromStack("R1") +
-                formatASM("", "CMP", "R1, R2") +
-                formatASM("", operator, label+"-$-2", "// X " + getComparisonOperator(operator) + " Y");
+                formatASM(labelBase, "CMP", "R1, R2") +
+                formatASM("", operator, gotoLabel+"-$-2", "// X " + getComparisonOperator(operator) + " Y");
     }
 
     public static int generateLabel() {
@@ -162,7 +167,7 @@ public class ASMUtils {
     public static String generateIf(Comparison c, Block b, Block elseBlock) {
         StringBuffer asm = new StringBuffer();
         int label = generateLabel();
-        c.setLabel("ELSE_" + label);
+        c.setGotoLabel("ELSE_" + label);
 
         asm.append(c.generate());
         asm.append(b.generate());
@@ -194,9 +199,19 @@ public class ASMUtils {
         return null;
     }
 
-    public static String generateFor() {
+    public static String generateFor(ConditionFor cond, Block block) {
         StringBuffer asm = new StringBuffer();
-        asm.append(generateDeclaration(INT_SIZE));
+        int label = generateLabel();
+        cond.setBaseLabel("LOOP_" + label);
+        cond.setGotoLabel("ENDLOOP_"+label);
+        asm.append(cond.generate());
+        asm.append(block.generate());
+        Affectation a = new Affectation(cond.getVariable(), new Plus(new Variable(cond.getVariable()), new ConstantInteger(1)));
+        asm.append(a.generate());
+        asm.append(formatASM("", "JEA", "@LOOP_" + label ,"// For, go back to condition "));
+        asm.append(formatASM("ENDLOOP_" + label, "", ""));
+
+
         return asm.toString();
     }
 

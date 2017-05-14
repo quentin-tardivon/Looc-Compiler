@@ -15,7 +15,7 @@ public class If implements Generable {
     public If(Comparison c, Block b, Block elseBlock) {
         this.c = c;
         this.then = b;
-        this.elseBlock = b;
+        this.elseBlock = elseBlock;
     }
     @Override
     public String generate() {
