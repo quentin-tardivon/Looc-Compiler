@@ -67,14 +67,17 @@ public class ASMUtils {
 //                formatASM("", "LDW", "BP, SP") +
                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
                 */
-    return label;
+        return formatASM("\n\n" + label, "LDW", "R0, BP", "// Static and dynamic are the same") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack dynamic link") +
+                formatASM("", "LDW", "BP, SP") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack static link");
     }
 
 
     public static String stackStaticAndDynamic() {
-        return formatASM("", "LDW", "R0, BP", "// Static and dynamic are the same") +
+        return formatASM("\n\n", "LDW", "R0, BP", "// Static and dynamic are the same") +
                 formatASM("", "STW", "R0, -(SP)", "// Stack dynamic link") +
-                formatASM("LDW", "BP, SP", "") +
+                formatASM("", "LDW", "BP, SP") +
                 formatASM("", "STW", "R0, -(SP)", "// Stack static link");
                                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
     }
@@ -199,14 +202,13 @@ public class ASMUtils {
         return null;
     }
 
-    public static String generateFor(ConditionFor cond, Block block) {
+    public static String generateFor(ConditionFor cond,  Block block, Affectation a) {
         StringBuffer asm = new StringBuffer();
         int label = generateLabel();
         cond.setBaseLabel("LOOP_" + label);
         cond.setGotoLabel("ENDLOOP_"+label);
         asm.append(cond.generate());
         asm.append(block.generate());
-        Affectation a = new Affectation(cond.getVariable(), new Plus(new Variable(cond.getVariable()), new ConstantInteger(1)));
         asm.append(a.generate());
         asm.append(formatASM("", "JEA", "@LOOP_" + label ,"// For, go back to condition "));
         asm.append(formatASM("ENDLOOP_" + label, "", ""));
@@ -218,6 +220,18 @@ public class ASMUtils {
     public static String unstackEnvironment() {
         return formatASM("", "LDW", "SP, BP", " // Unstack the environment") +
                 formatASM("", "LDW", "BP, (SP)+", "");
+    }
 
+    public static String loadParameter(String reg, int numParameter) {
+        return formatASM("", "LDW", "R0, (BP)" + (ADDR_SIZE + ADDR_SIZE), "// Get parameter");
+    }
+
+    public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration) {
+        System.out.println(currentImbricationLevel + " - " + imbricationLevelDeclaration);
+        StringBuffer asm = new StringBuffer();
+        asm.append(formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link"));
+        asm.append(addToStack("R0"));
+        asm.append(formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC));
+        return asm.toString();
     }
 }

@@ -144,6 +144,17 @@ public class CommonTreeParser {
 				Variable var = new Variable(tree.getChild(1).getText(),depl);
 				var.setInit(false);
 				depl+=2;
+				switch(tree.getChild(1).getText()){
+					case "int":
+						depl+=2;
+						break;
+					case "string":
+						depl+=2;
+						break;
+					default:
+						depl+=2;
+						break;
+				}
 				try {
 					tds.put(tree.getChild(0).getText(), var);
 				}
