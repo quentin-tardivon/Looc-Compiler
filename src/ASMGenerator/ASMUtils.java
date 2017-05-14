@@ -223,16 +223,25 @@ public class ASMUtils {
         return formatASM("", "LDW", "R0, (SP)" + ADDR_SIZE, "// Get parameter");
     }
 
+    public static String generateStaticLinkLoader(int currentImbricationLevel, int imbricationLevelDeclaration) {
+        return formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link") +
+                addToStack("R0") +
+                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC) +
+                unstack(ADDR_SIZE);
+    }
+
     public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl, Expression e) {
-        System.out.println(currentImbricationLevel + " - " + imbricationLevelDeclaration);
         StringBuffer asm = new StringBuffer();
-        asm.append(formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link"));
-        asm.append(addToStack("R0"));
-        asm.append(formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC));
-        asm.append(unstack(ADDR_SIZE));
+        asm.append(generateStaticLinkLoader(currentImbricationLevel, imbricationLevelDeclaration));
         asm.append(e.generate());
         asm.append(removeFromStack("R0"));
         asm.append(formatASM("", "STW", "R0, (R6)-" + (ASMUtils.OFFSET_ENV + depl), "// Affection: move = " + depl));
         return asm.toString();
+    }
+
+    public static String generateVariableStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl) {
+        return generateStaticLinkLoader(currentImbricationLevel, imbricationLevelDeclaration) +
+                formatASM("", "LDW", "R1, (R6)-" + (OFFSET_ENV + depl), "// Stack variable: move = " + depl) +
+                addToStack("R1");
     }
 }

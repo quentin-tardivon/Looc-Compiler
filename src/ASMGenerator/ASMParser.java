@@ -93,7 +93,7 @@ public class ASMParser {
                 break;
 
             case "FOR":
-                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
+                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
                 Affectation a = new Affectation(vFor, TDS, parseExpression(tree.getChild(1), TDS));
                 Comparison c = new LowerOrEqual(vFor, parseExpression(tree.getChild(2), TDS));
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
@@ -113,7 +113,7 @@ public class ASMParser {
                 break;
 
             case "AFFECT":
-                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
+                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
                 Expression right = parseExpression(tree.getChild(1), TDS);
                 res.add(new Affectation(varAffect, TDS, right));
                 break;
@@ -182,7 +182,7 @@ public class ASMParser {
                     return new ConstantString(node.getText());
                 // variable
                 else
-                    return new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(node.getText()));
+                    return new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(node.getText()), TDS);
         }
     }
 

@@ -268,102 +268,9 @@ public class ASMWriter {
 				formatASM("","CMP","R0, R8")+
 				formatASM("","JLW","#" + FORLabel + "-$-2"));
 
-	}
-
-/*
-	private void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException {
+	}*/
 
 
-		String afterIFLabel=afterIfLabelMaker(CPTIF);
-		String IFLabel=ifLabelMaker(CPTIF);
-
-		//if(3>2)
-		if (leftValueisRaw && rightValueisRaw) {
-			writer.write(formatASM("", "LDW", "R9, #" + valueLeft) +
-					formatASM("", "LDW", "R10, #" + valueRight) +
-					formatASM("", "CMP", "R9, R10") +
-					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
-
-		//if(b>2)
-		}else if(leftValueisRaw&&!rightValueisRaw){
-            writer.write (formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment))+
-                    formatASM("","LDW", "R10, #"+valueRight)+
-                    formatASM("", "CMP", "R0, R10") +
-                    formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
-
-		//if(2>b)
-		}else if(!leftValueisRaw&&rightValueisRaw){
-		    writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
-                     formatASM("","LDW","R10, #"+(valueLeft+this.offsetEnvironment))+
-					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
-
-		//if(a>b)
-		}else {
-            writer.write(formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment)) +
-					 formatASM("" ,"LDW","R10, (BP)-"+(valueRight+this.offsetEnvironment)) +
-					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#"+ IFLabel+"-$-2"));
-		}
-
-		constructASM(tree.getChild(1), writer, TDS);
-
-		writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
-				formatASM(IFLabel, "", ""));
-
-		constructASM(tree.getChild(2), writer, TDS);
-
-		writer.write(formatASM(afterIFLabel, "", ""));
-
-	}
-
-
-	private String ifLabelMaker(int cpt) {
-		String label = "ELSE" + cpt;
-		return label;
-	}
-
-
-	private String afterIfLabelMaker(int cpt) {
-		String label = "FI" + cpt;
-		return label;
-	}
-
-	private String forLabelMaker(int cpt){
-		String label = "LOOP"+cpt;
-		return label;
-	}
-
-	private String jumpCondition(String comparator){
-		String jump="";
-		switch(comparator){
-
-			case "<":
-				jump = "JGE";
-				break;
-			case "<=":
-				jump = "JG";
-				break;
-			case ">":
-				jump = "JBE";
-				break;
-			case ">=":
-				jump = "JB";
-				break;
-			case "==":
-				jump = "JNE";
-				break;
-			case "!=":
-				jump = "JE";
-				break;
-		}
-		return jump;
-	}
-
-	private String loadVar(int depl) {
-		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
-	}
-*/
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
 	}
@@ -429,29 +336,6 @@ public class ASMWriter {
 
 
 	}
-
-
-/*	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "LDW", "R0, #0x0000") +
-				formatASM("", "TRP", "#WRITE_EXC");
-	}
-
-
-	private String defPrintFunc() {
-		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				//formatASM("print_", "LDW", "R0, (BP)" + ADDR_SIZE) +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "RTS", "");
-	}
-
-	public void stackStaticAndDynamic(Writer w) throws IOException {
-		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
-				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
-	}
-
-*/
 
 	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
 		for(Generable g: l) {
