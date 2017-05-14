@@ -102,7 +102,7 @@ public class ASMParser {
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
                 Tree tmpFor = tree.getChild(3);
                 for (int i = 0; i < tmpFor.getChildCount(); i++) {
-                    parse(tmpFor.getChild(i), TDS, instFor);
+                    parse(tmpFor.getChild(i), TDS, instFor,meths);
                 }
                 Block forBlock = new Block();
                 forBlock.addAllInstructions(instFor);

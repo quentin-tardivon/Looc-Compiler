@@ -19,7 +19,7 @@ public class ASMUtils {
     public static final int OFFSET_ENV = ADDR_SIZE * 2;
 
     public static final String ADD = "ADD";
-    public static final String DIFF = "DIFF";
+    public static final String DIFF = "SUB";
     public static final String MUL = "MUL";
     public static final String DIV = "DIV";
     public static final String LT = "BGE";
