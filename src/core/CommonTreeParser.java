@@ -143,17 +143,7 @@ public class CommonTreeParser {
 			case "VAR_DEC":
 				Variable var = new Variable(tree.getChild(1).getText(),depl);
 				var.setInit(false);
-				switch(tree.getChild(1).getText()){
-					case "int":
-						depl+=2;
-						break;
-					case "string":
-						depl+=2;
-						break;
-					default:
-						depl+=0;
-						break;
-				}
+				depl+=2;
 				try {
 					tds.put(tree.getChild(0).getText(), var);
 				}
@@ -199,6 +189,7 @@ public class CommonTreeParser {
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
+				depl = 0;
 				break;
 
 

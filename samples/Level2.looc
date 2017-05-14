@@ -1,30 +1,33 @@
 class Math =
 (
-
     var pi: int;
+    var pi2: int;
 
-	method pow(a : int, b : int) : int {
-		var retval : int;
-		var i : int;
+    method calcPi() {
+            pi := 3;
+            write "pi value is";
+            write pi;
+            }
 
-		/*if b == 0 then
-			return (1);
-        else
-            return (2);
-		fi*/
+)
 
-		retval := 1 * 3 + 2;
-		/*for i in 1 .. b
-		do
-			retval := retval * a;
-		end*/
-
-		return (retval);
-	}
-
+class MathPi =
+(
+    var pi: int;
+    var pi2: int;
+    var pi3: int;
+    var pi4: int;
 )
 
 
 var m : Math;
-//m := new Math;
-write m.pow(2, 3);
+
+var x: MathPi;
+
+var n: int;
+
+m := new Math;
+
+x := new MathPi;
+
+n := 10;

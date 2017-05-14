@@ -33,9 +33,9 @@ public class ASMUtils {
 
     public static String formatASM(String...params) {
         if(params.length == 3)
-            return String.format("%-10s\t\t%-10s\t\t%-10s\n", params);
+            return String.format("%-10s\t\t%-10s\t\t%-10s\n", (Object[])params);
         if(params.length == 4)
-            return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n", params);
+            return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n",(Object[])params);
 
         if(params.length != 3 || params.length != 4) {
             try {
@@ -67,7 +67,7 @@ public class ASMUtils {
 //                formatASM("", "LDW", "BP, SP") +
                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
                 */
-    return "KJSFJKDFGJKFDGJKDFJKGJKDFGJKD";
+    return label;
     }
 
 
@@ -90,7 +90,7 @@ public class ASMUtils {
                     case "int":
                         return INT_SIZE;
                     default:
-                        return 0;
+                        return ADDR_SIZE;
                 }
             default:
                 return 0;

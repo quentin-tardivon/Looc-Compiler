@@ -17,14 +17,14 @@ public class Method extends Block implements Generable {
     @Override
     public String generate() {
         StringBuffer asm = new StringBuffer();
-        asm.append(ASMUtils.formatASM("\n\n", "JSR", "@pow"));
-        asm.append(ASMUtils.formatASM("// ", "method " + tds.getName(), ""));
+        asm.append(ASMUtils.formatASM("\n\n //Method " + tds.getFather().getName() + tds.getName(), "", ""));
 
-        asm.append(ASMUtils.stackStaticAndDynamic(tds.getName()));
+        asm.append(ASMUtils.stackStaticAndDynamic(tds.getFather().getName() + tds.getName()));
         for(Generable g: this.instructions) {
             asm.append(g.generate());
         }
 
+        asm.append(ASMUtils.formatASM("", "RTS", ""));
 
         return asm.toString();
     }

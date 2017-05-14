@@ -94,7 +94,7 @@ public class ASMWriter {
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
 
-			this.constructASM(tree, writer, TDS);
+			ArrayList<Generable> meths = this.constructASM(tree, writer, TDS);
 
 			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
 					formatASM("", "LDW SP, BP", "") +
@@ -102,6 +102,8 @@ public class ASMWriter {
 					formatASM("", "TRP #EXIT_EXC", "") +
 					formatASM("", "JEA @main_", "")
 			);
+
+			generateInstructions(writer, meths);
 
 			writer.write(itoaDef());
 
@@ -113,13 +115,14 @@ public class ASMWriter {
 	}
 
 
-	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
+	private ArrayList<Generable> constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 		int cpt = 0;
+		ArrayList<Generable> meths = new ArrayList<Generable>();
 		switch (tree.getText()) {
 			case "ROOT":
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					ArrayList<Generable> l = new ArrayList<Generable>();
-					ASMParser.parse(tree.getChild(i), TDS, l);
+					ASMParser.parse(tree.getChild(i), TDS, l, meths);
 					generateInstructions(writer, l);
 					//System.exit(0);
 					//constructASM(tree.getChild(i), writer, TDS);
@@ -228,6 +231,7 @@ public class ASMWriter {
 				}
 
 		}
+		return meths;
 	}
 
 	private void forCondition(int deplIndice, int lowerBound, int upperBound, boolean lowerBoundisRaw, boolean upperBoundisRaw, Tree tree,  Writer writer, SymbolTable TDS) throws IOException{
