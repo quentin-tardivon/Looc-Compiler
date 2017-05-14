@@ -353,6 +353,7 @@ public class ASMWriter {
 				ASMUtils.formatASM("", "LDW", "R1, #0") +
 				ASMUtils.formatASM("", "CMP", "R0, R1") +
 				ASMUtils.formatASM( "", "BNE", "STATIC_LOOP-$-2") +
-				ASMUtils.formatASM("", "RTS", "");
+				ASMUtils.formatASM("", "RTS", "") +
+				ASMUtils.unstack(ASMUtils.ADDR_SIZE);
 	}
 }

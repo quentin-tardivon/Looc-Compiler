@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-05-06 15:33:17
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-05-14 19:26:09
 
 package core;
 
@@ -101,9 +101,9 @@ public class LoocParser extends Parser {
         }
         public LoocParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-
+             
         }
-
+        
     protected TreeAdaptor adaptor = new CommonTreeAdaptor();
 
     public void setTreeAdaptor(TreeAdaptor adaptor) {
@@ -242,12 +242,12 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: class_decl, instruction, var_decl
-            // token labels:
+            // elements: class_decl, var_decl, instruction
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -347,10 +347,10 @@ public class LoocParser extends Parser {
             // Looc.g:58:11: ( 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')' -> ^( CLASS_DEC CLASS ( CLASS )? class_item_decl ) )
             // Looc.g:58:15: 'class' CLASS ( 'inherit' CLASS )? '=' '(' class_item_decl ')'
             {
-            string_literal4=(Token)match(input,44,FOLLOW_44_in_class_decl213);
+            string_literal4=(Token)match(input,44,FOLLOW_44_in_class_decl213);  
             stream_44.add(string_literal4);
 
-            CLASS5=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl215);
+            CLASS5=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl215);  
             stream_CLASS.add(CLASS5);
 
             // Looc.g:58:29: ( 'inherit' CLASS )?
@@ -364,10 +364,10 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:58:30: 'inherit' CLASS
                     {
-                    string_literal6=(Token)match(input,45,FOLLOW_45_in_class_decl218);
+                    string_literal6=(Token)match(input,45,FOLLOW_45_in_class_decl218);  
                     stream_45.add(string_literal6);
 
-                    CLASS7=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl220);
+                    CLASS7=(Token)match(input,CLASS,FOLLOW_CLASS_in_class_decl220);  
                     stream_CLASS.add(CLASS7);
 
 
@@ -376,10 +376,10 @@ public class LoocParser extends Parser {
 
             }
 
-            char_literal8=(Token)match(input,46,FOLLOW_46_in_class_decl225);
+            char_literal8=(Token)match(input,46,FOLLOW_46_in_class_decl225);  
             stream_46.add(char_literal8);
 
-            char_literal9=(Token)match(input,47,FOLLOW_47_in_class_decl227);
+            char_literal9=(Token)match(input,47,FOLLOW_47_in_class_decl227);  
             stream_47.add(char_literal9);
 
             pushFollow(FOLLOW_class_item_decl_in_class_decl228);
@@ -388,18 +388,18 @@ public class LoocParser extends Parser {
             state._fsp--;
 
             stream_class_item_decl.add(class_item_decl10.getTree());
-            char_literal11=(Token)match(input,48,FOLLOW_48_in_class_decl229);
+            char_literal11=(Token)match(input,48,FOLLOW_48_in_class_decl229);  
             stream_48.add(char_literal11);
 
 
 
             // AST REWRITE
             // elements: CLASS, CLASS, class_item_decl
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -533,12 +533,12 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: method_decl, var_decl
-            // token labels:
+            // elements: var_decl, method_decl
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -643,13 +643,13 @@ public class LoocParser extends Parser {
             // Looc.g:65:12: ( 'method' IDF '(' ( method_args )? ')' function_decl -> ^( METHOD IDF ( method_args )? function_decl ) )
             // Looc.g:65:16: 'method' IDF '(' ( method_args )? ')' function_decl
             {
-            string_literal14=(Token)match(input,49,FOLLOW_49_in_method_decl285);
+            string_literal14=(Token)match(input,49,FOLLOW_49_in_method_decl285);  
             stream_49.add(string_literal14);
 
-            IDF15=(Token)match(input,IDF,FOLLOW_IDF_in_method_decl287);
+            IDF15=(Token)match(input,IDF,FOLLOW_IDF_in_method_decl287);  
             stream_IDF.add(IDF15);
 
-            char_literal16=(Token)match(input,47,FOLLOW_47_in_method_decl289);
+            char_literal16=(Token)match(input,47,FOLLOW_47_in_method_decl289);  
             stream_47.add(char_literal16);
 
             // Looc.g:65:33: ( method_args )?
@@ -675,7 +675,7 @@ public class LoocParser extends Parser {
 
             }
 
-            char_literal18=(Token)match(input,48,FOLLOW_48_in_method_decl294);
+            char_literal18=(Token)match(input,48,FOLLOW_48_in_method_decl294);  
             stream_48.add(char_literal18);
 
             pushFollow(FOLLOW_function_decl_in_method_decl296);
@@ -687,12 +687,12 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: function_decl, IDF, method_args
-            // token labels:
+            // elements: method_args, function_decl, IDF
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -800,7 +800,7 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:67:18: ':' type '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal20=(Token)match(input,50,FOLLOW_50_in_function_decl318);
+                    char_literal20=(Token)match(input,50,FOLLOW_50_in_function_decl318);  
                     stream_50.add(char_literal20);
 
                     pushFollow(FOLLOW_type_in_function_decl320);
@@ -809,7 +809,7 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_type.add(type21.getTree());
-                    char_literal22=(Token)match(input,51,FOLLOW_51_in_function_decl321);
+                    char_literal22=(Token)match(input,51,FOLLOW_51_in_function_decl321);  
                     stream_51.add(char_literal22);
 
                     // Looc.g:67:29: ( var_decl )*
@@ -877,18 +877,18 @@ public class LoocParser extends Parser {
                         cnt9++;
                     } while (true);
 
-                    char_literal25=(Token)match(input,52,FOLLOW_52_in_function_decl327);
+                    char_literal25=(Token)match(input,52,FOLLOW_52_in_function_decl327);  
                     stream_52.add(char_literal25);
 
 
 
                     // AST REWRITE
-                    // elements: type, var_decl, instruction
-                    // token labels:
+                    // elements: instruction, type, var_decl
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -927,7 +927,7 @@ public class LoocParser extends Parser {
                 case 2 :
                     // Looc.g:68:7: '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal26=(Token)match(input,51,FOLLOW_51_in_function_decl349);
+                    char_literal26=(Token)match(input,51,FOLLOW_51_in_function_decl349);  
                     stream_51.add(char_literal26);
 
                     // Looc.g:68:10: ( var_decl )*
@@ -995,18 +995,18 @@ public class LoocParser extends Parser {
                         cnt11++;
                     } while (true);
 
-                    char_literal29=(Token)match(input,52,FOLLOW_52_in_function_decl356);
+                    char_literal29=(Token)match(input,52,FOLLOW_52_in_function_decl356);  
                     stream_52.add(char_literal29);
 
 
 
                     // AST REWRITE
                     // elements: instruction, var_decl
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1108,7 +1108,7 @@ public class LoocParser extends Parser {
             	case 1 :
             	    // Looc.g:72:27: ',' method_arg
             	    {
-            	    char_literal31=(Token)match(input,53,FOLLOW_53_in_method_args381);
+            	    char_literal31=(Token)match(input,53,FOLLOW_53_in_method_args381);  
             	    stream_53.add(char_literal31);
 
             	    pushFollow(FOLLOW_method_arg_in_method_args383);
@@ -1130,11 +1130,11 @@ public class LoocParser extends Parser {
 
             // AST REWRITE
             // elements: method_arg, method_arg
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1207,10 +1207,10 @@ public class LoocParser extends Parser {
             // Looc.g:74:11: ( IDF ':' type -> ^( FORMAL_PARAM IDF type ) )
             // Looc.g:74:13: IDF ':' type
             {
-            IDF33=(Token)match(input,IDF,FOLLOW_IDF_in_method_arg405);
+            IDF33=(Token)match(input,IDF,FOLLOW_IDF_in_method_arg405);  
             stream_IDF.add(IDF33);
 
-            char_literal34=(Token)match(input,50,FOLLOW_50_in_method_arg407);
+            char_literal34=(Token)match(input,50,FOLLOW_50_in_method_arg407);  
             stream_50.add(char_literal34);
 
             pushFollow(FOLLOW_type_in_method_arg409);
@@ -1222,12 +1222,12 @@ public class LoocParser extends Parser {
 
 
             // AST REWRITE
-            // elements: IDF, type
-            // token labels:
+            // elements: type, IDF
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1301,13 +1301,13 @@ public class LoocParser extends Parser {
             // Looc.g:76:9: ( 'var' IDF ':' type ';' -> ^( VAR_DEC IDF type ) )
             // Looc.g:76:12: 'var' IDF ':' type ';'
             {
-            string_literal36=(Token)match(input,54,FOLLOW_54_in_var_decl427);
+            string_literal36=(Token)match(input,54,FOLLOW_54_in_var_decl427);  
             stream_54.add(string_literal36);
 
-            IDF37=(Token)match(input,IDF,FOLLOW_IDF_in_var_decl429);
+            IDF37=(Token)match(input,IDF,FOLLOW_IDF_in_var_decl429);  
             stream_IDF.add(IDF37);
 
-            char_literal38=(Token)match(input,50,FOLLOW_50_in_var_decl431);
+            char_literal38=(Token)match(input,50,FOLLOW_50_in_var_decl431);  
             stream_50.add(char_literal38);
 
             pushFollow(FOLLOW_type_in_var_decl433);
@@ -1316,18 +1316,18 @@ public class LoocParser extends Parser {
             state._fsp--;
 
             stream_type.add(type39.getTree());
-            char_literal40=(Token)match(input,55,FOLLOW_55_in_var_decl435);
+            char_literal40=(Token)match(input,55,FOLLOW_55_in_var_decl435);  
             stream_55.add(char_literal40);
 
 
 
             // AST REWRITE
-            // elements: IDF, type
-            // token labels:
+            // elements: type, IDF
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1422,18 +1422,18 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:79:9: 'int'
                     {
-                    string_literal41=(Token)match(input,56,FOLLOW_56_in_type455);
+                    string_literal41=(Token)match(input,56,FOLLOW_56_in_type455);  
                     stream_56.add(string_literal41);
 
 
 
                     // AST REWRITE
                     // elements: 56
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1450,18 +1450,18 @@ public class LoocParser extends Parser {
                 case 2 :
                     // Looc.g:80:7: 'string'
                     {
-                    string_literal42=(Token)match(input,57,FOLLOW_57_in_type467);
+                    string_literal42=(Token)match(input,57,FOLLOW_57_in_type467);  
                     stream_57.add(string_literal42);
 
 
 
                     // AST REWRITE
                     // elements: 57
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1478,18 +1478,18 @@ public class LoocParser extends Parser {
                 case 3 :
                     // Looc.g:81:8: CLASS
                     {
-                    CLASS43=(Token)match(input,CLASS,FOLLOW_CLASS_in_type480);
+                    CLASS43=(Token)match(input,CLASS,FOLLOW_CLASS_in_type480);  
                     stream_CLASS.add(CLASS43);
 
 
 
                     // AST REWRITE
                     // elements: CLASS
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1674,10 +1674,10 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:84:15: IDF ':=' expression ';'
                     {
-                    IDF44=(Token)match(input,IDF,FOLLOW_IDF_in_instruction493);
+                    IDF44=(Token)match(input,IDF,FOLLOW_IDF_in_instruction493);  
                     stream_IDF.add(IDF44);
 
-                    string_literal45=(Token)match(input,58,FOLLOW_58_in_instruction495);
+                    string_literal45=(Token)match(input,58,FOLLOW_58_in_instruction495);  
                     stream_58.add(string_literal45);
 
                     pushFollow(FOLLOW_expression_in_instruction497);
@@ -1686,18 +1686,18 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression46.getTree());
-                    char_literal47=(Token)match(input,55,FOLLOW_55_in_instruction499);
+                    char_literal47=(Token)match(input,55,FOLLOW_55_in_instruction499);  
                     stream_55.add(char_literal47);
 
 
 
                     // AST REWRITE
                     // elements: IDF, expression
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1723,13 +1723,13 @@ public class LoocParser extends Parser {
                 case 2 :
                     // Looc.g:85:6: 'for' IDF 'in' expression '..' expression 'do' ( instruction )+ 'end'
                     {
-                    string_literal48=(Token)match(input,59,FOLLOW_59_in_instruction517);
+                    string_literal48=(Token)match(input,59,FOLLOW_59_in_instruction517);  
                     stream_59.add(string_literal48);
 
-                    IDF49=(Token)match(input,IDF,FOLLOW_IDF_in_instruction519);
+                    IDF49=(Token)match(input,IDF,FOLLOW_IDF_in_instruction519);  
                     stream_IDF.add(IDF49);
 
-                    string_literal50=(Token)match(input,60,FOLLOW_60_in_instruction521);
+                    string_literal50=(Token)match(input,60,FOLLOW_60_in_instruction521);  
                     stream_60.add(string_literal50);
 
                     pushFollow(FOLLOW_expression_in_instruction523);
@@ -1738,7 +1738,7 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression51.getTree());
-                    string_literal52=(Token)match(input,61,FOLLOW_61_in_instruction525);
+                    string_literal52=(Token)match(input,61,FOLLOW_61_in_instruction525);  
                     stream_61.add(string_literal52);
 
                     pushFollow(FOLLOW_expression_in_instruction527);
@@ -1747,7 +1747,7 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression53.getTree());
-                    string_literal54=(Token)match(input,62,FOLLOW_62_in_instruction529);
+                    string_literal54=(Token)match(input,62,FOLLOW_62_in_instruction529);  
                     stream_62.add(string_literal54);
 
                     // Looc.g:85:53: ( instruction )+
@@ -1785,18 +1785,18 @@ public class LoocParser extends Parser {
                         cnt15++;
                     } while (true);
 
-                    string_literal56=(Token)match(input,63,FOLLOW_63_in_instruction534);
+                    string_literal56=(Token)match(input,63,FOLLOW_63_in_instruction534);  
                     stream_63.add(string_literal56);
 
 
 
                     // AST REWRITE
-                    // elements: instruction, IDF, expression, expression
-                    // token labels:
+                    // elements: expression, instruction, IDF, expression
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -1839,7 +1839,7 @@ public class LoocParser extends Parser {
                 case 3 :
                     // Looc.g:86:6: 'if' expression 'then' (a+= instruction )+ ( 'else' (b+= instruction )+ )? 'fi'
                     {
-                    string_literal57=(Token)match(input,64,FOLLOW_64_in_instruction560);
+                    string_literal57=(Token)match(input,64,FOLLOW_64_in_instruction560);  
                     stream_64.add(string_literal57);
 
                     pushFollow(FOLLOW_expression_in_instruction562);
@@ -1848,7 +1848,7 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression58.getTree());
-                    string_literal59=(Token)match(input,65,FOLLOW_65_in_instruction564);
+                    string_literal59=(Token)match(input,65,FOLLOW_65_in_instruction564);  
                     stream_65.add(string_literal59);
 
                     // Looc.g:86:30: (a+= instruction )+
@@ -1900,7 +1900,7 @@ public class LoocParser extends Parser {
                         case 1 :
                             // Looc.g:86:46: 'else' (b+= instruction )+
                             {
-                            string_literal60=(Token)match(input,66,FOLLOW_66_in_instruction572);
+                            string_literal60=(Token)match(input,66,FOLLOW_66_in_instruction572);  
                             stream_66.add(string_literal60);
 
                             // Looc.g:86:54: (b+= instruction )+
@@ -1947,18 +1947,18 @@ public class LoocParser extends Parser {
 
                     }
 
-                    string_literal61=(Token)match(input,67,FOLLOW_67_in_instruction581);
+                    string_literal61=(Token)match(input,67,FOLLOW_67_in_instruction581);  
                     stream_67.add(string_literal61);
 
 
 
                     // AST REWRITE
-                    // elements: b, expression, a
-                    // token labels:
+                    // elements: expression, a, b
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
+                    // token list labels: 
                     // rule list labels: a, b
-                    // wildcard labels:
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
                     RewriteRuleSubtreeStream stream_a=new RewriteRuleSubtreeStream(adaptor,"token a",list_a);
@@ -2035,7 +2035,7 @@ public class LoocParser extends Parser {
                 case 5 :
                     // Looc.g:88:11: 'do' expression ';'
                     {
-                    string_literal63=(Token)match(input,62,FOLLOW_62_in_instruction628);
+                    string_literal63=(Token)match(input,62,FOLLOW_62_in_instruction628);  
                     stream_62.add(string_literal63);
 
                     pushFollow(FOLLOW_expression_in_instruction630);
@@ -2044,18 +2044,18 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression64.getTree());
-                    char_literal65=(Token)match(input,55,FOLLOW_55_in_instruction632);
+                    char_literal65=(Token)match(input,55,FOLLOW_55_in_instruction632);  
                     stream_55.add(char_literal65);
 
 
 
                     // AST REWRITE
                     // elements: expression
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2080,7 +2080,7 @@ public class LoocParser extends Parser {
                 case 6 :
                     // Looc.g:89:12: '{' ( var_decl )* ( instruction )+ '}'
                     {
-                    char_literal66=(Token)match(input,51,FOLLOW_51_in_instruction653);
+                    char_literal66=(Token)match(input,51,FOLLOW_51_in_instruction653);  
                     stream_51.add(char_literal66);
 
                     // Looc.g:89:16: ( var_decl )*
@@ -2148,18 +2148,18 @@ public class LoocParser extends Parser {
                         cnt20++;
                     } while (true);
 
-                    char_literal69=(Token)match(input,52,FOLLOW_52_in_instruction661);
+                    char_literal69=(Token)match(input,52,FOLLOW_52_in_instruction661);  
                     stream_52.add(char_literal69);
 
 
 
                     // AST REWRITE
                     // elements: var_decl, instruction
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2203,18 +2203,18 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_return_decl.add(return_decl70.getTree());
-                    char_literal71=(Token)match(input,55,FOLLOW_55_in_instruction684);
+                    char_literal71=(Token)match(input,55,FOLLOW_55_in_instruction684);  
                     stream_55.add(char_literal71);
 
 
 
                     // AST REWRITE
                     // elements: return_decl
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2245,18 +2245,18 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_read.add(read72.getTree());
-                    char_literal73=(Token)match(input,55,FOLLOW_55_in_instruction704);
+                    char_literal73=(Token)match(input,55,FOLLOW_55_in_instruction704);  
                     stream_55.add(char_literal73);
 
 
 
                     // AST REWRITE
                     // elements: read
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2356,21 +2356,21 @@ public class LoocParser extends Parser {
                 case 2 :
                     // Looc.g:94:5: 'new' CLASS
                     {
-                    string_literal75=(Token)match(input,68,FOLLOW_68_in_expression728);
+                    string_literal75=(Token)match(input,68,FOLLOW_68_in_expression728);  
                     stream_68.add(string_literal75);
 
-                    CLASS76=(Token)match(input,CLASS,FOLLOW_CLASS_in_expression730);
+                    CLASS76=(Token)match(input,CLASS,FOLLOW_CLASS_in_expression730);  
                     stream_CLASS.add(CLASS76);
 
 
 
                     // AST REWRITE
-                    // elements: CLASS, 68
-                    // token labels:
+                    // elements: 68, CLASS
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2454,11 +2454,11 @@ public class LoocParser extends Parser {
 
             // AST REWRITE
             // elements: multiop
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2490,7 +2490,7 @@ public class LoocParser extends Parser {
             	case 1 :
             	    // Looc.g:97:35: '+' mult= multiop
             	    {
-            	    char_literal78=(Token)match(input,69,FOLLOW_69_in_operation756);
+            	    char_literal78=(Token)match(input,69,FOLLOW_69_in_operation756);  
             	    stream_69.add(char_literal78);
 
             	    pushFollow(FOLLOW_multiop_in_operation760);
@@ -2502,12 +2502,12 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: mult, operation
-            	    // token labels:
+            	    // elements: operation, mult
+            	    // token labels: 
             	    // rule labels: mult, retval
-            	    // token list labels:
-            	    // rule list labels:
-            	    // wildcard labels:
+            	    // token list labels: 
+            	    // rule list labels: 
+            	    // wildcard labels: 
             	    retval.tree = root_0;
             	    RewriteRuleSubtreeStream stream_mult=new RewriteRuleSubtreeStream(adaptor,"rule mult",mult!=null?mult.tree:null);
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
@@ -2534,7 +2534,7 @@ public class LoocParser extends Parser {
             	case 2 :
             	    // Looc.g:98:4: '-' mult= multiop
             	    {
-            	    char_literal79=(Token)match(input,70,FOLLOW_70_in_operation777);
+            	    char_literal79=(Token)match(input,70,FOLLOW_70_in_operation777);  
             	    stream_70.add(char_literal79);
 
             	    pushFollow(FOLLOW_multiop_in_operation781);
@@ -2546,12 +2546,12 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: mult, operation
-            	    // token labels:
+            	    // elements: operation, mult
+            	    // token labels: 
             	    // rule labels: mult, retval
-            	    // token list labels:
-            	    // rule list labels:
-            	    // wildcard labels:
+            	    // token list labels: 
+            	    // rule list labels: 
+            	    // wildcard labels: 
             	    retval.tree = root_0;
             	    RewriteRuleSubtreeStream stream_mult=new RewriteRuleSubtreeStream(adaptor,"rule mult",mult!=null?mult.tree:null);
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
@@ -2644,11 +2644,11 @@ public class LoocParser extends Parser {
 
             // AST REWRITE
             // elements: comparaison
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -2680,7 +2680,7 @@ public class LoocParser extends Parser {
             	case 1 :
             	    // Looc.g:100:41: '*' cmp= comparaison
             	    {
-            	    char_literal81=(Token)match(input,71,FOLLOW_71_in_multiop812);
+            	    char_literal81=(Token)match(input,71,FOLLOW_71_in_multiop812);  
             	    stream_71.add(char_literal81);
 
             	    pushFollow(FOLLOW_comparaison_in_multiop816);
@@ -2692,12 +2692,12 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: cmp, multiop
-            	    // token labels:
+            	    // elements: multiop, cmp
+            	    // token labels: 
             	    // rule labels: cmp, retval
-            	    // token list labels:
-            	    // rule list labels:
-            	    // wildcard labels:
+            	    // token list labels: 
+            	    // rule list labels: 
+            	    // wildcard labels: 
             	    retval.tree = root_0;
             	    RewriteRuleSubtreeStream stream_cmp=new RewriteRuleSubtreeStream(adaptor,"rule cmp",cmp!=null?cmp.tree:null);
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
@@ -2724,7 +2724,7 @@ public class LoocParser extends Parser {
             	case 2 :
             	    // Looc.g:101:4: '/' cmp= comparaison
             	    {
-            	    char_literal82=(Token)match(input,72,FOLLOW_72_in_multiop833);
+            	    char_literal82=(Token)match(input,72,FOLLOW_72_in_multiop833);  
             	    stream_72.add(char_literal82);
 
             	    pushFollow(FOLLOW_comparaison_in_multiop837);
@@ -2736,12 +2736,12 @@ public class LoocParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: cmp, multiop
-            	    // token labels:
+            	    // elements: multiop, cmp
+            	    // token labels: 
             	    // rule labels: cmp, retval
-            	    // token list labels:
-            	    // rule list labels:
-            	    // wildcard labels:
+            	    // token list labels: 
+            	    // rule list labels: 
+            	    // wildcard labels: 
             	    retval.tree = root_0;
             	    RewriteRuleSubtreeStream stream_cmp=new RewriteRuleSubtreeStream(adaptor,"rule cmp",cmp!=null?cmp.tree:null);
             	    RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
@@ -2836,7 +2836,7 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:104:17: OPER moinsunaire
                     {
-                    OPER84=(Token)match(input,OPER,FOLLOW_OPER_in_comparaison863);
+                    OPER84=(Token)match(input,OPER,FOLLOW_OPER_in_comparaison863); 
                     OPER84_tree = (Object)adaptor.create(OPER84);
                     root_0 = (Object)adaptor.becomeRoot(OPER84_tree, root_0);
 
@@ -2909,7 +2909,7 @@ public class LoocParser extends Parser {
                 case 1 :
                     // Looc.g:107:5: '-'
                     {
-                    char_literal86=(Token)match(input,70,FOLLOW_70_in_moinsunaire878);
+                    char_literal86=(Token)match(input,70,FOLLOW_70_in_moinsunaire878); 
                     char_literal86_tree = (Object)adaptor.create(char_literal86);
                     root_0 = (Object)adaptor.becomeRoot(char_literal86_tree, root_0);
 
@@ -3032,7 +3032,7 @@ public class LoocParser extends Parser {
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    INT88=(Token)match(input,INT,FOLLOW_INT_in_atom890);
+                    INT88=(Token)match(input,INT,FOLLOW_INT_in_atom890); 
                     INT88_tree = (Object)adaptor.create(INT88);
                     adaptor.addChild(root_0, INT88_tree);
 
@@ -3044,7 +3044,7 @@ public class LoocParser extends Parser {
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    STRING89=(Token)match(input,STRING,FOLLOW_STRING_in_atom895);
+                    STRING89=(Token)match(input,STRING,FOLLOW_STRING_in_atom895); 
                     STRING89_tree = (Object)adaptor.create(STRING89);
                     adaptor.addChild(root_0, STRING89_tree);
 
@@ -3056,7 +3056,7 @@ public class LoocParser extends Parser {
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    IDF90=(Token)match(input,IDF,FOLLOW_IDF_in_atom900);
+                    IDF90=(Token)match(input,IDF,FOLLOW_IDF_in_atom900); 
                     IDF90_tree = (Object)adaptor.create(IDF90);
                     root_0 = (Object)adaptor.becomeRoot(IDF90_tree, root_0);
 
@@ -3091,7 +3091,7 @@ public class LoocParser extends Parser {
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    string_literal92=(Token)match(input,73,FOLLOW_73_in_atom912);
+                    string_literal92=(Token)match(input,73,FOLLOW_73_in_atom912); 
                     string_literal92_tree = (Object)adaptor.create(string_literal92);
                     root_0 = (Object)adaptor.becomeRoot(string_literal92_tree, root_0);
 
@@ -3126,7 +3126,7 @@ public class LoocParser extends Parser {
                     {
                     root_0 = (Object)adaptor.nil();
 
-                    string_literal94=(Token)match(input,74,FOLLOW_74_in_atom924);
+                    string_literal94=(Token)match(input,74,FOLLOW_74_in_atom924); 
                     string_literal94_tree = (Object)adaptor.create(string_literal94);
                     root_0 = (Object)adaptor.becomeRoot(string_literal94_tree, root_0);
 
@@ -3159,7 +3159,7 @@ public class LoocParser extends Parser {
                 case 6 :
                     // Looc.g:114:4: '(' expression ')'
                     {
-                    char_literal96=(Token)match(input,47,FOLLOW_47_in_atom936);
+                    char_literal96=(Token)match(input,47,FOLLOW_47_in_atom936);  
                     stream_47.add(char_literal96);
 
                     pushFollow(FOLLOW_expression_in_atom938);
@@ -3168,18 +3168,18 @@ public class LoocParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression97.getTree());
-                    char_literal98=(Token)match(input,48,FOLLOW_48_in_atom940);
+                    char_literal98=(Token)match(input,48,FOLLOW_48_in_atom940);  
                     stream_48.add(char_literal98);
 
 
 
                     // AST REWRITE
                     // elements: expression
-                    // token labels:
+                    // token labels: 
                     // rule labels: retval
-                    // token list labels:
-                    // rule list labels:
-                    // wildcard labels:
+                    // token list labels: 
+                    // rule list labels: 
+                    // wildcard labels: 
                     retval.tree = root_0;
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -3251,13 +3251,13 @@ public class LoocParser extends Parser {
             // Looc.g:117:6: ( '.' IDF '(' ( expression ( ',' expression )* )? ')' -> ^( CALL IDF ( ^( EFFECTIVE_PARAMS ( expression ( expression )* )? ) )? ) )
             // Looc.g:117:8: '.' IDF '(' ( expression ( ',' expression )* )? ')'
             {
-            char_literal99=(Token)match(input,75,FOLLOW_75_in_call953);
+            char_literal99=(Token)match(input,75,FOLLOW_75_in_call953);  
             stream_75.add(char_literal99);
 
-            IDF100=(Token)match(input,IDF,FOLLOW_IDF_in_call955);
+            IDF100=(Token)match(input,IDF,FOLLOW_IDF_in_call955);  
             stream_IDF.add(IDF100);
 
-            char_literal101=(Token)match(input,47,FOLLOW_47_in_call957);
+            char_literal101=(Token)match(input,47,FOLLOW_47_in_call957);  
             stream_47.add(char_literal101);
 
             // Looc.g:117:19: ( expression ( ',' expression )* )?
@@ -3292,7 +3292,7 @@ public class LoocParser extends Parser {
                     	case 1 :
                     	    // Looc.g:117:31: ',' expression
                     	    {
-                    	    char_literal103=(Token)match(input,53,FOLLOW_53_in_call961);
+                    	    char_literal103=(Token)match(input,53,FOLLOW_53_in_call961);  
                     	    stream_53.add(char_literal103);
 
                     	    pushFollow(FOLLOW_expression_in_call962);
@@ -3316,18 +3316,18 @@ public class LoocParser extends Parser {
 
             }
 
-            char_literal105=(Token)match(input,48,FOLLOW_48_in_call967);
+            char_literal105=(Token)match(input,48,FOLLOW_48_in_call967);  
             stream_48.add(char_literal105);
 
 
 
             // AST REWRITE
             // elements: expression, IDF, expression
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -3420,7 +3420,7 @@ public class LoocParser extends Parser {
             // Looc.g:119:6: ( 'write' expression ';' -> ^( WRITE expression ) )
             // Looc.g:119:9: 'write' expression ';'
             {
-            string_literal106=(Token)match(input,76,FOLLOW_76_in_print999);
+            string_literal106=(Token)match(input,76,FOLLOW_76_in_print999);  
             stream_76.add(string_literal106);
 
             pushFollow(FOLLOW_expression_in_print1001);
@@ -3429,18 +3429,18 @@ public class LoocParser extends Parser {
             state._fsp--;
 
             stream_expression.add(expression107.getTree());
-            char_literal108=(Token)match(input,55,FOLLOW_55_in_print1003);
+            char_literal108=(Token)match(input,55,FOLLOW_55_in_print1003);  
             stream_55.add(char_literal108);
 
 
 
             // AST REWRITE
             // elements: expression
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -3510,10 +3510,10 @@ public class LoocParser extends Parser {
             // Looc.g:121:12: ( 'return' '(' expression ')' -> expression )
             // Looc.g:121:15: 'return' '(' expression ')'
             {
-            string_literal109=(Token)match(input,77,FOLLOW_77_in_return_decl1019);
+            string_literal109=(Token)match(input,77,FOLLOW_77_in_return_decl1019);  
             stream_77.add(string_literal109);
 
-            char_literal110=(Token)match(input,47,FOLLOW_47_in_return_decl1020);
+            char_literal110=(Token)match(input,47,FOLLOW_47_in_return_decl1020);  
             stream_47.add(char_literal110);
 
             pushFollow(FOLLOW_expression_in_return_decl1022);
@@ -3522,18 +3522,18 @@ public class LoocParser extends Parser {
             state._fsp--;
 
             stream_expression.add(expression111.getTree());
-            char_literal112=(Token)match(input,48,FOLLOW_48_in_return_decl1024);
+            char_literal112=(Token)match(input,48,FOLLOW_48_in_return_decl1024);  
             stream_48.add(char_literal112);
 
 
 
             // AST REWRITE
             // elements: expression
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -3590,21 +3590,21 @@ public class LoocParser extends Parser {
             // Looc.g:123:6: ( 'read' IDF -> IDF )
             // Looc.g:123:8: 'read' IDF
             {
-            string_literal113=(Token)match(input,78,FOLLOW_78_in_read1037);
+            string_literal113=(Token)match(input,78,FOLLOW_78_in_read1037);  
             stream_78.add(string_literal113);
 
-            IDF114=(Token)match(input,IDF,FOLLOW_IDF_in_read1039);
+            IDF114=(Token)match(input,IDF,FOLLOW_IDF_in_read1039);  
             stream_IDF.add(IDF114);
 
 
 
             // AST REWRITE
             // elements: IDF
-            // token labels:
+            // token labels: 
             // rule labels: retval
-            // token list labels:
-            // rule list labels:
-            // wildcard labels:
+            // token list labels: 
+            // rule list labels: 
+            // wildcard labels: 
             retval.tree = root_0;
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
@@ -3639,7 +3639,7 @@ public class LoocParser extends Parser {
     // Delegated rules
 
 
-
+ 
 
     public static final BitSet FOLLOW_class_decl_in_program181 = new BitSet(new long[]{0x4848101000000000L,0x0000000000007001L});
     public static final BitSet FOLLOW_var_decl_in_program184 = new BitSet(new long[]{0x4848001000000000L,0x0000000000007001L});
