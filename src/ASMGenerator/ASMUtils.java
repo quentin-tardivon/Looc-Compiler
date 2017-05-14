@@ -12,7 +12,7 @@ public class ASMUtils {
     public static final int ADDR_SIZE = 2;
     public static final int INT_SIZE = 2;
     public static final int CHAR_SIZE = 1;
-    public static final int OFFSET_ENV = ADDR_SIZE * 1;
+    public static final int OFFSET_ENV = ADDR_SIZE * 2;
 
     public static final String ADD = "ADD";
     public static final String DIFF = "DIFF";
@@ -55,18 +55,24 @@ public class ASMUtils {
     }
 
     public static String stackStaticAndDynamic(String label) {
-        return formatASM(label, "STW", "BP, -(SP)") +
-                formatASM("", "LDW", "BP, SP");// +
+    /*    return formatASM(label, "STW", "BP, -(SP)", "// Stack the dynamic link") +
+                formatASM("", "LDW", "R0, (SP)", "// Static and dynamic are the same") +
+                formatASM("", "STW", "BP, -(SP)", "// Stack the static link") +
+                formatASM("STW", "R0, BP", "");
                 //formatASM("",  "STW", "R0, -(SP)", "// Stack the dynamic link") +
 //                formatASM("", "LDW", "BP, SP") +
                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
+                */
+    return "KJSFJKDFGJKFDGJKDFJKGJKDFGJKD";
     }
 
 
     public static String stackStaticAndDynamic() {
-        return formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
-                formatASM("", "LDW", "BP, SP");// +
-                //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
+        return formatASM("", "LDW", "R0, BP", "// Static and dynamic are the same") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack dynamic link") +
+                formatASM("LDW", "BP, SP", "") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack static link");
+                                //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
     }
 
     public static String generateDeclaration(int deplType) {
@@ -218,5 +224,11 @@ public class ASMUtils {
         StringBuffer asm = new StringBuffer();
         asm.append(generateDeclaration(INT_SIZE));
         return asm.toString();
+    }
+
+    public static String unstackEnvironment() {
+        return formatASM("", "LDW", "SP, BP", " // Unstack the environment") +
+                formatASM("", "LDW", "BP, (SP)+", "");
+
     }
 }

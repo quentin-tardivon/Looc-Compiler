@@ -31,7 +31,7 @@ public class Block implements Generable {
         for(Generable g: this.instructions) {
             asm.append(g.generate());
         }
-        asm.append(ASMUtils.unstack(this.countVariables * ASMUtils.ADDR_SIZE + ASMUtils.OFFSET_ENV));
+        asm.append(ASMUtils.unstackEnvironment());
         return asm.toString();
     }
 
