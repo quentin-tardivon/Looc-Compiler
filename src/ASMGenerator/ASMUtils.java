@@ -3,6 +3,8 @@ package ASMGenerator;
 
 import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.binaries.Comparison;
+import ASMGenerator.instructions.Affectation;
+import ASMGenerator.instructions.ConditionFor;
 import TDS.Entry;
 import core.Keywords;
 
@@ -15,7 +17,7 @@ public class ASMUtils {
     public static final int OFFSET_ENV = ADDR_SIZE * 2;
 
     public static final String ADD = "ADD";
-    public static final String DIFF = "DIFF";
+    public static final String DIFF = "SUB";
     public static final String MUL = "MUL";
     public static final String DIV = "DIV";
     public static final String LT = "BGE";
@@ -29,9 +31,9 @@ public class ASMUtils {
 
     public static String formatASM(String...params) {
         if(params.length == 3)
-            return String.format("%-10s\t\t%-10s\t\t%-10s\n", params);
+            return String.format("%-10s\t\t%-10s\t\t%-10s\n", (Object[])params);
         if(params.length == 4)
-            return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n", params);
+            return String.format("%-10s\t\t%-10s\t\t%-10s\t\t%10s\n",(Object[])params);
 
         if(params.length != 3 || params.length != 4) {
             try {
@@ -63,14 +65,17 @@ public class ASMUtils {
 //                formatASM("", "LDW", "BP, SP") +
                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
                 */
-    return "KJSFJKDFGJKFDGJKDFJKGJKDFGJKD";
+        return formatASM("\n\n" + label, "LDW", "R0, BP", "// Static and dynamic are the same") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack dynamic link") +
+                formatASM("", "LDW", "BP, SP") +
+                formatASM("", "STW", "R0, -(SP)", "// Stack static link");
     }
 
 
     public static String stackStaticAndDynamic() {
-        return formatASM("", "LDW", "R0, BP", "// Static and dynamic are the same") +
+        return formatASM("\n\n", "LDW", "R0, BP", "// Static and dynamic are the same") +
                 formatASM("", "STW", "R0, -(SP)", "// Stack dynamic link") +
-                formatASM("LDW", "BP, SP", "") +
+                formatASM("", "LDW", "BP, SP") +
                 formatASM("", "STW", "R0, -(SP)", "// Stack static link");
                                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
     }
@@ -178,11 +183,11 @@ public class ASMUtils {
                 addToStack("R3");
     }
 
-    public static String generateComparison(String operator, String label) {
+    public static String generateComparison(String operator, String gotoLabel) {
         return removeFromStack("R2") +
                 removeFromStack("R1") +
                 formatASM("", "CMP", "R1, R2") +
-                formatASM("", operator, label+"-$-2", "// X " + getComparisonOperator(operator) + " Y");
+                formatASM("", operator, gotoLabel+"-$-2", "// X " + getComparisonOperator(operator) + " Y");
     }
 
     public static int generateLabel() {
@@ -192,8 +197,7 @@ public class ASMUtils {
     public static String generateIf(Comparison c, Block b, Block elseBlock) {
         StringBuffer asm = new StringBuffer();
         int label = generateLabel();
-        c.setLabel("ELSE_" + label);
-
+        c.setGotoLabel("ELSE_" + label);
         asm.append(c.generate());
         asm.append(b.generate());
         asm.append(formatASM("", "JEA", "@FI_" + label));
@@ -224,15 +228,51 @@ public class ASMUtils {
         return null;
     }
 
-    public static String generateFor() {
+    public static String generateFor(ConditionFor cond,  Block block, Affectation a) {
         StringBuffer asm = new StringBuffer();
-        asm.append(generateDeclaration(INT_SIZE));
+        int label = generateLabel();
+        cond.setBaseLabel("LOOP_" + label);
+        cond.setGotoLabel("ENDLOOP_"+label);
+        asm.append(cond.generate());
+        asm.append(formatASM("//", "Instructions of for loop", ""));
+        asm.append(block.generate());
+        asm.append(formatASM("//", "Increment counter", ""));
+        asm.append(a.generate());
+        asm.append(formatASM("", "JEA", "@LOOP_" + label ,"// For, go back to condition "));
+        asm.append(formatASM("ENDLOOP_" + label, "", ""));
+
+
         return asm.toString();
     }
 
     public static String unstackEnvironment() {
         return formatASM("", "LDW", "SP, BP", " // Unstack the environment") +
                 formatASM("", "LDW", "BP, (SP)+", "");
+    }
 
+    public static String loadParameter(String reg, int numParameter) {
+        return formatASM("", "LDW", "R0, (SP)" + ADDR_SIZE, "// Get parameter");
+    }
+
+    public static String generateStaticLinkLoader(int currentImbricationLevel, int imbricationLevelDeclaration) {
+        return formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link") +
+                addToStack("R0") +
+                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC) +
+                ASMUtils.unstack(ASMUtils.ADDR_SIZE);
+    }
+
+    public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl, Expression e) {
+        StringBuffer asm = new StringBuffer();
+        asm.append(generateStaticLinkLoader(currentImbricationLevel, imbricationLevelDeclaration));
+        asm.append(e.generate());
+        asm.append(removeFromStack("R0"));
+        asm.append(formatASM("", "STW", "R0, (R6)-" + (ASMUtils.OFFSET_ENV + depl), "// Affection: move = " + depl));
+        return asm.toString();
+    }
+
+    public static String generateVariableStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl) {
+        return generateStaticLinkLoader(currentImbricationLevel, imbricationLevelDeclaration) +
+                formatASM("", "LDW", "R1, (R6)-" + (OFFSET_ENV + depl), "// Stack variable: move = " + depl) +
+                addToStack("R1");
     }
 }

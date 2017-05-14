@@ -1,9 +1,7 @@
 package ASMGenerator;
 
-import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
-import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -15,14 +13,10 @@ import java.util.ArrayList;
  */
 public class ASMWriter {
 
-	public static final int INT_SIZE = 2;
-	public static final int ADDR_SIZE = 2;
-	private static int CPTIF =0;
 	private static int CPTFOR =0;
-	public static final int CHAR_SIZE = 1;
 
 	private String output;
-	private final int offsetEnvironment = INT_SIZE * 3;
+	public static final String BUILTIN_FIND_STATIC = "FIND_STATIC";
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
@@ -90,8 +84,8 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, #NIL")+
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
-					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")+
 
+					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")+
 					formatASM("CONVERT_BUFF", "EQU", "40")+
 					formatASM("ITOA_I", "EQU", "4") +
 					formatASM("ATOI_A", "EQU", "10")+
@@ -100,10 +94,11 @@ public class ASMWriter {
 					formatASM("ASCII_SP", "EQU", "32") +
 					formatASM("ASCII_0", "EQU", "48") +
 					formatASM("ASCII_A", "EQU", "65")
+
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
 
-			this.constructASM(tree, writer, TDS);
+			ArrayList<Generable> meths = this.constructASM(tree, writer, TDS);
 
 			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
 					formatASM("", "LDW SP, BP", "") +
@@ -114,7 +109,8 @@ public class ASMWriter {
 
 			writer.write(itoaDef());
 			writer.write(atoiDef());
-
+			generateInstructions(writer, meths);
+			writer.write(generateFindVariableStatic());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,70 +119,22 @@ public class ASMWriter {
 	}
 
 
-	private void constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
+	private ArrayList<Generable> constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
 		int cpt = 0;
+		ArrayList<Generable> meths = new ArrayList<Generable>();
 		switch (tree.getText()) {
 			case "ROOT":
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					ArrayList<Generable> l = new ArrayList<Generable>();
-					ASMParser.parse(tree.getChild(i), TDS, l);
+					ASMParser.parse(tree.getChild(i), TDS, l, meths);
 					generateInstructions(writer, l);
+					//writer.write("\n\n");
 					//System.exit(0);
 					//constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
 
-/*			case "AFFECT":
 
-				if(TDS.getInfo(tree.getChild(0).getText()).get(Entry.TYPE).equals(Keywords.STRING)) {
-					if (tree.getChild(1).getText().matches("\".*\"")) {
-						writer.write(formatASM("", "LDW ",  "R0, #0x0000")) ;
-						writer.write(formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE));
-						writer.write(formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
-						for (int i = tree.getChild(1).getText().length()-2; i > 0 ; i--) {
-							writer.write(varStringAffect(CHAR_SIZE ,  String.format("%04x", (int) tree.getChild(1).getText().charAt(i)).substring(2)));
-						}
-						writer.write(addToStack("R12"));
-						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
-					}
-					else if (TDS.getInfo(tree.getChild(1).getText()) != null) {
-						writer.write(formatASM("", "LDW ",  "R0, (BP)-"+ (this.offsetEnvironment +  ((Variable)TDS.get(tree.getChild(1).getText())).getDepl() ) )) ;
-						writer.write(addToStack("R0"));
-						writer.write(varAffect(((Variable)TDS.get(tree.getChild(0).getText())).getDepl()));
-
-					}
-				}
-
-				break;*/
-
-			case "FOR":
-				CPTFOR++;
-				int deplIndice;
-				int upperBound;
-				int lowerBound;
-				boolean lowerBoundisRaw=true;
-				boolean upperBoundisRaw=true;
-
-
-				deplIndice=((Variable)TDS.get(tree.getChild(0).getText())).getDepl();
-
-
-				try{
-					lowerBound=Integer.parseInt(tree.getChild(1).getText());
-				}catch(NumberFormatException e){
-					lowerBound=((Variable)TDS.get(tree.getChild(1).getText())).getDepl();
-					upperBoundisRaw=false;
-				}
-
-				try{
-					upperBound=Integer.parseInt(tree.getChild(2).getText());
-				}catch(NumberFormatException e){
-					upperBound=((Variable)TDS.get(tree.getChild(2).getText())).getDepl();
-					upperBoundisRaw=false;
-				}
-
-				forCondition(deplIndice,lowerBound,upperBound,lowerBoundisRaw, upperBoundisRaw, tree,  writer, TDS);
-				break;
 
 
 			/*case "IF":
@@ -225,7 +173,7 @@ public class ASMWriter {
 				break;
 				*/
 
-			default:
+			/*default:
 				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
 					writer.write(formatASM("", "LDW", "R1, #" + tree.getText()));
 					writer.write(addToStack("R1"));
@@ -236,163 +184,12 @@ public class ASMWriter {
 					writer.write(addToStack("R1"));
 					System.out.println(tree.getText() + "\n");
 				}
-
+*/
 		}
-	}
-
-	private void forCondition(int deplIndice, int lowerBound, int upperBound, boolean lowerBoundisRaw, boolean upperBoundisRaw, Tree tree,  Writer writer, SymbolTable TDS) throws IOException{
-		String FORLabel=forLabelMaker(CPTFOR);
-		     //for i in 2..3
-		if(lowerBoundisRaw&&upperBoundisRaw){
-
-			writer.write (formatASM("","LDW","R0, #"+lowerBound)+
-					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
-					formatASM(""+FORLabel,"",""));
-
-			constructASM(tree.getChild(3), writer, TDS);
-
-			writer.write (formatASM("","LDW","R8, #"+upperBound));
-
-
-			//for i in b..2
-		}else if(!lowerBoundisRaw&&upperBoundisRaw){
-
-			writer.write (formatASM("" ,"LDW","R0, (BP)-"+(lowerBound+this.offsetEnvironment))+
-					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
-					formatASM(""+FORLabel,"",""));
-
-			constructASM(tree.getChild(3), writer, TDS);
-
-			writer.write (formatASM("","LDW","R8, #"+upperBound));
-
-
-			//for i in 2..b
-		}else if(lowerBoundisRaw&&!upperBoundisRaw){
-
-			writer.write (formatASM("","LDW","R0, #"+lowerBound)+
-					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
-					formatASM(""+FORLabel,"",""));
-
-			constructASM(tree.getChild(3), writer, TDS);
-
-			writer.write (formatASM("","LDW","R8, (BP)-"+(upperBound+this.offsetEnvironment)));
-
-
-			//for i in a..b
-		}else {
-
-			writer.write (formatASM("","LDW","R0, (BP)-"+(this.offsetEnvironment + deplIndice))+
-					formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice = lowerbound "+FORLabel+" : move = " + deplIndice)+
-					formatASM(""+FORLabel,"",""));
-
-			constructASM(tree.getChild(3), writer, TDS);
-
-			writer.write (formatASM("","LDW","R8, (BP)-"+(upperBound+this.offsetEnvironment)));
-
-		}
-
-		writer.write(formatASM("","LDW","R0, (BP)-"+(this.offsetEnvironment + deplIndice))+
-				formatASM("","LDW","R10, #1")+
-				formatASM("","ADD","R0, R10, R0")+
-				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + deplIndice), "// indice++ "+FORLabel+" : move = " + deplIndice)+
-				formatASM("","CMP","R0, R8")+
-				formatASM("","JLW","#" + FORLabel + "-$-2"));
-
-	}
-
-/*
-	private void ifCondition(int valueLeft, int valueRight, String comparator, boolean leftValueisRaw, boolean rightValueisRaw, Tree tree, Writer writer, SymbolTable TDS) throws IOException {
-
-
-		String afterIFLabel=afterIfLabelMaker(CPTIF);
-		String IFLabel=ifLabelMaker(CPTIF);
-
-		//if(3>2)
-		if (leftValueisRaw && rightValueisRaw) {
-			writer.write(formatASM("", "LDW", "R9, #" + valueLeft) +
-					formatASM("", "LDW", "R10, #" + valueRight) +
-					formatASM("", "CMP", "R9, R10") +
-					formatASM("", "" + jumpCondition(comparator), "#" + IFLabel + "-$-2"));
-
-		//if(b>2)
-		}else if(leftValueisRaw&&!rightValueisRaw){
-            writer.write (formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment))+
-                    formatASM("","LDW", "R10, #"+valueRight)+
-                    formatASM("", "CMP", "R0, R10") +
-                    formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
-
-		//if(2>b)
-		}else if(!leftValueisRaw&&rightValueisRaw){
-		    writer.write(formatASM("" ,"LDW","R0, (BP)-"+valueRight) +
-                     formatASM("","LDW","R10, #"+(valueLeft+this.offsetEnvironment))+
-					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#" + IFLabel + "-$-2"));
-
-		//if(a>b)
-		}else {
-            writer.write(formatASM("" ,"LDW","R0, (BP)-"+(valueLeft+this.offsetEnvironment)) +
-					 formatASM("" ,"LDW","R10, (BP)-"+(valueRight+this.offsetEnvironment)) +
-					 formatASM("", "CMP", "R0, R10") +
-					 formatASM("","" + jumpCondition(comparator),"#"+ IFLabel+"-$-2"));
-		}
-
-		constructASM(tree.getChild(1), writer, TDS);
-
-		writer.write(formatASM("", "JEA", "@" + afterIFLabel)+
-				formatASM(IFLabel, "", ""));
-
-		constructASM(tree.getChild(2), writer, TDS);
-
-		writer.write(formatASM(afterIFLabel, "", ""));
-
+		return meths;
 	}
 
 
-	private String ifLabelMaker(int cpt) {
-		String label = "ELSE" + cpt;
-		return label;
-	}
-
-
-	private String afterIfLabelMaker(int cpt) {
-		String label = "FI" + cpt;
-		return label;
-	}*/
-
-	private String forLabelMaker(int cpt){
-		String label = "LOOP"+cpt;
-		return label;
-	}
-
-	private String jumpCondition(String comparator){
-		String jump="";
-		switch(comparator){
-
-			case "<":
-				jump = "JGE";
-				break;
-			case "<=":
-				jump = "JG";
-				break;
-			case ">":
-				jump = "JBE";
-				break;
-			case ">=":
-				jump = "JB";
-				break;
-			case "==":
-				jump = "JNE";
-				break;
-			case "!=":
-				jump = "JE";
-				break;
-		}
-		return jump;
-	}
-
-	private String loadVar(int depl) {
-		return formatASM("", "LDW", "R1, (BP)-" + (depl + this.offsetEnvironment));
-	}
 
 	private String getVar(String reg, int depl) {
 		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
@@ -477,7 +274,7 @@ public class ASMWriter {
 				formatASM("","LDW","R3, (SP)")+
 				formatASM("","LDW","R1, #48")+
 				formatASM("","SUB","R3,R1,R0")+
-				formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+				formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
 				formatASM("","LDW","R3,(SP)")+
 				formatASM("","LDQ","10,R10")+
 				formatASM("LOOP_ATOI","NOP","")+
@@ -490,15 +287,15 @@ public class ASMWriter {
 					formatASM("","MUL","R0,R10,R0")+
 					formatASM("","LDW","R3,(SP)")+
 					formatASM("","ADD","R0,R3,R0")+
-					formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
-					formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+					formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
+					formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
 					formatASM("","LDW","R3,(SP)")+
 					formatASM("","LDW","R1, #10")+
 					formatASM("","MUL","R10,R1,R10")+
 				formatASM("","JEA","@LOOP_ATOI")+
 
 				formatASM("LOOP_ATOI_END","NOP","")+
-				formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+				formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
 				formatASM("", "LDW", "SP, BP") +
 				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("","RTS","");
@@ -507,80 +304,22 @@ public class ASMWriter {
 	}
 
 
-/*	private String printFuncCall(int depl) { //Equivalent à charger une fonction classique, inspiration
-		return formatASM("", "LDW", "R0, (BP)-" + (offsetEnvironment + depl) + "") +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "LDW", "R0, #0x0000") +
-				formatASM("", "TRP", "#WRITE_EXC");
-	}
-
-
-	private String defPrintFunc() {
-		return formatASM("\n\n\n\n// ------------- PRINT FUNCT", "", "\n") +
-				//formatASM("print_", "LDW", "R0, (BP)" + ADDR_SIZE) +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "RTS", "");
-	}
-
-	public void stackStaticAndDynamic(Writer w) throws IOException {
-		w.write(formatASM("", "STW", "BP, -(SP)", "// Stack the dynamic link") +
-				formatASM("", "STW", "BP, -(SP)", "// Stack the static link"));
-	}
-
-*/
-
-	private String varAffect(int depl) {
-		return removeFromStack("R1") +
-				formatASM("", "LDW", "R0, R1") +
-				formatASM("", "STW", "R0, (BP)-" + (this.offsetEnvironment + depl), "// Affection: move = " + depl);
-	}
-
-
-
-
-	public String addConst(int constante, int depl) {
-		getVar("R1", depl);
-		return formatASM("", "ADQ", constante + ", R1");
-	}
-
-	private String varStringAffect(int depl, String charValue) {
-		return formatASM("", "LDB ", "R0, #0x" + charValue + "00") +
-				formatASM("", "STB ", "R0, (ST)-" + depl) +
-				formatASM("", "ADQ", "-" + depl + ", ST");
-	}
-
-
-
-	public String addToStack(String reg) {
-		/*return formatASM("", "ADQ", "-2, SP") +
-				formatASM("", "STW", reg + ", (SP)");*/
-		return formatASM("", "STW", reg + ", -(SP)");
-	}
-
-
-	private String removeFromStack(String reg) {
-		return formatASM("", "LDW", reg + ", (SP)") +
-				formatASM("", "ADQ", "2, SP");
-	}
-
-
-	private String linkR(int R) {
-		return formatASM("", "ADQ", "-2, SP") +
-				formatASM("", "STW", "BP, (SP)") +
-				//Charger les param ici pour une func
-				formatASM("", "LDW", "BP, SP");
-	}
-
-
-	private String unlink() {
-		return formatASM("", "LDW", "SP, BP") +
-				formatASM("", "LDW", "BP, (SP)") +
-				formatASM("", "ADQ", "2, SP");
-	}
-
 	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
 		for(Generable g: l) {
 			w.write(g.generate());
 		}
+	}
+
+	public String generateFindVariableStatic() {
+		return ASMUtils.formatASM("\n\n//", "Function for finding variable with static link", "") +
+				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
+				ASMUtils.loadParameter("R0", 1) +
+				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +
+				ASMUtils.formatASM("", "LDW", "R1, #1") +
+				ASMUtils.formatASM("", "SUB", "R0, R1, R0") +
+				ASMUtils.formatASM("", "LDW", "R1, #0") +
+				ASMUtils.formatASM("", "CMP", "R0, R1") +
+				ASMUtils.formatASM( "", "BNE", "STATIC_LOOP-$-2") +
+				ASMUtils.formatASM("", "RTS", "");
 	}
 }

@@ -2,9 +2,10 @@ var z : string;
 var a : int;
 
 a := 4 ;
-z := "MO";
+z := "MOGWA";
 
 read a;
-
+write a;
+write z;
 
 

@@ -2,6 +2,7 @@ package ASMGenerator;
 
 import TDS.Entry;
 import TDS.SymbolTable;
+import org.antlr.runtime.tree.Tree;
 
 
 public class LoocClass implements Generable {
@@ -9,11 +10,13 @@ public class LoocClass implements Generable {
     private SymbolTable globalTDS;
     private SymbolTable classTDS;
     private String name;
+    private int nbClass;
 
-    public LoocClass(String name, SymbolTable tds) {
+    public LoocClass(String name, SymbolTable tds, int nbClass) {
         this.globalTDS = tds;
         this.classTDS = tds.getClass(name);
         this.name = name;
+        this.nbClass = nbClass;
     }
 
     @Override
@@ -27,12 +30,15 @@ public class LoocClass implements Generable {
 
         String asm =  ASMWriter.formatASM("\n\n//",  "Setup class descriptor for " + this.name, "") +
                 ASMWriter.formatASM("", "LDW", "R0, #" + size) +
-                ASMWriter.formatASM("", "STW",  "R0, -(SC)", "// sizeof(" + this.name + ") = " + size) +
+                ASMWriter.formatASM("", "STW",  "R0, (SC)"+ this.nbClass, "// sizeof(" + this.name + ") = " + size) +
                 ASMWriter.formatASM("", "LDW", "R0, #" + nbMethods) +
-                ASMWriter.formatASM("", "STW",  "R0, -(SC)", "// count methods of " + this.name + " = " + nbMethods);
+                ASMWriter.formatASM("", "STW",  "R0, (SC)"+ (this.nbClass + 2), "// count methods of " + this.name + " = " + nbMethods); //TODO change 2
 
-        for(int i = 1; i <= nbMethods; i++) {
-//            Tree t  = this.tree.getChild()
+        for(String key: this.classTDS.getKeyEntries()) {
+			if (this.classTDS.get(key).getName().equals(Entry.METHOD)) {
+				String id = this.name + key;
+				System.out.println(id);
+			}
         }
 
         return asm;
