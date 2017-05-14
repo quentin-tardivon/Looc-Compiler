@@ -1,9 +1,6 @@
 package ASMGenerator;
 
-import ASMGenerator.expressions.ConstantInteger;
-import ASMGenerator.expressions.ConstantString;
-import ASMGenerator.expressions.Expression;
-import ASMGenerator.expressions.LoocClassAffect;
+import ASMGenerator.expressions.*;
 import ASMGenerator.expressions.binaries.*;
 import ASMGenerator.instructions.*;
 import TDS.Entry;
@@ -126,6 +123,16 @@ public class ASMParser {
             case "WRITE":
                 res.add(new Write(parseExpression(tree.getChild(0), TDS)));
                 break;
+
+	        case "DO":
+		        for (int i = 0; i < tree.getChildCount(); i++) {
+			        parse(tree.getChild(i), TDS, res, meths);
+		        }
+	        	break;
+
+	        case "CALL":
+	        	res.add(new MethodCall(tree.getChild(0).getText(), TDS, tree.getChild(1).getText()));
+	        	break;
 
             default:
                 System.err.println(tree.getText() + " is not supported [line "+ tree.getLine() + "]");

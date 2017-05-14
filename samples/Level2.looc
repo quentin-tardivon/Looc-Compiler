@@ -4,9 +4,7 @@ class Math =
     var pi2: int;
 
     method calcPi() {
-            pi := 3;
-            write "pi value is";
-            write pi;
+            write 34;
             }
 
 )
@@ -29,5 +27,7 @@ var n: int;
 m := new Math;
 
 x := new MathPi;
+
+do m.calcPi();
 
 n := 10;

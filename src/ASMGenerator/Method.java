@@ -18,8 +18,8 @@ public class Method extends Block implements Generable {
     public String generate() {
         StringBuffer asm = new StringBuffer();
         asm.append(ASMUtils.formatASM("\n\n //Method " + tds.getFather().getName() + tds.getName(), "", ""));
-
-        asm.append(ASMUtils.stackStaticAndDynamic(tds.getFather().getName() + tds.getName()));
+	    asm.append(ASMUtils.formatASM("" + tds.getFather().getName() + tds.getName(), "NOP" , ""));
+        asm.append(ASMUtils.stackStaticAndDynamic(""));
         for(Generable g: this.instructions) {
             asm.append(g.generate());
         }
