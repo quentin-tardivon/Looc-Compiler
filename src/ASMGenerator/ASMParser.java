@@ -13,16 +13,20 @@ import java.util.ArrayList;
 
 public class ASMParser {
 
+	static int nbClass = 0;
+
     public static ArrayList<Generable> parse(Tree tree, SymbolTable TDS, ArrayList<Generable> res) {
         switch(tree.getText()) {
             case "CLASS_DEC":
                 String className = tree.getChild(0).getText();
-                res.add(new LoocClass(className, TDS));
+                res.add(new LoocClass(className, TDS, nbClass));
+                nbClass += 4; //TODO Change 4 to size of class descriptor + nb method
                 int startAt = 1;
                 for (int j = startAt; j < tree.getChildCount(); j++) {
                     parse(tree.getChild(j), TDS.getClass(className), res);
                 }
                 break;
+
             case "VARS":
                 break;
 
@@ -121,7 +125,9 @@ public class ASMParser {
             case "!=":
                 return new NotEqual(parseExpression(node.getChild(0), TDS), parseExpression(node.getChild(1), TDS));
 
-            case Keywords.NEW:
+	        case Keywords.NEW:
+               return new LoocClassAffect(node.getChild(0).getText(), 2);
+
             case Keywords.THIS:
             case "CALL":
             case Keywords.NIL:

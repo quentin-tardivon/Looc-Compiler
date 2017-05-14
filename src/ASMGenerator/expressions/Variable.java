@@ -11,7 +11,7 @@ public class Variable extends Expression {
     }
 
     @Override
-    public String generate() {
+    public String generate(){
         return ASMUtils.generateVariable(this.v.getDepl());
     }
 }
