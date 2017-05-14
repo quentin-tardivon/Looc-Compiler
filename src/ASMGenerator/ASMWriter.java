@@ -92,8 +92,9 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, ST") +
 					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")+
 
-					formatASM("ITOA_P", "EQU", "40")+
+					formatASM("CONVERT_BUFF", "EQU", "40")+
 					formatASM("ITOA_I", "EQU", "4") +
+					formatASM("ATOI_A", "EQU", "10")+
 					formatASM("ASCII_MINUS", "EQU", "45") +
 					formatASM("ASCII_PLUS", "EQU", "43") +
 					formatASM("ASCII_SP", "EQU", "32") +
@@ -112,6 +113,7 @@ public class ASMWriter {
 			);
 
 			writer.write(itoaDef());
+			writer.write(atoiDef());
 
 
 		} catch (Exception e) {
@@ -431,7 +433,7 @@ public class ASMWriter {
 				formatASM("", "TST", "R2") +
 				formatASM("", "BNE", "CNVLOOP-$-2", "// Les caractères sont empilés gauche en haut, droite en bas") +
 
-				formatASM("", "LDW", "R1, #ITOA_P") + //20 par défaut pour l'instant
+				formatASM("", "LDW", "R1, #CONVERT_BUFF") + //20 par défaut pour l'instant
 				formatASM("", "STB", "R3, (R1)+") +
 				formatASM("CPYLOOP", "LDW", "R0, (SP)+") +
 				formatASM("", "STB", "R0, (R1)+") +
@@ -440,7 +442,7 @@ public class ASMWriter {
 				formatASM("", "LDQ", "NUL, R0") +
 				formatASM("", "STB", "R0, (R1)+") +
 
-				formatASM("", "LDW", "R0, #ITOA_P", "// Pointeur sur chaine de caract") +
+				formatASM("", "LDW", "R0, #CONVERT_BUFF", "// Pointeur sur chaine de caract") +
 				formatASM("", "TRP", "#WRITE_EXC") +
 				formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
 				formatASM("", "TRP", "#WRITE_EXC") +
@@ -456,51 +458,51 @@ public class ASMWriter {
 				formatASM("atoi_", "STW", "BP, -(SP)") +
 				formatASM("", "LDW", "BP, SP") +
 				formatASM("", "LDW", "R0, (BP)ITOA_I") +
-				formatASM("", "LDW", "R1, #10") +
-				formatASM("", "LDQ", "ASCII_SP, R3") +
-				formatASM("", "LDQ", "10, WR") +
-				formatASM("", "CMP", "R1, WR") +
-				formatASM("", "BNE", "NOSIGN-$-2") +
-				formatASM("", "LDQ", "ASCII_PLUS, R3") +
-				formatASM("", "TST", "R0") +
-				formatASM("", "BGE", "POSIT-$-2") +
-				formatASM("", "NEG", "R0, R0") +
-				formatASM("", "LDQ", "ASCII_MINUS, R3") +
-				formatASM("POSIT", "NOP", "") +
-				formatASM("NOSIGN", "LDW", "R2, R0") +
-				formatASM("CNVLOOP", "LDW", "R0, R2") +
-				formatASM("", "SRL", "R1, R1") +
-				formatASM("", "ANI", "R0, R4, #1") +
-				formatASM("", "SRL", "R0, R0") +
-				formatASM("", "DIV", "R0, R1, R2") +
-				formatASM("", "SHL", "R0, R0") +
-				formatASM("", "ADD", "R0, R4, R0") +
-				formatASM("", "SHL", "R1, R1") +
-				formatASM("", "ADQ", "-10, R0") +
-				formatASM("", "BGE", "LETTER-$-2") +
-				formatASM("", "ADQ", "10+ASCII_0, R0") +
-				formatASM("", "BMP", "STKCHR-$-2") +
-				formatASM("LETTER", "ADQ", "ASCII_A, R0") +
-				formatASM("STKCHR", "STW", "R0, -(SP)") +
-				formatASM("", "TST", "R2") +
-				formatASM("", "BNE", "CNVLOOP-$-2", "// Les caractères sont empilés gauche en haut, droite en bas") +
 
-				formatASM("", "LDW", "R1, #ITOA_P") + //20 par défaut pour l'instant
-				formatASM("", "STB", "R3, (R1)+") +
-				formatASM("CPYLOOP", "LDW", "R0, (SP)+") +
-				formatASM("", "STB", "R0, (R1)+") +
-				formatASM("", "CMP", "SP, BP") +
-				formatASM("", "BNE", "CPYLOOP-$-2") +
-				formatASM("", "LDQ", "NUL, R0") +
-				formatASM("", "STB", "R0, (R1)+") +
 
-				formatASM("", "LDW", "R0, #ITOA_P", "// Pointeur sur chaine de caract") +
-				formatASM("", "TRP", "#WRITE_EXC") +
-				formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
-				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("","LDW","R3, #0x0100")+
+				formatASM("","LDQ","0,R1")+
+				formatASM("","STW","R1,-(SP)")+
+
+				formatASM("LOOP_STACK","NOP","")+
+				formatASM("","LDB","R0, (R3)")+
+				//formatASM("","STB","R3,")+
+				formatASM("","STW","R0,-(SP)")+
+				formatASM("","ADQ","1,R3")+
+				formatASM("","LDB","R0, (R3)")+
+				formatASM("","CMP","R0,R1")+
+				formatASM("","BNE","LOOP_STACK-$-2")+
+
+
+				formatASM("","LDW","R3, (SP)")+
+				formatASM("","LDW","R1, #48")+
+				formatASM("","SUB","R3,R1,R0")+
+				formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+				formatASM("","LDW","R3,(SP)")+
+				formatASM("","LDQ","10,R10")+
+				formatASM("LOOP_ATOI","NOP","")+
+					formatASM("","LDW","R1, #0")+
+					formatASM("","CMP","R3,R1")+
+					formatASM("","BEQ","LOOP_ATOI_END-$-2")+
+					formatASM("","STW","R0,-(SP)")+
+					formatASM("","LDW","R1, #48")+
+					formatASM("","SUB","R3,R1,R0")+
+					formatASM("","MUL","R0,R10,R0")+
+					formatASM("","LDW","R3,(SP)")+
+					formatASM("","ADD","R0,R3,R0")+
+					formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+					formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
+					formatASM("","LDW","R3,(SP)")+
+					formatASM("","LDW","R1, #10")+
+					formatASM("","MUL","R10,R1,R10")+
+				formatASM("","JEA","@LOOP_ATOI")+
+
+				formatASM("LOOP_ATOI_END","NOP","")+
+				formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack")+
 				formatASM("", "LDW", "SP, BP") +
 				formatASM("", "LDW", "BP, (SP)+") +
-				formatASM("", "RTS", "");
+				formatASM("","RTS","");
+
 
 	}
 

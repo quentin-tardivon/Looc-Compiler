@@ -163,6 +163,10 @@ public class ASMUtils {
                 formatASM("","TRP","#READ_EXC")+
                 formatASM("","LDW","R0, @0x0100")+
                 //addToStack("R0")+
+                //formatASM("","STW","R0, -(SP)", "//stack param for read")+
+                        //formatASM("","STW","R0, (BP)-"+ (OFFSET_ENV+depl))+
+                formatASM("", "JSR", "@atoi_", "")+
+                //formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack params")+
                 formatASM("","STW","R0, (BP)-"+ (OFFSET_ENV+depl)));
         return asm.toString();
     }
