@@ -96,9 +96,9 @@ public class ASMParser {
                 break;
 
             case "FOR":
-                Variable v = (Variable) TDS.getInfo(tree.getChild(0).getText());
-                Affectation a = new Affectation(v, parseExpression(tree.getChild(1), TDS));
-                Comparison c = new LowerOrEqual(new ASMGenerator.expressions.Variable(v), parseExpression(tree.getChild(2), TDS));
+                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
+                Affectation a = new Affectation(vFor, TDS, parseExpression(tree.getChild(1), TDS));
+                Comparison c = new LowerOrEqual(vFor, parseExpression(tree.getChild(2), TDS));
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
                 Tree tmpFor = tree.getChild(3);
                 for (int i = 0; i < tmpFor.getChildCount(); i++) {
@@ -106,7 +106,8 @@ public class ASMParser {
                 }
                 Block forBlock = new Block();
                 forBlock.addAllInstructions(instFor);
-                res.add(new For(new ConditionFor(a, c), forBlock));
+                res.add(new For(new ConditionFor(a, c), forBlock, TDS));
+                break;
 
 
             case "VAR_DEC":
@@ -114,8 +115,9 @@ public class ASMParser {
                 break;
 
             case "AFFECT":
+                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()));
                 Expression right = parseExpression(tree.getChild(1), TDS);
-                res.add(new Affectation( (Variable) TDS.getInfo(tree.getChild(0).getText()), right));
+                res.add(new Affectation(varAffect, TDS, right));
                 break;
 
             case "RETURN":

@@ -1,11 +1,11 @@
 package ASMGenerator.instructions;
 
 import ASMGenerator.ASMUtils;
-import ASMGenerator.ASMWriter;
 import ASMGenerator.Block;
 import ASMGenerator.Generable;
-import ASMGenerator.expressions.Variable;
-import ASMGenerator.expressions.binaries.Comparison;
+import ASMGenerator.expressions.ConstantInteger;
+import ASMGenerator.expressions.binaries.Plus;
+import TDS.SymbolTable;
 
 /**
  * @author Maxime Escamez
@@ -17,14 +17,16 @@ public class For implements Generable {
 
     private Block block;
     private ConditionFor cond;
+    private Affectation a;
 
-    public For(ConditionFor cond,  Block b) {
+    public For(ConditionFor cond, Block b, SymbolTable tds) {
         this.block = b;
         this.cond = cond;
+        this.a = new Affectation(this.cond.getVariable(), tds, new Plus(this.cond.getVariable(), new ConstantInteger(1)));
     }
 
     @Override
     public String generate() {
-        return ASMUtils.generateFor(this.cond, this.block);
+        return ASMUtils.generateFor(this.cond, this.block, this.a);
     }
 }

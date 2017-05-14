@@ -2,8 +2,8 @@ package ASMGenerator.instructions;
 
 import ASMGenerator.Generable;
 import ASMGenerator.Labelable;
+import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.Comparison;
-import TDS.entries.Variable;
 
 
 public class ConditionFor implements Generable, Labelable {
