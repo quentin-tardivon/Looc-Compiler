@@ -62,7 +62,7 @@ public class ASMUtils {
 //                formatASM("", "LDW", "BP, SP") +
                 //formatASM("", "STW", "BP, -(SP)", "// Stack the static link");
                 */
-    return "KJSFJKDFGJKFDGJKDFJKGJKDFGJKD";
+    return label;
     }
 
 

@@ -3,16 +3,31 @@ class Math =
     var pi: int;
     var pi2: int;
 
+    method calcPi() {
+            pi := 3;
+            write "pi value is";
+            write pi;
+            }
+
 )
 
 class MathPi =
 (
     var pi: int;
     var pi2: int;
+    var pi3: int;
+    var pi4: int;
 )
 
 
 var m : Math;
+
+var x: MathPi;
+
 var n: int;
+
 m := new Math;
+
+x := new MathPi;
+
 n := 10;

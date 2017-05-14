@@ -2,6 +2,7 @@ package ASMGenerator;
 
 import TDS.Entry;
 import TDS.SymbolTable;
+import org.antlr.runtime.tree.Tree;
 
 
 public class LoocClass implements Generable {
@@ -33,8 +34,11 @@ public class LoocClass implements Generable {
                 ASMWriter.formatASM("", "LDW", "R0, #" + nbMethods) +
                 ASMWriter.formatASM("", "STW",  "R0, (SC)"+ (this.nbClass + 2), "// count methods of " + this.name + " = " + nbMethods); //TODO change 2
 
-        for(int i = 1; i <= nbMethods; i++) {
-//            Tree t  = this.tree.getChild()
+        for(String key: this.classTDS.getKeyEntries()) {
+			if (this.classTDS.get(key).getName().equals(Entry.METHOD)) {
+				String id = this.name + key;
+				System.out.println(id);
+			}
         }
 
         return asm;
