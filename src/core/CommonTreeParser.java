@@ -143,8 +143,8 @@ public class CommonTreeParser {
 			case "VAR_DEC":
 				Variable var = new Variable(tree.getChild(1).getText(),depl);
 				var.setInit(false);
-				depl+=2;
-				switch(tree.getChild(1).getText()){
+				depl += 2;
+/*				switch(tree.getChild(1).getText()){
 					case "int":
 						depl+=2;
 						break;
@@ -154,7 +154,7 @@ public class CommonTreeParser {
 					default:
 						depl+=2;
 						break;
-				}
+				}*/
 				try {
 					tds.put(tree.getChild(0).getText(), var);
 				}
@@ -302,7 +302,7 @@ public class CommonTreeParser {
 			case "FOR":
 				depl=0;
 				nb = this.counter.getCountFor();
-				String forID = "FOR_" + tds.getImbricationLevel() + 1 + "_" + nb;
+				String forID = EnvironmentCounter.generateID(Entry.FOR, this.counter.incrementFor(), tds.getImbricationLevel() + 1);
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, forID);
 				try {
 					tds.put(forID, new ForLoop(), Entry.FOR);

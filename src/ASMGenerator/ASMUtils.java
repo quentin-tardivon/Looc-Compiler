@@ -205,6 +205,7 @@ public class ASMUtils {
         cond.setBaseLabel("LOOP_" + label);
         cond.setGotoLabel("ENDLOOP_"+label);
         asm.append(cond.generate());
+        asm.append(formatASM("//", "Instructions of for loop", ""));
         asm.append(block.generate());
         asm.append(a.generate());
         asm.append(formatASM("", "JEA", "@LOOP_" + label ,"// For, go back to condition "));
@@ -226,8 +227,7 @@ public class ASMUtils {
     public static String generateStaticLinkLoader(int currentImbricationLevel, int imbricationLevelDeclaration) {
         return formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link") +
                 addToStack("R0") +
-                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC) +
-                unstack(ADDR_SIZE);
+                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC);
     }
 
     public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl, Expression e) {

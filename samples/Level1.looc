@@ -1,10 +1,16 @@
 var n : int;
-n := 1;
 
 {
+    n := 2;
+
     {
-        n :=  3;
+        n := 10;
     }
 }
 
 write n;
+
+/*for n in 1 .. 1 do
+    var tmp : int;
+end
+*/
