@@ -25,6 +25,6 @@ public class MethodCall extends Expression{
 		return ASMUtils.formatASM("", "LDW", "R0, #-" + ((TDS.entries.Variable) this.tds.get(this.nameCaller)).getDepl() + OFFSET_ENV)
 				+ ASMUtils.formatASM("", "STW", "R0, -(SP)") //TODO finir d'empiler l'env là
 				+ ASMUtils.formatASM("", "JSR", "@"+this.tds.getInfo(this.nameCaller).get(Entry.TYPE) + this.nameMeth)
-				+ ASMUtils.formatASM("", "ADQ", "2, SP");
+				+ ASMUtils.formatASM("", "ADI", "SP, SP, #2");
 	}
 }

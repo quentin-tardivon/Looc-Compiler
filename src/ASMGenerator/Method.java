@@ -23,7 +23,8 @@ public class Method extends Block implements Generable {
         for(Generable g: this.instructions) {
             asm.append(g.generate());
         }
-
+		asm.append(ASMUtils.formatASM("", "LDW", "SP, BP")
+				+ ASMUtils.formatASM("", "LDW", "BP, (SP)+"));
         asm.append(ASMUtils.formatASM("", "RTS", ""));
 
         return asm.toString();
