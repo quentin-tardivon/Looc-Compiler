@@ -83,8 +83,8 @@ public class ASMWriter {
 					formatASM("", "LDW", "R0, #0x0d0a") +
 					formatASM("", "STW", "R0, @0x0000") +
 					formatASM("", "LDW", "BP, #NIL") +
-					formatASM("", "STW", "BP, -(SP)") +
-					formatASM("", "LDW", "BP, SP") +
+					//formatASM("", "STW", "BP, -(SP)") +
+					//formatASM("", "LDW", "BP, SP") +
 
 					formatASM("", "LDW","ST, #HEAP_ADRS")+
 					formatASM("", "LDW","BT, #NIL")+
@@ -524,7 +524,6 @@ public class ASMWriter {
 
 	public void generateInstructions(Writer w, ArrayList<Generable> l) throws IOException {
 		for(Generable g: l) {
-			//System.out.println(g.generate());
 			w.write(g.generate());
 		}
 	}

@@ -1,19 +1,27 @@
 package ASMGenerator;
 
-import ASMGenerator.expressions.*;
+import ASMGenerator.expressions.ConstantInteger;
+import ASMGenerator.expressions.ConstantString;
+import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.binaries.*;
 import ASMGenerator.instructions.*;
+import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
 import org.antlr.runtime.tree.Tree;
+import utils.EnvironmentCounter;
 
 import java.util.ArrayList;
 
 
 public class ASMParser {
 
+
 	static int nbClass = 0;
+    private static int countBlock = 0;
+    private static EnvironmentCounter counter = new EnvironmentCounter();
+
 
     public static ArrayList<Generable> parse(Tree tree, SymbolTable TDS, ArrayList<Generable> res) {
         switch(tree.getText()) {
@@ -45,6 +53,17 @@ public class ASMParser {
                 Method m = new Method(TDS.getLink(tree.getChild(0).getText()));
                 m.addAllInstructions(inst);
                 res.add(m);
+                break;
+
+            case "BLOCK":
+                String blockID = EnvironmentCounter.generateID(Entry.ANONYMOUS_BLOC, counter.incrementBlock() ,TDS.getImbricationLevel() + 1);
+                ArrayList<Generable> instBlock = new ArrayList<Generable>();
+                for (int i = 0; i < tree.getChildCount(); i++) {
+                    parse(tree.getChild(i), TDS.getLink(blockID), instBlock);
+                }
+                Block myBlock = new Block();
+                myBlock.addAllInstructions(instBlock);
+                res.add(myBlock);
                 break;
 
             case "BODY":
@@ -82,7 +101,7 @@ public class ASMParser {
 
             case "AFFECT":
                 Expression right = parseExpression(tree.getChild(1), TDS);
-                res.add(new Affectation( (Variable) TDS.get(tree.getChild(0).getText()), right));
+                res.add(new Affectation( (Variable) TDS.getInfo(tree.getChild(0).getText()), right));
                 break;
 
             case "RETURN":
@@ -138,7 +157,8 @@ public class ASMParser {
                     return new ConstantString(node.getText());
                 // variable
                 else
-                    return new ASMGenerator.expressions.Variable((Variable) TDS.get(node.getText()));
+                    return new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(node.getText()));
         }
     }
+
 }

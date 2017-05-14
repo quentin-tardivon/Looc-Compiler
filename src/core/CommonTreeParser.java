@@ -7,6 +7,7 @@ import TDS.entries.Class;
 import exceptions.LoocException;
 import exceptions.MismatchTypeException;
 import org.antlr.runtime.tree.Tree;
+import utils.EnvironmentCounter;
 import utils.Util;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class CommonTreeParser {
 	private int currentLine = 0;
 	private List<LoocException> exceptions;
 	public  static int depl;
+	private EnvironmentCounter counter = new EnvironmentCounter();
 
 	public CommonTreeParser(String filename) {
 		CommonTreeParser.filename = filename;
@@ -202,11 +204,11 @@ public class CommonTreeParser {
 
 			case "BLOCK":
 				depl=0;
-				int nb = tds.getNumberBlock();
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "block" + nb);
+				String blockID = EnvironmentCounter.generateID(Entry.ANONYMOUS_BLOC, this.counter.incrementBlock(), tds.getImbricationLevel() + 1);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, blockID);
 				try {
-					tds.put("block" +nb , new AnonymousBloc(), "Block");
-					tds.putLink("block" + nb, newtds);
+					tds.put(blockID , new AnonymousBloc(), Entry.ANONYMOUS_BLOC);
+					tds.putLink(blockID, newtds);
 				}
 				catch (LoocException e) {
 					this.exceptions.add(e);
@@ -222,12 +224,12 @@ public class CommonTreeParser {
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), tds, rootTDS);
 				}
-				tds.setNumberIf(tds.getNumberIf()+1);
+				//tds.setNumberIf(tds.getNumberIf()+1);
 				break;
 
 			case "THEN":
 				depl=0;
-				nb = tds.getNumberIf();
+				int nb = counter.incrementIf();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "if" + nb);
 				try {
 					tds.put("if" +nb , new If());
@@ -244,7 +246,7 @@ public class CommonTreeParser {
 
 			case "ELSE":
 				depl=0;
-				nb = tds.getNumberIf();
+				nb = this.counter.incrementIf();
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "else" + nb);
 				try {
 					tds.put("else" +nb , new Else());
@@ -297,11 +299,12 @@ public class CommonTreeParser {
 
 			case "FOR":
 				depl=0;
-				nb = tds.getNumberBlock();
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "for" + nb);
+				nb = this.counter.getCountFor();
+				String forID = "FOR_" + tds.getImbricationLevel() + 1 + "_" + nb;
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, forID);
 				try {
-					tds.put("for" +nb , new ForLoop(), "For");
-					tds.putLink("for" + nb, newtds);
+					tds.put(forID, new ForLoop(), Entry.FOR);
+					tds.putLink(forID, newtds);
 				}
 				catch (LoocException e) {
 					this.exceptions.add(e);
@@ -384,20 +387,5 @@ public class CommonTreeParser {
 	public List<LoocException> getExceptions() {
 		return this.exceptions;
 	}
-
-	/**
-	 * This method must:
-	 *  - Check that the variable is correctly declared
-	 *  - The type of the variable corresponds to the right node's type
-	 *  - If the expression is the creation of object (new), check if the class exists
-	 *
-	 * @param tree
-	 * @param tds
-	 * @throws Exception
-	 */
-
-
-
-
 
 }

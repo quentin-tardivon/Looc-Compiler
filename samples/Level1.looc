@@ -1,20 +1,11 @@
-var n : int;
+//var n : int;
 var total : int;
-var i : int;
+//var i : int;
 
-n := 10;
+/*n := 10;
 total := 1;
-i := 2;
+i := 2;*/
 
-if n == 20 then
-    write 100 * 3;
-    else
-    write 200 * 2;
-fi
-
-/*for i in 0 .. n
-do
-	total := total + i * i;
-end*/
-
-write total;
+total := 1;
+total := 3;
+write total + 3;
