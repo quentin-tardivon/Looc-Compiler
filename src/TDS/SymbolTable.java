@@ -1,8 +1,11 @@
 package TDS;
 
 import core.CommonTreeParser;
+import core.Keywords;
 import exceptions.SymbolAlreadyDeclaredException;
+import utils.EnvironmentCounter;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -32,15 +35,17 @@ public class SymbolTable {
 	/** Links between symbol tables (used to access symbol table of a function for example) */
 	private final HashMap<String, SymbolTable> links;
 	/** Number of for statement in this block **/
-	private int numberFor = 0;
+	/*private  int numberFor = 0;
 	/** Number of if statement in this block **/
-	private int numberIf = 0;
+	//private int numberIf = 0;
 	/** Number of block statement statement in this block **/
-	private int numberBlock = 0;
+	//private int numberBlock = 0;
 
+//	private EnvironmentCounter counter = new EnvironmentCounter();
 	private final String name;
 
 	private HashMap<String, SymbolTable> classList;
+	private static int blockID;
 
 
 	/**
@@ -96,14 +101,14 @@ public class SymbolTable {
 			throw new SymbolAlreadyDeclaredException("", null, symbol);
 		}
 		else {
-			if (type.equals("For")) {
+		/*	if (type.equals(Entry.FOR)) {
 				numberFor += 1;
 			}
 			else {
 				numberBlock +=1;
 			}
 
-
+*/
 			return this.entries.put(symbol, entry);
 		}
 	}
@@ -188,34 +193,31 @@ public class SymbolTable {
 	 *
 	 * @return The number of for statement
 	 */
-	public int getNumberFor() {
+/*	public int getNumberFor() {
 		return numberFor;
 	}
-
+*/
 	/**
 	 *
 	 * @return The number of if statement
 	 */
-	public int getNumberIf() {
+/*	public int getNumberIf() {
 		return numberIf;
-	}
+	}*/
 
 	/**
 	 *
 	 * @return The number of block
 	 */
-	public int getNumberBlock() {
+/*	public int getNumberBlock() {
 		return numberBlock;
 	}
+*/
 
-	/**
-	 *
-	 * @param numberIf
-	 */
-	public void setNumberIf(int numberIf) {
+/*	public void setNumberIf(int numberIf) {
 		this.numberIf = numberIf;
 	}
-
+*/
 	public String getName() {
 		return this.name;
 	}
@@ -265,12 +267,10 @@ public class SymbolTable {
 		return res;
 	}
 
-
 	public SymbolTable putClass(String symbol, SymbolTable tds) {  return this.classList.put(symbol, tds);  }
 
 	public SymbolTable getClass(String symbol) {
 		return this.classList.get(symbol);
 	}
-
 
 }
