@@ -85,6 +85,10 @@ public class ASMWriter {
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
 					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+					/*formatASM("", "ADQ", "-2, SP") +
+					formatASM("", "LDW", "BP, SP") +
+					formatASM("", "STW", "SP, (BP)")*/
+
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
 
@@ -457,8 +461,14 @@ public class ASMWriter {
 
 	public String generateFindVariableStatic() {
 		return ASMUtils.formatASM("\n\n//", "Function for finding variable with static link", "") +
-				ASMUtils.stackStaticAndDynamic(BUILTIN_FIND_STATIC) +
-				ASMUtils.loadParameter("R0", 1);
-
+				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
+				ASMUtils.loadParameter("R0", 1) +
+				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +
+				ASMUtils.formatASM("", "LDW", "R1, #1") +
+				ASMUtils.formatASM("", "SUB", "R0, R1, R0") +
+				ASMUtils.formatASM("", "LDW", "R1, #0") +
+				ASMUtils.formatASM("", "CMP", "R0, R1") +
+				ASMUtils.formatASM( "", "BNE", "STATIC_LOOP-$-2") +
+				ASMUtils.formatASM("", "RTS", "");
 	}
 }

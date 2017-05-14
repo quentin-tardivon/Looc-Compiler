@@ -25,7 +25,7 @@ public class Affectation implements Generable {
         if(this.localTDS.contains(varEntry))
             return ASMUtils.generateAffection(this.v.getVariableEntry().getDepl(), this.e);
         else
-            return ASMUtils.generateAffectionWithStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(varEntry).getImbricationLevel());
+            return ASMUtils.generateAffectionWithStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(varEntry).getImbricationLevel(), varEntry.getDepl(), this.e);
     }
 
     public Variable getVariable() {

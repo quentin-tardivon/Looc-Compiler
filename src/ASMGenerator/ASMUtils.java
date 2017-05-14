@@ -1,11 +1,8 @@
 package ASMGenerator;
 
 
-import ASMGenerator.expressions.ConstantInteger;
 import ASMGenerator.expressions.Expression;
-import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.Comparison;
-import ASMGenerator.expressions.binaries.Plus;
 import ASMGenerator.instructions.Affectation;
 import ASMGenerator.instructions.ConditionFor;
 import TDS.Entry;
@@ -19,7 +16,7 @@ public class ASMUtils {
     public static final int OFFSET_ENV = ADDR_SIZE * 2;
 
     public static final String ADD = "ADD";
-    public static final String DIFF = "DIFF";
+    public static final String DIFF = "SUB";
     public static final String MUL = "MUL";
     public static final String DIV = "DIV";
     public static final String LT = "BGE";
@@ -223,15 +220,19 @@ public class ASMUtils {
     }
 
     public static String loadParameter(String reg, int numParameter) {
-        return formatASM("", "LDW", "R0, (BP)" + (ADDR_SIZE + ADDR_SIZE), "// Get parameter");
+        return formatASM("", "LDW", "R0, (SP)" + ADDR_SIZE, "// Get parameter");
     }
 
-    public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration) {
+    public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl, Expression e) {
         System.out.println(currentImbricationLevel + " - " + imbricationLevelDeclaration);
         StringBuffer asm = new StringBuffer();
         asm.append(formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link"));
         asm.append(addToStack("R0"));
         asm.append(formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC));
+        asm.append(unstack(ADDR_SIZE));
+        asm.append(e.generate());
+        asm.append(removeFromStack("R0"));
+        asm.append(formatASM("", "STW", "R0, (R6)-" + (ASMUtils.OFFSET_ENV + depl), "// Affection: move = " + depl));
         return asm.toString();
     }
 }
