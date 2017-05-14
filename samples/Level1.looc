@@ -1,16 +1,10 @@
 var n : int;
+var total: int;
 
-{
-    n := 2;
 
-    {
-        n := 10;
-    }
-}
+for n in 1 .. 3 do
+    total := total + n;
+end
 
 write n;
-
-/*for n in 1 .. 1 do
-    var tmp : int;
-end
-*/
+write total;

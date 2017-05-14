@@ -18,8 +18,19 @@ public abstract class Comparison extends Binary implements Labelable {
     }
 
     @Override
+    public String generate() {
+        StringBuffer asm = new StringBuffer();
+        asm.append(ASMUtils.formatASM(this.baselabel, "", ""));
+        asm.append(this.left.generate());
+        asm.append(this.right.generate());
+        asm.append(this.generateOperation());
+
+        return asm.toString();
+    }
+
+    @Override
     public String generateOperation() {
-        return ASMUtils.generateComparison(this.operator, this.gotoLabel, this.baselabel);
+        return ASMUtils.generateComparison(this.operator, this.gotoLabel);
     }
 
     public void setBaseLabel(String l) {

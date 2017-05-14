@@ -33,6 +33,5 @@ public class ConditionFor implements Generable, Labelable {
     @Override
     public void setGotoLabel(String l) {
         this.condition.setGotoLabel(l);
-
     }
 }

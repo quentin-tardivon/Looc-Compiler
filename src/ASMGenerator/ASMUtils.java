@@ -153,10 +153,10 @@ public class ASMUtils {
                 addToStack("R3");
     }
 
-    public static String generateComparison(String operator, String gotoLabel, String labelBase) {
+    public static String generateComparison(String operator, String gotoLabel) {
         return removeFromStack("R2") +
                 removeFromStack("R1") +
-                formatASM(labelBase, "CMP", "R1, R2") +
+                formatASM("", "CMP", "R1, R2") +
                 formatASM("", operator, gotoLabel+"-$-2", "// X " + getComparisonOperator(operator) + " Y");
     }
 
@@ -168,7 +168,6 @@ public class ASMUtils {
         StringBuffer asm = new StringBuffer();
         int label = generateLabel();
         c.setGotoLabel("ELSE_" + label);
-
         asm.append(c.generate());
         asm.append(b.generate());
         asm.append(formatASM("", "JEA", "@FI_" + label));
@@ -207,6 +206,7 @@ public class ASMUtils {
         asm.append(cond.generate());
         asm.append(formatASM("//", "Instructions of for loop", ""));
         asm.append(block.generate());
+        asm.append(formatASM("//", "Increment counter", ""));
         asm.append(a.generate());
         asm.append(formatASM("", "JEA", "@LOOP_" + label ,"// For, go back to condition "));
         asm.append(formatASM("ENDLOOP_" + label, "", ""));
@@ -227,7 +227,8 @@ public class ASMUtils {
     public static String generateStaticLinkLoader(int currentImbricationLevel, int imbricationLevelDeclaration) {
         return formatASM("", "LDW", "R0, #" + (currentImbricationLevel - imbricationLevelDeclaration), "// Find @variable with static link") +
                 addToStack("R0") +
-                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC);
+                formatASM("", "JSR", "@" + ASMWriter.BUILTIN_FIND_STATIC) +
+                ASMUtils.unstack(ASMUtils.ADDR_SIZE);
     }
 
     public static String generateAffectionWithStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl, Expression e) {
