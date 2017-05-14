@@ -2,6 +2,7 @@ package ASMGenerator.expressions;
 
 
 import ASMGenerator.ASMUtils;
+import core.Keywords;
 
 public class ConstantString extends Expression {
 
@@ -13,5 +14,10 @@ public class ConstantString extends Expression {
     @Override
     public String generate() {
         return ASMUtils.generateConstantString(this.s);
+    }
+
+    @Override
+    public String getType() {
+        return Keywords.STRING;
     }
 }

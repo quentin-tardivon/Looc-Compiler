@@ -89,6 +89,10 @@ public class ASMParser {
                 res.add(new Write(parseExpression(tree.getChild(0), TDS)));
                 break;
 
+            case "READ":
+                res.add(new Read((Variable) TDS.get(tree.getChild(0).getText())));
+                break;
+
             default:
                 System.err.println(tree.getText() + " is not supported [line "+ tree.getLine() + "]");
                 break;

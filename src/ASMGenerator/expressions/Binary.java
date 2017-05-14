@@ -1,5 +1,7 @@
 package ASMGenerator.expressions;
 
+import core.Keywords;
+
 /**
  * Created by mcdostone on 13/05/17.
  */
@@ -24,5 +26,10 @@ public abstract class Binary extends Expression {
     }
 
     public abstract String generateOperation();
+
+    @Override
+    public String getType() {
+        return Keywords.INTEGER;
+    }
 
 }

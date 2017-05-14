@@ -1,13 +1,11 @@
-//var n : int;
-//var total : int;
-var band: string;
+var z : string;
+var a : int;
 
-band := "le";
+a := 4 ;
+z := "MOGWAI";
 
-//total := 12;
-//n := total * 2;
-
-write -8 + 2 * 4;
+read a;
+write a;
 
 
 

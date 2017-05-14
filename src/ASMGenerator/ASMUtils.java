@@ -4,6 +4,7 @@ package ASMGenerator;
 import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.binaries.Comparison;
 import TDS.Entry;
+import core.Keywords;
 
 public class ASMUtils {
 
@@ -79,7 +80,7 @@ public class ASMUtils {
                     case "int":
                         return INT_SIZE;
                     default:
-                        return 0;
+                        return ADDR_SIZE;
                 }
             default:
                 return 0;
@@ -128,11 +129,36 @@ public class ASMUtils {
     }
 
     public static String generateWrite(Expression e) {
-        return e.generate() +
-                removeFromStack("R0")+
-                formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE") +
-                formatASM("", "JSR", "@itoa_", "") +
-                formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack params");
+        StringBuffer asm = new StringBuffer();
+        asm.append(e.generate());
+        asm.append(removeFromStack("R0"));
+        asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
+
+        switch (e.getType()) {
+            case Keywords.STRING :
+                asm.append(formatASM("", "TRP", "#WRITE_EXC"));
+                break;
+            case Keywords.INTEGER:
+                asm.append(
+                    formatASM("", "JSR", "@itoa_", "") +
+                    formatASM("", "ADI", "SP, SP, #" + INT_SIZE, "// Unstack params"));
+                break;
+            default:
+                System.err.println(e.getType() + " is not supported for write");
+                break;
+        }
+        return asm.toString();
+    }
+
+    public static  String generateRead(int depl) {
+        StringBuffer asm = new StringBuffer();
+        asm.append(formatASM("","LDW","R0, #0x0100" )+
+                //formatASM("","LDW","R0, #0x2000")+
+                formatASM("","TRP","#READ_EXC")+
+                formatASM("","LDW","R0, @0x0100")+
+                //addToStack("R0")+
+                formatASM("","STW","R0, (BP)-"+ (OFFSET_ENV+depl)));
+        return asm.toString();
     }
 
     public static String generateOperator(String operator) {

@@ -90,7 +90,15 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, #NIL")+
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
-					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")+
+
+					formatASM("ITOA_P", "EQU", "40")+
+					formatASM("ITOA_I", "EQU", "4") +
+					formatASM("ASCII_MINUS", "EQU", "45") +
+					formatASM("ASCII_PLUS", "EQU", "43") +
+					formatASM("ASCII_SP", "EQU", "32") +
+					formatASM("ASCII_0", "EQU", "48") +
+					formatASM("ASCII_A", "EQU", "65")
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
 
@@ -391,13 +399,6 @@ public class ASMWriter {
 
 	private String itoaDef() {
 		return formatASM("\n\n\n\n// ------------- I_TO_A FUNCT", "", "\n") +
-				formatASM("ITOA_P", "EQU", "40") +
-				formatASM("ITOA_I", "EQU", "4") +
-				formatASM("ASCII_MINUS", "EQU", "45") +
-				formatASM("ASCII_PLUS", "EQU", "43") +
-				formatASM("ASCII_SP", "EQU", "32") +
-				formatASM("ASCII_0", "EQU", "48") +
-				formatASM("ASCII_A", "EQU", "65") +
 				formatASM("itoa_", "STW", "BP, -(SP)") +
 				formatASM("", "LDW", "BP, SP") +
 				formatASM("", "LDW", "R0, (BP)ITOA_I") +
@@ -447,6 +448,59 @@ public class ASMWriter {
 				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("", "RTS", "");
 
+
+	}
+
+	private String atoiDef(){
+		return formatASM("\n\n\n\n// ------------- A_TO_I FUNCT", "", "\n")+
+				formatASM("atoi_", "STW", "BP, -(SP)") +
+				formatASM("", "LDW", "BP, SP") +
+				formatASM("", "LDW", "R0, (BP)ITOA_I") +
+				formatASM("", "LDW", "R1, #10") +
+				formatASM("", "LDQ", "ASCII_SP, R3") +
+				formatASM("", "LDQ", "10, WR") +
+				formatASM("", "CMP", "R1, WR") +
+				formatASM("", "BNE", "NOSIGN-$-2") +
+				formatASM("", "LDQ", "ASCII_PLUS, R3") +
+				formatASM("", "TST", "R0") +
+				formatASM("", "BGE", "POSIT-$-2") +
+				formatASM("", "NEG", "R0, R0") +
+				formatASM("", "LDQ", "ASCII_MINUS, R3") +
+				formatASM("POSIT", "NOP", "") +
+				formatASM("NOSIGN", "LDW", "R2, R0") +
+				formatASM("CNVLOOP", "LDW", "R0, R2") +
+				formatASM("", "SRL", "R1, R1") +
+				formatASM("", "ANI", "R0, R4, #1") +
+				formatASM("", "SRL", "R0, R0") +
+				formatASM("", "DIV", "R0, R1, R2") +
+				formatASM("", "SHL", "R0, R0") +
+				formatASM("", "ADD", "R0, R4, R0") +
+				formatASM("", "SHL", "R1, R1") +
+				formatASM("", "ADQ", "-10, R0") +
+				formatASM("", "BGE", "LETTER-$-2") +
+				formatASM("", "ADQ", "10+ASCII_0, R0") +
+				formatASM("", "BMP", "STKCHR-$-2") +
+				formatASM("LETTER", "ADQ", "ASCII_A, R0") +
+				formatASM("STKCHR", "STW", "R0, -(SP)") +
+				formatASM("", "TST", "R2") +
+				formatASM("", "BNE", "CNVLOOP-$-2", "// Les caractères sont empilés gauche en haut, droite en bas") +
+
+				formatASM("", "LDW", "R1, #ITOA_P") + //20 par défaut pour l'instant
+				formatASM("", "STB", "R3, (R1)+") +
+				formatASM("CPYLOOP", "LDW", "R0, (SP)+") +
+				formatASM("", "STB", "R0, (R1)+") +
+				formatASM("", "CMP", "SP, BP") +
+				formatASM("", "BNE", "CPYLOOP-$-2") +
+				formatASM("", "LDQ", "NUL, R0") +
+				formatASM("", "STB", "R0, (R1)+") +
+
+				formatASM("", "LDW", "R0, #ITOA_P", "// Pointeur sur chaine de caract") +
+				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
+				formatASM("", "TRP", "#WRITE_EXC") +
+				formatASM("", "LDW", "SP, BP") +
+				formatASM("", "LDW", "BP, (SP)+") +
+				formatASM("", "RTS", "");
 
 	}
 
