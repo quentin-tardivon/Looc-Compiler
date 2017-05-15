@@ -229,7 +229,7 @@ public class CommonTreeParser {
 					this.exceptions.add(e);
 					e.printStackTrace();
 				}
-				for (int j = 1; j < tree.getChildCount(); j++) {
+				for (int j = 0; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
 				break;

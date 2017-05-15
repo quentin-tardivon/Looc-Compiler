@@ -1,14 +1,17 @@
 var n : int;
-var total: int;
 var borne: int;
-borne := 3;
-total := -1;
+var total : int;
+total := 0;
 n := 2;
+borne := 3;
 
 for n in 1 .. borne do
-    borne := borne - 1;
+    write n;
+    total := total + n;
 end
 
-write n;
+if n == 4 then
+    write  n;
+fi
+
 write total;
-write borne;
