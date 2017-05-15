@@ -1,10 +1,13 @@
 var z : string;
 var a : int;
 
-a := 4 ;
+a := 4;
 z := "MOGWA";
 
-read a;
+
+{
+    a := 6;
+}
 write a;
 write z;
 

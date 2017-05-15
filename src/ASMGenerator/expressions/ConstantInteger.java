@@ -21,4 +21,8 @@ public class ConstantInteger extends Expression {
     public String getType() {
         return Keywords.INTEGER;
     }
+
+    public String toString() {
+        return Integer.toString(this.v);
+    }
 }

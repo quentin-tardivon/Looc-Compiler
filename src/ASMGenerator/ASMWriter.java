@@ -42,50 +42,25 @@ public class ASMWriter {
 	public void generateASMFile(Tree tree, SymbolTable TDS) {
 		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 				new FileOutputStream(this.output), "utf-8"))) {
-			//Début du programme
 
 			writer.write(formatASM("// ------------- ASM FOR LOOC", "", "\n") +
 					formatASM("SP", "EQU", "R15") +
 					formatASM("WR", "EQU", "R14") +
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
-
 					formatASM("BT", "EQU", "R11") +
-					formatASM("SC", "EQU", "R7") +
+					formatASM("SC", "EQU", "R7\n") +
 
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
-					formatASM("WRITE_EXC", "EQU", "66\n") +
+					formatASM("WRITE_EXC", "EQU", "66") +
 					formatASM("NUL", "EQU", "0") +
 					formatASM("NULL", "EQU", "0") +
-					formatASM("NIL", "EQU", "0\n") +
-
-
+					formatASM("NIL", "EQU", "0") +
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
 					formatASM("HEAP_ADRS", "EQU", "0xF000") +
-					formatASM("LOAD_ADRS", "EQU", "0xFA00\n") +
+					formatASM("LOAD_ADRS", "EQU", "0xFA00") +
 					formatASM("CLASS_ADRS","EQU","0xFD00")+
-
-
-
-					formatASM("", "ORG", "LOAD_ADRS") +
-					formatASM("", "START", "main_") +
-					//formatASM("CHAR","STRING","\"Chienne de caractere\"")+
-
-
-					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
-					formatASM("", "LDW", "R0, #0x0d0a") +
-					formatASM("", "STW", "R0, @0x0000") +
-					formatASM("", "LDW", "BP, #NIL") +
-					//formatASM("", "STW", "BP, -(SP)") +
-					//formatASM("", "LDW", "BP, SP") +
-
-					formatASM("", "LDW","ST, #HEAP_ADRS")+
-					formatASM("", "LDW","BT, #NIL")+
-					formatASM("", "STW","BT, -(ST)")+
-					formatASM("", "LDW","BT, ST") +
-
-					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")+
 					formatASM("CONVERT_BUFF", "EQU", "40")+
 					formatASM("ITOA_I", "EQU", "4") +
 					formatASM("ATOI_A", "EQU", "10")+
@@ -93,15 +68,33 @@ public class ASMWriter {
 					formatASM("ASCII_PLUS", "EQU", "43") +
 					formatASM("ASCII_SP", "EQU", "32") +
 					formatASM("ASCII_0", "EQU", "48") +
-					formatASM("ASCII_A", "EQU", "65")
+					formatASM("ASCII_A", "EQU", "65\n")+
 
+					formatASM("", "ORG", "LOAD_ADRS") +
+					formatASM("", "START", "main_\n") +
+
+					formatASM("main_", "LDW", "SP, #STACK_ADRS") +
+					formatASM("", "LDW", "R0, #0x0d0a") +
+					formatASM("", "STW", "R0, @0x0000") +
+					formatASM("", "LDW", "BP, #NIL") +
+					formatASM("", "LDW","ST, #HEAP_ADRS")+
+					formatASM("", "LDW","BT, #NIL")+
+					formatASM("", "STW","BT, -(ST)")+
+					formatASM("", "LDW","BT, ST") +
+					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+			);
+
+			writer.write(formatASM("\n\n//", "---------------------------------------------", "")+
+					formatASM("//", "|        Beginning of program	            |", "") +
+					formatASM("//", "|        Looc compiler V0.0.2 beta          |", "") +
+					formatASM("//", "|        The program starts right now !     |", "") +
+					formatASM("//", "---------------------------------------------", "\n")
 			);
 			writer.write(ASMUtils.stackStaticAndDynamic());
-
 			ArrayList<Generable> meths = this.constructASM(tree, writer, TDS);
 
-			writer.write(formatASM("\n\n\n\n// ------------- FIN DU PGM", "", "\n") +
-					formatASM("", "LDW SP, BP", "") +
+			writer.write(ASMUtils.generateComment("End of program", "Go back to @main"));
+			writer.write(formatASM("", "LDW SP, BP", "") +
 					formatASM("", "LDW BP, (SP)+", "") +
 					formatASM("", "TRP #EXIT_EXC", "") +
 					formatASM("", "JEA @main_", "")
@@ -120,7 +113,6 @@ public class ASMWriter {
 
 
 	private ArrayList<Generable> constructASM(Tree tree, Writer writer, SymbolTable TDS) throws IOException {
-		int cpt = 0;
 		ArrayList<Generable> meths = new ArrayList<Generable>();
 		switch (tree.getText()) {
 			case "ROOT":
@@ -128,76 +120,16 @@ public class ASMWriter {
 					ArrayList<Generable> l = new ArrayList<Generable>();
 					ASMParser.parse(tree.getChild(i), TDS, l, meths);
 					generateInstructions(writer, l);
-					//writer.write("\n\n");
-					//System.exit(0);
-					//constructASM(tree.getChild(i), writer, TDS);
 				}
 				break;
-
-
-
-
-			/*case "IF":
-				CPTIF++;
-				int leftValue;
-				int rightValue;
-				boolean leftValueisRaw = true;
-				boolean rightValueisRaw = true;
-				try {
-					leftValue = Integer.parseInt(tree.getChild(0).getChild(0).getText());
-				} catch (NumberFormatException e) {
-					leftValue = ((Variable) TDS.get(tree.getChild(0).getChild(0).getText())).getDepl();
-					leftValueisRaw = false;
-				}
-
-				try {
-					rightValue = Integer.parseInt(tree.getChild(0).getChild(1).getText());
-				} catch (NumberFormatException e) {
-					rightValue = ((Variable) TDS.get(tree.getChild(0).getChild(1).getText())).getDepl();
-					rightValueisRaw = false;
-				}
-
-				ifCondition(leftValue, rightValue, tree.getChild(0).getText(), rightValueisRaw, leftValueisRaw, tree, writer, TDS);
-				break;
-
-			case "THEN":
-				for (int i = 0; i < tree.getChildCount(); i++) {
-					constructASM(tree.getChild(i), writer, TDS);
-				}
-				break;
-
-			case "ELSE":
-				for (int i = 0; i < tree.getChildCount(); i++) {
-					constructASM(tree.getChild(i), writer, TDS);
-				}
-				break;
-				*/
-
-			/*default:
-				if (tree.getText().matches("[-+]?\\d*\\.?\\d+")) { //Cas d'entier
-					writer.write(formatASM("", "LDW", "R1, #" + tree.getText()));
-					writer.write(addToStack("R1"));
-					System.out.println(tree.getText() + "\n");
-				} else { //Cas de variable
-					System.out.println("Load var" + ((Variable) TDS.get(tree.getText())).getDepl());
-					writer.write(loadVar(((Variable) TDS.get(tree.getText())).getDepl()));
-					writer.write(addToStack("R1"));
-					System.out.println(tree.getText() + "\n");
-				}
-*/
 		}
 		return meths;
+
 	}
-
-
-
-	private String getVar(String reg, int depl) {
-		return formatASM("", "LDW " + "" + reg + ", (BP)-" + depl, "");
-	}
-
 
 	private String itoaDef() {
-		return formatASM("\n\n\n\n// ------------- I_TO_A FUNCT", "", "\n") +
+		return 	formatASM("\n\n", "", "") +
+				ASMUtils.generateComment("I_TO_A builtin:", "Convert an integer into ASCII") +
 				formatASM("itoa_", "STW", "BP, -(SP)") +
 				formatASM("", "LDW", "BP, SP") +
 				formatASM("", "LDW", "R0, (BP)ITOA_I") +
@@ -251,7 +183,8 @@ public class ASMWriter {
 	}
 
 	private String atoiDef(){
-		return formatASM("\n\n\n\n// ------------- A_TO_I FUNCT", "", "\n")+
+		return formatASM("\n\n", "", "") +
+				ASMUtils.generateComment("A_TO_I builtin:", "Convert ASCII chars into integer") +
 				formatASM("atoi_", "STW", "BP, -(SP)") +
 				formatASM("", "LDW", "BP, SP") +
 				formatASM("", "LDW", "R0, (BP)ITOA_I") +
@@ -311,7 +244,8 @@ public class ASMWriter {
 	}
 
 	public String generateFindVariableStatic() {
-		return ASMUtils.formatASM("\n\n//", "Function for finding variable with static link", "") +
+		return formatASM("\n\n", "", "") +
+				ASMUtils.generateComment(BUILTIN_FIND_STATIC + " builtin:", "Use static links to load", "variable not declared in", "the current environment") +
 				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
 				ASMUtils.loadParameter("R0", 1) +
 				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +

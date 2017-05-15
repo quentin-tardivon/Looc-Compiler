@@ -8,6 +8,6 @@ import ASMGenerator.expressions.Expression;
 public class Diff extends Operation {
 
     public Diff(Expression left, Expression right) {
-        super(left, right, ASMUtils.DIFF);
+        super(left, right, ASMUtils.DIFF, "-");
     }
 }

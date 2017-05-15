@@ -18,12 +18,12 @@ public class EntryFactory {
     public static Class createInheritClass(String cls, String inherit) {  return new Class(cls, inherit);  }
 
     public static Variable createVariable(String type) {
-        return new Variable(type);
+        return new Variable(type, "X");
     }
     public static Variable createStringVariable() {
-        return new Variable(Keywords.STRING);
+        return new Variable(Keywords.STRING, "X");
     }
-    public static Variable createIntVariable() {  return new Variable(Keywords.INTEGER); }
+    public static Variable createIntVariable() {  return new Variable(Keywords.INTEGER, "X"); }
 
     public static Method createMethod() {  return new Method(); }
     public static Method createMethodReturn(String type) {  return new Method(type); }

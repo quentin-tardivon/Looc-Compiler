@@ -1,46 +1,32 @@
-class Animal = (
+class Fibonacci = (
 
-	var name : string;
+	var current : int;
+	var previous: int;
+	var generation: int;
 
-	method setName(n : string, test : string) {
-		name := n;
+	method init() {
+		current := 1 + 2 * 4 + (- (1+123));
+		previous := 0;
+		generation := 1;
 	}
 
-	method whoami() {
-		write "My name is ";
-		write name;
-	}
-)
-
-class Dog inherit Animal = (
-
-	method iLVersusTRS(canadiens: int, irlandais: int): int {
-		return (canadiens < irlandais);
-	}
-	method whoami() {
-		do super.setName("Rox", "Les TRS sont des gros nazes");
-		write "My name is ";
-		write name;
-		write this.iLVersusTRS(42, 999);
-		write ". And I am a dog.";
+	method nextGen() {
+		var temp : int;
+		temp := current;
+    current := current + previous;
+		previous := temp;
+		generation := generation + 1;
 	}
 
-
-)
-
-class Cat inherit Animal =
-(
-	method whoami () {
-		do super.whoami();
-		write ". And I am a cat.";
+	method nextGenAndGet() : int {
+		do this.nextGen();
+		return (current);
 	}
 )
 
-var a1 : Animal;
-var a2 : Animal;
-a1 := new Dog;
-//do 4+3;
-a2 := new Cat;
-do a2.setName("foo", "Et oui Jamy !");
-do a1.whoami();
-do a2.whoami();
+var f : Fibonacci;
+f := new Fibonacci;
+do f.init();
+do f.nextGen();
+do f.nextGen();
+write f.nextGenAndGet() + 4;

@@ -8,7 +8,7 @@ import ASMGenerator.expressions.Expression;
 public class Div extends Operation {
 
     public Div(Expression left, Expression right) {
-        super(left, right, ASMUtils.DIV);
+        super(left, right, ASMUtils.DIV, "/");
     }
 
 }

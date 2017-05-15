@@ -39,12 +39,7 @@ public class Sandbox {
         CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
         treeParser.parseCommonTreeParser(tree);
 	      SymbolTable tds = new SymbolTable();
-
 	    treeParser.constructTDS(tree, tds, tds);
-
-
-//	    System.out.println(tds.toString());
-
         ASMWriter writer = new ASMWriter("./samples/asmSamples/" + f.getName() + ".asm");
         writer.generateASMFile(tree, tds);
     }

@@ -2,7 +2,8 @@ package ASMGenerator.instructions;
 
 import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
-import TDS.entries.Variable;
+import ASMGenerator.expressions.Variable;
+import TDS.SymbolTable;
 
 /**
  * Created by tld on 14/05/2017.
@@ -10,13 +11,14 @@ import TDS.entries.Variable;
 public class Read implements Generable{
 
     private Variable v;
-
-    public Read(Variable v){
-        this.v=v;
+    private SymbolTable TDS;
+    public Read(Variable variable, SymbolTable TDS) {
+        this.v = variable;
+        this.TDS = TDS;
     }
 
     @Override
     public String generate() {
-        return ASMUtils.generateRead(this.v.getDepl());
+        return ASMUtils.generateRead(this.v.getVariableEntry(), this.TDS);
     }
 }

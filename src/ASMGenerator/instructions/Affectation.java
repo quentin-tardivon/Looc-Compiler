@@ -20,12 +20,15 @@ public class Affectation implements Generable {
 
     @Override
     public String generate() {
-        TDS.entries.Variable varEntry = this.v.getVariableEntry();
+        return ASMUtils.generateAffection(this.v, this.localTDS, this.e);
+        /*TDS.entries.Variable varEntry = this.v.getVariableEntry();
+        ASMUtils.generateAffection(this.v, localTDS);
 
         if(this.localTDS.contains(varEntry))
-            return ASMUtils.generateAffection(this.v.getVariableEntry().getDepl(), this.e);
+            return ASMUtils.generateAffection(this.v, this.e);
         else
             return ASMUtils.generateAffectionWithStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(varEntry).getImbricationLevel(), varEntry.getDepl(), this.e);
+           */
     }
 
     public Variable getVariable() {

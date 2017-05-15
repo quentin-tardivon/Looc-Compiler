@@ -20,4 +20,8 @@ public class ConstantString extends Expression {
     public String getType() {
         return Keywords.STRING;
     }
+
+    public String toString() {
+        return "'" + this.s + "'";
+    }
 }

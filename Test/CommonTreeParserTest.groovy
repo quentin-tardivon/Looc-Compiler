@@ -26,7 +26,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel2() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level2.looc")
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3.looc")
 
         assertEquals(treeParser.tds.findClass("Math").getLink("pow").get("retval"), EntryFactory.createIntVariable())
         assertEquals(treeParser.tds.get("m"), EntryFactory.createVariable("Math"))
@@ -47,7 +47,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel3() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3.looc");
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level4.looc");
 
         assertEquals(treeParser.tds.get("Animal"), EntryFactory.createClass("Animal"))
         assertEquals(treeParser.tds.findClass("Animal").get("name"), EntryFactory.createStringVariable())
@@ -66,7 +66,7 @@ class CommonTreeParserTest extends GroovyTestCase {
 
 
     void testConstructTDSLevel3AnonymousBlock() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level3AnonymousBlock.looc")
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level4AnonymousBlock.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
         assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntVariable())
@@ -86,7 +86,7 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel4() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level4.looc")
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level5.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
         assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntVariable())
@@ -102,17 +102,17 @@ class CommonTreeParserTest extends GroovyTestCase {
     }
 
     void testConstructTDSLevel5() {
-        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level5.looc")
-        System.out.println(treeParser.tds)
-    }
-
-    void testConstructTDSLevel6() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level6.looc")
         System.out.println(treeParser.tds)
     }
 
-    void testConstructTDSLevel7() {
+    void testConstructTDSLevel6() {
         treeParser = CommonTreeParserFactory.createFromFile("./samples/Level7.looc")
+        System.out.println(treeParser.tds)
+    }
+
+    void testConstructTDSLevel7() {
+        treeParser = CommonTreeParserFactory.createFromFile("./samples/Level8.looc")
         System.out.println(treeParser.tds)
     }
 

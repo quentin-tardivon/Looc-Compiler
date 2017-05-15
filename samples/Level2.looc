@@ -1,33 +1,14 @@
-class Math =
-(
-    var pi: int;
-    var pi2: int;
+var n : int;
+var total: int;
+var borne: int;
+borne := 3;
+total := -1;
+n := 2;
 
-    method calcPi() {
-            write 34;
-            }
+for n in 1 .. borne do
+    borne := borne - 1;
+end
 
-)
-
-class MathPi =
-(
-    var pi: int;
-    var pi2: int;
-    var pi3: int;
-    var pi4: int;
-)
-
-
-var m : Math;
-
-var x: MathPi;
-
-var n: int;
-
-m := new Math;
-
-x := new MathPi;
-
-do m.calcPi();
-
-n := 10;
+write n;
+write total;
+write borne;

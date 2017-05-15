@@ -70,22 +70,25 @@ public class ASMParser {
                 break;
 
             case "IF":
+                String ifID = EnvironmentCounter.generateID(Entry.IF, counter.incrementIf() ,TDS.getImbricationLevel() + 1);
+
                 Expression comparaison = parseExpression(tree.getChild(0), TDS);
                 ArrayList<Generable> instIf = new ArrayList<Generable>();
                 Tree tmp = tree.getChild(1);
                 for (int i = 0; i < tmp.getChildCount(); i++) {
-                    parse(tmp.getChild(i), TDS, instIf, meths);
+                    parse(tmp.getChild(i), TDS.getLink(ifID), instIf, meths);
                 }
                 Block then = new Block();
                 Block elseBlock = null;
                 then.addAllInstructions(instIf);
 
                 if(tree.getChildCount() == 3) {
+                    String elseID = EnvironmentCounter.generateID(Entry.ELSE, counter.incrementElse() ,TDS.getImbricationLevel() + 1);
                     elseBlock =  new Block();
                     tmp = tree.getChild(2);
                     instIf = new ArrayList<Generable>();
                     for (int i = 0; i < tmp.getChildCount(); i++) {
-                        parse(tmp.getChild(i), TDS, instIf, meths);
+                        parse(tmp.getChild(i), TDS.getLink(elseID), instIf, meths);
                     }
                     elseBlock.addAllInstructions(instIf);
                 }
@@ -129,9 +132,10 @@ public class ASMParser {
                 break;
 
             case "READ":
-                res.add(new Read((Variable) TDS.get(tree.getChild(0).getText())));
+                res.add(new Read((ASMGenerator.expressions.Variable) parseExpression(tree.getChild(0), TDS), TDS));
                 break;
-	        case "DO":
+
+                case "DO":
 		        for (int i = 0; i < tree.getChildCount(); i++) {
 			        parse(tree.getChild(i), TDS, res, meths);
 		        }
@@ -184,7 +188,6 @@ public class ASMParser {
                     return new ConstantInteger(Integer.parseInt(node.getText()));
                 if(node.getText().matches("\".*\""))
                     return new ConstantString(node.getText());
-                // variable
                 else
                     return new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(node.getText()), TDS);
         }

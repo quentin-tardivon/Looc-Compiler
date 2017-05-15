@@ -1,53 +1,58 @@
+class ExceptionNotImplemented = (
 
-class Dev = (
-
-    var programmingLanguagesKnown: int;
-    var age: int;
-    var master: string;
-
-    method getNbLanguages(godmod : int): int {
-    	if godmod != -1 then
-    		return (99999);
-    	else
-    	    return (programmingLanguagesKnown);
-    	fi
-    }
-
-    method init() {
-        programmingLanguagesKnown := 3;
-        age := 20;
-        master := nil;
-    }
-
-    method pointer(): Dev {
-        return (this);
-    }
-
-    method levelUp() {
-        programmingLanguagesKnown := this.getNbLanguages(-1) + 1;
-        age := age + 1;
-    }
-
+  method throw() {
+    write "ExceptionNotImplemented: need to implement the method!";
+  }
 )
 
-class Engineer inherit Dev = (
-    method getNblanguages(godmod: int): int {
-        return (super.getNbLanguages(godmod) - 1);
-    }
+class Comparator = (
+  method compare(left: int, right: int) {
+    var ex : ExceptionNotImplemented;
+    ex := new ExceptionNotImplemented;
+    do ex.throw();
+  }
 )
 
-var d : Dev;
-var e : Dev;
-d := new Dev;
-e := new Engineer;
-do d.init();
-do e.init();
+class Greater inherit Comparator = (
 
-write d.getNbLanguages(0);
-write e.getNbLanguages(0);
+  method compare(left :int, right: int): int {
+    return (left > right);
+  }
+)
 
-do d.levelUp();
-do e.levelUp();
-do e.levelUp();
-write d.getNbLanguages(0);
-write e.getNbLanguages(0);
+class Lower inherit Comparator = (
+
+  method compare(left :int, right: int): int {
+    return (left < right);
+  }
+)
+
+class Between = (
+
+  method test(left :int, right: int, value: int): int {
+    var g : Greater;
+    var l : Lower;
+    g := new Greater;
+    l := new Lower;
+    return (g.compare(left, value) * l.compare(value, right));
+  }
+)
+
+
+var b : Between;
+b := new Between;
+
+write b.test(10, 600, 55);
+
+if 55 > 10 * 55 < 600 then
+  write "yes";
+else
+  write "no";
+fi
+
+
+if (55 / 55 + 98) < 100 then
+  write "yes";
+else
+  write "no";
+fi

@@ -8,7 +8,7 @@ import ASMGenerator.expressions.Expression;
 public class Plus extends Operation {
 
     public Plus(Expression left, Expression right) {
-        super(left, right, ASMUtils.ADD);
+        super(left, right, ASMUtils.ADD, "+");
     }
 
 }

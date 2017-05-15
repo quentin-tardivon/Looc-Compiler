@@ -1,48 +1,33 @@
-class Animal = (
+class Math =
+(
+    var pi: int;
+    var pi2: int;
 
-    var name : string ;
-
-    method setName (n: string) {
-      name := n;
-       }
-
-    method whoami() {
-        write "My name is";
-        write name;
-        }
-)
-
-class Dog inherit Animal = (
-
-    method whoami() {
-        write "My name is" ;
-        write name ;
-        write ". And I am a dog. ";
-        }
+    method calcPi() {
+            write 34;
+            }
 
 )
 
-class Cat inherit Animal = (
-
-    method whoami () {
-        do super.whoami();
-        write ".And I am a cat. " ;
-        }
-
+class MathPi =
+(
+    var pi: int;
+    var pi2: int;
+    var pi3: int;
+    var pi4: int;
 )
 
-var a1 : Animal;
 
-var a2 : Animal;
+var m : Math;
 
-a1 := new Dog;
+var x: MathPi;
 
-do a1.setName("boo") ;
+var n: int;
 
-a2 := new Cat ;
+m := new Math;
 
-do a2.setName("foo");
+x := new MathPi;
 
-do a1.whoami();
+do m.calcPi();
 
-do a2.whoami();
+n := 10;

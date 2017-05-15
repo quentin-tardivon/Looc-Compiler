@@ -141,20 +141,9 @@ public class CommonTreeParser {
 				break;
 
 			case "VAR_DEC":
-				Variable var = new Variable(tree.getChild(1).getText(),depl);
+				Variable var = new Variable(tree.getChild(1).getText(), depl, tree.getChild(0).getText());
 				var.setInit(false);
 				depl += 2;
-/*				switch(tree.getChild(1).getText()){
-					case "int":
-						depl+=2;
-						break;
-					case "string":
-						depl+=2;
-						break;
-					default:
-						depl+=2;
-						break;
-				}*/
 				try {
 					tds.put(tree.getChild(0).getText(), var);
 				}
@@ -226,16 +215,15 @@ public class CommonTreeParser {
 				for (int j = 1; j < tree.getChildCount(); j++) {
 					constructTDS(tree.getChild(j), tds, rootTDS);
 				}
-				//tds.setNumberIf(tds.getNumberIf()+1);
 				break;
 
 			case "THEN":
 				depl=0;
-				int nb = counter.incrementIf();
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "if" + nb);
+				String ifID = EnvironmentCounter.generateID(Entry.IF, this.counter.incrementIf(), tds.getImbricationLevel() + 1);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, ifID);
 				try {
-					tds.put("if" +nb , new If());
-					tds.putLink("if" + nb, newtds);
+					tds.put(ifID, new If());
+					tds.putLink(ifID, newtds);
 				}
 				catch (LoocException e) {
 					this.exceptions.add(e);
@@ -248,11 +236,11 @@ public class CommonTreeParser {
 
 			case "ELSE":
 				depl=0;
-				nb = this.counter.incrementIf();
-				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "else" + nb);
+				String elseID = EnvironmentCounter.generateID(Entry.ELSE, this.counter.incrementElse(), tds.getImbricationLevel() + 1);
+				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, "else" + elseID);
 				try {
-					tds.put("else" +nb , new Else());
-					tds.putLink("else" + nb, newtds);
+					tds.put(elseID, new Else());
+					tds.putLink(elseID, newtds);
 				}
 				catch (LoocException e) {
 					this.exceptions.add(e);
@@ -301,7 +289,6 @@ public class CommonTreeParser {
 
 			case "FOR":
 				depl=0;
-				nb = this.counter.getCountFor();
 				String forID = EnvironmentCounter.generateID(Entry.FOR, this.counter.incrementFor(), tds.getImbricationLevel() + 1);
 				newtds = new SymbolTable(tds.getImbricationLevel() + 1, tds, forID);
 				try {

@@ -9,7 +9,7 @@ import ASMGenerator.expressions.Expression;
 public class GreaterOrEqual extends Comparison {
 
     public GreaterOrEqual(Expression left, Expression right) {
-        super(left, right, ASMUtils.GE);
+        super(left, right, ASMUtils.GE, ">=");
     }
 
 }

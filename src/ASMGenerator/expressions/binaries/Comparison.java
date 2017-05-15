@@ -12,15 +12,16 @@ public abstract class Comparison extends Binary implements Labelable {
     private String baselabel;
     private String gotoLabel;
 
-    public Comparison(Expression left, Expression right, String operator) {
-        super(left, right);
+    public Comparison(Expression left, Expression right, String operator, String opSymbol) {
+        super(left, right,opSymbol);
         this.operator = operator;
     }
 
     @Override
     public String generate() {
         StringBuffer asm = new StringBuffer();
-        asm.append(ASMUtils.formatASM(this.baselabel, "", ""));
+        if(this.baselabel != null)
+            asm.append(ASMUtils.formatASM(this.baselabel, "", ""));
         asm.append(this.left.generate());
         asm.append(this.right.generate());
         asm.append(this.generateOperation());
