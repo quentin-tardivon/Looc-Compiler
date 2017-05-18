@@ -1,17 +1,16 @@
 var n : int;
 var borne: int;
-var total : int;
-total := 0;
+var msg: string;
+msg := "Last iteration";
 n := 2;
 borne := 3;
 
 for n in 1 .. borne do
-    write n;
-    total := total + n;
+    if n == 3 then
+        borne := 4;
+    fi
 end
 
-if n == 4 then
-    write  n;
-fi
-
-write total;
+write borne;
+write 3 + 4;
+write n;

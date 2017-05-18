@@ -204,7 +204,7 @@ public class ASMUtils {
         return removeFromStack("R2") +
                 removeFromStack("R1") +
                 formatASM("", "CMP", "R1, R2") +
-                formatASM("", operator, gotoLabel+"-$-2");
+                formatASM("", operator, gotoLabel+"-($+2)");
     }
 
     public static int generateLabel() {

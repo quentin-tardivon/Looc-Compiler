@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="272.7499999999999" y="253.0">ASMGenerator.expressions.binaries.Comparison</node>
+    <node x="908.0" y="344.0">ASMGenerator.expressions.binaries.Plus</node>
+    <node x="0.0" y="344.0">ASMGenerator.expressions.binaries.Lower</node>
+    <node x="250.2499999999999" y="172.0">ASMGenerator.Labelable</node>
+    <node x="212.99999999999994" y="344.0">ASMGenerator.expressions.binaries.NotEqual</node>
+    <node x="1250.5" y="172.0">ASMGenerator.expressions.MethodCall</node>
+    <node x="1001.0" y="344.0">ASMGenerator.expressions.binaries.Mul</node>
+    <node x="843.75" y="81.0">ASMGenerator.expressions.Expression</node>
+    <node x="845.75" y="0.0">ASMGenerator.Generable</node>
+    <node x="103.0" y="344.0">ASMGenerator.expressions.binaries.Greater</node>
+    <node x="585.0" y="344.0">ASMGenerator.expressions.binaries.LowerOrEqual</node>
+    <node x="444.45223922902494" y="172.0">ASMGenerator.expressions.LoocClassAffect</node>
+    <node x="836.5" y="172.0">ASMGenerator.expressions.Binary</node>
+    <node x="331.99999999999994" y="344.0">ASMGenerator.expressions.binaries.GreaterOrEqual</node>
+    <node x="847.25" y="253.0">ASMGenerator.expressions.binaries.Operation</node>
+    <node x="485.99999999999994" y="344.0">ASMGenerator.expressions.binaries.Equal</node>
+    <node x="1091.5" y="172.0">ASMGenerator.expressions.ConstantInteger</node>
+    <node x="818.0" y="344.0">ASMGenerator.expressions.binaries.Diff</node>
+    <node x="939.5" y="172.0">ASMGenerator.expressions.ConstantString</node>
+    <node x="608.4522392290249" y="172.0">ASMGenerator.expressions.Variable</node>
+    <node x="732.0" y="344.0">ASMGenerator.expressions.binaries.Div</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ASMGenerator.expressions.binaries.Operation" target="ASMGenerator.expressions.Binary">
+      <point x="0.0" y="-15.5" />
+      <point x="20.75" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.NotEqual" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="262.49999999999994" y="324.0" />
+      <point x="321.0833333333332" y="324.0" />
+      <point x="-9.666666666666686" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Plus" target="ASMGenerator.expressions.binaries.Operation">
+      <point x="0.0" y="-15.5" />
+      <point x="944.5" y="324.0" />
+      <point x="911.625" y="324.0" />
+      <point x="12.875" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.LowerOrEqual" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="648.5" y="304.0" />
+      <point x="379.0833333333332" y="304.0" />
+      <point x="48.333333333333314" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.GreaterOrEqual" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="398.99999999999994" y="324.0" />
+      <point x="340.4166666666666" y="324.0" />
+      <point x="9.666666666666686" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Equal" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="525.5" y="314.0" />
+      <point x="359.7499999999999" y="314.0" />
+      <point x="29.0" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Diff" target="ASMGenerator.expressions.binaries.Operation">
+      <point x="0.0" y="-15.5" />
+      <point x="853.0" y="324.0" />
+      <point x="885.875" y="324.0" />
+      <point x="-12.875" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Comparison" target="ASMGenerator.expressions.Binary">
+      <point x="29.0" y="-15.5" />
+      <point x="359.7499999999999" y="228.0" />
+      <point x="857.25" y="228.0" />
+      <point x="-20.75" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.ConstantString" target="ASMGenerator.expressions.Expression">
+      <point x="0.0" y="-15.5" />
+      <point x="1005.5" y="152.0" />
+      <point x="914.4642857142856" y="152.0" />
+      <point x="15.714285714285666" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.Variable" target="ASMGenerator.expressions.Expression">
+      <point x="0.0" y="-15.5" />
+      <point x="655.4522392290249" y="142.0" />
+      <point x="867.3214285714284" y="142.0" />
+      <point x="-31.428571428571445" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Mul" target="ASMGenerator.expressions.binaries.Operation">
+      <point x="0.0" y="-15.5" />
+      <point x="1035.5" y="314.0" />
+      <point x="937.375" y="314.0" />
+      <point x="38.625" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.Binary" target="ASMGenerator.expressions.Expression">
+      <point x="20.75" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.Expression" target="ASMGenerator.Generable">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Lower" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="41.5" y="304.0" />
+      <point x="282.4166666666666" y="304.0" />
+      <point x="-48.333333333333314" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Greater" target="ASMGenerator.expressions.binaries.Comparison">
+      <point x="0.0" y="-15.5" />
+      <point x="148.0" y="314.0" />
+      <point x="301.7499999999999" y="314.0" />
+      <point x="-29.0" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Div" target="ASMGenerator.expressions.binaries.Operation">
+      <point x="0.0" y="-15.5" />
+      <point x="765.0" y="314.0" />
+      <point x="860.125" y="314.0" />
+      <point x="-38.625" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.binaries.Comparison" target="ASMGenerator.Labelable">
+      <point x="-29.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.ConstantInteger" target="ASMGenerator.expressions.Expression">
+      <point x="0.0" y="-15.5" />
+      <point x="1161.0" y="142.0" />
+      <point x="930.1785714285713" y="142.0" />
+      <point x="31.428571428571445" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.LoocClassAffect" target="ASMGenerator.expressions.Expression">
+      <point x="0.0" y="-15.5" />
+      <point x="516.4522392290249" y="132.0" />
+      <point x="851.6071428571429" y="132.0" />
+      <point x="-47.14285714285711" y="15.5" />
+    </edge>
+    <edge source="ASMGenerator.expressions.MethodCall" target="ASMGenerator.expressions.Expression">
+      <point x="0.0" y="-15.5" />
+      <point x="1306.5" y="132.0" />
+      <point x="945.8928571428571" y="132.0" />
+      <point x="47.14285714285711" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9027538726333907" x="571.0" y="184.35081029551958" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
