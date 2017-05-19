@@ -124,7 +124,7 @@ public class CommonTreeParser {
 				break;
 
 			case "FORMAL_PARAMS":
-				depl=0;
+				depl=-2;
 				for (int i = 0; i < tree.getChildCount(); i++) {
 					constructTDS(tree.getChild(i), tds, rootTDS);
 				}
@@ -132,7 +132,8 @@ public class CommonTreeParser {
 
 			case "FORMAL_PARAM":
 				try {
-					tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), tree.getChildIndex()));
+					tds.put(tree.getChild(0).getText(), new Parameter(tree.getChild(1).getText(), depl, tree.getChild(0).getText()));
+					depl -= 2;
 				}
 				catch (LoocException e) {
 					this.exceptions.add(e);
@@ -320,7 +321,8 @@ public class CommonTreeParser {
 			case "RETURN":
 				depl=0;
 				String realV = Util.subTreeType(tree.getChild(0), tds, rootTDS);
-				String expectedV = tds.getFather().get(tds.getName()).get(Entry.RETURN_TYPE);
+				SymbolTable tdsFunction = tds.getFather(tds.getImbricationLevel() - 2);
+				String expectedV = tdsFunction.getFather().get(tdsFunction.getName()).get(Entry.RETURN_TYPE);
 
 				try {
 					Util.testReturnType(expectedV,realV);

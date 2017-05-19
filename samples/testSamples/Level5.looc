@@ -1,0 +1,46 @@
+class Animal = (
+
+	var name : string;
+
+	method setName(n : string, test : string) {
+		name := n;
+	}
+
+	method whoami() {
+		write "My name is ";
+		write name;
+	}
+)
+
+class Dog inherit Animal = (
+
+	method iLVersusTRS(canadiens: int, irlandais: int): int {
+		return (canadiens < irlandais);
+	}
+	method whoami() {
+		do super.setName("Rox", "Les TRS sont des gros nazes");
+		write "My name is ";
+		write name;
+		write this.iLVersusTRS(42, 999);
+		write ". And I am a dog.";
+	}
+
+
+)
+
+class Cat inherit Animal =
+(
+	method whoami () {
+		do super.whoami();
+		write ". And I am a cat.";
+	}
+)
+
+var a1 : Animal;
+var a2 : Animal;
+a1 := new Dog;
+//do 4+3;
+a2 := new Cat;
+do a2.setName("foo", "Et oui Jamy !");
+do a1.whoami();
+do a2.whoami();

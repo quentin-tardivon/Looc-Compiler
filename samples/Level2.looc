@@ -14,3 +14,20 @@ end
 write borne;
 write 3 + 4;
 write n;
+
+/*var n : int;
+var borne: int;
+var msg: string;
+msg := "Last iteration";
+n := 2;
+borne := 3;
+
+for n in 1 .. borne do
+    if n == 3 then
+        borne := 4;
+    fi
+end
+
+write borne;
+write 3 + 4;
+write n;*/*

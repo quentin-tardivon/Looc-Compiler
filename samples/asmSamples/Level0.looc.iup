@@ -1,0 +1,223 @@
+fa00  origine
+fa00  debut d'execution
+6f80   emplacement : 64000  (0xfa00)  ligne n° 32	main_     		LDW       		SP, #STACK_ADRS
+1000   emplacement : 64002  (0xfa02) 
+6080   emplacement : 64004  (0xfa04)  ligne n° 33	          		LDW       		R0, #0x0d0a
+0d0a   emplacement : 64006  (0xfa06) 
+6050   emplacement : 64008  (0xfa08)  ligne n° 34	          		STW       		R0, @0x0000
+0000   emplacement : 64010  (0xfa0a) 
+6d80   emplacement : 64012  (0xfa0c)  ligne n° 35	          		LDW       		BP, #NIL  
+0000   emplacement : 64014  (0xfa0e) 
+6c80   emplacement : 64016  (0xfa10)  ligne n° 36	          		LDW       		ST, #HEAP_ADRS
+f000   emplacement : 64018  (0xfa12) 
+6b80   emplacement : 64020  (0xfa14)  ligne n° 37	          		LDW       		BT, #NIL  
+0000   emplacement : 64022  (0xfa16) 
+6b4c   emplacement : 64024  (0xfa18)  ligne n° 38	          		STW       		BT, -(ST) 
+6b9c   emplacement : 64026  (0xfa1a)  ligne n° 39	          		LDW       		BT, ST    
+6780   emplacement : 64028  (0xfa1c)  ligne n° 40	          		LDW       		SC, #CLASS_ADRS		// load into SC the base of class descriptors
+fd00   emplacement : 64030  (0xfa1e) 
+609d   emplacement : 64032  (0xfa20)  ligne n° 53	          		LDW       		R0, BP    		// Static and dynamic are the same
+604f   emplacement : 64034  (0xfa22)  ligne n° 54	          		STW       		R0, -(SP) 		// DYN    
+6d9f   emplacement : 64036  (0xfa24)  ligne n° 55	          		LDW       		BP, SP    
+604f   emplacement : 64038  (0xfa26)  ligne n° 56	          		STW       		R0, -(SP) 		// STAT   
+4eff   emplacement : 64040  (0xfa28)  ligne n° 57	          		ADI       		SP, SP, #-2		// Declaration: size = 2
+fffe   emplacement : 64042  (0xfa2a) 
+4eff   emplacement : 64044  (0xfa2c)  ligne n° 58	          		ADI       		SP, SP, #-2		// Declaration: size = 2
+fffe   emplacement : 64046  (0xfa2e) 
+6180   emplacement : 64048  (0xfa30)  ligne n° 59	          		LDW       		R1, #4    
+0004   emplacement : 64050  (0xfa32) 
+614f   emplacement : 64052  (0xfa34)  ligne n° 60	          		STW       		R1, -(SP) 
+60bf   emplacement : 64054  (0xfa36)  ligne n° 61	          		LDW       		R0, (SP)+ 
+606d   emplacement : 64056  (0xfa38)  ligne n° 62	          		STW       		R0, (BP)-6		// Affection: a = 4
+fffa   emplacement : 64058  (0xfa3a) 
+6080   emplacement : 64060  (0xfa3c)  ligne n° 64	          		LDW       		R0, #0x0000
+0000   emplacement : 64062  (0xfa3e) 
+606c   emplacement : 64064  (0xfa40)  ligne n° 65	          		STW       		R0, (ST)-2
+fffe   emplacement : 64066  (0xfa42) 
+3cfe   emplacement : 64068  (0xfa44)  ligne n° 66	          		ADQ       		-2, ST    
+5080   emplacement : 64070  (0xfa46)  ligne n° 67	          		LDB       		R0, #0x4100
+4100   emplacement : 64072  (0xfa48) 
+506c   emplacement : 64074  (0xfa4a)  ligne n° 68	          		STB       		R0, (ST)-1
+ffff   emplacement : 64076  (0xfa4c) 
+3cff   emplacement : 64078  (0xfa4e)  ligne n° 69	          		ADQ       		-1, ST    
+5080   emplacement : 64080  (0xfa50)  ligne n° 70	          		LDB       		R0, #0x5700
+5700   emplacement : 64082  (0xfa52) 
+506c   emplacement : 64084  (0xfa54)  ligne n° 71	          		STB       		R0, (ST)-1
+ffff   emplacement : 64086  (0xfa56) 
+3cff   emplacement : 64088  (0xfa58)  ligne n° 72	          		ADQ       		-1, ST    
+5080   emplacement : 64090  (0xfa5a)  ligne n° 73	          		LDB       		R0, #0x4700
+4700   emplacement : 64092  (0xfa5c) 
+506c   emplacement : 64094  (0xfa5e)  ligne n° 74	          		STB       		R0, (ST)-1
+ffff   emplacement : 64096  (0xfa60) 
+3cff   emplacement : 64098  (0xfa62)  ligne n° 75	          		ADQ       		-1, ST    
+5080   emplacement : 64100  (0xfa64)  ligne n° 76	          		LDB       		R0, #0x4f00
+4f00   emplacement : 64102  (0xfa66) 
+506c   emplacement : 64104  (0xfa68)  ligne n° 77	          		STB       		R0, (ST)-1
+ffff   emplacement : 64106  (0xfa6a) 
+3cff   emplacement : 64108  (0xfa6c)  ligne n° 78	          		ADQ       		-1, ST    
+5080   emplacement : 64110  (0xfa6e)  ligne n° 79	          		LDB       		R0, #0x4d00
+4d00   emplacement : 64112  (0xfa70) 
+506c   emplacement : 64114  (0xfa72)  ligne n° 80	          		STB       		R0, (ST)-1
+ffff   emplacement : 64116  (0xfa74) 
+3cff   emplacement : 64118  (0xfa76)  ligne n° 81	          		ADQ       		-1, ST    
+6c4f   emplacement : 64120  (0xfa78)  ligne n° 82	          		STW       		R12, -(SP)
+60bf   emplacement : 64122  (0xfa7a)  ligne n° 83	          		LDW       		R0, (SP)+ 
+606d   emplacement : 64124  (0xfa7c)  ligne n° 84	          		STW       		R0, (BP)-4		// Affection: z = 'MOGWA'
+fffc   emplacement : 64126  (0xfa7e) 
+609d   emplacement : 64128  (0xfa80)  ligne n° 89	          		LDW       		R0, BP    		// Static and dynamic are the same
+604f   emplacement : 64130  (0xfa82)  ligne n° 90	          		STW       		R0, -(SP) 		// DYN    
+6d9f   emplacement : 64132  (0xfa84)  ligne n° 91	          		LDW       		BP, SP    
+604f   emplacement : 64134  (0xfa86)  ligne n° 92	          		STW       		R0, -(SP) 		// STAT   
+6180   emplacement : 64136  (0xfa88)  ligne n° 93	          		LDW       		R1, #6    
+0006   emplacement : 64138  (0xfa8a) 
+614f   emplacement : 64140  (0xfa8c)  ligne n° 94	          		STW       		R1, -(SP) 
+6080   emplacement : 64142  (0xfa8e)  ligne n° 95	          		LDW       		R0, #1    		// Find @variable with static link
+0001   emplacement : 64144  (0xfa90) 
+604f   emplacement : 64146  (0xfa92)  ligne n° 96	          		STW       		R0, -(SP) 
+0a50   emplacement : 64148  (0xfa94)  ligne n° 97	          		JSR       		@FIND_STATIC
+fba2   emplacement : 64150  (0xfa96) 
+3f02   emplacement : 64152  (0xfa98)  ligne n° 98	          		ADQ       		2, SP     		// Unstack
+60bf   emplacement : 64154  (0xfa9a)  ligne n° 99	          		LDW       		R0, (SP)+ 
+6066   emplacement : 64156  (0xfa9c)  ligne n° 100	          		STW       		R0, (R6)-6		// Affection: a = 6
+fffa   emplacement : 64158  (0xfa9e) 
+6f9d   emplacement : 64160  (0xfaa0)  ligne n° 101	          		LDW       		SP, BP    		// Unstack the environment
+6dbf   emplacement : 64162  (0xfaa2)  ligne n° 102	          		LDW       		BP, (SP)+ 		          
+61ed   emplacement : 64164  (0xfaa4)  ligne n° 103	          		LDW       		R1, (BP)-6
+fffa   emplacement : 64166  (0xfaa6) 
+614f   emplacement : 64168  (0xfaa8)  ligne n° 104	          		STW       		R1, -(SP) 
+60bf   emplacement : 64170  (0xfaaa)  ligne n° 105	          		LDW       		R0, (SP)+ 
+604f   emplacement : 64172  (0xfaac)  ligne n° 106	          		STW       		R0, -(SP) 		// Stack param for WRITE
+0a50   emplacement : 64174  (0xfaae)  ligne n° 107	          		JSR       		@itoa_    		          
+fad0   emplacement : 64176  (0xfab0) 
+4eff   emplacement : 64178  (0xfab2)  ligne n° 108	          		ADI       		SP, SP, #2		// Unstack params
+0002   emplacement : 64180  (0xfab4) 
+61ed   emplacement : 64182  (0xfab6)  ligne n° 109	          		LDW       		R1, (BP)-4
+fffc   emplacement : 64184  (0xfab8) 
+614f   emplacement : 64186  (0xfaba)  ligne n° 110	          		STW       		R1, -(SP) 
+60bf   emplacement : 64188  (0xfabc)  ligne n° 111	          		LDW       		R0, (SP)+ 
+604f   emplacement : 64190  (0xfabe)  ligne n° 112	          		STW       		R0, -(SP) 		// Stack param for WRITE
+0b00   emplacement : 64192  (0xfac0)  ligne n° 113	          		TRP       		#WRITE_EXC
+0042   emplacement : 64194  (0xfac2) 
+6f9d   emplacement : 64196  (0xfac4)  ligne n° 119	          		LDW SP, BP		          
+6dbf   emplacement : 64198  (0xfac6)  ligne n° 120	          		LDW BP, (SP)+		          
+0b00   emplacement : 64200  (0xfac8)  ligne n° 121	          		TRP #EXIT_EXC		          
+0040   emplacement : 64202  (0xfaca) 
+0950   emplacement : 64204  (0xfacc)  ligne n° 122	          		JEA @main_		          
+fa00   emplacement : 64206  (0xface) 
+6d4f   emplacement : 64208  (0xfad0)  ligne n° 131	itoa_     		STW       		BP, -(SP) 
+6d9f   emplacement : 64210  (0xfad2)  ligne n° 132	          		LDW       		BP, SP    
+60ed   emplacement : 64212  (0xfad4)  ligne n° 133	          		LDW       		R0, (BP)ITOA_I
+0004   emplacement : 64214  (0xfad6) 
+6180   emplacement : 64216  (0xfad8)  ligne n° 134	          		LDW       		R1, #10   
+000a   emplacement : 64218  (0xfada) 
+2320   emplacement : 64220  (0xfadc)  ligne n° 135	          		LDQ       		ASCII_SP, R3
+2e0a   emplacement : 64222  (0xfade)  ligne n° 136	          		LDQ       		10, WR    
+4f1e   emplacement : 64224  (0xfae0)  ligne n° 137	          		CMP       		R1, WR    
+130c   emplacement : 64226  (0xfae2)  ligne n° 138	          		BNE       		NOSIGN-$-2
+232b   emplacement : 64228  (0xfae4)  ligne n° 139	          		LDQ       		ASCII_PLUS, R3
+0c10   emplacement : 64230  (0xfae6)  ligne n° 140	          		TST       		R0        
+1404   emplacement : 64232  (0xfae8)  ligne n° 141	          		BGE       		POSIT-$-2 
+4700   emplacement : 64234  (0xfaea)  ligne n° 142	          		NEG       		R0, R0    
+232d   emplacement : 64236  (0xfaec)  ligne n° 143	          		LDQ       		ASCII_MINUS, R3
+0000   emplacement : 64238  (0xfaee)  ligne n° 144	POSIT     		NOP       		          
+6290   emplacement : 64240  (0xfaf0)  ligne n° 145	NOSIGN    		LDW       		R2, R0    
+6092   emplacement : 64242  (0xfaf2)  ligne n° 146	CNVLOOP   		LDW       		R0, R2    
+4211   emplacement : 64244  (0xfaf4)  ligne n° 147	          		SRL       		R1, R1    
+4c04   emplacement : 64246  (0xfaf6)  ligne n° 148	          		ANI       		R0, R4, #1
+0001   emplacement : 64248  (0xfaf8) 
+4200   emplacement : 64250  (0xfafa)  ligne n° 149	          		SRL       		R0, R0    
+a012   emplacement : 64252  (0xfafc)  ligne n° 150	          		DIV       		R0, R1, R2
+4600   emplacement : 64254  (0xfafe)  ligne n° 151	          		SHL       		R0, R0    
+e040   emplacement : 64256  (0xfb00)  ligne n° 152	          		ADD       		R0, R4, R0
+4611   emplacement : 64258  (0xfb02)  ligne n° 153	          		SHL       		R1, R1    
+30f6   emplacement : 64260  (0xfb04)  ligne n° 154	          		ADQ       		-10, R0   
+1404   emplacement : 64262  (0xfb06)  ligne n° 155	          		BGE       		LETTER-$-2
+303a   emplacement : 64264  (0xfb08)  ligne n° 156	          		ADQ       		10+ASCII_0, R0
+1102   emplacement : 64266  (0xfb0a)  ligne n° 157	          		BMP       		STKCHR-$-2
+3041   emplacement : 64268  (0xfb0c)  ligne n° 158	LETTER    		ADQ       		ASCII_A, R0
+604f   emplacement : 64270  (0xfb0e)  ligne n° 159	STKCHR    		STW       		R0, -(SP) 
+0c12   emplacement : 64272  (0xfb10)  ligne n° 160	          		TST       		R2        
+13de   emplacement : 64274  (0xfb12)  ligne n° 161	          		BNE       		CNVLOOP-$-2		// Les caracthres sont empilis gauche en haut, droite en bas
+6180   emplacement : 64276  (0xfb14)  ligne n° 162	          		LDW       		R1, #CONVERT_BUFF
+0028   emplacement : 64278  (0xfb16) 
+5331   emplacement : 64280  (0xfb18)  ligne n° 163	          		STB       		R3, (R1)+ 
+60bf   emplacement : 64282  (0xfb1a)  ligne n° 164	CPYLOOP   		LDW       		R0, (SP)+ 
+5031   emplacement : 64284  (0xfb1c)  ligne n° 165	          		STB       		R0, (R1)+ 
+4ffd   emplacement : 64286  (0xfb1e)  ligne n° 166	          		CMP       		SP, BP    
+13f8   emplacement : 64288  (0xfb20)  ligne n° 167	          		BNE       		CPYLOOP-$-2
+2000   emplacement : 64290  (0xfb22)  ligne n° 168	          		LDQ       		NUL, R0   
+5031   emplacement : 64292  (0xfb24)  ligne n° 169	          		STB       		R0, (R1)+ 
+6080   emplacement : 64294  (0xfb26)  ligne n° 170	          		LDW       		R0, #CONVERT_BUFF		// Pointeur sur chaine de caract
+0028   emplacement : 64296  (0xfb28) 
+0b00   emplacement : 64298  (0xfb2a)  ligne n° 171	          		TRP       		#WRITE_EXC
+0042   emplacement : 64300  (0xfb2c) 
+6080   emplacement : 64302  (0xfb2e)  ligne n° 172	          		LDW       		R0, #0x0000		// Pointeur sur retour ligne
+0000   emplacement : 64304  (0xfb30) 
+0b00   emplacement : 64306  (0xfb32)  ligne n° 173	          		TRP       		#WRITE_EXC
+0042   emplacement : 64308  (0xfb34) 
+6f9d   emplacement : 64310  (0xfb36)  ligne n° 174	          		LDW       		SP, BP    
+6dbf   emplacement : 64312  (0xfb38)  ligne n° 175	          		LDW       		BP, (SP)+ 
+0200   emplacement : 64314  (0xfb3a)  ligne n° 176	          		RTS       		          
+6d4f   emplacement : 64316  (0xfb3c)  ligne n° 185	atoi_     		STW       		BP, -(SP) 
+6d9f   emplacement : 64318  (0xfb3e)  ligne n° 186	          		LDW       		BP, SP    
+60ed   emplacement : 64320  (0xfb40)  ligne n° 187	          		LDW       		R0, (BP)ITOA_I
+0004   emplacement : 64322  (0xfb42) 
+6380   emplacement : 64324  (0xfb44)  ligne n° 188	          		LDW       		R3, #0x0100
+0100   emplacement : 64326  (0xfb46) 
+2100   emplacement : 64328  (0xfb48)  ligne n° 189	          		LDQ       		0,R1      
+614f   emplacement : 64330  (0xfb4a)  ligne n° 190	          		STW       		R1,-(SP)  
+0000   emplacement : 64332  (0xfb4c)  ligne n° 191	LOOP_STACK		NOP       		          
+50a3   emplacement : 64334  (0xfb4e)  ligne n° 192	          		LDB       		R0, (R3)  
+604f   emplacement : 64336  (0xfb50)  ligne n° 193	          		STW       		R0,-(SP)  
+3301   emplacement : 64338  (0xfb52)  ligne n° 194	          		ADQ       		1,R3      
+50a3   emplacement : 64340  (0xfb54)  ligne n° 195	          		LDB       		R0, (R3)  
+4f01   emplacement : 64342  (0xfb56)  ligne n° 196	          		CMP       		R0,R1     
+13f2   emplacement : 64344  (0xfb58)  ligne n° 197	          		BNE       		LOOP_STACK-$-2
+63af   emplacement : 64346  (0xfb5a)  ligne n° 198	          		LDW       		R3, (SP)  
+6180   emplacement : 64348  (0xfb5c)  ligne n° 199	          		LDW       		R1, #48   
+0030   emplacement : 64350  (0xfb5e) 
+f310   emplacement : 64352  (0xfb60)  ligne n° 200	          		SUB       		R3,R1,R0  
+4eff   emplacement : 64354  (0xfb62)  ligne n° 201	          		ADI       		SP, SP, #2		// Unstack
+0002   emplacement : 64356  (0xfb64) 
+63af   emplacement : 64358  (0xfb66)  ligne n° 202	          		LDW       		R3,(SP)   
+2a0a   emplacement : 64360  (0xfb68)  ligne n° 203	          		LDQ       		10,R10    
+0000   emplacement : 64362  (0xfb6a)  ligne n° 204	LOOP_ATOI 		NOP       		          
+6180   emplacement : 64364  (0xfb6c)  ligne n° 205	          		LDW       		R1, #0    
+0000   emplacement : 64366  (0xfb6e) 
+4f31   emplacement : 64368  (0xfb70)  ligne n° 206	          		CMP       		R3,R1     
+1222   emplacement : 64370  (0xfb72)  ligne n° 207	          		BEQ       		LOOP_ATOI_END-$-2
+604f   emplacement : 64372  (0xfb74)  ligne n° 208	          		STW       		R0,-(SP)  
+6180   emplacement : 64374  (0xfb76)  ligne n° 209	          		LDW       		R1, #48   
+0030   emplacement : 64376  (0xfb78) 
+f310   emplacement : 64378  (0xfb7a)  ligne n° 210	          		SUB       		R3,R1,R0  
+b0a0   emplacement : 64380  (0xfb7c)  ligne n° 211	          		MUL       		R0,R10,R0 
+63af   emplacement : 64382  (0xfb7e)  ligne n° 212	          		LDW       		R3,(SP)   
+e030   emplacement : 64384  (0xfb80)  ligne n° 213	          		ADD       		R0,R3,R0  
+4eff   emplacement : 64386  (0xfb82)  ligne n° 214	          		ADI       		SP, SP, #2		// Unstack
+0002   emplacement : 64388  (0xfb84) 
+4eff   emplacement : 64390  (0xfb86)  ligne n° 215	          		ADI       		SP, SP, #2		// Unstack
+0002   emplacement : 64392  (0xfb88) 
+63af   emplacement : 64394  (0xfb8a)  ligne n° 216	          		LDW       		R3,(SP)   
+6180   emplacement : 64396  (0xfb8c)  ligne n° 217	          		LDW       		R1, #10   
+000a   emplacement : 64398  (0xfb8e) 
+ba1a   emplacement : 64400  (0xfb90)  ligne n° 218	          		MUL       		R10,R1,R10
+0950   emplacement : 64402  (0xfb92)  ligne n° 219	          		JEA       		@LOOP_ATOI
+fb6a   emplacement : 64404  (0xfb94) 
+0000   emplacement : 64406  (0xfb96)  ligne n° 220	LOOP_ATOI_END		NOP       		          
+4eff   emplacement : 64408  (0xfb98)  ligne n° 221	          		ADI       		SP, SP, #2		// Unstack
+0002   emplacement : 64410  (0xfb9a) 
+6f9d   emplacement : 64412  (0xfb9c)  ligne n° 222	          		LDW       		SP, BP    
+6dbf   emplacement : 64414  (0xfb9e)  ligne n° 223	          		LDW       		BP, (SP)+ 
+0200   emplacement : 64416  (0xfba0)  ligne n° 224	          		RTS       		          
+669d   emplacement : 64418  (0xfba2)  ligne n° 235	FIND_STATIC		LDW       		R6, BP    
+60ef   emplacement : 64420  (0xfba4)  ligne n° 236	          		LDW       		R0, (SP)2 		// Get parameter
+0002   emplacement : 64422  (0xfba6) 
+66c6   emplacement : 64424  (0xfba8)  ligne n° 237	STATIC_LOOP		LDW       		R6, -(R6) 
+6180   emplacement : 64426  (0xfbaa)  ligne n° 238	          		LDW       		R1, #1    
+0001   emplacement : 64428  (0xfbac) 
+f010   emplacement : 64430  (0xfbae)  ligne n° 239	          		SUB       		R0, R1, R0
+6180   emplacement : 64432  (0xfbb0)  ligne n° 240	          		LDW       		R1, #0    
+0000   emplacement : 64434  (0xfbb2) 
+4f01   emplacement : 64436  (0xfbb4)  ligne n° 241	          		CMP       		R0, R1    
+13f0   emplacement : 64438  (0xfbb6)  ligne n° 242	          		BNE       		STATIC_LOOP-$-2
+0200   emplacement : 64440  (0xfbb8)  ligne n° 243	          		RTS       		          
