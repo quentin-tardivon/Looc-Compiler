@@ -55,6 +55,7 @@ public class ASMUtils {
 
     public static String generateAffection(ASMGenerator.expressions.Variable v, SymbolTable localTDS, Expression e) {
         Variable varEntry = v.getVariableEntry();
+        System.out.println(v);
         if(localTDS.contains(varEntry))
             return ASMUtils.generateAffection(varEntry, e);
         else

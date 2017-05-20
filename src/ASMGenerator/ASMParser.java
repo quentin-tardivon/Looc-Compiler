@@ -142,7 +142,7 @@ public class ASMParser {
 	        	break;
 
 	        case "CALL":
-	        	res.add(new MethodCall(tree.getChild(0).getText(), TDS, tree.getChild(1).getText()));
+	        	res.add(new MethodCall(tree, TDS)); //TODO: Ajouter tous les cas différents
 	        	break;
 
             default:
