@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-05-20 13:49:54
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Looc.g 2017-05-20 14:46:54
 
 package core;
 
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class LoocLexer extends Lexer {
     public static final int EOF=-1;
-    public static final int T__45=45;
     public static final int T__46=46;
     public static final int T__47=47;
     public static final int T__48=48;
@@ -45,6 +44,7 @@ public class LoocLexer extends Lexer {
     public static final int T__77=77;
     public static final int T__78=78;
     public static final int T__79=79;
+    public static final int T__80=80;
     public static final int CLASS_DEC=4;
     public static final int VAR_DEC=5;
     public static final int ROOT=6;
@@ -77,15 +77,16 @@ public class LoocLexer extends Lexer {
     public static final int VARS=33;
     public static final int METHODS=34;
     public static final int ATTRIBUTES=35;
-    public static final int CLASS=36;
-    public static final int IDF=37;
-    public static final int OPER=38;
-    public static final int INT=39;
-    public static final int STRING=40;
-    public static final int WS=41;
-    public static final int NEWLINE=42;
-    public static final int COMMENT=43;
-    public static final int LINE_COMMENT=44;
+    public static final int ATTR_DEC=36;
+    public static final int CLASS=37;
+    public static final int IDF=38;
+    public static final int OPER=39;
+    public static final int INT=40;
+    public static final int STRING=41;
+    public static final int WS=42;
+    public static final int NEWLINE=43;
+    public static final int COMMENT=44;
+    public static final int LINE_COMMENT=45;
 
     // delegates
     // delegators
@@ -100,36 +101,15 @@ public class LoocLexer extends Lexer {
     }
     public String getGrammarFileName() { return "Looc.g"; }
 
-    // $ANTLR start "T__45"
-    public final void mT__45() throws RecognitionException {
-        try {
-            int _type = T__45;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:7:7: ( 'class' )
-            // Looc.g:7:9: 'class'
-            {
-            match("class"); 
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__45"
-
     // $ANTLR start "T__46"
     public final void mT__46() throws RecognitionException {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:8:7: ( 'inherit' )
-            // Looc.g:8:9: 'inherit'
+            // Looc.g:7:7: ( 'class' )
+            // Looc.g:7:9: 'class'
             {
-            match("inherit"); 
+            match("class"); 
 
 
             }
@@ -147,10 +127,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:9:7: ( '=' )
-            // Looc.g:9:9: '='
+            // Looc.g:8:7: ( 'inherit' )
+            // Looc.g:8:9: 'inherit'
             {
-            match('='); 
+            match("inherit"); 
+
 
             }
 
@@ -167,10 +148,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:10:7: ( '(' )
-            // Looc.g:10:9: '('
+            // Looc.g:9:7: ( '=' )
+            // Looc.g:9:9: '='
             {
-            match('('); 
+            match('='); 
 
             }
 
@@ -187,10 +168,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:11:7: ( ')' )
-            // Looc.g:11:9: ')'
+            // Looc.g:10:7: ( '(' )
+            // Looc.g:10:9: '('
             {
-            match(')'); 
+            match('('); 
 
             }
 
@@ -207,11 +188,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:12:7: ( 'method' )
-            // Looc.g:12:9: 'method'
+            // Looc.g:11:7: ( ')' )
+            // Looc.g:11:9: ')'
             {
-            match("method"); 
-
+            match(')'); 
 
             }
 
@@ -228,10 +208,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:13:7: ( ':' )
-            // Looc.g:13:9: ':'
+            // Looc.g:12:7: ( 'method' )
+            // Looc.g:12:9: 'method'
             {
-            match(':'); 
+            match("method"); 
+
 
             }
 
@@ -248,10 +229,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:14:7: ( '{' )
-            // Looc.g:14:9: '{'
+            // Looc.g:13:7: ( ':' )
+            // Looc.g:13:9: ':'
             {
-            match('{'); 
+            match(':'); 
 
             }
 
@@ -268,10 +249,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:15:7: ( '}' )
-            // Looc.g:15:9: '}'
+            // Looc.g:14:7: ( '{' )
+            // Looc.g:14:9: '{'
             {
-            match('}'); 
+            match('{'); 
 
             }
 
@@ -288,10 +269,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:16:7: ( ',' )
-            // Looc.g:16:9: ','
+            // Looc.g:15:7: ( '}' )
+            // Looc.g:15:9: '}'
             {
-            match(','); 
+            match('}'); 
 
             }
 
@@ -308,11 +289,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:17:7: ( 'var' )
-            // Looc.g:17:9: 'var'
+            // Looc.g:16:7: ( ',' )
+            // Looc.g:16:9: ','
             {
-            match("var"); 
-
+            match(','); 
 
             }
 
@@ -329,10 +309,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:18:7: ( ';' )
-            // Looc.g:18:9: ';'
+            // Looc.g:17:7: ( 'var' )
+            // Looc.g:17:9: 'var'
             {
-            match(';'); 
+            match("var"); 
+
 
             }
 
@@ -349,11 +330,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:19:7: ( 'int' )
-            // Looc.g:19:9: 'int'
+            // Looc.g:18:7: ( ';' )
+            // Looc.g:18:9: ';'
             {
-            match("int"); 
-
+            match(';'); 
 
             }
 
@@ -370,10 +350,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:20:7: ( 'string' )
-            // Looc.g:20:9: 'string'
+            // Looc.g:19:7: ( 'int' )
+            // Looc.g:19:9: 'int'
             {
-            match("string"); 
+            match("int"); 
 
 
             }
@@ -391,10 +371,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__59;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:21:7: ( ':=' )
-            // Looc.g:21:9: ':='
+            // Looc.g:20:7: ( 'string' )
+            // Looc.g:20:9: 'string'
             {
-            match(":="); 
+            match("string"); 
 
 
             }
@@ -412,10 +392,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__60;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:22:7: ( 'for' )
-            // Looc.g:22:9: 'for'
+            // Looc.g:21:7: ( ':=' )
+            // Looc.g:21:9: ':='
             {
-            match("for"); 
+            match(":="); 
 
 
             }
@@ -433,10 +413,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__61;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:23:7: ( 'in' )
-            // Looc.g:23:9: 'in'
+            // Looc.g:22:7: ( 'for' )
+            // Looc.g:22:9: 'for'
             {
-            match("in"); 
+            match("for"); 
 
 
             }
@@ -454,10 +434,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:24:7: ( '..' )
-            // Looc.g:24:9: '..'
+            // Looc.g:23:7: ( 'in' )
+            // Looc.g:23:9: 'in'
             {
-            match(".."); 
+            match("in"); 
 
 
             }
@@ -475,10 +455,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:25:7: ( 'do' )
-            // Looc.g:25:9: 'do'
+            // Looc.g:24:7: ( '..' )
+            // Looc.g:24:9: '..'
             {
-            match("do"); 
+            match(".."); 
 
 
             }
@@ -496,10 +476,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:26:7: ( 'end' )
-            // Looc.g:26:9: 'end'
+            // Looc.g:25:7: ( 'do' )
+            // Looc.g:25:9: 'do'
             {
-            match("end"); 
+            match("do"); 
 
 
             }
@@ -517,10 +497,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:27:7: ( 'if' )
-            // Looc.g:27:9: 'if'
+            // Looc.g:26:7: ( 'end' )
+            // Looc.g:26:9: 'end'
             {
-            match("if"); 
+            match("end"); 
 
 
             }
@@ -538,10 +518,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:28:7: ( 'then' )
-            // Looc.g:28:9: 'then'
+            // Looc.g:27:7: ( 'if' )
+            // Looc.g:27:9: 'if'
             {
-            match("then"); 
+            match("if"); 
 
 
             }
@@ -559,10 +539,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:29:7: ( 'else' )
-            // Looc.g:29:9: 'else'
+            // Looc.g:28:7: ( 'then' )
+            // Looc.g:28:9: 'then'
             {
-            match("else"); 
+            match("then"); 
 
 
             }
@@ -580,10 +560,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:30:7: ( 'fi' )
-            // Looc.g:30:9: 'fi'
+            // Looc.g:29:7: ( 'else' )
+            // Looc.g:29:9: 'else'
             {
-            match("fi"); 
+            match("else"); 
 
 
             }
@@ -601,10 +581,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:31:7: ( 'new' )
-            // Looc.g:31:9: 'new'
+            // Looc.g:30:7: ( 'fi' )
+            // Looc.g:30:9: 'fi'
             {
-            match("new"); 
+            match("fi"); 
 
 
             }
@@ -622,10 +602,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:32:7: ( '+' )
-            // Looc.g:32:9: '+'
+            // Looc.g:31:7: ( 'new' )
+            // Looc.g:31:9: 'new'
             {
-            match('+'); 
+            match("new"); 
+
 
             }
 
@@ -642,10 +623,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__71;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:33:7: ( '-' )
-            // Looc.g:33:9: '-'
+            // Looc.g:32:7: ( '+' )
+            // Looc.g:32:9: '+'
             {
-            match('-'); 
+            match('+'); 
 
             }
 
@@ -662,10 +643,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__72;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:34:7: ( '*' )
-            // Looc.g:34:9: '*'
+            // Looc.g:33:7: ( '-' )
+            // Looc.g:33:9: '-'
             {
-            match('*'); 
+            match('-'); 
 
             }
 
@@ -682,10 +663,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__73;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:35:7: ( '/' )
-            // Looc.g:35:9: '/'
+            // Looc.g:34:7: ( '*' )
+            // Looc.g:34:9: '*'
             {
-            match('/'); 
+            match('*'); 
 
             }
 
@@ -702,11 +683,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__74;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:36:7: ( 'this' )
-            // Looc.g:36:9: 'this'
+            // Looc.g:35:7: ( '/' )
+            // Looc.g:35:9: '/'
             {
-            match("this"); 
-
+            match('/'); 
 
             }
 
@@ -723,10 +703,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__75;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:37:7: ( 'super' )
-            // Looc.g:37:9: 'super'
+            // Looc.g:36:7: ( 'this' )
+            // Looc.g:36:9: 'this'
             {
-            match("super"); 
+            match("this"); 
 
 
             }
@@ -744,10 +724,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__76;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:38:7: ( '.' )
-            // Looc.g:38:9: '.'
+            // Looc.g:37:7: ( 'super' )
+            // Looc.g:37:9: 'super'
             {
-            match('.'); 
+            match("super"); 
+
 
             }
 
@@ -764,11 +745,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__77;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:39:7: ( 'write' )
-            // Looc.g:39:9: 'write'
+            // Looc.g:38:7: ( '.' )
+            // Looc.g:38:9: '.'
             {
-            match("write"); 
-
+            match('.'); 
 
             }
 
@@ -785,10 +765,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__78;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:40:7: ( 'return' )
-            // Looc.g:40:9: 'return'
+            // Looc.g:39:7: ( 'write' )
+            // Looc.g:39:9: 'write'
             {
-            match("return"); 
+            match("write"); 
 
 
             }
@@ -806,6 +786,27 @@ public class LoocLexer extends Lexer {
         try {
             int _type = T__79;
             int _channel = DEFAULT_TOKEN_CHANNEL;
+            // Looc.g:40:7: ( 'return' )
+            // Looc.g:40:9: 'return'
+            {
+            match("return"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__79"
+
+    // $ANTLR start "T__80"
+    public final void mT__80() throws RecognitionException {
+        try {
+            int _type = T__80;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // Looc.g:41:7: ( 'read' )
             // Looc.g:41:9: 'read'
             {
@@ -820,24 +821,24 @@ public class LoocLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__79"
+    // $ANTLR end "T__80"
 
     // $ANTLR start "IDF"
     public final void mIDF() throws RecognitionException {
         try {
             int _type = IDF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:133:4: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // Looc.g:133:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // Looc.g:135:4: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // Looc.g:135:7: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
-            // Looc.g:133:7: ( 'a' .. 'z' )
-            // Looc.g:133:8: 'a' .. 'z'
+            // Looc.g:135:7: ( 'a' .. 'z' )
+            // Looc.g:135:8: 'a' .. 'z'
             {
             matchRange('a','z'); 
 
             }
 
-            // Looc.g:133:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // Looc.g:135:17: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop1:
             do {
                 int alt1=2;
@@ -886,17 +887,17 @@ public class LoocLexer extends Lexer {
         try {
             int _type = CLASS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:135:6: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )* )
-            // Looc.g:135:8: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )*
+            // Looc.g:137:6: ( ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )* )
+            // Looc.g:137:8: ( 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' )*
             {
-            // Looc.g:135:8: ( 'A' .. 'Z' )
-            // Looc.g:135:9: 'A' .. 'Z'
+            // Looc.g:137:8: ( 'A' .. 'Z' )
+            // Looc.g:137:9: 'A' .. 'Z'
             {
             matchRange('A','Z'); 
 
             }
 
-            // Looc.g:135:18: ( 'a' .. 'z' | 'A' .. 'Z' )*
+            // Looc.g:137:18: ( 'a' .. 'z' | 'A' .. 'Z' )*
             loop2:
             do {
                 int alt2=2;
@@ -945,10 +946,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:137:4: ( ( '0' .. '9' )+ )
-            // Looc.g:137:6: ( '0' .. '9' )+
+            // Looc.g:139:4: ( ( '0' .. '9' )+ )
+            // Looc.g:139:6: ( '0' .. '9' )+
             {
-            // Looc.g:137:6: ( '0' .. '9' )+
+            // Looc.g:139:6: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -962,7 +963,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // Looc.g:137:6: '0' .. '9'
+            	    // Looc.g:139:6: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -994,11 +995,11 @@ public class LoocLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:139:7: ( '\"' ( . )* '\"' )
-            // Looc.g:139:9: '\"' ( . )* '\"'
+            // Looc.g:141:7: ( '\"' ( . )* '\"' )
+            // Looc.g:141:9: '\"' ( . )* '\"'
             {
             match('\"'); 
-            // Looc.g:139:12: ( . )*
+            // Looc.g:141:12: ( . )*
             loop4:
             do {
                 int alt4=2;
@@ -1014,7 +1015,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // Looc.g:139:13: .
+            	    // Looc.g:141:13: .
             	    {
             	    matchAny(); 
 
@@ -1043,7 +1044,7 @@ public class LoocLexer extends Lexer {
         try {
             int _type = OPER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:141:5: ( '<' | '<=' | '>' | '>=' | '==' | '!=' )
+            // Looc.g:143:5: ( '<' | '<=' | '>' | '>=' | '==' | '!=' )
             int alt5=6;
             switch ( input.LA(1) ) {
             case '<':
@@ -1087,14 +1088,14 @@ public class LoocLexer extends Lexer {
 
             switch (alt5) {
                 case 1 :
-                    // Looc.g:141:8: '<'
+                    // Looc.g:143:8: '<'
                     {
                     match('<'); 
 
                     }
                     break;
                 case 2 :
-                    // Looc.g:141:12: '<='
+                    // Looc.g:143:12: '<='
                     {
                     match("<="); 
 
@@ -1102,14 +1103,14 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // Looc.g:141:17: '>'
+                    // Looc.g:143:17: '>'
                     {
                     match('>'); 
 
                     }
                     break;
                 case 4 :
-                    // Looc.g:141:21: '>='
+                    // Looc.g:143:21: '>='
                     {
                     match(">="); 
 
@@ -1117,7 +1118,7 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // Looc.g:141:26: '=='
+                    // Looc.g:143:26: '=='
                     {
                     match("=="); 
 
@@ -1125,7 +1126,7 @@ public class LoocLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // Looc.g:141:31: '!='
+                    // Looc.g:143:31: '!='
                     {
                     match("!="); 
 
@@ -1147,10 +1148,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:143:3: ( ( ' ' | '\\t' | '\\n' )+ )
-            // Looc.g:143:6: ( ' ' | '\\t' | '\\n' )+
+            // Looc.g:145:3: ( ( ' ' | '\\t' | '\\n' )+ )
+            // Looc.g:145:6: ( ' ' | '\\t' | '\\n' )+
             {
-            // Looc.g:143:6: ( ' ' | '\\t' | '\\n' )+
+            // Looc.g:145:6: ( ' ' | '\\t' | '\\n' )+
             int cnt6=0;
             loop6:
             do {
@@ -1205,10 +1206,10 @@ public class LoocLexer extends Lexer {
         try {
             int _type = NEWLINE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:145:8: ( ( '\\r' )? '\\n' )
-            // Looc.g:145:10: ( '\\r' )? '\\n'
+            // Looc.g:147:8: ( ( '\\r' )? '\\n' )
+            // Looc.g:147:10: ( '\\r' )? '\\n'
             {
-            // Looc.g:145:10: ( '\\r' )?
+            // Looc.g:147:10: ( '\\r' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1217,7 +1218,7 @@ public class LoocLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // Looc.g:145:10: '\\r'
+                    // Looc.g:147:10: '\\r'
                     {
                     match('\r'); 
 
@@ -1243,15 +1244,15 @@ public class LoocLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:148:2: ( '/*' ( ( . )* ) '*/' )
-            // Looc.g:148:4: '/*' ( ( . )* ) '*/'
+            // Looc.g:150:2: ( '/*' ( ( . )* ) '*/' )
+            // Looc.g:150:4: '/*' ( ( . )* ) '*/'
             {
             match("/*"); 
 
-            // Looc.g:148:9: ( ( . )* )
-            // Looc.g:148:10: ( . )*
+            // Looc.g:150:9: ( ( . )* )
+            // Looc.g:150:10: ( . )*
             {
-            // Looc.g:148:10: ( . )*
+            // Looc.g:150:10: ( . )*
             loop8:
             do {
                 int alt8=2;
@@ -1276,7 +1277,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // Looc.g:148:10: .
+            	    // Looc.g:150:10: .
             	    {
             	    matchAny(); 
 
@@ -1310,15 +1311,15 @@ public class LoocLexer extends Lexer {
         try {
             int _type = LINE_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Looc.g:151:2: ( '//' ( ( . )* ) '\\n' )
-            // Looc.g:151:4: '//' ( ( . )* ) '\\n'
+            // Looc.g:153:2: ( '//' ( ( . )* ) '\\n' )
+            // Looc.g:153:4: '//' ( ( . )* ) '\\n'
             {
             match("//"); 
 
-            // Looc.g:151:9: ( ( . )* )
-            // Looc.g:151:10: ( . )*
+            // Looc.g:153:9: ( ( . )* )
+            // Looc.g:153:10: ( . )*
             {
-            // Looc.g:151:10: ( . )*
+            // Looc.g:153:10: ( . )*
             loop9:
             do {
                 int alt9=2;
@@ -1334,7 +1335,7 @@ public class LoocLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // Looc.g:151:10: .
+            	    // Looc.g:153:10: .
             	    {
             	    matchAny(); 
 
@@ -1363,252 +1364,252 @@ public class LoocLexer extends Lexer {
     // $ANTLR end "LINE_COMMENT"
 
     public void mTokens() throws RecognitionException {
-        // Looc.g:1:8: ( T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | IDF | CLASS | INT | STRING | OPER | WS | NEWLINE | COMMENT | LINE_COMMENT )
+        // Looc.g:1:8: ( T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | IDF | CLASS | INT | STRING | OPER | WS | NEWLINE | COMMENT | LINE_COMMENT )
         int alt10=44;
         alt10 = dfa10.predict(input);
         switch (alt10) {
             case 1 :
-                // Looc.g:1:10: T__45
-                {
-                mT__45(); 
-
-                }
-                break;
-            case 2 :
-                // Looc.g:1:16: T__46
+                // Looc.g:1:10: T__46
                 {
                 mT__46(); 
 
                 }
                 break;
-            case 3 :
-                // Looc.g:1:22: T__47
+            case 2 :
+                // Looc.g:1:16: T__47
                 {
                 mT__47(); 
 
                 }
                 break;
-            case 4 :
-                // Looc.g:1:28: T__48
+            case 3 :
+                // Looc.g:1:22: T__48
                 {
                 mT__48(); 
 
                 }
                 break;
-            case 5 :
-                // Looc.g:1:34: T__49
+            case 4 :
+                // Looc.g:1:28: T__49
                 {
                 mT__49(); 
 
                 }
                 break;
-            case 6 :
-                // Looc.g:1:40: T__50
+            case 5 :
+                // Looc.g:1:34: T__50
                 {
                 mT__50(); 
 
                 }
                 break;
-            case 7 :
-                // Looc.g:1:46: T__51
+            case 6 :
+                // Looc.g:1:40: T__51
                 {
                 mT__51(); 
 
                 }
                 break;
-            case 8 :
-                // Looc.g:1:52: T__52
+            case 7 :
+                // Looc.g:1:46: T__52
                 {
                 mT__52(); 
 
                 }
                 break;
-            case 9 :
-                // Looc.g:1:58: T__53
+            case 8 :
+                // Looc.g:1:52: T__53
                 {
                 mT__53(); 
 
                 }
                 break;
-            case 10 :
-                // Looc.g:1:64: T__54
+            case 9 :
+                // Looc.g:1:58: T__54
                 {
                 mT__54(); 
 
                 }
                 break;
-            case 11 :
-                // Looc.g:1:70: T__55
+            case 10 :
+                // Looc.g:1:64: T__55
                 {
                 mT__55(); 
 
                 }
                 break;
-            case 12 :
-                // Looc.g:1:76: T__56
+            case 11 :
+                // Looc.g:1:70: T__56
                 {
                 mT__56(); 
 
                 }
                 break;
-            case 13 :
-                // Looc.g:1:82: T__57
+            case 12 :
+                // Looc.g:1:76: T__57
                 {
                 mT__57(); 
 
                 }
                 break;
-            case 14 :
-                // Looc.g:1:88: T__58
+            case 13 :
+                // Looc.g:1:82: T__58
                 {
                 mT__58(); 
 
                 }
                 break;
-            case 15 :
-                // Looc.g:1:94: T__59
+            case 14 :
+                // Looc.g:1:88: T__59
                 {
                 mT__59(); 
 
                 }
                 break;
-            case 16 :
-                // Looc.g:1:100: T__60
+            case 15 :
+                // Looc.g:1:94: T__60
                 {
                 mT__60(); 
 
                 }
                 break;
-            case 17 :
-                // Looc.g:1:106: T__61
+            case 16 :
+                // Looc.g:1:100: T__61
                 {
                 mT__61(); 
 
                 }
                 break;
-            case 18 :
-                // Looc.g:1:112: T__62
+            case 17 :
+                // Looc.g:1:106: T__62
                 {
                 mT__62(); 
 
                 }
                 break;
-            case 19 :
-                // Looc.g:1:118: T__63
+            case 18 :
+                // Looc.g:1:112: T__63
                 {
                 mT__63(); 
 
                 }
                 break;
-            case 20 :
-                // Looc.g:1:124: T__64
+            case 19 :
+                // Looc.g:1:118: T__64
                 {
                 mT__64(); 
 
                 }
                 break;
-            case 21 :
-                // Looc.g:1:130: T__65
+            case 20 :
+                // Looc.g:1:124: T__65
                 {
                 mT__65(); 
 
                 }
                 break;
-            case 22 :
-                // Looc.g:1:136: T__66
+            case 21 :
+                // Looc.g:1:130: T__66
                 {
                 mT__66(); 
 
                 }
                 break;
-            case 23 :
-                // Looc.g:1:142: T__67
+            case 22 :
+                // Looc.g:1:136: T__67
                 {
                 mT__67(); 
 
                 }
                 break;
-            case 24 :
-                // Looc.g:1:148: T__68
+            case 23 :
+                // Looc.g:1:142: T__68
                 {
                 mT__68(); 
 
                 }
                 break;
-            case 25 :
-                // Looc.g:1:154: T__69
+            case 24 :
+                // Looc.g:1:148: T__69
                 {
                 mT__69(); 
 
                 }
                 break;
-            case 26 :
-                // Looc.g:1:160: T__70
+            case 25 :
+                // Looc.g:1:154: T__70
                 {
                 mT__70(); 
 
                 }
                 break;
-            case 27 :
-                // Looc.g:1:166: T__71
+            case 26 :
+                // Looc.g:1:160: T__71
                 {
                 mT__71(); 
 
                 }
                 break;
-            case 28 :
-                // Looc.g:1:172: T__72
+            case 27 :
+                // Looc.g:1:166: T__72
                 {
                 mT__72(); 
 
                 }
                 break;
-            case 29 :
-                // Looc.g:1:178: T__73
+            case 28 :
+                // Looc.g:1:172: T__73
                 {
                 mT__73(); 
 
                 }
                 break;
-            case 30 :
-                // Looc.g:1:184: T__74
+            case 29 :
+                // Looc.g:1:178: T__74
                 {
                 mT__74(); 
 
                 }
                 break;
-            case 31 :
-                // Looc.g:1:190: T__75
+            case 30 :
+                // Looc.g:1:184: T__75
                 {
                 mT__75(); 
 
                 }
                 break;
-            case 32 :
-                // Looc.g:1:196: T__76
+            case 31 :
+                // Looc.g:1:190: T__76
                 {
                 mT__76(); 
 
                 }
                 break;
-            case 33 :
-                // Looc.g:1:202: T__77
+            case 32 :
+                // Looc.g:1:196: T__77
                 {
                 mT__77(); 
 
                 }
                 break;
-            case 34 :
-                // Looc.g:1:208: T__78
+            case 33 :
+                // Looc.g:1:202: T__78
                 {
                 mT__78(); 
 
                 }
                 break;
-            case 35 :
-                // Looc.g:1:214: T__79
+            case 34 :
+                // Looc.g:1:208: T__79
                 {
                 mT__79(); 
+
+                }
+                break;
+            case 35 :
+                // Looc.g:1:214: T__80
+                {
+                mT__80(); 
 
                 }
                 break;
@@ -1876,7 +1877,7 @@ public class LoocLexer extends Lexer {
             this.transition = DFA10_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | IDF | CLASS | INT | STRING | OPER | WS | NEWLINE | COMMENT | LINE_COMMENT );";
+            return "1:1: Tokens : ( T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | IDF | CLASS | INT | STRING | OPER | WS | NEWLINE | COMMENT | LINE_COMMENT );";
         }
     }
  

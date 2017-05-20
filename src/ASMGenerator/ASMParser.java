@@ -27,7 +27,7 @@ public class ASMParser {
                 }
                 break;
 
-            case "VARS":
+            case "ATTRIBUTES":
                 break;
 
             case "METHODS":
