@@ -14,18 +14,13 @@ import java.util.ArrayList;
 
 public class ASMParser {
 
-
-	static int nbClass = 0;
-    private static int countBlock = 0;
-    private static EnvironmentCounter counter = new EnvironmentCounter();
-
+	private static EnvironmentCounter counter = new EnvironmentCounter();
 
     public static ArrayList<Generable> parse(Tree tree, SymbolTable TDS, ArrayList<Generable> res, ArrayList<Generable> meths) {
         switch(tree.getText()) {
             case "CLASS_DEC":
                 String className = tree.getChild(0).getText();
-                res.add(new LoocClass(className, TDS, nbClass));
-                nbClass += 4; //TODO Change 4 to size of class descriptor + nb method
+                res.add(new LoocClass(className, TDS, counter.incrementClass()));
                 int startAt = 1;
                 for (int j = startAt; j < tree.getChildCount(); j++) {
                     parse(tree.getChild(j), TDS.getClass(className), res, meths);
@@ -104,7 +99,6 @@ public class ASMParser {
                 Tree tmpFor = tree.getChild(3);
                 for (int i = 0; i < tmpFor.getChildCount(); i++) {
                     parse(tmpFor.getChild(i), TDS.getLink(forID), instFor,meths);
-
                 }
                 Block forBlock = new Block();
                 forBlock.addAllInstructions(instFor);
@@ -123,9 +117,8 @@ public class ASMParser {
                 break;
 
             case "RETURN":
-                res.add(new Return( (Variable) TDS.get(tree.getChild(0).getText())));
+                res.add(new Return( (Variable) TDS.getInfo(tree.getChild(0).getText())));
                 break;
-
 
             case "WRITE":
                 res.add(new Write(parseExpression(tree.getChild(0), TDS)));
@@ -142,7 +135,7 @@ public class ASMParser {
 	        	break;
 
 	        case "CALL":
-	        	res.add(new MethodCall(tree.getChild(0).getText(), TDS, tree.getChild(1).getText()));
+	        	res.add(new MethodCall(tree, TDS)); //TODO: Ajouter tous les cas différents
 	        	break;
 
             default:

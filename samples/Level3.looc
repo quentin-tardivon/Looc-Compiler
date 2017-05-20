@@ -1,33 +1,16 @@
 class Math =
 (
-    var pi: int;
-    var pi2: int;
-
-    method calcPi() {
-            write 34;
+    method calcPi(n: int) {
+            var h: int;
+            h := n;
+            write h;
             }
 
 )
 
-class MathPi =
-(
-    var pi: int;
-    var pi2: int;
-    var pi3: int;
-    var pi4: int;
-)
-
-
 var m : Math;
-
-var x: MathPi;
-
-var n: int;
-
+var i: int;
 m := new Math;
+i := 5;
 
-x := new MathPi;
-
-do m.calcPi();
-
-n := 10;
+do m.calcPi(i); 

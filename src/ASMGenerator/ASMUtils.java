@@ -10,6 +10,8 @@ import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
 
+import java.util.ArrayList;
+
 public class ASMUtils {
 
     private static int labelsCounter = 0;
@@ -17,6 +19,7 @@ public class ASMUtils {
     public static final int INT_SIZE = 2;
     public static final int CHAR_SIZE = 1;
     public static final int OFFSET_ENV = ADDR_SIZE * 2;
+    public static final int CLASS_DESC_SIZE = ADDR_SIZE * 2;
 
     public static final String ADD = "ADD";
     public static final String DIFF = "SUB";
@@ -55,6 +58,7 @@ public class ASMUtils {
 
     public static String generateAffection(ASMGenerator.expressions.Variable v, SymbolTable localTDS, Expression e) {
         Variable varEntry = v.getVariableEntry();
+        System.out.println(v);
         if(localTDS.contains(varEntry))
             return ASMUtils.generateAffection(varEntry, e);
         else
@@ -98,6 +102,56 @@ public class ASMUtils {
                 formatASM("", "STW", "R0, -(SP)", "// DYN") +
                 formatASM("", "LDW", "BP, SP") +
                 formatASM("", "STW", "R0, -(SP)", "// STAT");
+    }
+
+    public static String generateLoocClassDescriptor(String className, SymbolTable classTDS, int numClass) {
+        StringBuffer asm = new StringBuffer();
+        int size = 0;
+        int nbMethods = 0;
+        for(String key: classTDS.getKeyEntries()) {
+            size += ASMUtils.sizeof(classTDS.get(key));
+            nbMethods += classTDS.get(key).getName().equals(Entry.METHOD) ? 1 : 0;
+        }
+
+        asm.append(generateComment("Setup class descriptor", className));
+        asm.append(formatASM("", "LDW", "R0, #" + size) +
+                ASMWriter.formatASM("", "STW",  "R0, (BC)" + (numClass * CLASS_DESC_SIZE), "// sizeof(" + className + ") = " + size) +
+                ASMWriter.formatASM("", "LDW", "R0, #" + nbMethods) +
+                ASMWriter.formatASM("", "STW",  "R0, (BC)" + ((numClass * CLASS_DESC_SIZE) + 2), "// count methods of " + className + " = " + nbMethods + "\n\n"));
+
+        return asm.toString();
+    }
+
+
+    public static String generateLoocClassAffectation(String className, SymbolTable classTDS, int numClass) {
+        StringBuffer asm = new StringBuffer();
+        asm.append(formatASM("", "LDW", "R0, BC") +
+                formatASM("", "ADQ", (numClass * CLASS_DESC_SIZE) + ", R0") +
+                formatASM("", "STW",  "R0, -(ST)") +
+                formatASM("", "LDW", "R0, ST") +
+                addToStack("R0")
+        );
+
+        for(String key: classTDS.getKeyEntries()) {
+            if (classTDS.get(key).getName().equals(Entry.VARIABLE)) {
+                asm.append(formatASM("", "ADI", "ST, ST, #-2"));
+            }
+        }
+        return asm.toString();
+    }
+
+    public static String generateMethod(SymbolTable methodTDS, ArrayList<Generable> instructions) {
+        StringBuffer asm = new StringBuffer();
+        asm.append(generateComment("Method " + methodTDS.getName(), "Class " + methodTDS.getFather().getName()));
+        String labelMethod = methodTDS.getFather().getName() + methodTDS.getName();
+        asm.append(ASMUtils.stackStaticAndDynamic(labelMethod));
+        for(Generable g: instructions) {
+            asm.append(g.generate());
+        }
+        asm.append(ASMUtils.formatASM("", "LDW", "SP, BP")
+                + ASMUtils.formatASM("", "LDW", "BP, (SP)+"));
+        asm.append(ASMUtils.formatASM("", "RTS", ""));
+        return asm.toString();
     }
 
     public static String stackStaticAndDynamic(String label) {

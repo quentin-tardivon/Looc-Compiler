@@ -25,7 +25,7 @@ public abstract class Entry {
 	public static final String FOR = 			"For";
 	public static final String ANONYMOUS_BLOC = "Block";
 	public static final String NIL = 			"Nil";
-	public static final String ORDER = 			"Order";
+	public static final String ATTRIBUTE = 		"Attribute";
 
 	private boolean init = true;
 

@@ -16,18 +16,7 @@ public class Method extends Block implements Generable {
 
     @Override
     public String generate() {
-        StringBuffer asm = new StringBuffer();
-        asm.append(ASMUtils.formatASM("\n\n //Method " + tds.getFather().getName() + tds.getName(), "", ""));
-	    asm.append(ASMUtils.formatASM("" + tds.getFather().getName() + tds.getName(), "NOP" , ""));
-        asm.append(ASMUtils.stackStaticAndDynamic(""));
-        for(Generable g: this.instructions) {
-            asm.append(g.generate());
-        }
-		asm.append(ASMUtils.formatASM("", "LDW", "SP, BP")
-				+ ASMUtils.formatASM("", "LDW", "BP, (SP)+"));
-        asm.append(ASMUtils.formatASM("", "RTS", ""));
-
-        return asm.toString();
+        return ASMUtils.generateMethod(this.tds, this.instructions);
     }
 
     private int countParameters() {
