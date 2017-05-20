@@ -2,7 +2,19 @@ class Square = (
     var size: int;
     var perimeter: int;
     var area: int;
+
+    method init(s: int) {
+        size := s;
+    }
+
+    method print(n: int, y: int) {
+        write(n);
+        write(y);
+    }
+
 )
 
 var m : Square;
 m := new Square;
+do m.init(10);
+do m.print(5, 10);

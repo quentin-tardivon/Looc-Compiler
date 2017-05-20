@@ -7,8 +7,9 @@ import TDS.SymbolTable;
 
 public class Variable extends Expression {
 
-    private TDS.entries.Variable v;
-    private SymbolTable localTDS;
+    protected TDS.entries.Variable v;
+    protected SymbolTable localTDS;
+
     public Variable (TDS.entries.Variable v, SymbolTable TDS) {
         this.v = v;
         this.localTDS = TDS;

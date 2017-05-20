@@ -11,23 +11,19 @@ public class Parameter extends Expression {
 
 	private TDS.entries.Parameter p;
 	private SymbolTable localTDS;
+	private Expression expression;
 
-	public Parameter (TDS.entries.Parameter p, SymbolTable TDS) {
+
+	public Parameter(TDS.entries.Parameter p, Expression expression) {
 		this.p = p;
-		this.localTDS = TDS;
+		this.expression = expression;
 	}
 
 	@Override
 	public String generate(){
-		if(this.localTDS.contains(this.p))
-			return ASMUtils.generateParameter(this.p, this.localTDS);
-		else
-			return ASMUtils.generateParameterStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(this.p).getImbricationLevel(), this.p.getDepl());
+		return ASMUtils.generateParameter(this.p, this.expression);
 	}
 
-	public TDS.entries.Parameter getParameterEntry() {
-		return this.p;
-	}
 
 	public String toString() {
 		return this.p.getNameVariable();
