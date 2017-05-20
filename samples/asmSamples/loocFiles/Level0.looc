@@ -1,0 +1,14 @@
+var z : string;
+var a : int;
+
+a := 4;
+z := "MOGWA";
+
+
+{
+    a := 6;
+}
+write a;
+write z;
+
+

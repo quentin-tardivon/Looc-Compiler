@@ -12,7 +12,7 @@ import TDS.Entry;
  */
 public class Variable extends Entry {
 
-	private int depl;
+	protected int depl;
 	protected String nameVariable;
 
 	public Variable(String type, String nameVariable) {
@@ -28,9 +28,10 @@ public class Variable extends Entry {
 		this.nameVariable = nameVariable;
 	}
 
-	protected Variable(String t, String type, String nameVariable) {
-		super(t);
+	protected Variable(String entryType, String type, int depl, String nameVariable) {
+		super(entryType);
 		this.put(Entry.TYPE, type);
+		this.depl = depl;
 		this.nameVariable = nameVariable;
 	}
 

@@ -1,0 +1,11 @@
+var n : int;
+var total: int;
+n := 2;
+
+if n == 4 then
+    n := 2;
+else
+    n := 4;
+fi
+
+write n;
