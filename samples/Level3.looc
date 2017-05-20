@@ -1,33 +1,26 @@
-class Math =
-(
+class Math = (
     var pi: int;
     var pi2: int;
 
     method calcPi() {
-            write 34;
-            }
-
+        write 34;
+    }
 )
 
-class MathPi =
-(
-    var pi: int;
-    var pi2: int;
-    var pi3: int;
-    var pi4: int;
-)
+class Square = (
+    var size: int;
+    var perimeter: int;
+    var area: int;
 
+    method init() {
+        size := 3;
+    }
+
+    method getSize(): int {
+        return (size);
+    }
+)
 
 var m : Math;
-
-var x: MathPi;
-
-var n: int;
-
 m := new Math;
-
-x := new MathPi;
-
 do m.calcPi();
-
-n := 10;

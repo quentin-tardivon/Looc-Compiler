@@ -49,7 +49,7 @@ public class ASMWriter {
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
 					formatASM("BT", "EQU", "R11") +
-					formatASM("SC", "EQU", "R7\n") +
+					formatASM("BC", "EQU", "R7\n") +
 
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
@@ -81,7 +81,7 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, #NIL")+
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
-					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+					formatASM("", "LDW","BC, #CLASS_ADRS", "// load into SC the base of class descriptors")
 			);
 
 			writer.write(formatASM("\n\n//", "---------------------------------------------", "")+
