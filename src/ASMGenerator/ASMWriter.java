@@ -49,7 +49,7 @@ public class ASMWriter {
 					formatASM("BP", "EQU", "R13") +
 					formatASM("ST", "EQU", "R12") +
 					formatASM("BT", "EQU", "R11") +
-					formatASM("SC", "EQU", "R7\n") +
+					formatASM("BC", "EQU", "R7\n") +
 
 					formatASM("EXIT_EXC", "EQU", "64") +
 					formatASM("READ_EXC", "EQU", "65") +
@@ -81,7 +81,7 @@ public class ASMWriter {
 					formatASM("", "LDW","BT, #NIL")+
 					formatASM("", "STW","BT, -(ST)")+
 					formatASM("", "LDW","BT, ST") +
-					formatASM("", "LDW","SC, #CLASS_ADRS", "// load into SC the base of class descriptors")
+					formatASM("", "LDW","BC, #CLASS_ADRS", "// load into SC the base of class descriptors")
 			);
 
 			writer.write(formatASM("\n\n//", "---------------------------------------------", "")+
@@ -195,12 +195,12 @@ public class ASMWriter {
 				formatASM("","STW","R1,-(SP)")+
 
 				formatASM("LOOP_STACK","NOP","")+
-				formatASM("","LDB","R0, (R3)")+
-				//formatASM("","STB","R3,")+
-				formatASM("","STW","R0,-(SP)")+
-				formatASM("","ADQ","1,R3")+
-				formatASM("","LDB","R0, (R3)")+
-				formatASM("","CMP","R0,R1")+
+					formatASM("","LDB","R0, (R3)")+
+					//formatASM("","STB","R3,")+
+					formatASM("","STW","R0,-(SP)")+
+					formatASM("","ADQ","1,R3")+
+					formatASM("","LDB","R0, (R3)")+
+					formatASM("","CMP","R0,R1")+
 				formatASM("","BNE","LOOP_STACK-$-2")+
 
 
@@ -211,6 +211,9 @@ public class ASMWriter {
 				formatASM("","LDW","R3,(SP)")+
 				formatASM("","LDQ","10,R10")+
 				formatASM("LOOP_ATOI","NOP","")+
+					formatASM("","LDW","R1, #0x002D")+
+					formatASM("","CMP","R3,R1")+
+					formatASM("","BEQ","ATOI_NEG-$-2")+
 					formatASM("","LDW","R1, #0")+
 					formatASM("","CMP","R3,R1")+
 					formatASM("","BEQ","LOOP_ATOI_END-$-2")+
@@ -226,6 +229,15 @@ public class ASMWriter {
 					formatASM("","LDW","R1, #10")+
 					formatASM("","MUL","R10,R1,R10")+
 				formatASM("","JEA","@LOOP_ATOI")+
+
+				formatASM("ATOI_NEG","NOP","")+
+				formatASM("","LDW","R1, #0xFFFF")+
+				formatASM("","SUB","R1,R0,R0")+
+				formatASM("","ADQ","1,R0")+
+				formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
+				formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
+
+
 
 				formatASM("LOOP_ATOI_END","NOP","")+
 				formatASM("", "ADI", "SP, SP, #" + ASMUtils.INT_SIZE, "// Unstack")+
