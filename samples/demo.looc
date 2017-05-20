@@ -27,7 +27,8 @@ class Math =
 	}
 
 	method reponse() {
-	    var question;
+	    var question: int;
+	    question := 0;
 	    read question;
 
 	    write const;
@@ -84,4 +85,4 @@ write m.pow(2, 3);
 
 write "Geo power:";
 
-write g.pow(2, 3):
+write g.pow(2, 3);
