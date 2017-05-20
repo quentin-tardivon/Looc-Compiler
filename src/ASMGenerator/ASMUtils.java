@@ -168,7 +168,9 @@ public class ASMUtils {
 
         switch (e.getType()) {
             case Keywords.STRING :
-                asm.append(formatASM("", "TRP", "#WRITE_EXC"));
+                asm.append(formatASM("", "TRP", "#WRITE_EXC") +
+	                    formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
+		                formatASM("", "TRP", "#WRITE_EXC"));
                 break;
             case Keywords.INTEGER:
                 asm.append(
