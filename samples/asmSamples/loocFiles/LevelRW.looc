@@ -1,0 +1,23 @@
+var i : int;
+var j : int;
+var x : int;
+var z : string;
+
+i := 10;
+x := 1;
+
+if i<20 then
+    j := -455;
+    i := 3333;
+    //read x;
+fi
+
+write "i+j :";
+write i+j;
+i := j-i;
+z := "helloworld";
+write "i (i:=j-i) :";
+write i;
+write "x+i/100 :";
+write x+i/100;
+write z;
