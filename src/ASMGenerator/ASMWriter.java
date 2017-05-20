@@ -260,12 +260,27 @@ public class ASMWriter {
 				ASMUtils.generateComment(BUILTIN_FIND_STATIC + " builtin:", "Use static links to load", "variable not declared in", "the current environment") +
 				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
 				ASMUtils.loadParameter("R0", 1) +
+				ASMUtils.formatASM("LOOP_STATIC", "LDW", "R1, #0") +
+				ASMUtils.formatASM("", "CMP", "R0, R1") +
+				ASMUtils.formatASM( "", "BEQ", "END_STATIC-$-2") +
+				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +
+				ASMUtils.formatASM("", "LDW", "R1, #1") +
+				ASMUtils.formatASM("", "SUB", "R0, R1, R0") +
+				ASMUtils.formatASM("", "JEA", "@LOOP_STATIC") +
+				ASMUtils.formatASM("END_STATIC", "RTS", "");
+
+		/*return formatASM("\n\n", "", "") +
+				ASMUtils.generateComment(BUILTIN_FIND_STATIC + " builtin:", "Use static links to load", "variable not declared in", "the current environment") +
+				ASMUtils.formatASM(BUILTIN_FIND_STATIC, "LDW", "R6, BP") +
+				ASMUtils.loadParameter("R0", 1) +
 				ASMUtils.formatASM( "STATIC_LOOP", "LDW", "R6, -(R6)") +
 				ASMUtils.formatASM("", "LDW", "R1, #1") +
 				ASMUtils.formatASM("", "SUB", "R0, R1, R0") +
 				ASMUtils.formatASM("", "LDW", "R1, #0") +
 				ASMUtils.formatASM("", "CMP", "R0, R1") +
-				ASMUtils.formatASM( "", "BNE", "STATIC_LOOP-$-2") +
-				ASMUtils.formatASM("", "RTS", "");
+				ASMUtils.formatASM( "", "BGT", "STATIC_LOOP-$-2") +
+				ASMUtils.formatASM("", "RTS", "");*/
 	}
+
+
 }

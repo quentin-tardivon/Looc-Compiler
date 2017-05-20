@@ -22,7 +22,7 @@ public class LoocClassAffect extends Expression {
 
 	@Override
 	public String generate() {
-		return ASMUtils.generateLoocClassAffectation(this.name, this.classTDS, this.numClass);
+		return ASMUtils.generateLoocClassAffectation(this.classTDS, this.numClass);
 	}
 
 	@Override
