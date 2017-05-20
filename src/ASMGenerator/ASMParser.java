@@ -9,7 +9,6 @@ import ASMGenerator.instructions.If;
 import TDS.Entry;
 import TDS.SymbolTable;
 
-import TDS.entries.*;
 import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 import utils.EnvironmentCounter;

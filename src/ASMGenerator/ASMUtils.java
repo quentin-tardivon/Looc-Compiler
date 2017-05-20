@@ -26,12 +26,12 @@ public class ASMUtils {
     public static final String DIFF = "SUB";
     public static final String MUL = "MUL";
     public static final String DIV = "DIV";
-    public static final String LT = "BGE";
-    public static final String LE = "BGT";
-    public static final String GT = "BLE";
-    public static final String GE = "BLW";
-    public static final String EQ = "BNE";
-    public static final String NE = "BEQ";
+    public static final String LT = "BLW";
+    public static final String LE = "BLE";
+    public static final String GT = "BGT";
+    public static final String GE = "BGE";
+    public static final String EQ = "BEQ";
+    public static final String NE = "BNE";
 
 
 
@@ -256,7 +256,8 @@ public class ASMUtils {
         return removeFromStack("R2") +
                 removeFromStack("R1") +
                 formatASM("", "CMP", "R1, R2") +
-                formatASM("", operator, gotoLabel+"-($+2)");
+                formatASM("", operator, "2")+
+		        formatASM("", "JEA", "@" + gotoLabel);
     }
 
     public static int generateLabel() {
