@@ -27,6 +27,10 @@ class AssemblerTest extends GroovyTestCase {
         compileAndGenerate("Level2.looc", "+4", "+21", "+5")
     }
 
+    void testASmLevelRW() {
+        compileAndGenerate("LevelRW.looc", "i+j :", "+2878","i (i:=j-i) :", "-3788", "x+i/100 :", "-36","helloworld")
+    }
+
 
     public compileAndGenerate(String filename, String ... res) {
         File f = new File(LOOC_PATH + filename);

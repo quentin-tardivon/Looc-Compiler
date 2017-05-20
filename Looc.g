@@ -36,6 +36,8 @@ tokens{
 	BLOCK;
 	VARS;
 	METHODS;
+	ATTRIBUTES;
+	ATTR_DEC;
 }
 
 
@@ -59,7 +61,7 @@ class_decl:			'class' CLASS ('inherit' CLASS)?  '=' '('class_item_decl')' -> ^(C
 
 
 
-class_item_decl:	var_decl* method_decl* -> ^(VARS var_decl*)? ^(METHODS method_decl*)?;
+class_item_decl:	attr_decl* method_decl* -> ^(ATTRIBUTES attr_decl*)? ^(METHODS method_decl*)?;
 
 
 method_decl: 		'method' IDF '(' method_args? ')' function_decl -> ^(METHOD IDF method_args? function_decl);
@@ -74,6 +76,7 @@ method_args: 	method_arg (',' method_arg)* -> ^(FORMAL_PARAMS method_arg (method
 method_arg: IDF ':' type -> ^(FORMAL_PARAM IDF type);
 
 var_decl: 	'var' IDF ':' type ';' -> ^(VAR_DEC IDF type);
+attr_decl: 	'var' IDF ':' type ';' -> ^(ATTR_DEC IDF type);
 
 
 type: 		'int' -> 'int'
