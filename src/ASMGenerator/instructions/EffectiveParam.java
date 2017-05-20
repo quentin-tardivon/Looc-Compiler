@@ -15,7 +15,7 @@ public class EffectiveParam extends Variable implements Generable {
 
     @Override
     public String generate() {
-        return ASMUtils.generateEffectiveParam((Parameter) this.v);
+        return ASMUtils.generateEffectiveParam((Parameter) this.v, this.localTDS);
     }
 
 }
