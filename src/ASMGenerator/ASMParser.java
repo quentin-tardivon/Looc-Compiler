@@ -1,11 +1,15 @@
 package ASMGenerator;
 
 import ASMGenerator.expressions.*;
+import ASMGenerator.expressions.Parameter;
+import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.*;
 import ASMGenerator.instructions.*;
+import ASMGenerator.instructions.If;
 import TDS.Entry;
 import TDS.SymbolTable;
-import TDS.entries.Variable;
+
+import TDS.entries.*;
 import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 import utils.EnvironmentCounter;
@@ -92,7 +96,7 @@ public class ASMParser {
 
             case "FOR":
                 String forID = EnvironmentCounter.generateID(Entry.FOR, counter.incrementFor() ,TDS.getImbricationLevel() + 1);
-                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
+                ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
                 Affectation a = new Affectation(vFor, TDS, parseExpression(tree.getChild(1), TDS));
                 Comparison c = new LowerOrEqual(vFor, parseExpression(tree.getChild(2), TDS));
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
@@ -107,17 +111,17 @@ public class ASMParser {
 
 
             case "VAR_DEC":
-                res.add(new Declaration((Variable) TDS.get(tree.getChild(0).getText())));
+                res.add(new Declaration((TDS.entries.Variable) TDS.get(tree.getChild(0).getText())));
                 break;
 
             case "AFFECT":
-                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
+                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
                 Expression right = parseExpression(tree.getChild(1), TDS);
                 res.add(new Affectation(varAffect, TDS, right));
                 break;
 
             case "RETURN":
-                res.add(new Return( (Variable) TDS.getInfo(tree.getChild(0).getText())));
+                res.add(new Return( (TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText())));
                 break;
 
             case "WRITE":
@@ -182,7 +186,14 @@ public class ASMParser {
                 if(node.getText().matches("\".*\""))
                     return new ConstantString(node.getText());
                 else
-                    return new ASMGenerator.expressions.Variable((Variable) TDS.getInfo(node.getText()), TDS);
+
+                	if (TDS.getInfo(node.getText()).getClass().toString().equals("class TDS.entries.Parameter")) {
+		                return new ASMGenerator.expressions.Parameter((TDS.entries.Parameter) TDS.getInfo(node.getText()), TDS);
+	                }
+	                else {
+		                return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
+	                }
+
         }
     }
 

@@ -34,6 +34,7 @@ public class MethodCall extends Expression{
 	public String generate() {
 
 		String buf = "";
+		System.out.print(this.tds.toString());
 		for (int i=0; i < this.tree.getChild(1).getChildCount(); i++) {
 			System.out.println(tree.getChild(1).getChild(i).getText());
 			buf = ASMUtils.formatASM("", "LDW", "R0, #-" + ((TDS.entries.Variable) this.tds.get(tree.getChild(1).getChild(i).getText())).getDepl() + OFFSET_ENV)

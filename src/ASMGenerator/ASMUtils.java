@@ -383,7 +383,7 @@ public class ASMUtils {
 	}
 
 	private static String generateParameter(Parameter p, String baseReg) {
-		return formatASM("", "LDW", "R1, (" + baseReg + ")+" + (OFFSET_ENV + p.getDepl())) + addToStack("R1");
+		return formatASM("", "LDW", "R1, (" + baseReg + ")" + (-p.getDepl())) + addToStack("R1");
 	}
 
 }
