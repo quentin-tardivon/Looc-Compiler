@@ -9,7 +9,7 @@ public class MismatchTypeException extends LoocException {
 
 
     public MismatchTypeException(String filename, Tree node, String type1 , String type2, String idf1) {
-        super(filename, node, "Cannot assign an '" + type1 + "' to a '" + type2 +"'"  );
+        super(filename, node, "Cannot assign a '" + type1 + "' to a '" + type2 +"'"  );
     }
 
 }
