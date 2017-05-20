@@ -154,12 +154,24 @@ public class CommonTreeParser {
 				}
 				break;
 
+			case "ATTR_DEC":
+				Attribute attr = new Attribute(tree.getChild(1).getText(), depl, tree.getChild(0).getText());
+				depl += 2;
+				try {
+					tds.put(tree.getChild(0).getText(), attr);
+				}
+				catch (LoocException e) {
+					this.exceptions.add(e);
+					System.err.println( e.getClass().getName() + " " + e.getMessage());
+				}
+				break;
+
+
 			case "CLASS_DEC":
 				depl=0;
 				Class newClass = new Class(tree.getChild(0).getText());
-				String quentin = tree.getChild(0).getText();
 				SymbolTable parentTDS = rootTDS;
-				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("VARS"))) {
+				if (!(tree.getChild(1).getText().equals("METHODS") || tree.getChild(1).getText().equals("ATTRIBUTES"))) {
 					if (rootTDS.findClass(tree.getChild(1).getText()) == null) {
 						try {
 							Util.undeclaredInheritance(tree.getChild(1).getText(), tds);
@@ -191,6 +203,14 @@ public class CommonTreeParser {
 					constructTDS(tree.getChild(j), newtds, rootTDS);
 				}
 				depl = 0;
+				break;
+
+
+			case "ATTRIBUTES":
+				depl = 0;
+				for (int i = 0; i < tree.getChildCount(); i++) {
+					constructTDS(tree.getChild(i), tds, rootTDS);
+				}
 				break;
 
 
