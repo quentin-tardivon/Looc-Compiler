@@ -2,25 +2,28 @@ package ASMGenerator;
 
 import ASMGenerator.expressions.*;
 import ASMGenerator.expressions.Parameter;
-import ASMGenerator.expressions.Variable;
 import ASMGenerator.expressions.binaries.*;
 import ASMGenerator.instructions.*;
 import ASMGenerator.instructions.If;
 import TDS.Entry;
 import TDS.SymbolTable;
-
-import TDS.entries.*;
 import core.Keywords;
 import org.antlr.runtime.tree.Tree;
 import utils.EnvironmentCounter;
+import utils.Util;
+
 import java.util.ArrayList;
 
 
 public class ASMParser {
 
 	private static EnvironmentCounter counter = new EnvironmentCounter();
+	private static SymbolTable rootTDS;
 
     public static ArrayList<Generable> parse(Tree tree, SymbolTable TDS, ArrayList<Generable> res, ArrayList<Generable> meths) {
+        if(ASMParser.rootTDS == null)
+            ASMParser.rootTDS = TDS;
+
         switch(tree.getText()) {
             case "CLASS_DEC":
                 String className = tree.getChild(0).getText();
@@ -139,14 +142,33 @@ public class ASMParser {
 	        	break;
 
 	        case "CALL":
-	        	res.add(new MethodCall(tree, TDS)); //TODO: Ajouter tous les cas différents
-	        	break;
+	            // No params
+                int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
+                ASMGenerator.expressions.Variable receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
+                ArrayList<Parameter> p = new ArrayList<Parameter>();
+                if(tree.getChildCount() == 2)
+                    res.add(new MethodCall(receiver, tree.getChild(0).getText(), TDS, p));
+                else {
+                    SymbolTable methodTDS = rootTDS.findClass(receiver.getType()).getLink(tree.getChild(0).getText());
+                    ArrayList<TDS.entries.Parameter> formalParams = Util.getParameters(methodTDS);
+
+                    Tree node = tree.getChild(1);
+	                for(int i = node.getChildCount() - 1; i >= 0; i--) {
+                        p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
+                    }
+                    res.add(new MethodCall(receiver, tree.getChild(0).getText(), TDS, p));
+                }
+                break;
 
             default:
                 System.err.println(tree.getText() + " is not supported [line "+ tree.getLine() + "]");
                 break;
         }
         return res;
+    }
+
+    public static Parameter parseParameter(TDS.entries.Parameter p, Tree node, SymbolTable TDS) {
+        return new Parameter(p, parseExpression(node, TDS));
     }
 
     public static Expression parseExpression(Tree node, SymbolTable TDS) {
@@ -185,15 +207,15 @@ public class ASMParser {
                     return new ConstantInteger(Integer.parseInt(node.getText()));
                 if(node.getText().matches("\".*\""))
                     return new ConstantString(node.getText());
-                else
-
-                	if (TDS.getInfo(node.getText()).getClass().toString().equals("class TDS.entries.Parameter")) {
-		                return new ASMGenerator.expressions.Parameter((TDS.entries.Parameter) TDS.getInfo(node.getText()), TDS);
-	                }
-	                else {
-		                return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
-	                }
-
+                else {
+                    if(TDS.getInfo(node.getText()) instanceof TDS.entries.Parameter) {
+                    //if (TDS.getInfo(node.getText()).getClass().toString().equals("class TDS.entries.Parameter")) {
+                        return new EffectiveParam((TDS.entries.Parameter) TDS.getInfo(node.getText()), TDS);
+                    }
+                    else {
+                        return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
+                    }
+                }
         }
     }
 

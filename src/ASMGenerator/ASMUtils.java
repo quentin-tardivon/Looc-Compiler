@@ -59,7 +59,6 @@ public class ASMUtils {
 
     public static String generateAffection(ASMGenerator.expressions.Variable v, SymbolTable localTDS, Expression e) {
         Variable varEntry = v.getVariableEntry();
-        System.out.println(v);
         if(localTDS.contains(varEntry))
             return ASMUtils.generateAffection(varEntry, e);
         else
@@ -367,19 +366,31 @@ public class ASMUtils {
         return formatASM("", "LDW", "R1, (" + baseReg + ")-" + (OFFSET_ENV + v.getDepl())) + addToStack("R1");
     }
 
-	public static String generateParameter(Parameter p, SymbolTable localTDS) {
-		StringBuffer asm = new StringBuffer();
+	public static String generateParameter(Parameter p, Expression e) {
+		/*StringBuffer asm = new StringBuffer();
 		if(localTDS.contains(p))
 			asm.append(ASMUtils.generateParameter(p, "BP"));
 		else {
 			asm.append(ASMUtils.generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(p).getImbricationLevel()));
 			asm.append(ASMUtils.generateParameter(p, "R6"));
-		}
-		return asm.toString();
+		}*/
+		return e.generate();
 	}
 
-	private static String generateParameter(Parameter p, String baseReg) {
-		return formatASM("", "LDW", "R1, (" + baseReg + ")" + (-p.getDepl())) + addToStack("R1");
-	}
+    public static String generateCallMethod(String labelMethod, ArrayList<ASMGenerator.expressions.Parameter> params) {
+        StringBuffer asm = new StringBuffer();
+        for (Expression e: params) {
+            asm.append(e.generate());
+        }
 
+        asm.append(ASMUtils.formatASM("", "JSR", "@" + labelMethod));
+        if(params.size() > 0)
+            asm.append(ASMUtils.formatASM("", "ADI", "SP, SP, #" + (params.size() * ADDR_SIZE)));
+
+        return asm.toString();
+    }
+
+    public static String generateEffectiveParam(Parameter p) {
+        return formatASM("", "LDW", "R1, (BP)" + (-p.getDepl() + ADDR_SIZE)) + addToStack("R1");
+    }
 }
