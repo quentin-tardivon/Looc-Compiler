@@ -9,8 +9,8 @@ public abstract class Operation extends Binary {
 
     protected String operator;
 
-    public Operation(Expression left, Expression right, String operator) {
-        super(left, right);
+    public Operation(Expression left, Expression right, String operator, String opSymbol) {
+        super(left, right, opSymbol);
         this.operator = operator;
     }
 

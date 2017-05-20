@@ -6,7 +6,7 @@ import ASMGenerator.expressions.Expression;
 public class Lower extends Comparison {
 
     public Lower(Expression left, Expression right) {
-        super(left, right, ASMUtils.LT);
+        super(left, right, ASMUtils.LT, "<");
     }
 
 }

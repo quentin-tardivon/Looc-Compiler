@@ -7,6 +7,6 @@ import ASMGenerator.expressions.Expression;
 public class Greater extends Comparison {
 
     public Greater(Expression left, Expression right) {
-        super(left, right, ASMUtils.GT);
+        super(left, right, ASMUtils.GT, ">");
     }
 }

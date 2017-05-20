@@ -1,6 +1,5 @@
 package ASMGenerator.expressions;
 
-import ASMGenerator.ASMUtils;
 import ASMGenerator.ASMWriter;
 import TDS.Entry;
 import TDS.SymbolTable;
@@ -35,5 +34,11 @@ public class LoocClassAffect extends Expression {
 		}
 
 		return asm;
+	}
+
+
+	@Override
+	public String getType() {
+		return null;
 	}
 }

@@ -187,6 +187,17 @@ public class SymbolTable {
 	 */
     public SymbolTable getFather(){return this.father;}
 
+	public SymbolTable getFather(int nth){
+    	if(this.father == null)
+    		return null;
+    	else {
+    		if(nth <= 0)
+    			return this;
+    		else
+    			return this.father.getFather(nth - 1);
+    	}
+	}
+
     public String getNameOfSymbolTable() {
 		if(this.father != null) {
 			for(String key: this.father.links.keySet()) {

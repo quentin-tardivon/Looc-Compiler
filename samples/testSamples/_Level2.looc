@@ -1,0 +1,26 @@
+// Oubli ';' ligne 11
+// oubli 'do' pour l'appel de la fonction ligne 16
+
+class Math =
+(
+	method pow() : int {
+		var retval : int;
+		var i : int;
+
+		if b == 0 then
+			return (1)
+		fi
+		retval := 1;
+		for i in 1 .. b
+		do
+			retval := retval * a;
+		end
+
+		return (retval);
+	}
+)
+
+
+var m : Math;
+m := new Math;
+m.pow();

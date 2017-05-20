@@ -171,7 +171,7 @@ public class Util {
         list.sort(new Comparator<Parameter>() {
             @Override
             public int compare(Parameter o1, Parameter o2) {
-                return o1.getOrder() - o2.getOrder();
+                return o1.getDepl() < o2.getDepl() ? 1 : -1;
             }
         });
         return list;
@@ -260,7 +260,7 @@ public class Util {
     private static SymbolTable getSymbolTable(String receiver, SymbolTable currentTDS, SymbolTable rootTDS) throws LoocException {
         switch (receiver) {
             case Keywords.THIS:
-                return currentTDS.getFather();
+                return currentTDS.getFather(currentTDS.getImbricationLevel() - 1);
             case Keywords.SUPER:
                 String inheritedClass = currentTDS.getFather().getFather().get(currentTDS.getFather().getName()).get(Entry.INHERIT);
                 return rootTDS.findClass(inheritedClass);

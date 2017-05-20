@@ -1,3 +1,6 @@
+// Mauvais déclaration classe ligne 4
+// Type inconnu ligne 30 (ne respecte pas la convention avec majuscule)
+
 class Fibonacci = (
 
 	var current : int;
@@ -5,7 +8,7 @@ class Fibonacci = (
 	var generation: int;
 
 	method init() {
-		current := 1 + 2 * 4 + (- (1+123));
+		current := 1 + 2 * 4;
 		previous := 0;
 		generation := 1;
 	}
@@ -24,9 +27,9 @@ class Fibonacci = (
 	}
 )
 
-var f : Fibonacci;
+var f : fibonacci;
 f := new Fibonacci;
 do f.init();
 do f.nextGen();
 do f.nextGen();
-write f.nextGenAndGet() + 4;
+write f.nextGenAndGet();

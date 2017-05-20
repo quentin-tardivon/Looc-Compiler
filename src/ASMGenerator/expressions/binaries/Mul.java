@@ -8,7 +8,7 @@ import ASMGenerator.expressions.Expression;
 public class Mul extends Operation {
 
     public Mul(Expression left, Expression right) {
-        super(left, right, ASMUtils.MUL);
+        super(left, right, ASMUtils.MUL, "*");
     }
 
 }

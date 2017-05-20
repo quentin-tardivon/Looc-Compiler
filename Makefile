@@ -3,6 +3,7 @@ BIN_DIR = out
 CORE_DIR= core
 TMP_DIR= tmp
 SAMPLE_DIR = samples
+TESTS_DIR = $(SAMPLE_DIR)/testSamples/
 MICROPIUPK = microPIUPK.jar
 SEMANTIC_ERRORS_DIR = errorSamples
 PGM = TestLoocMakefile
@@ -43,14 +44,10 @@ javaTest:
 	javac -d $(TMP_DIR) $(TMP_DIR)/LoocLexer.java $(TMP_DIR)/LoocParser.java $(SRC_DIR)/$(PGM_JAVA)
 	@echo ""
 
-parse: javaTest
-	java $(PGM) samples/errorSamples/ReturnValueTypeMismatchEx.looc
-	@echo "\n\033[0m --- Delete tmp/ directory ---"
-	rm -rf $(TMP_DIR)
 
 testSyntaxErrors:
 	@echo "\n --- Test Syntax errors ---"
-	@for file in $(SAMPLE_DIR)/*.$(EXTENSION); do \
+	@for file in $(TESTS_DIR)*.$(EXTENSION); do \
 		FILE=$$(basename $$file); \
 		TMP=$$(java $(PGM) $$file 2>&1|tr -d '\n'); \
 		LETTER=$$(echo $$FILE | head -c 2); \

@@ -27,4 +27,10 @@ public class MethodCall extends Expression{
 				+ ASMUtils.formatASM("", "JSR", "@"+this.tds.getInfo(this.nameCaller).get(Entry.TYPE) + this.nameMeth)
 				+ ASMUtils.formatASM("", "ADI", "SP, SP, #2");
 	}
+
+
+	@Override
+	public String getType() {
+		return null;
+	}
 }

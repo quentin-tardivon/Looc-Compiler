@@ -34,4 +34,4 @@ class Jukebox = (
 
 var player: Jukebox;
 do player.init();
-do player.play("Sing, Sing, Sing - Benny Goodman",5);
+do player.play("Sing, Sing, Sing - Benny Goodman", 5);

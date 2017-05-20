@@ -12,26 +12,35 @@ import TDS.Entry;
  */
 public class Variable extends Entry {
 
-	private int depl;
+	protected int depl;
+	protected String nameVariable;
 
-	public Variable(String type) {
+	public Variable(String type, String nameVariable) {
 		super(Entry.VARIABLE);
 		this.put(Entry.TYPE, type);
+		this.nameVariable = nameVariable;
 	}
 
-	public Variable(String type,int depl) {
+	public Variable(String type,int depl, String nameVariable) {
 		super(Entry.VARIABLE);
 		this.put(Entry.TYPE, type);
 		this.depl=depl;
+		this.nameVariable = nameVariable;
 	}
 
-	protected Variable(String name, String type) {
-		super(name);
+	protected Variable(String entryType, String type, int depl, String nameVariable) {
+		super(entryType);
 		this.put(Entry.TYPE, type);
+		this.depl = depl;
+		this.nameVariable = nameVariable;
 	}
 
 	public int getDepl(){
 		return this.depl;
+	}
+
+	public String getNameVariable() {
+		return this.nameVariable;
 	}
 
 	public String toString() {
