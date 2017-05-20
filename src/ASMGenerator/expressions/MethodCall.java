@@ -43,7 +43,7 @@ public class MethodCall extends Expression{
 				+ ASMUtils.formatASM("", "STW", "R0, -(SP)") //TODO finir d'empiler l'env là: paramètre et appelant
 				+ buf
 				+ ASMUtils.formatASM("", "JSR", "@"+this.tds.getInfo(this.nameCaller).get(Entry.TYPE) + this.nameMeth)
-				+ ASMUtils.formatASM("", "ADI", "SP, SP, #2");
+				+ ASMUtils.formatASM("", "ADI", "SP, SP, #" + (4 + (2*this.tree.getChild(1).getChildCount())));
 	}
 
 

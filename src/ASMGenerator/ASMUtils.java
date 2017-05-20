@@ -7,9 +7,9 @@ import ASMGenerator.instructions.Affectation;
 import ASMGenerator.instructions.ConditionFor;
 import TDS.Entry;
 import TDS.SymbolTable;
+import TDS.entries.Parameter;
 import TDS.entries.Variable;
 import core.Keywords;
-import org.stringtemplate.v4.compiler.Bytecode;
 
 import java.util.ArrayList;
 
@@ -331,6 +331,12 @@ public class ASMUtils {
                 addToStack("R1");
     }
 
+	public static String generateParameterStaticLink(int currentImbricationLevel, int imbricationLevelDeclaration, int depl) {
+		return generateStaticLinkLoader(currentImbricationLevel, imbricationLevelDeclaration) +
+				formatASM("", "LDW", "R1, (R6)-" + (OFFSET_ENV + depl), "// Stack variable: move = " + depl) +
+				addToStack("R1");
+	}
+
     public static String generateRead(Variable v, SymbolTable tds) {
         StringBuffer asm = new StringBuffer();
 
@@ -363,5 +369,20 @@ public class ASMUtils {
     private static String generateVariable(Variable v, String baseReg) {
         return formatASM("", "LDW", "R1, (" + baseReg + ")-" + (OFFSET_ENV + v.getDepl())) + addToStack("R1");
     }
+
+	public static String generateParameter(Parameter p, SymbolTable localTDS) {
+		StringBuffer asm = new StringBuffer();
+		if(localTDS.contains(p))
+			asm.append(ASMUtils.generateParameter(p, "BP"));
+		else {
+			asm.append(ASMUtils.generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(p).getImbricationLevel()));
+			asm.append(ASMUtils.generateParameter(p, "R6"));
+		}
+		return asm.toString();
+	}
+
+	private static String generateParameter(Parameter p, String baseReg) {
+		return formatASM("", "LDW", "R1, (" + baseReg + ")+" + (OFFSET_ENV + p.getDepl())) + addToStack("R1");
+	}
 
 }
