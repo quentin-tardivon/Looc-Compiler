@@ -144,8 +144,7 @@ public class ASMUtils {
     public static String generateConstantString(String s) {
         StringBuffer asm = new StringBuffer();
         asm.append(
-                formatASM("//", "push into the heap string '" + s + "'", "") +
-                formatASM("", "LDW ",  "R0, #0x0000") +
+                formatASM("", "LDW ",  "R0, #0x0000","//  push into the heap string '" + s + "'") +
                 formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE) +
                 formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
         for (int i = s.length() - 1; i >= 0 ; i--) {
