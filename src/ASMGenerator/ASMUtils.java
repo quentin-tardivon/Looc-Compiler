@@ -168,13 +168,9 @@ public class ASMUtils {
 
     public static int sizeof(Entry e) {
         switch(e.getName()) {
+            case Entry.ATTRIBUTE:
             case Entry.VARIABLE:
-                switch(e.get(Entry.TYPE)) {
-                    case "int":
-                        return INT_SIZE;
-                    default:
-                        return ADDR_SIZE;
-                }
+                return ADDR_SIZE;
             default:
                 return 0;
         }

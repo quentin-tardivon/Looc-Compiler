@@ -13,4 +13,4 @@ var i: int;
 m := new Math;
 i := 5;
 
-do m.calcPi(i); 
+do m.calcPi(i);

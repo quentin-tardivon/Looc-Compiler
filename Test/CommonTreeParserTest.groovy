@@ -52,7 +52,7 @@ class CommonTreeParserTest extends GroovyTestCase {
         treeParser = CommonTreeParserFactory.createFromFile(ROOT_PATH + "Level3.looc");
 
         assertEquals(treeParser.tds.get("Animal"), EntryFactory.createClass("Animal"))
-        assertEquals(treeParser.tds.findClass("Animal").get("name"), EntryFactory.createStringVariable())
+        assertEquals(treeParser.tds.findClass("Animal").get("name"), EntryFactory.createStringAttribute())
         assertEquals(treeParser.tds.findClass("Animal").get("setName"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Animal").getLink("setName").get("n"), EntryFactory.createStringParameter())
         assertEquals(treeParser.tds.findClass("Animal").get("Dog"), EntryFactory.createInheritClass("Dog", "Animal"))
@@ -71,9 +71,9 @@ class CommonTreeParserTest extends GroovyTestCase {
         treeParser = CommonTreeParserFactory.createFromFile(ROOT_PATH + "Level3AnonymousBlock.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntVariable())
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("previous"), EntryFactory.createIntVariable())
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("generation"), EntryFactory.createIntVariable())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntAttribute())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("previous"), EntryFactory.createIntAttribute())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("generation"), EntryFactory.createIntAttribute())
         assertEquals(treeParser.tds.findClass("Fibonacci").get("init"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Fibonacci").get("nextGen"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Fibonacci").getLink("nextGen").get("temp"), EntryFactory.createIntVariable())
@@ -91,9 +91,9 @@ class CommonTreeParserTest extends GroovyTestCase {
         treeParser = CommonTreeParserFactory.createFromFile(ROOT_PATH + "Level4.looc")
 
         assertEquals(treeParser.tds.get("Fibonacci"), EntryFactory.createClass("Fibonacci"))
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntVariable())
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("previous"), EntryFactory.createIntVariable())
-        assertEquals(treeParser.tds.findClass("Fibonacci").get("generation"), EntryFactory.createIntVariable())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("current"), EntryFactory.createIntAttribute())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("previous"), EntryFactory.createIntAttribute())
+        assertEquals(treeParser.tds.findClass("Fibonacci").get("generation"), EntryFactory.createIntAttribute())
         assertEquals(treeParser.tds.findClass("Fibonacci").get("init"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Fibonacci").get("nextGen"), EntryFactory.createMethod())
         assertEquals(treeParser.tds.findClass("Fibonacci").getLink("nextGen").get("temp"), EntryFactory.createIntVariable())
