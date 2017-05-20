@@ -99,7 +99,6 @@ public class ASMParser {
                 Tree tmpFor = tree.getChild(3);
                 for (int i = 0; i < tmpFor.getChildCount(); i++) {
                     parse(tmpFor.getChild(i), TDS.getLink(forID), instFor,meths);
-
                 }
                 Block forBlock = new Block();
                 forBlock.addAllInstructions(instFor);

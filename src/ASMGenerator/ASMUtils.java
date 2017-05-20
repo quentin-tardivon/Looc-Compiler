@@ -9,7 +9,6 @@ import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
-import org.stringtemplate.v4.compiler.Bytecode;
 
 import java.util.ArrayList;
 
@@ -126,10 +125,11 @@ public class ASMUtils {
 
     public static String generateLoocClassAffectation(String className, SymbolTable classTDS, int numClass) {
         StringBuffer asm = new StringBuffer();
-        asm.append(formatASM("", "LDW", "R0, (BC)") +
+        asm.append(formatASM("", "LDW", "R0, BC") +
+                formatASM("", "ADQ", (numClass * CLASS_DESC_SIZE) + ", R0") +
                 formatASM("", "STW",  "R0, -(ST)") +
                 formatASM("", "LDW", "R0, ST") +
-                formatASM("", "STW", "R0, -(SP)")
+                addToStack("R0")
         );
 
         for(String key: classTDS.getKeyEntries()) {
