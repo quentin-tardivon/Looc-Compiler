@@ -26,7 +26,7 @@ public class MethodCall extends Expression {
 	@Override
 	public String generate() {
 		String labelMethod = this.receiver.getVariableEntry().get(Entry.TYPE) + this.nameMeth;
-		return ASMUtils.generateCallMethod(labelMethod, this.params);
+		return ASMUtils.generateCallMethod(labelMethod, this.receiver.getVariableEntry(), this.params, this.tds);
 	}
 
 	@Override

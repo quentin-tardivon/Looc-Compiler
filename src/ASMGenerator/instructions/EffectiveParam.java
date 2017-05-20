@@ -2,29 +2,20 @@ package ASMGenerator.instructions;
 
 import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
-import ASMGenerator.expressions.Expression;
-import TDS.Entry;
+import ASMGenerator.expressions.Variable;
 import TDS.SymbolTable;
 import TDS.entries.Parameter;
 
 
-public class EffectiveParam extends Expression implements Generable {
-
-    private Parameter p;
-    private SymbolTable tds;
+public class EffectiveParam extends Variable implements Generable {
 
     public EffectiveParam(Parameter p, SymbolTable tds) {
-        this.p = p;
-        this.tds = tds;
+        super(p, tds);
     }
 
     @Override
     public String generate() {
-        return ASMUtils.generateEffectiveParam(this.p);
+        return ASMUtils.generateEffectiveParam((Parameter) this.v);
     }
 
-    @Override
-    public String getType() {
-        return p.get(Entry.TYPE);
-    }
 }

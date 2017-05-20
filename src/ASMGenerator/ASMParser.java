@@ -118,7 +118,7 @@ public class ASMParser {
                 break;
 
             case "AFFECT":
-                ASMGenerator.expressions.Variable varAffect = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
+                ASMGenerator.expressions.Variable varAffect = parseReceiver(tree.getChild(0), TDS);
                 Expression right = parseExpression(tree.getChild(1), TDS);
                 res.add(new Affectation(varAffect, TDS, right));
                 break;
@@ -182,7 +182,7 @@ public class ASMParser {
             case "DIV":
                 return new Div(parseExpression(node.getChild(0), TDS), parseExpression(node.getChild(1), TDS));
             case "-":
-                return new ConstantInteger(- Integer.parseInt(node.getChild(0).getText()));
+                return new ConstantInteger(-Integer.parseInt(node.getChild(0).getText()));
             case ">":
                 return new Greater(parseExpression(node.getChild(0), TDS), parseExpression(node.getChild(1), TDS));
             case ">=":
@@ -196,27 +196,33 @@ public class ASMParser {
             case "!=":
                 return new NotEqual(parseExpression(node.getChild(0), TDS), parseExpression(node.getChild(1), TDS));
 
-	        case Keywords.NEW:
-               return new LoocClassAffect(node.getChild(0).getText(), 0, TDS);
+            case Keywords.NEW:
+                return new LoocClassAffect(node.getChild(0).getText(), 0, TDS);
 
             case Keywords.THIS:
             case "CALL":
             case Keywords.NIL:
             default:
-                if(node.getText().matches("[-+]?\\d*\\.?\\d+"))
+                if (node.getText().matches("[-+]?\\d*\\.?\\d+"))
                     return new ConstantInteger(Integer.parseInt(node.getText()));
-                if(node.getText().matches("\".*\""))
+                if (node.getText().matches("\".*\""))
                     return new ConstantString(node.getText());
                 else {
-                    if(TDS.getInfo(node.getText()) instanceof TDS.entries.Parameter) {
-                    //if (TDS.getInfo(node.getText()).getClass().toString().equals("class TDS.entries.Parameter")) {
+                    if (TDS.getInfo(node.getText()) instanceof TDS.entries.Parameter)
                         return new EffectiveParam((TDS.entries.Parameter) TDS.getInfo(node.getText()), TDS);
-                    }
-                    else {
+                    if (TDS.getInfo(node.getText()) instanceof TDS.entries.Attribute)
+                        return new Attribute((TDS.entries.Attribute) TDS.getInfo(node.getText()), TDS);
+                    else
                         return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
-                    }
                 }
         }
+    }
+
+    public static Variable parseReceiver(Tree node, SymbolTable TDS) {
+        if(TDS.getInfo(node.getText()) instanceof TDS.entries.Attribute)
+            return new Attribute((TDS.entries.Attribute) TDS.getInfo(node.getText()), TDS);
+        else
+            return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
     }
 
 }
