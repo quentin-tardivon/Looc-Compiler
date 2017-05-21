@@ -45,7 +45,7 @@ class AssemblerTest extends GroovyTestCase {
     }
 
     void testASmLevelDoubleFor() {
-        compileAndGenerate("LevelDoubleFor.looc", "end", "+4","+4","+4", "+12")
+        compileAndGenerate("LevelDoubleFor.looc", "end", "+4","+5","+5", "+16")
     }
 
 
