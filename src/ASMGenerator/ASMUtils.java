@@ -10,8 +10,8 @@ import TDS.SymbolTable;
 import TDS.entries.Attribute;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
-import com.sun.org.apache.regexp.internal.RE;
 import core.Keywords;
+
 import java.util.ArrayList;
 
 
@@ -67,6 +67,7 @@ public class ASMUtils {
         asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), methodTDS.getImbricationLevel()));
         asm.append(formatASM("", "LDW", "R1, (R6)" + (deplObject * ADDR_SIZE)));
         asm.append(formatASM("", "ADQ", -(attr.getDepl() + ADDR_SIZE) + ",R1"));
+        asm.append(formatASM("", "LDW", "R1, (R1)"));
         asm.append(addToStack("R1"));
         return asm.toString();
     }
@@ -76,7 +77,13 @@ public class ASMUtils {
         StringBuffer asm = new StringBuffer();
         switch(entry.getName()) {
             case Entry.ATTRIBUTE:
-                asm.append(generateAttribute((Attribute) entry, localTDS));
+                SymbolTable methodTDS = localTDS.getFather(localTDS.getImbricationLevel() - 2);
+                int deplObject = countParameters(methodTDS) + 2;
+                asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), methodTDS.getImbricationLevel()));
+                asm.append(formatASM("", "LDW", "R1, (R6)" + (deplObject * ADDR_SIZE)));
+                asm.append(formatASM("", "ADQ", -(entry.getDepl() + ADDR_SIZE) + ",R1"));
+                asm.append(addToStack("R1"));
+                //asm.append(generateAttribute((Attribute) entry, localTDS));
                 break;
             default:
                 asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(entry).getImbricationLevel()));
@@ -239,7 +246,7 @@ public class ASMUtils {
     public static String generateConstantString(String s) {
         StringBuffer asm = new StringBuffer();
         asm.append(
-                formatASM("", "LDW ",  "R0, #0x0000","//  push into the heap string '" + s + "'") +
+                formatASM("", "LDW ",  "R0, #0x0000","//  push into the h9eap string '" + s + "'") +
                 formatASM("", "STW " , "R0, (ST)-" + ADDR_SIZE) +
                 formatASM("","ADQ" , "-" + ADDR_SIZE + ", ST"));
         for (int i = s.length() - 1; i >= 0 ; i--) {
@@ -261,6 +268,7 @@ public class ASMUtils {
         asm.append(removeFromStack("R0"));
 
         asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
+
         switch (e.getType()) {
             case Keywords.STRING :
                 asm.append(formatASM("", "TRP", "#WRITE_EXC") +
@@ -392,8 +400,7 @@ public class ASMUtils {
         }
 
         asm.append(ASMUtils.formatASM("", "JSR", "@" + labelMethod));
-        if(params.size() > 0)
-            asm.append(ASMUtils.formatASM("", "ADI", "SP, SP, #" + ((params.size() + 1) * ADDR_SIZE)));
+        asm.append(ASMUtils.formatASM("", "ADI", "SP, SP, #" + ((params.size() + 1) * ADDR_SIZE)));
 
         return asm.toString();
     }

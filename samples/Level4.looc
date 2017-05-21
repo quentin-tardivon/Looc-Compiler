@@ -21,6 +21,6 @@ s2 := new Square;
 size := 50;
 
 do s1.init(size);
-do s1.printSize();
 do s2.init(size * 3);
+do s1.printSize();
 do s2.printSize();
