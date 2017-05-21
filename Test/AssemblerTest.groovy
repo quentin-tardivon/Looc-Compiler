@@ -45,7 +45,7 @@ class AssemblerTest extends GroovyTestCase {
     }
 
     void testASmLevelRW() {
-        compileAndGenerate("LevelRW.looc", "i+j :", "+2878","i (i:=j-i) :", "-3788", "x+i/100 :", "-36","helloworld")
+        compileAndGenerate("LevelRW.looc", "i+j :", "+2878","i (i:=j-i) :", "-3788", "x+i/100 :", "-36","helloworld()35!{","+0")
     }
 
     void testASmLevelDoubleFor() {

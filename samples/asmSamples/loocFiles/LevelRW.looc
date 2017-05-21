@@ -2,22 +2,25 @@ var i : int;
 var j : int;
 var x : int;
 var z : string;
+var y : int;
 
 i := 10;
 x := 1;
+y :=0;
 
 if i<20 then
     j := -455;
     i := 3333;
-    //read x;
+    //read y;
 fi
 
 write "i+j :";
 write i+j;
 i := j-i;
-z := "helloworld";
+z := "helloworld()35!{";
 write "i (i:=j-i) :";
 write i;
 write "x+i/100 :";
 write x+i/100;
 write z;
+write y;
