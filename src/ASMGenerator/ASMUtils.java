@@ -70,16 +70,33 @@ public class ASMUtils {
         return asm.toString();
     }
 
+    public static String generateReceiver(ASMGenerator.expressions.Variable v, SymbolTable localTDS) {
+        Variable entry = v.getVariableEntry();
+        StringBuffer asm = new StringBuffer();
+        /*switch (entry.getName()) {
+            case Entry.ATTRIBUTE:
+                break;
+            case Entry.VARIABLE:*/
+                    asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(entry).getImbricationLevel()));
+                    asm.append(formatASM("", "LDW", "R1, R6"));
+                //break;
+        //}
+        asm.append(formatASM("", "ADQ", (-(OFFSET_ENV + entry.getDepl())) + ", R1"));
+        asm.append(addToStack("R1"));
+        return asm.toString();
+    }
+
     public static String generateVariable(Variable v, SymbolTable localTDS) {
         StringBuffer asm = new StringBuffer();
         asm.append(ASMUtils.generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(v).getImbricationLevel()));
         asm.append(formatASM("", "LDW", "R1, R6"));
         asm.append(formatASM("", "ADQ", (-(OFFSET_ENV + v.getDepl())) + ", R1"));
+        asm.append(formatASM("", "LDW", "R1, (R1)"));
         asm.append(addToStack("R1"));
         return asm.toString();
     }
 
-    private static String prepareObject(Variable v, SymbolTable localTDS) {
+    private static String setupParameter(Variable v, SymbolTable localTDS) {
         StringBuffer asm = new StringBuffer();
         asm.append(ASMUtils.generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(v).getImbricationLevel()));
         asm.append(formatASM("", "LDW", "R1, (R6)" + (-(OFFSET_ENV + v.getDepl()))));
@@ -89,7 +106,7 @@ public class ASMUtils {
 
 
     public static String generateAffection(ASMGenerator.expressions.Variable v, SymbolTable localTDS, Expression e) {
-        return v.generate() +
+        return generateReceiver(v, localTDS) + //v.generate() +
                 e.generate()
                 + removeFromStack("R0")
                 + removeFromStack("R1")
@@ -242,8 +259,8 @@ public class ASMUtils {
         asm.append(e.generate());
         asm.append(removeFromStack("R0"));
 
-        if(e instanceof ASMGenerator.expressions.Variable)
-            asm.append(ASMUtils.formatASM("", "LDW", "R0, (R0)"));
+        //if(e instanceof ASMGenerator.expressions.Variable)
+        //    asm.append(ASMUtils.formatASM("", "LDW", "R0, (R0)"));
 
         asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
         switch (e.getType()) {
@@ -365,15 +382,15 @@ public class ASMUtils {
     }
 
 	public static String generateParameter(Parameter p, Expression e) {
-		return e.generate();
+        return e.generate();
 	}
 
     public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS) {
         StringBuffer asm = new StringBuffer();
-        asm.append(prepareObject(receiver, localTDS));
+        asm.append(setupParameter(receiver, localTDS));
 
-        for (Expression e: params) {
-            asm.append(e.generate());
+        for (ASMGenerator.expressions.Parameter p: params) {
+            asm.append(p.generate());
         }
 
         asm.append(ASMUtils.formatASM("", "JSR", "@" + labelMethod));
