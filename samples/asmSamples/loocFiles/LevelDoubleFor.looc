@@ -1,0 +1,23 @@
+var n : int;
+var borne: int;
+var msg: string;
+var k : int;
+n := 2;
+k := 0;
+borne := 4;
+
+for n in 1 .. borne do
+    write "start 1 :";
+    write n;
+    write k;
+    for k in 2 .. borne do
+        write "start 2 :";
+        write n;
+        write k;
+    end
+end
+
+write "end";
+write borne;
+write n;
+write k;
