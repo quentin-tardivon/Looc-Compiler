@@ -1,11 +1,11 @@
 package ASMGenerator.expressions;
 
+import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
+import TDS.Entry;
 import TDS.SymbolTable;
 
-/**
- * Created by mcdostone on 20/05/17.
- */
+
 public class Attribute extends Variable implements Generable {
 
     public Attribute (TDS.entries.Attribute v, SymbolTable TDS) {
@@ -14,12 +14,11 @@ public class Attribute extends Variable implements Generable {
 
     @Override
     public String generate() {
-        //return ASMUtils.generateAttribute();
-        return null;
+        return ASMUtils.generateAttribute((TDS.entries.Attribute) this.v, this.localTDS);
     }
 
     @Override
     public String getType() {
-        return null;
+        return v.get(Entry.TYPE);
     }
 }

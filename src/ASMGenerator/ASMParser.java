@@ -14,7 +14,12 @@ import utils.Util;
 
 import java.util.ArrayList;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class ASMParser {
 
 	private static EnvironmentCounter counter = new EnvironmentCounter();
@@ -135,8 +140,8 @@ public class ASMParser {
                 res.add(new Read((ASMGenerator.expressions.Variable) parseExpression(tree.getChild(0), TDS), TDS));
                 break;
 
-                case "DO":
-		        for (int i = 0; i < tree.getChildCount(); i++) {
+            case "DO":
+                for (int i = 0; i < tree.getChildCount(); i++) {
 			        parse(tree.getChild(i), TDS, res, meths);
 		        }
 	        	break;

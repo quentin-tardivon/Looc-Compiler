@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 
 /**
- * Class for testing things !
+ * Class for testing stuff !
  *
  * @author Maxime Escamez
  * @author Théo Le Donné

@@ -1,5 +1,11 @@
 package utils;
 
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class EnvironmentCounter {
 
     private int countFor;

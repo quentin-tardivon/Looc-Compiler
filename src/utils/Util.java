@@ -14,7 +14,10 @@ import java.util.Comparator;
 
 
 /**
- * Created by tld on 22/03/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class Util {
 

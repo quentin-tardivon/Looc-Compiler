@@ -4,7 +4,12 @@ import ASMGenerator.ASMUtils;
 import TDS.Entry;
 import TDS.SymbolTable;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class Variable extends Expression {
 
     protected TDS.entries.Variable v;
@@ -17,10 +22,7 @@ public class Variable extends Expression {
 
     @Override
     public String generate(){
-        if(this.localTDS.contains(this.v))
-            return ASMUtils.generateVariable(this.v, this.localTDS);
-        else
-            return ASMUtils.generateVariableStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(this.v).getImbricationLevel(), this.v.getDepl());
+        return ASMUtils.generateVariable(this.v, this.localTDS);
     }
 
     public TDS.entries.Variable getVariableEntry() {

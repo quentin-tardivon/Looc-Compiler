@@ -5,7 +5,12 @@ import ASMGenerator.Labelable;
 import ASMGenerator.expressions.Binary;
 import ASMGenerator.expressions.Expression;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public abstract class Comparison extends Binary implements Labelable {
 
     private String operator;

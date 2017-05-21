@@ -1,7 +1,10 @@
 package ASMGenerator;
 
 /**
- * Created by mcdostone on 29/04/17.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public interface Generable {
 

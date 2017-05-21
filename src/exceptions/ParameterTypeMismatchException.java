@@ -3,9 +3,11 @@ package exceptions;
 import org.antlr.runtime.tree.Tree;
 
 /**
- * Created by madmax on 02/04/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
-
 public class ParameterTypeMismatchException extends LoocException {
 
     public ParameterTypeMismatchException(String filename, Tree node, String type1 , String type2, String idf1) {

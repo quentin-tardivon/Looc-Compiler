@@ -3,7 +3,10 @@ package exceptions;
 import org.antlr.runtime.tree.Tree;
 
 /**
- * Created by quentin on 30/03/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class UndeclaredInheritanceException extends LoocException {
 

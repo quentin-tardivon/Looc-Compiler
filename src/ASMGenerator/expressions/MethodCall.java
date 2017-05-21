@@ -7,7 +7,10 @@ import TDS.SymbolTable;
 import java.util.ArrayList;
 
 /**
- * Created by quentin on 14/05/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class MethodCall extends Expression {
 	private String nameMeth;

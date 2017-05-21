@@ -6,7 +6,10 @@ import TDS.Entry;
 import TDS.SymbolTable;
 
 /**
- * Created by quentin on 14/05/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class LoocClassAffect extends Expression {
 
@@ -22,7 +25,7 @@ public class LoocClassAffect extends Expression {
 
 	@Override
 	public String generate() {
-		return ASMUtils.generateLoocClassAffectation(this.name, this.classTDS, this.numClass);
+		return ASMUtils.generateLoocClassAffectation(this.classTDS, this.numClass);
 	}
 
 	@Override
