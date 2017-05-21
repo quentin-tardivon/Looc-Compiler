@@ -69,7 +69,5 @@ s1 := new Square;
 s2 := new Circle;
 size := 50;
 
-write "do :";
-
 do s1.printSize();
 do s2.printSize();

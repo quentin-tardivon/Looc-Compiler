@@ -41,7 +41,7 @@ class AssemblerTest extends GroovyTestCase {
     }
 
     void testASmLevel5() {
-        compileAndGenerate("Level5.looc", "+12","+50", "+100")
+        compileAndGenerate("Level5.looc", "+12","lower","+50", "+100")
     }
 
     void testASmLevel6() {

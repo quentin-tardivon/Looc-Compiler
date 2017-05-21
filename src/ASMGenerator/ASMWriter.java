@@ -60,9 +60,9 @@ public class ASMWriter {
 					formatASM("NULL", "EQU", "0") +
 					formatASM("NIL", "EQU", "0") +
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
-					formatASM("HEAP_ADRS", "EQU", "0xF000") +
-					formatASM("LOAD_ADRS", "EQU", "0xFA00") +
-					formatASM("CLASS_ADRS","EQU","0xFD00") +
+					formatASM("HEAP_ADRS", "EQU", "0xC000") +
+					formatASM("LOAD_ADRS", "EQU", "0xD000") +
+					formatASM("CLASS_ADRS","EQU","0xC100") +
 					formatASM("CONVERT_BUFF", "EQU", "40") +
 					//formatASM("MSG_DIV", "STRING", "Cannot divide by 0") +
 					formatASM("ITOA_I", "EQU", "4") +
