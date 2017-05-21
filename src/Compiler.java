@@ -32,7 +32,7 @@ public class Compiler {
             treeParser.parseCommonTreeParser(tree);
             SymbolTable tds = new SymbolTable();
             treeParser.constructTDS(tree, tds, tds);
-            ASMWriter writer = new ASMWriter(new File(f.getAbsolutePath(), f.getName() + ".asm").getPath());
+            ASMWriter writer = new ASMWriter(new File(f.getAbsolutePath() + ".asm").getPath());
             writer.generateASMFile(tree, tds);
         }
         catch (Exception e) {
