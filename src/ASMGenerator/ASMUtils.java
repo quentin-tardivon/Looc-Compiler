@@ -398,7 +398,13 @@ public class ASMUtils {
 
     public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS, String typeReturn) {
         StringBuffer asm = new StringBuffer();
-        asm.append(setupParameter(receiver, localTDS));
+        if (receiver != null) {
+	        asm.append(setupParameter(receiver, localTDS));
+        }
+        else {
+	        asm.append(ASMUtils.formatASM("", "LDW", "R1, (BP)2"));
+	        asm.append(addToStack("R1"));
+        }
         for (ASMGenerator.expressions.Parameter p: params) {
             asm.append(p.generate());
         }
