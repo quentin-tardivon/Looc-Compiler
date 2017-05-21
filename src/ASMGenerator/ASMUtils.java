@@ -403,11 +403,14 @@ public class ASMUtils {
 
     public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS, String typeReturn) {
         StringBuffer asm = new StringBuffer();
+	    SymbolTable methodTDS = localTDS.getFather(localTDS.getImbricationLevel() - 2);
         if (receiver != null) {
 	        asm.append(setupParameter(receiver, localTDS));
         }
         else {
-	        asm.append(ASMUtils.formatASM("", "LDW", "R1, (BP)2"));
+	        int deplObject = countParameters(methodTDS) + 2;
+	        asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), methodTDS.getImbricationLevel()));
+	        asm.append(formatASM("", "LDW", "R1, (R6)" + (deplObject * ADDR_SIZE)));
 	        asm.append(addToStack("R1"));
         }
         for (ASMGenerator.expressions.Parameter p: params) {
