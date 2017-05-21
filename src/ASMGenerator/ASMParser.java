@@ -149,22 +149,6 @@ public class ASMParser {
 	        	break;
 
 	        case "CALL":
-	            // No params
-                /*int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
-                ASMGenerator.expressions.Variable receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
-                ArrayList<Parameter> p = new ArrayList<Parameter>();
-                if(tree.getChildCount() == 2)
-                    res.add(new MethodCall(receiver, tree.getChild(0).getText(), TDS, p));
-                else {
-                    SymbolTable methodTDS = rootTDS.findClass(receiver.getType()).getLink(tree.getChild(0).getText());
-                    ArrayList<TDS.entries.Parameter> formalParams = Util.getParameters(methodTDS);
-
-                    Tree node = tree.getChild(1);
-	                for(int i = node.getChildCount() - 1; i >= 0; i--) {
-                        p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
-                    }
-                    res.add(new MethodCall(receiver, tree.getChild(0).getText(), TDS, p));
-                }*/
                 res.add(parseCallMethod(tree, TDS, rootTDS));
                 break;
 
@@ -240,18 +224,30 @@ public class ASMParser {
     public static MethodCall parseCallMethod(Tree tree, SymbolTable TDS, SymbolTable rootTDS) {
         // No params
         int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
-        ASMGenerator.expressions.Variable receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
-        ArrayList<Parameter> p = new ArrayList<Parameter>();
-        if(tree.getChildCount() == 3) {
-            SymbolTable methodTDS = rootTDS.findClass(receiver.getType()).getLink(tree.getChild(0).getText());
-            ArrayList<TDS.entries.Parameter> formalParams = Util.getParameters(methodTDS);
-
-            Tree node = tree.getChild(1);
-            for(int i = node.getChildCount() - 1; i >= 0; i--) {
-                p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
-            }
+	    ASMGenerator.expressions.Variable receiver;
+	    String className;
+        if (tree.getChild(indexReceiver).getText().equals("this")) {
+        	receiver = null;
+        	className = TDS.getFather().getName();
         }
-        return new MethodCall(receiver, tree.getChild(0).getText(), TDS, p);
+        else {
+	        receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
+	        className = receiver.getType();
+        }
+	        ArrayList<Parameter> p = new ArrayList<Parameter>();
+	        if(tree.getChildCount() == 3) {
+		        SymbolTable methodTDS = rootTDS.findClass(className).getLink(tree.getChild(0).getText());
+		        ArrayList<TDS.entries.Parameter> formalParams = Util.getParameters(methodTDS);
+
+		        Tree node = tree.getChild(1);
+		        for(int i = node.getChildCount() - 1; i >= 0; i--) {
+			        p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
+		        }
+	        }
+	        return new MethodCall(receiver, tree.getChild(0).getText(), TDS, p, className);
+
+
+
     }
 
 }

@@ -17,25 +17,37 @@ public class MethodCall extends Expression {
 	private SymbolTable tds;
 	private Variable receiver;
 	private ArrayList<Parameter> params;
+	private String className;
 
 
-	public MethodCall(Variable receiver, String nameMeth, SymbolTable tds, ArrayList<Parameter> p) {
+	public MethodCall(Variable receiver, String nameMeth, SymbolTable tds, ArrayList<Parameter> p, String className) {
 		this.nameMeth = nameMeth;
 		this.receiver = receiver;
 		this.tds = tds;
 		this.params = p;
+		this.className = className;
 	}
 
 	@Override
 	public String generate() {
-		String labelMethod = this.receiver.getVariableEntry().get(Entry.TYPE) + this.nameMeth;
-		return ASMUtils.generateCallMethod(labelMethod, this.receiver.getVariableEntry(), this.params, this.tds, this.getType());
+		if (receiver != null) {
+			return ASMUtils.generateCallMethod(this.className + this.nameMeth, this.receiver.getVariableEntry(), this.params, this.tds, this.getType());
+		}
+		else {
+			return ASMUtils.generateCallMethod(this.className + this.nameMeth, null, this.params, this.tds, this.getType());
+		}
+
 	}
 
 	@Override
 	public String getType() {
-		String className= this.receiver.getVariableEntry().get(Entry.TYPE);
-		SymbolTable classTDS = this.tds.getClass(className);
-		return classTDS.get(this.nameMeth).get(Entry.RETURN_TYPE);
+		if (this.receiver == null) {
+			return this.tds.getFather().get(this.nameMeth).get(Entry.RETURN_TYPE);
+		}
+		else {
+			SymbolTable classTDS = this.tds.getClass(this.className);
+			return classTDS.get(this.nameMeth).get(Entry.RETURN_TYPE);
+		}
+
 	}
 }
