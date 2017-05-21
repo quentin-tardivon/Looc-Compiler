@@ -1,6 +1,30 @@
-var a: int;
-var b: int;
-b := 0;
-a := 5;
-read b;
-write a/b;
+class Square = (
+    var size: int;
+    var perimeter: int;
+    var area: int;
+
+    method greater() {
+        write "greater";
+    }
+
+    method lower() {
+        write "lower";
+    }
+
+    method init(s: int) {
+        if s > 100 then
+            do this.greater();
+        else
+            do this.lower();
+        fi
+    }
+
+)
+
+var size: int;
+var s: Square;
+
+size := 50;
+s := new Square;
+do s.init(size);
+do s.init(500);
