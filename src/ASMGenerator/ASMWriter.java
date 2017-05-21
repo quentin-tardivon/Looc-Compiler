@@ -1,7 +1,7 @@
 package ASMGenerator;
 
+import ASMGenerator.expressions.ConstantString;
 import TDS.SymbolTable;
-import TDS.entries.Variable;
 import org.antlr.runtime.tree.Tree;
 
 import java.io.*;
@@ -18,6 +18,7 @@ public class ASMWriter {
 
 	private String output;
 	public static final String BUILTIN_FIND_STATIC = "FIND_STATIC";
+	public static final String DIV_ZERO = "DIV_ZERO";
 
 	public ASMWriter(String asmFile) {
 		this.output = asmFile;
@@ -61,8 +62,9 @@ public class ASMWriter {
 					formatASM("STACK_ADRS", "EQU", "0x1000") +
 					formatASM("HEAP_ADRS", "EQU", "0xF000") +
 					formatASM("LOAD_ADRS", "EQU", "0xFA00") +
-					formatASM("CLASS_ADRS","EQU","0xFD00")+
-					formatASM("CONVERT_BUFF", "EQU", "40")+
+					formatASM("CLASS_ADRS","EQU","0xFD00") +
+					formatASM("CONVERT_BUFF", "EQU", "40") +
+					//formatASM("MSG_DIV", "STRING", "Cannot divide by 0") +
 					formatASM("ITOA_I", "EQU", "4") +
 					formatASM("ATOI_A", "EQU", "10")+
 					formatASM("ASCII_MINUS", "EQU", "45") +
@@ -104,6 +106,7 @@ public class ASMWriter {
 			writer.write(itoaDef());
 			writer.write(atoiDef());
 			generateInstructions(writer, meths);
+			writer.write(throwExceptionDivZero());
 			writer.write(generateFindVariableStatic());
 
 		} catch (Exception e) {
@@ -156,7 +159,7 @@ public class ASMWriter {
 				formatASM("", "SHL", "R1, R1") +
 				formatASM("", "ADQ", "-10, R0") +
 				formatASM("", "BGE", "LETTER-$-2") +
-				formatASM("", "ADQ", "10+ASCII_0, R0") +
+					formatASM("", "ADQ", "10+ASCII_0, R0") +
 				formatASM("", "BMP", "STKCHR-$-2") +
 				formatASM("LETTER", "ADQ", "ASCII_A, R0") +
 				formatASM("STKCHR", "STW", "R0, -(SP)") +
@@ -179,8 +182,20 @@ public class ASMWriter {
 				formatASM("", "LDW", "SP, BP") +
 				formatASM("", "LDW", "BP, (SP)+") +
 				formatASM("", "RTS", "");
+	}
 
-
+	private String throwExceptionDivZero() {
+		return 	formatASM("\n\n", "", "") +
+				ASMUtils.generateComment(DIV_ZERO + " builtin:", "Throw exception when division by 0") +
+				formatASM(DIV_ZERO, "LDW", "R1, #0") +
+				ASMUtils.loadParameter("R0", 1) +
+				formatASM("", "CMP", "R0, R1") +
+				ASMUtils.formatASM( "", "BNE", "NOT_ZERO-$-2") +
+				ASMUtils.formatASM("", "ENI", "") +
+				ASMUtils.formatASM("", "TRP", "#4") +
+				ASMUtils.generateWrite(new ConstantString("'Cannot divide by 0'")) +
+				ASMUtils.formatASM("", "TRP",  "#EXIT_EXC") +
+				formatASM("NOT_ZERO", "RTS", "");
 	}
 
 	private String atoiDef(){
