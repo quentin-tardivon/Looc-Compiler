@@ -1,7 +1,11 @@
 class Counter = (
     var count : int;
 
-    method getCount(): int {
+    method init(i: int) {
+        count := i;
+    }
+
+    method incrCount(): int {
         count := count + 1;
         return (count);
     }
@@ -10,4 +14,5 @@ class Counter = (
 
 var counter: Counter;
 counter := new Counter;
-write counter.getCount();
+do counter.init(10);
+write counter.incrCount();

@@ -54,7 +54,7 @@ public class ASMParser {
                 for (int i = 0; i < body.getChildCount(); i++) {
                     parse(body.getChild(i), TDS.getLink(tree.getChild(0).getText()), inst, meths);
                 }
-                Method m = new Method(TDS.getLink(tree.getChild(0).getText()));
+                Method m = new Method(TDS.getLink(tree.getChild(0).getText()), inst.get(inst.size() - 1) instanceof Return);
                 m.addAllInstructions(inst);
                 meths.add(m);
                 break;
@@ -131,7 +131,7 @@ public class ASMParser {
                 break;
 
             case "RETURN":
-                res.add(new Return( (TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText())));
+                res.add(new Return(parseExpression(tree.getChild(0),TDS)));
                 break;
 
             case "WRITE":
@@ -150,7 +150,7 @@ public class ASMParser {
 
 	        case "CALL":
 	            // No params
-                int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
+                /*int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
                 ASMGenerator.expressions.Variable receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
                 ArrayList<Parameter> p = new ArrayList<Parameter>();
                 if(tree.getChildCount() == 2)
@@ -164,7 +164,8 @@ public class ASMParser {
                         p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
                     }
                     res.add(new MethodCall(receiver, tree.getChild(0).getText(), TDS, p));
-                }
+                }*/
+                res.add(parseCallMethod(tree, TDS, rootTDS));
                 break;
 
             default:
@@ -207,7 +208,10 @@ public class ASMParser {
                 return new LoocClassAffect(node.getChild(0).getText(), 0, TDS);
 
             case Keywords.THIS:
+
             case "CALL":
+                return parseCallMethod(node, TDS, rootTDS);
+
             case Keywords.NIL:
             default:
                 if (node.getText().matches("[-+]?\\d*\\.?\\d+"))
@@ -230,6 +234,24 @@ public class ASMParser {
             return new Attribute((TDS.entries.Attribute) TDS.getInfo(node.getText()), TDS);
         else
             return new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(node.getText()), TDS);
+    }
+
+
+    public static MethodCall parseCallMethod(Tree tree, SymbolTable TDS, SymbolTable rootTDS) {
+        // No params
+        int indexReceiver = tree.getChildCount() == 2 ? 1 : 2;
+        ASMGenerator.expressions.Variable receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
+        ArrayList<Parameter> p = new ArrayList<Parameter>();
+        if(tree.getChildCount() == 3) {
+            SymbolTable methodTDS = rootTDS.findClass(receiver.getType()).getLink(tree.getChild(0).getText());
+            ArrayList<TDS.entries.Parameter> formalParams = Util.getParameters(methodTDS);
+
+            Tree node = tree.getChild(1);
+            for(int i = node.getChildCount() - 1; i >= 0; i--) {
+                p.add(parseParameter(formalParams.get(i), node.getChild(i), TDS));
+            }
+        }
+        return new MethodCall(receiver, tree.getChild(0).getText(), TDS, p);
     }
 
 }
