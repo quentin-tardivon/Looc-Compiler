@@ -1,6 +1,7 @@
 var a: int;
 var b: int;
-b := 0;
+
 a := 5;
+
 read b;
 write a/b;

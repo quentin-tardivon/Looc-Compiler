@@ -5,7 +5,6 @@ import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.binaries.Comparison;
 import ASMGenerator.instructions.Affectation;
 import ASMGenerator.instructions.ConditionFor;
-import ASMGenerator.instructions.Return;
 import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Attribute;
@@ -303,10 +302,16 @@ public class ASMUtils {
     }
 
     public static String generateOperator(String operator) {
-        return removeFromStack("R2") +
-                removeFromStack("R1") +
-                formatASM("", operator, "R1, R2, R3", "// Make a " + operator) +
-                addToStack("R3");
+        StringBuffer asm = new StringBuffer();
+
+        if(operator.equals(ASMUtils.DIV))
+            asm.append(formatASM("", "JSR", "@" + ASMWriter.DIV_ZERO));
+
+        asm.append(removeFromStack("R2"));
+        asm.append(removeFromStack("R1"));
+        asm.append(formatASM("", operator, "R1, R2, R3", "// Make a " + operator) + addToStack("R3"));
+
+        return asm.toString();
     }
 
     public static String generateComparison(String operator, String gotoLabel) {
@@ -398,11 +403,14 @@ public class ASMUtils {
 
     public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS, String typeReturn) {
         StringBuffer asm = new StringBuffer();
+	    SymbolTable methodTDS = localTDS.getFather(localTDS.getImbricationLevel() - 2);
         if (receiver != null) {
 	        asm.append(setupParameter(receiver, localTDS));
         }
         else {
-	        asm.append(ASMUtils.formatASM("", "LDW", "R1, (BP)2"));
+	        int deplObject = countParameters(methodTDS) + 2;
+	        asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), methodTDS.getImbricationLevel()));
+	        asm.append(formatASM("", "LDW", "R1, (R6)" + (deplObject * ADDR_SIZE)));
 	        asm.append(addToStack("R1"));
         }
         for (ASMGenerator.expressions.Parameter p: params) {

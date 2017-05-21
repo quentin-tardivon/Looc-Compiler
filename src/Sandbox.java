@@ -36,7 +36,7 @@ public class Sandbox {
         LoocParser parser = new LoocParser(tokens);
         CommonTree tree = (CommonTree)parser.program().getTree();
 
-        CommonTreeParser treeParser = new CommonTreeParser("##called in TestLooc.java");
+        CommonTreeParser treeParser = new CommonTreeParser(f.getName());
         treeParser.parseCommonTreeParser(tree);
 	      SymbolTable tds = new SymbolTable();
 	    treeParser.constructTDS(tree, tds, tds);
