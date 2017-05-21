@@ -26,7 +26,7 @@ public abstract class Comparison extends Binary implements Labelable {
     public String generate() {
         StringBuffer asm = new StringBuffer();
         if(this.baselabel != null)
-            asm.append(ASMUtils.formatASM(this.baselabel, "", ""));
+            asm.append(ASMUtils.formatASM(this.baselabel, "NOP", ""));
         asm.append(this.left.generate());
         asm.append(this.right.generate());
         asm.append(this.generateOperation());
