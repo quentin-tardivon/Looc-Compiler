@@ -3,17 +3,30 @@ class Square = (
     var perimeter: int;
     var area: int;
 
+    method greater() {
+            write "greater";
+        }
+
+    method lower() {
+            write "lower";
+        }
+
     method init(s: int) {
         if s > 100 then
+            do this.greater();
             size := 100;
         else
             size := s;
+            do this.lower();
         fi
     }
 
     method printSize() {
+        do this.init(50);
         write size;
     }
+
+
 )
 
 class Circle = (
@@ -29,6 +42,7 @@ class Circle = (
         }
 
     method printSize() {
+            do this.init(150);
             write size;
         }
 )
@@ -38,7 +52,7 @@ var size: int;
 var s1: Square;
 var s2: Circle;
 
-
+{
     var i: int;
     var n: int;
     var h: int;
@@ -55,7 +69,7 @@ s1 := new Square;
 s2 := new Circle;
 size := 50;
 
-do s1.init(size);
+write "do :";
+
 do s1.printSize();
-do s2.init(size * 3);
 do s2.printSize();
