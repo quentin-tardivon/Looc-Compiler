@@ -1,0 +1,96 @@
+/**
+    Class Math
+*/
+
+class Math = (
+    var pi: int;
+    var const: int;
+    var msg: string;
+
+    method init() {
+        pi := 3;
+        const := 42;
+        msg := "Hello Math !";
+    }
+
+    method pow(a: int, b:int): int {
+        var retval: int;
+        var i: int;
+
+        if b == 0 then
+            return (1);
+        fi
+
+
+        retval := 1;
+        for i in 1 .. b do
+            retval := retval * a;
+        end
+
+        return (retval);
+    }
+
+    method response() {
+        var question: int;
+        question := 0;
+
+        write const;
+        write msg;
+    }
+
+    method printPow(a: int, b:int) {
+        write this.pow(a, b);
+    }
+
+)
+
+
+class Geo = (
+
+    method pow(a: int, b: int): int {
+        var retval: int;
+        var i: int;
+
+        if b == 0 then
+            if a == 2 then
+                return (1);
+            fi
+        else
+            write "So long !";
+        fi
+
+        retval := 1;
+        for i in 1 .. b do
+            retval := retval * a * 2;
+        end
+
+        return (retval);
+    }
+)
+
+var m: Math;
+var g: Geo;
+var tmp: string;
+var r: int;
+
+r := 0;
+m := new Math;
+do m.init();
+do m.response();
+write "Math power:";
+write m.pow(2, 3);
+
+write "";
+
+g := new Geo;
+write "Geo power";
+write g.pow(2, 3);
+
+{
+    tmp := "How to copy and paste from a PDF file by Quentin Tardivon !";
+    write tmp;
+}
+
+write "Type r:";
+read r;
+do m.printPow(r, 4);

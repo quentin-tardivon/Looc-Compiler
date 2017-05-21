@@ -270,12 +270,10 @@ public class ASMUtils {
         StringBuffer asm = new StringBuffer();
         asm.append(e.generate());
 
-        //asm.append(removeFromStack("R0"));
-
-        //asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
-
         switch (e.getType()) {
             case Keywords.STRING :
+                asm.append(removeFromStack("R0"));
+                asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
                 asm.append(formatASM("", "TRP", "#WRITE_EXC") +
 	                    formatASM("", "LDW", "R0, #0x0000", "// Pointeur sur retour ligne") +
 		                formatASM("", "TRP", "#WRITE_EXC"));
