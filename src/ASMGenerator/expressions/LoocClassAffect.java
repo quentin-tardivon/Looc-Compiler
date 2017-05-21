@@ -1,5 +1,6 @@
 package ASMGenerator.expressions;
 
+import ASMGenerator.ASMUtils;
 import ASMGenerator.ASMWriter;
 import TDS.Entry;
 import TDS.SymbolTable;
@@ -12,36 +13,28 @@ import TDS.SymbolTable;
  */
 public class LoocClassAffect extends Expression {
 
-	private int nbClass;
+	private int numClass;
 	private String name;
 	private SymbolTable classTDS;
 
-	public LoocClassAffect(String name, int nbClass, SymbolTable tds) {
-		this.nbClass = nbClass;
+	public LoocClassAffect(String name, int num, SymbolTable tds) {
+		this.numClass = num;
 		this.name = name;
 		this.classTDS = tds.getClass(name);
 	}
 
 	@Override
 	public String generate() {
-		String asm = ASMWriter.formatASM("\n\n//",  "Class affect for " + this.name, "") +
-				ASMWriter.formatASM("", "LDW", "R0, SC") +
-				ASMWriter.formatASM("", "STW",  "R0, -(ST)") +
-				ASMWriter.formatASM("", "LDW", "R0, ST") +
-				ASMWriter.formatASM("", "STW", "R0, -(SP)");
-
-		for(String key: this.classTDS.getKeyEntries()) {
-			if (this.classTDS.get(key).getName().equals(Entry.VARIABLE)) {
-				asm += ASMWriter.formatASM("", "ADI", "ST, ST, #-2");
-			}
-		}
-
-		return asm;
+		return ASMUtils.generateLoocClassAffectation(this.classTDS, this.numClass);
 	}
-
 
 	@Override
 	public String getType() {
-		return null;
+		return this.name;
+	}
+
+	@Override
+	public String toString() {
+		return "new "+ this.name;
 	}
 }

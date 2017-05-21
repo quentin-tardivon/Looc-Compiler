@@ -10,8 +10,8 @@ target/
 antlrworks-1.4.jar
 doc/*
 PFSI/
-./samples/asmSamples/loocFiles/output/*
-./samples/asmSamples/*iup
-./samples/asmSamples/*asm
+samples/asmSamples/loocFiles/output/*
+samples/asmSamples/*.iup
+samples/asmSamples/*asm
 
 *.png

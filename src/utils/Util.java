@@ -165,7 +165,7 @@ public class Util {
 	 * @param tds
 	 * @return
 	 */
-	private static ArrayList<Parameter> getParameters(SymbolTable tds){
+	public static ArrayList<Parameter> getParameters(SymbolTable tds){
         ArrayList<Parameter> list= new ArrayList<>();
         for(String key: tds.getKeyEntries()) {
             if(tds.get(key).getName().equals(Entry.PARAMETER))

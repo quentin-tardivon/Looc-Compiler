@@ -32,6 +32,18 @@ class AssemblerTest extends GroovyTestCase {
         compileAndGenerate("Level2.looc", "+4", "+21", "+5")
     }
 
+    void testASmLevel3() {
+        compileAndGenerate("Level3.looc", "+5", "+10")
+    }
+
+    void testASmLevel4() {
+        compileAndGenerate("Level4.looc", "+50", "+100")
+    }
+
+    void testASmLevelRW() {
+        compileAndGenerate("LevelRW.looc", "i+j :", "+2878","i (i:=j-i) :", "-3788", "x+i/100 :", "-36","helloworld")
+    }
+
 
     public compileAndGenerate(String filename, String ... res) {
         File f = new File(LOOC_PATH + filename)
@@ -48,6 +60,7 @@ class AssemblerTest extends GroovyTestCase {
         ASMWriter writer = new ASMWriter(ASM_PATH + f.getName() + ".asm")
         writer.generateASMFile(tree, tds)
         executeAndCompare(f.getName(), res)
+
     }
 
     public executeAndCompare(filename, String ... res) {

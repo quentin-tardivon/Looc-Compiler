@@ -12,8 +12,9 @@ import TDS.SymbolTable;
  */
 public class Variable extends Expression {
 
-    private TDS.entries.Variable v;
-    private SymbolTable localTDS;
+    protected TDS.entries.Variable v;
+    protected SymbolTable localTDS;
+
     public Variable (TDS.entries.Variable v, SymbolTable TDS) {
         this.v = v;
         this.localTDS = TDS;
@@ -21,10 +22,7 @@ public class Variable extends Expression {
 
     @Override
     public String generate(){
-        if(this.localTDS.contains(this.v))
-            return ASMUtils.generateVariable(this.v, this.localTDS);
-        else
-            return ASMUtils.generateVariableStaticLink(this.localTDS.getImbricationLevel(), this.localTDS.getSymbolTable(this.v).getImbricationLevel(), this.v.getDepl());
+        return ASMUtils.generateVariable(this.v, this.localTDS);
     }
 
     public TDS.entries.Variable getVariableEntry() {

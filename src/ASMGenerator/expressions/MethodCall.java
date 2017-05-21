@@ -3,7 +3,8 @@ package ASMGenerator.expressions;
 import ASMGenerator.ASMUtils;
 import TDS.Entry;
 import TDS.SymbolTable;
-import TDS.entries.*;
+
+import java.util.ArrayList;
 
 /**
  * @author Maxime Escamez
@@ -11,26 +12,25 @@ import TDS.entries.*;
  * @author Quentin Tardivon
  * @author Yann Prono
  */
-public class MethodCall extends Expression{
-	public static final int OFFSET_ENV = 4;
-	String nameMeth;
-	SymbolTable tds;
-	String nameCaller;
+public class MethodCall extends Expression {
+	private String nameMeth;
+	private SymbolTable tds;
+	private Variable receiver;
+	private ArrayList<Parameter> params;
 
-	public MethodCall(String nameMeth, SymbolTable tds, String nameCaller) {
-		this.tds = tds;
+
+	public MethodCall(Variable receiver, String nameMeth, SymbolTable tds, ArrayList<Parameter> p) {
 		this.nameMeth = nameMeth;
-		this.nameCaller = nameCaller;
+		this.receiver = receiver;
+		this.tds = tds;
+		this.params = p;
 	}
 
 	@Override
 	public String generate() {
-		return ASMUtils.formatASM("", "LDW", "R0, #-" + ((TDS.entries.Variable) this.tds.get(this.nameCaller)).getDepl() + OFFSET_ENV)
-				+ ASMUtils.formatASM("", "STW", "R0, -(SP)") //TODO finir d'empiler l'env là
-				+ ASMUtils.formatASM("", "JSR", "@"+this.tds.getInfo(this.nameCaller).get(Entry.TYPE) + this.nameMeth)
-				+ ASMUtils.formatASM("", "ADI", "SP, SP, #2");
+		String labelMethod = this.receiver.getVariableEntry().get(Entry.TYPE) + this.nameMeth;
+		return ASMUtils.generateCallMethod(labelMethod, this.receiver.getVariableEntry(), this.params, this.tds);
 	}
-
 
 	@Override
 	public String getType() {

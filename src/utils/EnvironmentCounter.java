@@ -12,13 +12,17 @@ public class EnvironmentCounter {
     private int countIf;
     private int countElse;
     private int countBlock;
+    private int countClass;
 
     public EnvironmentCounter() {
         this.countBlock = 0;
         this.countFor = 0;
         this.countElse = 0;
         this.countIf = 0;
+        this.countClass = 0;
     }
+
+    public int incrementClass() { return (this.countClass)++; }
 
     public int incrementFor() {
         return (this.countFor)++;

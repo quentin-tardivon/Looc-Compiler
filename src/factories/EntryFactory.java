@@ -28,6 +28,9 @@ public class EntryFactory {
     public static Method createMethod() {  return new Method(); }
     public static Method createMethodReturnInt() {  return new Method(Keywords.INTEGER); }
 
+    public static Variable createIntAttribute() {  return new Attribute(Keywords.INTEGER, 0, "a"); }
+    public static Variable createStringAttribute() {  return new Attribute(Keywords.STRING, 0, "a"); }
+
     public static Variable createStringParameter() {  return new Parameter(Keywords.STRING, -2, "a"); }
     public static Variable createIntParameter(String type) {  return new Parameter(Keywords.INTEGER, -2, "b"); }
 
