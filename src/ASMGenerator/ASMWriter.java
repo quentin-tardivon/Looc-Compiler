@@ -190,7 +190,8 @@ public class ASMWriter {
 				formatASM(DIV_ZERO, "LDW", "R1, #0") +
 				ASMUtils.loadParameter("R0", 1) +
 				formatASM("", "CMP", "R0, R1") +
-				ASMUtils.formatASM( "", "BNE", "NOT_ZERO-$-2") +
+				ASMUtils.formatASM( "", "BEQ", "2") +
+				ASMUtils.formatASM("", "JEA", "@NOT_ZERO") +
 				ASMUtils.formatASM("", "ENI", "") +
 				ASMUtils.formatASM("", "TRP", "#4") +
 				ASMUtils.generateWrite(new ConstantString("'Cannot divide by 0'")) +
