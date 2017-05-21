@@ -13,11 +13,8 @@ import java.util.ArrayList;
  * @author Quentin Tardivon
  * @author Yann Prono
  */
- //Note: Une adresse 2 octets, un entier 2 octets
-
 public class ASMWriter {
 
-	private static int CPTFOR =0;
 
 	private String output;
 	public static final String BUILTIN_FIND_STATIC = "FIND_STATIC";

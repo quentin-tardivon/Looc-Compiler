@@ -2,18 +2,21 @@ package ASMGenerator.instructions;
 
 import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
-import TDS.entries.Variable;
+import ASMGenerator.expressions.Expression;
 
 
 public class Return implements Generable {
 
-    private Variable v;
-    public Return(Variable v) {
-        this.v = v;
+    private Expression e;
+
+    public Return(Expression expression) {
+        this.e = expression;
     }
+
+    public Return() {}
 
     @Override
     public String generate() {
-        return ASMUtils.generateReturn(this.v.getDepl());
+        return ASMUtils.generateReturn(this.e);
     }
 }

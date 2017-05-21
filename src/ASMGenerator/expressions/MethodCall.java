@@ -29,11 +29,13 @@ public class MethodCall extends Expression {
 	@Override
 	public String generate() {
 		String labelMethod = this.receiver.getVariableEntry().get(Entry.TYPE) + this.nameMeth;
-		return ASMUtils.generateCallMethod(labelMethod, this.receiver.getVariableEntry(), this.params, this.tds);
+		return ASMUtils.generateCallMethod(labelMethod, this.receiver.getVariableEntry(), this.params, this.tds, this.getType());
 	}
 
 	@Override
 	public String getType() {
-		return null;
+		String className= this.receiver.getVariableEntry().get(Entry.TYPE);
+		SymbolTable classTDS = this.tds.getClass(className);
+		return classTDS.get(this.nameMeth).get(Entry.RETURN_TYPE);
 	}
 }
