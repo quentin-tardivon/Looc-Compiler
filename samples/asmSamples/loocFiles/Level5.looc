@@ -33,6 +33,11 @@ class Circle = (
         }
 )
 
+var size: int;
+var s1: Square;
+var s2: Circle;
+
+
 {
     var i: int;
     var n: int;
@@ -46,9 +51,6 @@ class Circle = (
 }
 
 
-var size: int;
-var s1: Square;
-var s2: Circle;
 
 s1 := new Square;
 s2 := new Circle;
