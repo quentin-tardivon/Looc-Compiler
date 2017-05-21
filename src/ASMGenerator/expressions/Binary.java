@@ -2,7 +2,12 @@ package ASMGenerator.expressions;
 
 import core.Keywords;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public abstract class Binary extends Expression {
 
     protected Expression left;

@@ -5,7 +5,10 @@ import TDS.Entry;
 import TDS.SymbolTable;
 
 /**
- * Created by quentin on 14/05/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class LoocClassAffect extends Expression {
 

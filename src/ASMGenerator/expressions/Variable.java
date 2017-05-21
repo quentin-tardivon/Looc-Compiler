@@ -4,7 +4,12 @@ import ASMGenerator.ASMUtils;
 import TDS.Entry;
 import TDS.SymbolTable;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class Variable extends Expression {
 
     private TDS.entries.Variable v;

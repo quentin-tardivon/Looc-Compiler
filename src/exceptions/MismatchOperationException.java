@@ -3,7 +3,10 @@ package exceptions;
 import org.antlr.runtime.tree.Tree;
 
 /**
- * Created by quentin on 29/03/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class MismatchOperationException extends LoocException {
 	public MismatchOperationException(String filename, Tree node) {

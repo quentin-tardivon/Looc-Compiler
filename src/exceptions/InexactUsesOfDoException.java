@@ -3,7 +3,10 @@ package exceptions;
 import org.antlr.runtime.tree.Tree;
 
 /**
- * Created by tld on 02/04/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class InexactUsesOfDoException extends LoocException {
 

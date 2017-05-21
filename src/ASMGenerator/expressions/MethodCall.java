@@ -6,7 +6,10 @@ import TDS.SymbolTable;
 import TDS.entries.*;
 
 /**
- * Created by quentin on 14/05/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public class MethodCall extends Expression{
 	public static final int OFFSET_ENV = 4;

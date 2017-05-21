@@ -7,7 +7,12 @@ import org.antlr.runtime.ANTLRInputStream
 import org.antlr.runtime.CommonTokenStream
 import org.antlr.runtime.tree.CommonTree
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 class AssemblerTest extends GroovyTestCase {
 
     private final String ROOT_PATH = "./samples/asmSamples/"
@@ -15,13 +20,13 @@ class AssemblerTest extends GroovyTestCase {
     private final String ASM_PATH = LOOC_PATH + "output/"
 
 
-    void testASmLevel0() {
+    /*void testASmLevel0() {
         compileAndGenerate("Level0.looc", "+6", "MOGWA")
     }
 
     void testASmLevel1() {
         compileAndGenerate("Level1.looc", "+4")
-    }
+    }*/
 
     void testASmLevel2() {
         compileAndGenerate("Level2.looc", "+4", "+21", "+5")
@@ -29,7 +34,7 @@ class AssemblerTest extends GroovyTestCase {
 
 
     public compileAndGenerate(String filename, String ... res) {
-        File f = new File(LOOC_PATH + filename);
+        File f = new File(LOOC_PATH + filename)
         ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(f))
         LoocLexer lexer = new LoocLexer(input)
         CommonTokenStream tokens = new CommonTokenStream(lexer)
@@ -53,8 +58,9 @@ class AssemblerTest extends GroovyTestCase {
         String line = ""
         while ((line = reader.readLine())!= null && !line.contains("java -jar")) {}
 
-        if(res)
-            checkOutput(reader, res)
+            if (res)
+                checkOutput(reader, res)
+
     }
 
     public checkOutput(BufferedReader reader, String ... res) {
@@ -62,10 +68,10 @@ class AssemblerTest extends GroovyTestCase {
         String line = ""
         while ((line = reader.readLine())!= null && !line.contains("Simulation terminée")) {
             System.out.println(line)
-            assertEquals("Output doesn't corresponds", res[i], line.trim())
+            assertEquals("Output(s) doesn't correspond", res[i], line.trim())
             i++
         }
-        assertEquals("Output of assembler code doesn't corresponds", res.length, i)
+        assertEquals("Output(s) of assembler code doesn't correspond", res.length, i)
     }
 
 }

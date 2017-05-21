@@ -3,7 +3,12 @@ package ASMGenerator.expressions;
 import ASMGenerator.ASMUtils;
 import core.Keywords;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class ConstantInteger extends Expression {
 
     private int v;

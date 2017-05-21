@@ -8,9 +8,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Created by quentin on 29/04/2017.
- * Note: Une adresse 2 octets, un entier 2 octets
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
+ //Note: Une adresse 2 octets, un entier 2 octets
+
 public class ASMWriter {
 
 	private static int CPTFOR =0;

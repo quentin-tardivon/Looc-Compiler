@@ -5,6 +5,12 @@ import org.antlr.runtime.CommonTokenStream;
 
 import java.io.FileInputStream;
 
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class TestLoocMakefile {
 
 	public static void main(String[] args) throws Exception {

@@ -4,7 +4,10 @@ import factories.CommonTreeParserFactory
 import org.junit.Ignore
 
 /**
- * Created by quentin on 30/03/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 class SemanticControlTest extends GroovyTestCase {
     private CommonTreeParser treeParser

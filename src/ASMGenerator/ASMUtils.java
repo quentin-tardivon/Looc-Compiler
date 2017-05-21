@@ -10,6 +10,12 @@ import TDS.SymbolTable;
 import TDS.entries.Variable;
 import core.Keywords;
 
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class ASMUtils {
 
     private static int labelsCounter = 0;

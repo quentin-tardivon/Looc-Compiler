@@ -5,7 +5,10 @@ import factories.CommonTreeParserFactory
 import factories.EntryFactory
 
 /**
- * Created by quentin on 18/03/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 class CommonTreeParserTest extends GroovyTestCase {
 

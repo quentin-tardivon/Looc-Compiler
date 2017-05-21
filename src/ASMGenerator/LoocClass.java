@@ -4,7 +4,12 @@ import TDS.Entry;
 import TDS.SymbolTable;
 import org.antlr.runtime.tree.Tree;
 
-
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class LoocClass implements Generable {
 
     private SymbolTable globalTDS;

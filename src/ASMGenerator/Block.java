@@ -5,6 +5,12 @@ import ASMGenerator.instructions.Declaration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class Block implements Generable {
 
     protected ArrayList<Generable> instructions;

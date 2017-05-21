@@ -11,6 +11,12 @@ import org.antlr.stringtemplate.StringTemplate;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 
+/**
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
+ */
 public class TestLooc {
 
 	private static final String LANGUAGE_NAME = "LOOC";

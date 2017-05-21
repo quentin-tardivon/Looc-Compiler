@@ -1,7 +1,10 @@
 package ASMGenerator;
 
 /**
- * Created by madmax on 14/05/2017.
+ * @author Maxime Escamez
+ * @author Théo Le Donné
+ * @author Quentin Tardivon
+ * @author Yann Prono
  */
 public interface Labelable {
 
