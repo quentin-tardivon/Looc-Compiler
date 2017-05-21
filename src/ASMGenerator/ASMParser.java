@@ -105,7 +105,8 @@ public class ASMParser {
             case "FOR":
                 String forID = EnvironmentCounter.generateID(Entry.FOR, counter.incrementFor() ,TDS.getImbricationLevel() + 1);
                 ASMGenerator.expressions.Variable vFor = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(0).getText()), TDS);
-                Affectation a = new Affectation(vFor, TDS, parseExpression(tree.getChild(1), TDS));
+                Receiver r = new Receiver(vFor, TDS);
+                Affectation a = new Affectation(r, TDS, parseExpression(tree.getChild(1), TDS));
                 Comparison c = new LowerOrEqual(vFor, parseExpression(tree.getChild(2), TDS));
                 ArrayList<Generable> instFor = new ArrayList<Generable>();
                 Tree tmpFor = tree.getChild(3);
@@ -124,8 +125,9 @@ public class ASMParser {
 
             case "AFFECT":
                 ASMGenerator.expressions.Variable varAffect = parseReceiver(tree.getChild(0), TDS);
+                Receiver rAffect = new Receiver(varAffect, TDS);
                 Expression right = parseExpression(tree.getChild(1), TDS);
-                res.add(new Affectation(varAffect, TDS, right));
+                res.add(new Affectation(rAffect, TDS, right));
                 break;
 
             case "RETURN":

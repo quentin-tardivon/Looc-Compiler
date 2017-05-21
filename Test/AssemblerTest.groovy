@@ -20,13 +20,13 @@ class AssemblerTest extends GroovyTestCase {
     private final String ASM_PATH = LOOC_PATH + "output/"
 
 
-    /*void testASmLevel0() {
+    void testASmLevel0() {
         compileAndGenerate("Level0.looc", "+6", "MOGWA")
     }
 
     void testASmLevel1() {
         compileAndGenerate("Level1.looc", "+4")
-    }*/
+    }
 
     void testASmLevel2() {
         compileAndGenerate("Level2.looc", "+4", "+21", "+5")

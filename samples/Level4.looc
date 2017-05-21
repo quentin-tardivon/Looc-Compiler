@@ -4,11 +4,7 @@ class Square = (
     var area: int;
 
     method init(s: int) {
-        if s > 100 then
-            size := 100;
-        else
-            size := s;
-        fi
+        size := s;
     }
 
     method printSize() {

@@ -2,6 +2,7 @@ package ASMGenerator.instructions;
 
 import ASMGenerator.ASMUtils;
 import ASMGenerator.Generable;
+import ASMGenerator.Receiver;
 import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.Variable;
 import TDS.SymbolTable;
@@ -9,22 +10,22 @@ import TDS.SymbolTable;
 
 public class Affectation implements Generable {
 
-    private Variable v;
+    private Receiver r;
     private Expression e;
     private SymbolTable localTDS;
-    public Affectation(Variable v, SymbolTable localTDS, Expression b) {
-        this.v = v;
+    public Affectation(Receiver r, SymbolTable localTDS, Expression b) {
+        this.r = r;
         this.localTDS = localTDS;
         this.e = b;
     }
 
     @Override
     public String generate() {
-        return ASMUtils.generateAffection(this.v, this.localTDS, this.e);
+        return ASMUtils.generateAffection(this.r, this.localTDS, this.e);
     }
 
     public Variable getVariable() {
-        return this.v;
+        return this.r.getVariable();
     }
 
     public Expression getExpression() {

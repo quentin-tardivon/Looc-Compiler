@@ -10,6 +10,7 @@ import TDS.SymbolTable;
 import TDS.entries.Attribute;
 import TDS.entries.Parameter;
 import TDS.entries.Variable;
+import com.sun.org.apache.regexp.internal.RE;
 import core.Keywords;
 import java.util.ArrayList;
 
@@ -73,16 +74,16 @@ public class ASMUtils {
     public static String generateReceiver(ASMGenerator.expressions.Variable v, SymbolTable localTDS) {
         Variable entry = v.getVariableEntry();
         StringBuffer asm = new StringBuffer();
-        /*switch (entry.getName()) {
+        switch(entry.getName()) {
             case Entry.ATTRIBUTE:
+                asm.append(generateAttribute((Attribute) entry, localTDS));
                 break;
-            case Entry.VARIABLE:*/
-                    asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(entry).getImbricationLevel()));
-                    asm.append(formatASM("", "LDW", "R1, R6"));
-                //break;
-        //}
-        asm.append(formatASM("", "ADQ", (-(OFFSET_ENV + entry.getDepl())) + ", R1"));
-        asm.append(addToStack("R1"));
+            default:
+                asm.append(generateStaticLinkLoader(localTDS.getImbricationLevel(), localTDS.getSymbolTable(entry).getImbricationLevel()));
+                asm.append(formatASM("", "LDW", "R1, R6"));
+                asm.append(formatASM("", "ADQ", (-(OFFSET_ENV + entry.getDepl())) + ", R1"));
+                asm.append(addToStack("R1"));
+        }
         return asm.toString();
     }
 
@@ -105,12 +106,12 @@ public class ASMUtils {
     }
 
 
-    public static String generateAffection(ASMGenerator.expressions.Variable v, SymbolTable localTDS, Expression e) {
-        return generateReceiver(v, localTDS) + //v.generate() +
+    public static String generateAffection(Receiver r, SymbolTable localTDS, Expression e) {
+        return r.generate() +//generateReceiver(v, localTDS) + //v.generate() +
                 e.generate()
                 + removeFromStack("R0")
                 + removeFromStack("R1")
-                + formatASM("", "STW", "R0, (R1)", "// Affection: " + v.getVariableEntry().getNameVariable() + " = " + e.toString());
+                + formatASM("", "STW", "R0, (R1)", "// Affection: " + r.getVariable().getVariableEntry().getNameVariable() + " = " + e.toString());
     }
 
     public static String removeFromStack(String reg) {
@@ -258,9 +259,6 @@ public class ASMUtils {
         StringBuffer asm = new StringBuffer();
         asm.append(e.generate());
         asm.append(removeFromStack("R0"));
-
-        //if(e instanceof ASMGenerator.expressions.Variable)
-        //    asm.append(ASMUtils.formatASM("", "LDW", "R0, (R0)"));
 
         asm.append(formatASM("", "STW", "R0, -(SP)", "// Stack param for WRITE"));
         switch (e.getType()) {
