@@ -42,7 +42,8 @@ public class MethodCall extends Expression {
 	@Override
 	public String getType() {
 		if (this.receiver == null) {
-			return this.tds.getFather().get(this.nameMeth).get(Entry.RETURN_TYPE);
+			return this.tds.getFather(this.tds.getImbricationLevel() - 1).get(this.nameMeth).get(Entry.RETURN_TYPE);
+			//return this.tds.getFather().get(this.nameMeth).get(Entry.RETURN_TYPE);
 		}
 		else {
 			SymbolTable classTDS = this.tds.getClass(this.className);

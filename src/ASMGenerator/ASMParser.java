@@ -228,7 +228,7 @@ public class ASMParser {
 	    String className;
         if (tree.getChild(indexReceiver).getText().equals("this")) {
         	receiver = null;
-        	className = TDS.getFather().getName();
+        	className = TDS.getFather(TDS.getImbricationLevel() - 1).getName();
         }
         else {
 	        receiver = new ASMGenerator.expressions.Variable((TDS.entries.Variable) TDS.getInfo(tree.getChild(indexReceiver).getText()), TDS);
