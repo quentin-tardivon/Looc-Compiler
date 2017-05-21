@@ -1,0 +1,51 @@
+/**
+    Class Math
+*/
+
+class Math = (
+    var pi: int;
+    var const: int;
+    var msg: string;
+
+    method init() {
+        pi := 3;
+        const := 42;
+        msg := "Hello Math !";
+    }
+
+    method pow(a: int, b:int): int {
+        var retval: int;
+        var i: int;
+
+/*        if b == 0 then
+            return (1);
+        fi
+        */
+
+        retval := 1;
+        for i in 1 .. b do
+            retval := retval * a;
+            write retval;
+        end
+
+        return (retval);
+    }
+
+    method response() {
+        var question: int;
+        question := 0;
+
+        write const;
+        write msg;
+    }
+
+)
+
+var m : Math;
+m := new Math;
+
+//do m.init();
+//do m.response();
+
+//write "Math power:";
+write m.pow(2, 3);
