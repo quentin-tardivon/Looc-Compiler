@@ -5,6 +5,7 @@ import ASMGenerator.expressions.Expression;
 import ASMGenerator.expressions.binaries.Comparison;
 import ASMGenerator.instructions.Affectation;
 import ASMGenerator.instructions.ConditionFor;
+import ASMGenerator.instructions.Return;
 import TDS.Entry;
 import TDS.SymbolTable;
 import TDS.entries.Attribute;
@@ -200,9 +201,7 @@ public class ASMUtils {
         for(Generable g: instructions) {
             asm.append(g.generate());
         }
-        asm.append(ASMUtils.formatASM("", "LDW", "SP, BP")
-                + ASMUtils.formatASM("", "LDW", "BP, (SP)+"));
-        asm.append(ASMUtils.formatASM("", "RTS", ""));
+
         return asm.toString();
     }
 
@@ -231,11 +230,17 @@ public class ASMUtils {
         return formatASM("", "ADQ", depl + ", SP", "// Unstack");
     }
 
-    public static String generateReturn(int depl) {
-        return formatASM("", "STW", "R0, (BP)-" + (OFFSET_ENV + depl), "// Store result int R0") +
-                formatASM("", "LDW", "SP, BP", " // Remove all locals variables") +
-                formatASM("", "LDW", "BP, (SP)+", "") +
-                formatASM("", "RTS", "// return");
+    public static String generateReturn(Expression e) {
+        StringBuffer asm = new StringBuffer();
+        if(e != null) {
+            asm.append(e.generate());
+            asm.append(removeFromStack("R0"));
+        }
+
+        asm.append(formatASM("", "LDW", "SP, BP", " // Remove all locals variables"));
+        asm.append(formatASM("", "LDW", "BP, (SP)+", ""));
+        asm.append(formatASM("", "RTS", "// return"));
+        return asm.toString();
     }
 
     public static String generateConstantInteger(int v) {
@@ -391,17 +396,16 @@ public class ASMUtils {
         return e.generate();
 	}
 
-    public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS) {
+    public static String generateCallMethod(String labelMethod, Variable receiver, ArrayList<ASMGenerator.expressions.Parameter> params, SymbolTable localTDS, String typeReturn) {
         StringBuffer asm = new StringBuffer();
         asm.append(setupParameter(receiver, localTDS));
-
         for (ASMGenerator.expressions.Parameter p: params) {
             asm.append(p.generate());
         }
-
         asm.append(ASMUtils.formatASM("", "JSR", "@" + labelMethod));
         asm.append(ASMUtils.formatASM("", "ADI", "SP, SP, #" + ((params.size() + 1) * ADDR_SIZE)));
-
+        if(typeReturn != null)
+            asm.append(addToStack("R0"));
         return asm.toString();
     }
 
