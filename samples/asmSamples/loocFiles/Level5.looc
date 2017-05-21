@@ -1,0 +1,60 @@
+class Square = (
+    var size: int;
+    var perimeter: int;
+    var area: int;
+
+    method init(s: int) {
+        if s > 100 then
+            size := 100;
+        else
+            size := s;
+        fi
+    }
+
+    method printSize() {
+        write size;
+    }
+)
+
+class Circle = (
+    var perimeter: int;
+    var size : int;
+
+    method init(s: int) {
+            if s > 100 then
+                size := 100;
+            else
+                size := s;
+            fi
+        }
+
+    method printSize() {
+            write size;
+        }
+)
+
+{
+    var i: int;
+    var n: int;
+    var h: int;
+    i := 12;
+    for n in 1..i do
+           h := n;
+    end
+
+    write h;
+}
+
+
+var size: int;
+var s1: Square;
+var s2: Circle;
+
+s1 := new Square;
+s2 := new Circle;
+size := 50;
+
+do s1.init(size);
+do s1.printSize();
+do s2.init(size * 3);
+do s2.printSize();
