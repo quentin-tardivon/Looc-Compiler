@@ -14,9 +14,10 @@
             <version>3.3</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.mojo.groovy.runtime</groupId>
-            <artifactId>groovy-runtime-1.1</artifactId>
-            <version>1.0-beta-3</version>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.5.8</version>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -35,17 +36,6 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo.groovy</groupId>
-                <artifactId>groovy-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
